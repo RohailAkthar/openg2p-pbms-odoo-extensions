@@ -18,19 +18,7 @@
                 <field name="pbms_domain" widget="domain"
                        options="{'model': 'g2p.student.registry'}"
                        invisible="target_registry != 'student'"/>
-<!-- 
-                <field name="pbms_domain" widget="domain"
-                       options="{'model': 'g2p.worker.registry'}"
-                       invisible="target_registry != 'worker'"/>
 
-                <field name="pbms_domain" widget="domain"
-                       options="{'model': 'g2p.worker.daily.registry'}"
-                       invisible="target_registry != 'worker_daily'"/>
-
-                <field name="pbms_domain" widget="domain"
-                       options="{'model': 'g2p.worker.monthly.registry'}"
-                       invisible="target_registry != 'worker_monthly'"/>
- -->
             </xpath>
         </field>
     </record>

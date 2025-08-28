@@ -18,19 +18,7 @@
                 <field name="pbms_domain" widget="domain"
                        options="{'model': 'g2p.student.registry', 'allowed_fields': ['priority_rank']}"
                        invisible="target_registry != 'student'"/>
-<!-- 
-                <field name="pbms_domain" widget="domain"
-                       options="{'model': 'g2p.worker.registry', 'allowed_fields': ['priority_rank']}"
-                       invisible="target_registry != 'worker'"/>
 
-                <field name="pbms_domain" widget="domain"
-                       options="{'model': 'g2p.worker.daily.registry', 'allowed_fields': ['priority_rank']}"
-                       invisible="target_registry != 'worker_daily'"/>
-
-                <field name="pbms_domain" widget="domain"
-                       options="{'model': 'g2p.worker.monthly.registry', 'allowed_fields': ['priority_rank']}"
-                       invisible="target_registry != 'worker_monthly'"/>
- -->
             </xpath>
         </field>
     </record>

@@ -13,13 +13,14 @@
         "views/priority/priority_rule_view.xml",
         "views/registry/farmer_registry_view.xml",
         "views/registry/student_registry_view.xml",
-        # "views/registry/worker_registry_view.xml",
-        # "views/registry/worker_daily_registry_view.xml",
-        # "views/registry/worker_monthly_registry_view.xml",
         "views/menu.xml",
     ],
     "assets": {
-        "web.assets_backend": [],
+        "web.assets_backend": [
+            "/g2p_registry_addon/static/src/css/registry_styles.scss",
+            "/g2p_registry_addon/static/src/js/beneficiaries_widget.js",
+            "/g2p_registry_addon/static/src/xml/g2p_beneficiaries_info_tpl.xml",
+        ],
     },
     "installable": True,
     "application": True,
