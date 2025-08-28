@@ -44,6 +44,16 @@
                             <th><t t-esc="('Institution Name')"/></th>
                             <th><t t-esc="('Date of Birth')"/></th>
                         </t>
+                        <!-- Conditional columns (worker) -->
+                        <t t-if="state.target_registry === 'worker'">
+                            <th><t t-esc="('Name')"/></th>
+                            <th><t t-esc="('Email')"/></th>
+                            <th><t t-esc="('Age Group')"/></th>
+                            <th><t t-esc="('Province ID')"/></th>
+                            <th><t t-esc="('District ID')"/></th>
+                            <th><t t-esc="('Constituency ID')"/></th>
+                            <th><t t-esc="('Ward ID')"/></th>
+                        </t>
                     </tr>
                 </thead>
                 <tbody>
@@ -68,6 +78,16 @@
                                 <td><t t-esc="record.gender"/></td>
                                 <td><t t-esc="record.institution_name"/></td>
                                 <td><t t-esc="record.date_of_birth"/></td>
+                            </t>
+                            <!-- Conditional cells (worker) -->
+                            <t t-if="state.target_registry === 'worker'">
+                                <td><t t-esc="record.name"/></td>
+                                <td><t t-esc="record.email"/></td>
+                                <td><t t-esc="record.age_group"/></td>
+                                <td><t t-esc="record.province_id"/></td>
+                                <td><t t-esc="record.district_id"/></td>
+                                <td><t t-esc="record.constituency_id"/></td>
+                                <td><t t-esc="record.ward_id"/></td>
                             </t>
                         </tr>
                     </t>

@@ -11,5 +11,23 @@
               parent="g2p_pbms.menu_g2p_registry"
               action="action_g2p_student_registry"
               sequence="2"/>
+    <!-- Add Worker Registry menu under Registry -->
+    <menuitem id="menu_g2p_worker_registry"
+              name="Worker Registry"
+              parent="g2p_pbms.menu_g2p_registry"
+              action="action_g2p_worker_registry"
+              sequence="3"/>
+    <!-- Add Worker Daily Registry menu under Registry -->
+    <menuitem id="menu_g2p_worker_daily_registry"
+              name="Worker Daily Registry"
+              parent="g2p_pbms.menu_g2p_registry"
+              action="action_g2p_worker_daily_registry"
+              sequence="4"/>
+    <!-- Add Worker Monthly Registry menu under Registry -->
+    <menuitem id="menu_g2p_worker_monthly_registry"
+              name="Worker Monthly Registry"
+              parent="g2p_pbms.menu_g2p_registry"
+              action="action_g2p_worker_monthly_registry"
+              sequence="5"/>
 </odoo>
 

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Actions -->
+    <record id="action_g2p_worker_registry" model="ir.actions.act_window">
+        <field name="name">Worker Registry</field>
+        <field name="res_model">g2p.worker.registry</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    
+    <record id="view_g2p_worker_registry_form" model="ir.ui.view">
+        <field name="name">g2p.worker.registry.form</field>
+        <field name="model">g2p.worker.registry</field>
+        <field name="arch" type="xml">
+            <form string="G2P Worker Registry">
+                <sheet>
+                    <group>
+                        <field name="unique_id"/>
+                        <field name="name"/>
+                        <field name="email"/>
+                        <field name="phone"/>
+                        <field name="age_group"/>
+                        <field name="province_id"/>
+                        <field name="district_id"/>
+                        <field name="constituency_id"/>
+                        <field name="ward_id"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_g2p_worker_registry_tree" model="ir.ui.view">
+        <field name="name">g2p.worker.registry.tree</field>
+        <field name="model">g2p.worker.registry</field>
+        <field name="arch" type="xml">
+            <tree string="G2P Worker Registry">
+                <field name="unique_id"/>
+                <field name="name"/>
+                <field name="email"/>
+                <field name="phone"/>
+                <field name="age_group"/>
+                <field name="province_id"/>
+                <field name="district_id"/>
+                <field name="constituency_id"/>
+                <field name="ward_id"/>
+            </tree>
+        </field>
+    </record>
+</odoo>
