@@ -4,3 +4,12 @@ g2p_student_registry_write,Write Student Registry,model_g2p_student_registry,g2p
 
 g2p_farmer_registry_read,Read Farmer Registry,model_g2p_farmer_registry,g2p_pbms.group_beneficiary_list_viewer,1,0,0,0
 g2p_farmer_registry_write,Write Farmer Registry,model_g2p_farmer_registry,g2p_pbms.group_beneficiary_list_editor,1,1,1,1
+
+g2p_worker_registry_read,Read Worker Registry,model_g2p_worker_registry,g2p_pbms.group_beneficiary_list_viewer,1,0,0,0
+g2p_worker_registry_write,Write Worker Registry,model_g2p_worker_registry,g2p_pbms.group_beneficiary_list_editor,1,1,1,1
+
+g2p_worker_daily_registry_read,Read Worker Daily Registry,model_g2p_worker_daily_registry,g2p_pbms.group_beneficiary_list_viewer,1,0,0,0
+g2p_worker_daily_registry_write,Write Worker Daily Registry,model_g2p_worker_daily_registry,g2p_pbms.group_beneficiary_list_editor,1,1,1,1
+
+g2p_worker_monthly_registry_read,Read Worker Monthly Registry,model_g2p_worker_monthly_registry,g2p_pbms.group_beneficiary_list_viewer,1,0,0,0
+g2p_worker_monthly_registry_write,Write Worker Monthly Registry,model_g2p_worker_monthly_registry,g2p_pbms.group_beneficiary_list_editor,1,1,1,1
