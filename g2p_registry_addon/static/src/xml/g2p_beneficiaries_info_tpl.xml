@@ -25,34 +25,12 @@
                 <thead>
                     <tr>
                         <th><t t-esc="('Unique ID')"/></th>
-                        <!-- <th><t t-esc="('Registration Date')"/></th> -->
 
-                        <!-- Conditional columns (farmer) -->
-                        <t t-if="state.target_registry === 'farmer'">
-                            <th><t t-esc="('Name')"/></th>
-                            <th><t t-esc="('Land Area')"/></th>
-                            <th><t t-esc="('Cattle Heads')"/></th>
-                            <th><t t-esc="('Poultry Heads')"/></th>
-                            <th><t t-esc="('Annual Income')"/></th>
-                            <th><t t-esc="('Small Area Code')"/></th>
-                            <th><t t-esc="('Large Area Code')"/></th>
-                        </t>
-                        <!-- Conditional columns (student) -->
-                        <t t-if="state.target_registry === 'student'">
-                            <th><t t-esc="('Name')"/></th>
-                            <th><t t-esc="('Gender')"/></th>
-                            <th><t t-esc="('Institution Name')"/></th>
-                            <th><t t-esc="('Date of Birth')"/></th>
-                        </t>
-                        <!-- Conditional columns (worker) -->
-                        <t t-if="state.target_registry === 'worker'">
-                            <th><t t-esc="('Name')"/></th>
-                            <th><t t-esc="('Email')"/></th>
-                            <th><t t-esc="('Age Group')"/></th>
-                            <th><t t-esc="('Province ID')"/></th>
-                            <th><t t-esc="('District ID')"/></th>
-                            <th><t t-esc="('Constituency ID')"/></th>
-                            <th><t t-esc="('Ward ID')"/></th>
+                        <!-- Conditional columns (registry_families) -->
+                        <t t-if="state.target_registry === 'registry_families'">
+                            <th><t t-esc="('HOF Individual Registry ID')"/></th>
+                            <th><t t-esc="('HOF Individual Unique ID')"/></th>
+                            <th><t t-esc="('HOF Individual Name')"/></th>
                         </t>
                     </tr>
                 </thead>
@@ -60,34 +38,12 @@
                     <t t-foreach="state.records" t-as="record" t-key="record.id">
                         <tr>
                             <td><t t-esc="record.unique_id"/></td>
-                            <!-- <td><t t-esc="record.registration_date"/></td> -->
 
-                            <!-- Conditional cells (farmer) -->
-                            <t t-if="state.target_registry === 'farmer'">
-                                <td><t t-esc="record.name"/></td>
-                                <td><t t-esc="record.land_area"/></td>
-                                <td><t t-esc="record.no_of_cattle_heads"/></td>
-                                <td><t t-esc="record.no_of_poultry_heads"/></td>
-                                <td><t t-esc="record.annual_income"/></td>
-                                <td><t t-esc="record.small_area_code"/></td>
-                                <td><t t-esc="record.large_area_code"/></td>
-                            </t>
-                            <!-- Conditional cells (student) -->
-                            <t t-if="state.target_registry === 'student'">
-                                <td><t t-esc="record.name"/></td>
-                                <td><t t-esc="record.gender"/></td>
-                                <td><t t-esc="record.institution_name"/></td>
-                                <td><t t-esc="record.date_of_birth"/></td>
-                            </t>
-                            <!-- Conditional cells (worker) -->
-                            <t t-if="state.target_registry === 'worker'">
-                                <td><t t-esc="record.name"/></td>
-                                <td><t t-esc="record.email"/></td>
-                                <td><t t-esc="record.age_group"/></td>
-                                <td><t t-esc="record.province_id"/></td>
-                                <td><t t-esc="record.district_id"/></td>
-                                <td><t t-esc="record.constituency_id"/></td>
-                                <td><t t-esc="record.ward_id"/></td>
+                            <!-- Conditional cells (registry_families) -->
+                            <t t-if="state.target_registry === 'registry_families'">
+                                <td><t t-esc="record.hof_individual_registry_id"/></td>
+                                <td><t t-esc="record.hof_individual_unique_id"/></td>
+                                <td><t t-esc="record.hof_individual_name"/></td>
                             </t>
                         </tr>
                     </t>
