@@ -1,5 +1,7 @@
 from odoo import models, fields, api
 
+from .registry import G2PRegistry
+
 
 class G2PRegistryRationCardApplicants(models.Model):
     """Ration Card Applicant Registry Model"""

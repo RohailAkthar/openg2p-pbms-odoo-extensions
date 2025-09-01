@@ -2,8 +2,8 @@ id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 g2p_registry_individuals_read,Read G2P Registry Individuals,model_g2p_registry_individuals,g2p_pbms.group_beneficiary_list_viewer,1,0,0,0
 g2p_registry_individuals_write,Write G2P Registry Individuals,model_g2p_registry_individuals,g2p_pbms.group_beneficiary_list_editor,1,1,1,1
 
-g2p_registry_residential_houses_read,Read G2P Registry Residential Houses,model_g2p_residential_houses,g2p_pbms.group_beneficiary_list_viewer,1,0,0,0
-g2p_registry_residential_houses_write,Write G2P Registry Residential Houses,model_g2p_residential_houses,g2p_pbms.group_beneficiary_list_editor,1,1,1,1
+g2p_registry_residential_houses_read,Read G2P Registry Residential Houses,model_g2p_registry_residential_houses,g2p_pbms.group_beneficiary_list_viewer,1,0,0,0
+g2p_registry_residential_houses_write,Write G2P Registry Residential Houses,model_g2p_registry_residential_houses,g2p_pbms.group_beneficiary_list_editor,1,1,1,1
 
 g2p_registry_elec_monthly_avg_read,Read G2P Registry Elec Monthly Avg,model_g2p_registry_elec_monthly_avg,g2p_pbms.group_beneficiary_list_viewer,1,0,0,0
 g2p_registry_elec_monthly_avg_write,Write G2P Registry Elec Monthly Avg,model_g2p_registry_elec_monthly_avg,g2p_pbms.group_beneficiary_list_editor,1,1,1,1
