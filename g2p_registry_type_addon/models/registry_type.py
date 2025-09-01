@@ -3,8 +3,8 @@ from enum import Enum
 
 class G2PRegistryType(Enum):
     RATION_CARD_APPLICANTS = "ration_card_applicants"
-    REGISTRY_INDIVIDUALS = "registry_individuals"
-    REGISTRY_FAMILIES = "registry_families"
+    INDIVIDUALS = "individuals"
+    FAMILIES = "families"
     ELEC_MONTHLY_AVG = "elec_monthly_avg"
     GOVT_EMPLOYEES = "govt_employees"
     LAND_HOLDINGS = "land_holdings"
@@ -26,8 +26,8 @@ class G2PTargetModelMapping:
 
     MODEL_MAPPING = {
         "ration_card_applicants": "g2p.registry.ration.card.applicants",
-        "registry_individuals": "g2p.registry.individuals",
-        "registry_families": "g2p.registry.families",
+        "individuals": "g2p.registry.individuals",
+        "families": "g2p.registry.families",
         "elec_monthly_avg": "g2p.registry.elec.monthly.avg",
         "govt_employees": "g2p.registry.govt.employees",
         "land_holdings": "g2p.registry.land.holdings",

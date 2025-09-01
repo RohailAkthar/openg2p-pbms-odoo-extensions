@@ -26,8 +26,8 @@
                     <tr>
                         <th><t t-esc="('Unique ID')"/></th>
 
-                        <!-- Conditional columns (registry_families) -->
-                        <t t-if="state.target_registry === 'registry_families'">
+                        <!-- Conditional columns (families) -->
+                        <t t-if="state.target_registry === 'families'">
                             <th><t t-esc="('HOF Individual Registry ID')"/></th>
                             <th><t t-esc="('HOF Individual Unique ID')"/></th>
                             <th><t t-esc="('HOF Individual Name')"/></th>
@@ -39,8 +39,8 @@
                         <tr>
                             <td><t t-esc="record.unique_id"/></td>
 
-                            <!-- Conditional cells (registry_families) -->
-                            <t t-if="state.target_registry === 'registry_families'">
+                            <!-- Conditional cells (families) -->
+                            <t t-if="state.target_registry === 'families'">
                                 <td><t t-esc="record.hof_individual_registry_id"/></td>
                                 <td><t t-esc="record.hof_individual_unique_id"/></td>
                                 <td><t t-esc="record.hof_individual_name"/></td>

@@ -14,15 +14,15 @@
                        options="{'model': 'g2p.registry.ration.card.applicants'}"
                        invisible="target_registry != 'ration_card_applicants'"/>
 
-                <!-- Domain widget for the 'registry_individuals' type -->
+                <!-- Domain widget for the 'individuals' type -->
                 <field name="pbms_domain" widget="domain"
                        options="{'model': 'g2p.registry.individuals'}"
-                       invisible="target_registry != 'registry_individuals'"/>
+                       invisible="target_registry != 'individuals'"/>
 
-                <!-- Domain widget for the 'registry_families' type -->
+                <!-- Domain widget for the 'families' type -->
                 <field name="pbms_domain" widget="domain"
                        options="{'model': 'g2p.registry.families'}"
-                       invisible="target_registry != 'registry_families'"/>
+                       invisible="target_registry != 'families'"/>
 
                 <!-- Domain widget for the 'elec_monthly_avg' type -->
                 <field name="pbms_domain" widget="domain"
