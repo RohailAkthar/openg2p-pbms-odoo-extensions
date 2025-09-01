@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Actions -->
+    <record id="action_g2p_elec_monthly_avg_registry" model="ir.actions.act_window">
+        <field name="name">Electricity Monthly Average Registry</field>
+        <field name="res_model">g2p.registry.elec.monthly.avg</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    
+    <record id="view_g2p_elec_monthly_avg_registry_form" model="ir.ui.view">
+        <field name="name">g2p.registry.elec.monthly.avg.form</field>
+        <field name="model">g2p.registry.elec.monthly.avg</field>
+        <field name="arch" type="xml">
+            <form string="G2P Electricity Monthly Average Registry">
+                <sheet>
+                    <group>
+                        <field name="id"/>
+                        <field name="unique_id"/>
+                        <field name="ration_card_application_id"/>
+                        <field name="individual_registry_id"/>
+                        <field name="individual_unique_id"/>
+                        <field name="applicant_aadhaar"/>
+                        <field name="family_unique_id"/>
+                        <field name="family_registry_id"/>
+                        <field name="date_of_computation"/>
+                        <field name="six_month_avg_units"/>
+                        <field name="six_month_avg_amount"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_g2p_elec_monthly_avg_registry_tree" model="ir.ui.view">
+        <field name="name">g2p.registry.elec.monthly.avg.tree</field>
+        <field name="model">g2p.registry.elec.monthly.avg</field>
+        <field name="arch" type="xml">
+            <tree string="G2P Electricity Monthly Average Registry">
+                <field name="id"/>
+                <field name="unique_id"/>
+                <field name="ration_card_application_id"/>
+                <field name="individual_registry_id"/>
+                <field name="individual_unique_id"/>
+                <field name="applicant_aadhaar"/>
+                <field name="family_unique_id"/>
+                <field name="family_registry_id"/>
+                <field name="date_of_computation"/>
+                <field name="six_month_avg_units"/>
+                <field name="six_month_avg_amount"/>
+                <button name="action_open_view" type="object" class="fa fa-eye" title="View"/>
+            </tree>
+        </field>
+    </record>
+</odoo>

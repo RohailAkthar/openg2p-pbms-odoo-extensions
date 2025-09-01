@@ -9,28 +9,55 @@
             <!-- Inject domain widgets inside the <group> -->
             <xpath expr="//form/sheet/group" position="inside">
 
-                <!-- Domain widget for the 'farmer' type -->
+                <!-- Domain widget for the 'ration_card_applicants' type -->
                 <field name="pbms_domain" widget="domain"
-                       options="{'model': 'g2p.farmer.registry', 'allowed_fields': ['priority_rank']}"
-                       invisible="target_registry != 'farmer'"/>
+                       options="{'model': 'g2p.registry.ration.card.applicants'}"
+                       invisible="target_registry != 'ration_card_applicants'"/>
 
-                <!-- Domain widget for the 'student' type -->
+                <!-- Domain widget for the 'registry_individuals' type -->
                 <field name="pbms_domain" widget="domain"
-                       options="{'model': 'g2p.student.registry', 'allowed_fields': ['priority_rank']}"
-                       invisible="target_registry != 'student'"/>
+                       options="{'model': 'g2p.registry.individuals'}"
+                       invisible="target_registry != 'registry_individuals'"/>
 
-                <!-- Domain widget for the 'worker' types -->
+                <!-- Domain widget for the 'registry_families' type -->
                 <field name="pbms_domain" widget="domain"
-                       options="{'model': 'g2p.worker.registry', 'allowed_fields': ['priority_rank']}"
-                       invisible="target_registry != 'worker'"/>
+                       options="{'model': 'g2p.registry.families'}"
+                       invisible="target_registry != 'registry_families'"/>
 
+                <!-- Domain widget for the 'elec_monthly_avg' type -->
                 <field name="pbms_domain" widget="domain"
-                       options="{'model': 'g2p.worker.daily.registry', 'allowed_fields': ['priority_rank']}"
-                       invisible="target_registry != 'worker_daily'"/>
+                       options="{'model': 'g2p.registry.elec.monthly.avg'}"
+                       invisible="target_registry != 'elec_monthly_avg'"/>
 
+                <!-- Domain widget for the 'govt_employees' type -->
                 <field name="pbms_domain" widget="domain"
-                       options="{'model': 'g2p.worker.monthly.registry', 'allowed_fields': ['priority_rank']}"
-                       invisible="target_registry != 'worker_monthly'"/>
+                       options="{'model': 'g2p.registry.govt.employees'}"
+                       invisible="target_registry != 'govt_employees'"/>
+
+                <!-- Domain widget for the 'land_holdings' type -->
+                <field name="pbms_domain" widget="domain"
+                       options="{'model': 'g2p.registry.land.holdings'}"
+                       invisible="target_registry != 'land_holdings'"/>
+
+                <!-- Domain widget for the 'lrs_brs_application' type -->
+                <field name="pbms_domain" widget="domain"
+                       options="{'model': 'g2p.registry.lrs.brs.application'}"
+                       invisible="target_registry != 'lrs_brs_application'"/>
+
+                <!-- Domain widget for the 'professional_tax_payers' type -->
+                <field name="pbms_domain" widget="domain"
+                       options="{'model': 'g2p.registry.professional.tax.payers'}"
+                       invisible="target_registry != 'professional_tax_payers'"/>
+
+                <!-- Domain widget for the 'residential_houses' type -->
+                <field name="pbms_domain" widget="domain"
+                       options="{'model': 'g2p.registry.residential.houses'}"
+                       invisible="target_registry != 'residential_houses'"/>
+
+                <!-- Domain widget for the 'vehicle_ownership' type -->
+                <field name="pbms_domain" widget="domain"
+                       options="{'model': 'g2p.registry.vehicle.ownership'}"
+                       invisible="target_registry != 'vehicle_ownership'"/>
 
             </xpath>
         </field>

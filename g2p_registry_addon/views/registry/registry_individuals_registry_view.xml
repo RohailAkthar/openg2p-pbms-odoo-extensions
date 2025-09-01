@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Actions -->
+    <record id="action_g2p_registry_individuals_registry" model="ir.actions.act_window">
+        <field name="name">Registry Individuals</field>
+        <field name="res_model">g2p.registry.individuals</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    
+    <record id="view_g2p_registry_individuals_registry_form" model="ir.ui.view">
+        <field name="name">g2p.registry.individuals.form</field>
+        <field name="model">g2p.registry.individuals</field>
+        <field name="arch" type="xml">
+            <form string="G2P Registry Individuals">
+                <sheet>
+                    <group>
+                        <field name="id"/>
+                        <field name="unique_id"/>
+                        <field name="individual_unique_id"/>
+                        <field name="owner_aadhaar"/>
+                        <field name="family_unique_id"/>
+                        <field name="family_registry_id"/>
+                        <field name="ration_card_id"/>
+                        <field name="praja_palana_id"/>
+                        <field name="icdb_id"/>
+                        <field name="name"/>
+                        <field name="family_name"/>
+                        <field name="given_name"/>
+                        <field name="gender"/>
+                        <field name="village"/>
+                        <field name="mandal_string"/>
+                        <field name="district_string"/>
+                        <field name="address"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_g2p_registry_individuals_registry_tree" model="ir.ui.view">
+        <field name="name">g2p.registry.individuals.tree</field>
+        <field name="model">g2p.registry.individuals</field>
+        <field name="arch" type="xml">
+            <tree string="G2P Registry Individuals">
+                <field name="id"/>
+                <field name="unique_id"/>
+                <field name="individual_unique_id"/>
+                <field name="owner_aadhaar"/>
+                <field name="family_unique_id"/>
+                <field name="family_registry_id"/>
+                <field name="ration_card_id"/>
+                <field name="praja_palana_id"/>
+                <field name="icdb_id"/>
+                <field name="name"/>
+                <field name="family_name"/>
+                <field name="given_name"/>
+                <field name="gender"/>
+                <field name="village"/>
+                <field name="mandal_string"/>
+                <field name="district_string"/>
+                <field name="address"/>
+                <button name="action_open_view" type="object" class="fa fa-eye" title="View"/>
+            </tree>
+        </field>
+    </record>
+</odoo>
