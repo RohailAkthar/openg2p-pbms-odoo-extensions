@@ -21,6 +21,7 @@
         "views/registry/registry_individuals_registry_view.xml",
         "views/registry/residential_houses_registry_view.xml",
         "views/registry/vehicle_ownership_registry_view.xml",
+        "views/bgtask/bgtask_view.xml",
         "views/menu.xml",
     ],
     "assets": {
