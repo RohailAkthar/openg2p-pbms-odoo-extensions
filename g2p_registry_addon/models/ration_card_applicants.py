@@ -8,11 +8,7 @@ class G2PRegistryRationCardApplicants(models.Model):
     _name = 'g2p.registry.ration.card.applicants'
     _description = 'Ration Card Applicant Registry'
     _inherit = 'g2p.registry'
-    
-    id = fields.Integer(
-        string='ID',
-        help='Primary key identifier for the ration card applicant record'
-    )
+
     ration_card_application_id = fields.Char(
         string='Ration Card Application ID',
         help='Unique identifier for the ration card application'
@@ -25,7 +21,7 @@ class G2PRegistryRationCardApplicants(models.Model):
         string='Individual Unique ID',
         help='MOSIP generated unique ID for the individual applicant'
     )
-    applicant_aadhaar = fields.Char(
+    aadhaar_id = fields.Char(
         string='Applicant Aadhaar',
         help='Aadhaar number of the applicant'
     )

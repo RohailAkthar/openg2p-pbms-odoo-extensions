@@ -9,10 +9,6 @@ class G2PRegistryFamilies(models.Model):
     _description = 'Family Registry'
     _inherit = 'g2p.registry'
 
-    id = fields.Integer(
-        string='ID',
-        help='Primary key identifier for the family record'
-    )
     family_unique_id = fields.Char(
         string='Family Unique ID',
         help='MOSIP generated unique ID for family'

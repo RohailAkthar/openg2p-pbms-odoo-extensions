@@ -17,7 +17,7 @@
                         <field name="id"/>
                         <field name="unique_id"/>
                         <field name="individual_unique_id"/>
-                        <field name="owner_aadhaar"/>
+                        <field name="aadhaar_id"/>
                         <field name="family_unique_id"/>
                         <field name="family_registry_id"/>
                         <field name="ration_card_id"/>
@@ -44,7 +44,7 @@
                 <field name="id"/>
                 <field name="unique_id"/>
                 <field name="individual_unique_id"/>
-                <field name="owner_aadhaar"/>
+                <field name="aadhaar_id"/>
                 <field name="family_unique_id"/>
                 <field name="family_registry_id"/>
                 <field name="ration_card_id"/>

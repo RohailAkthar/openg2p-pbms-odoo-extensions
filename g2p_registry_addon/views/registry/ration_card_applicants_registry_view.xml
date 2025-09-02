@@ -19,7 +19,7 @@
                         <field name="ration_card_application_id"/>
                         <field name="individual_registry_id"/>
                         <field name="individual_unique_id"/>
-                        <field name="applicant_aadhaar"/>
+                        <field name="aadhaar_id"/>
                         <field name="family_unique_id"/>
                         <field name="family_registry_id"/>
                         <field name="application_date"/>
@@ -41,7 +41,7 @@
                 <field name="ration_card_application_id"/>
                 <field name="individual_registry_id"/>
                 <field name="individual_unique_id"/>
-                <field name="applicant_aadhaar"/>
+                <field name="aadhaar_id"/>
                 <field name="family_unique_id"/>
                 <field name="family_registry_id"/>
                 <field name="application_date"/>

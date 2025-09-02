@@ -16,12 +16,12 @@
                     <group>
                         <field name="id"/>
                         <field name="unique_id"/>
-                        <field name="ration_card_application_id"/>
                         <field name="individual_registry_id"/>
                         <field name="individual_unique_id"/>
-                        <field name="applicant_aadhaar"/>
+                        <field name="aadhaar"/>
                         <field name="family_unique_id"/>
                         <field name="family_registry_id"/>
+                        <field name="government_employee_id"/>
                         <field name="government_department"/>
                         <field name="employee_since_date"/>
                         <field name="type_of_department"/>
@@ -37,12 +37,12 @@
             <tree string="G2P Government Employees Registry">
                 <field name="id"/>
                 <field name="unique_id"/>
-                <field name="ration_card_application_id"/>
                 <field name="individual_registry_id"/>
                 <field name="individual_unique_id"/>
-                <field name="applicant_aadhaar"/>
+                <field name="aadhaar"/>
                 <field name="family_unique_id"/>
                 <field name="family_registry_id"/>
+                <field name="government_employee_id"/>
                 <field name="government_department"/>
                 <field name="employee_since_date"/>
                 <field name="type_of_department"/>

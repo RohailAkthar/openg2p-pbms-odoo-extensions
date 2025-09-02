@@ -5,6 +5,10 @@ class G2PRegistry(models.AbstractModel):
     _name = "g2p.registry"
     _description = "Abstract G2P Registry"
 
+    id = fields.Integer(
+        string='ID',
+        help='Primary key identifier for the record'
+    )
     unique_id = fields.Char(string="Unique ID", required=False)
 
     def action_open_view(self):

@@ -9,14 +9,6 @@ class G2PRegistryGovtEmployees(models.Model):
     _description = 'Government Employees Registry'
     _inherit = 'g2p.registry'
 
-    id = fields.Integer(
-        string='ID',
-        help='Primary key identifier for the government employee record'
-    )
-    ration_card_application_id = fields.Char(
-        string='Ration Card Application ID',
-        help='Unique identifier for the ration card application'
-    )
     individual_registry_id = fields.Integer(
         string='Individual Registry ID',
         help='Reference to individual registry record'
@@ -25,7 +17,7 @@ class G2PRegistryGovtEmployees(models.Model):
         string='Individual Unique ID',
         help='MOSIP generated unique ID for individual'
     )
-    applicant_aadhaar = fields.Char(
+    aadhaar = fields.Char(
         string='Applicant Aadhaar',
         help='Aadhaar number of the applicant'
     )
@@ -36,6 +28,10 @@ class G2PRegistryGovtEmployees(models.Model):
     family_registry_id = fields.Integer(
         string='Family Registry ID',
         help='Reference to family registry record'
+    )
+    government_employee_id = fields.Char(
+        string='Government Employee ID',
+        help='Employee ID of the government employee'
     )
     government_department = fields.Char(
         string='Government Department',

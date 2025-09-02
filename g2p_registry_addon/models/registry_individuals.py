@@ -9,15 +9,11 @@ class G2PRegistryIndividuals(models.Model):
     _description = 'Individual Registry'
     _inherit = 'g2p.registry'
 
-    id = fields.Integer(
-        string='ID',
-        help='Primary key identifier for the individual record'
-    )
     individual_unique_id = fields.Char(
         string='Individual Unique ID',
         help='MOSIP generated unique ID for individual'
     )
-    owner_aadhaar = fields.Char(
+    aadhaar_id = fields.Char(
         string='Owner Aadhaar',
         help='Aadhaar number of the individual'
     )

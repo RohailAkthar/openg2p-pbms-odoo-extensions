@@ -8,15 +8,8 @@ class G2PRegistryProfessionalTaxPayers(models.Model):
     _name = 'g2p.registry.professional.tax.payers'
     _description = 'Professional Tax Registry'
     _inherit = 'g2p.registry'
-    
-    id = fields.Integer(
-        string='ID',
-        help='Primary key identifier for the professional tax record'
-    )
-    ration_card_application_id = fields.Char(
-        string='Ration Card Application ID',
-        help='Unique identifier for the ration card application'
-    )
+
+
     individual_registry_id = fields.Integer(
         string='Individual Registry ID',
         help='Reference to individual registry record'
@@ -25,7 +18,7 @@ class G2PRegistryProfessionalTaxPayers(models.Model):
         string='Individual Unique ID',
         help='MOSIP generated unique ID for individual'
     )
-    applicant_aadhaar = fields.Char(
+    aadhaar_id = fields.Char(
         string='Applicant Aadhaar',
         help='Aadhaar number of the applicant'
     )
@@ -36,6 +29,11 @@ class G2PRegistryProfessionalTaxPayers(models.Model):
     family_registry_id = fields.Integer(
         string='Family Registry ID',
         help='Reference to family registry record'
+    )
+
+    professional_tax_payer_id = fields.Char(
+        string='Professional Tax Payer ID',
+        help='Unique identifier for the professional tax payer'
     )
 
     # Business type

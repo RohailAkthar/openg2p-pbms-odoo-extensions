@@ -9,10 +9,6 @@ class G2PRegistryVehicleOwnership(models.Model):
     _description = 'Vehicle Ownership Registry'
     _inherit = 'g2p.registry'
 
-    id = fields.Integer(
-        string='ID',
-        help='Primary key identifier for the vehicle ownership record'
-    )
     vehicle_registration_id = fields.Char(
         string='Vehicle Registration ID',
         help='Unique identifier for the vehicle registration'

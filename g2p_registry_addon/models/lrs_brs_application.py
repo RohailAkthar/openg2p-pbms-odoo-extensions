@@ -8,15 +8,7 @@ class G2PRegistryLrsBrsApplication(models.Model):
     _name = 'g2p.registry.lrs.brs.application'
     _description = 'LRS BRS Application Registry'
     _inherit = 'g2p.registry'
-    
-    id = fields.Integer(
-        string='ID',
-        help='Primary key identifier for the LRS BRS application record'
-    )
-    ration_card_application_id = fields.Char(
-        string='Ration Card Application ID',
-        help='Unique identifier for the ration card application'
-    )
+
     individual_registry_id = fields.Integer(
         string='Individual Registry ID',
         help='Reference to individual registry record'
@@ -25,7 +17,7 @@ class G2PRegistryLrsBrsApplication(models.Model):
         string='Individual Unique ID',
         help='MOSIP generated unique ID for individual'
     )
-    applicant_aadhaar = fields.Char(
+    aadhaar_id = fields.Char(
         string='Applicant Aadhaar',
         help='Aadhaar number of the applicant'
     )
@@ -36,6 +28,11 @@ class G2PRegistryLrsBrsApplication(models.Model):
     family_registry_id = fields.Integer(
         string='Family Registry ID',
         help='Reference to family registry record'
+    )
+
+    lrs_brs_application_id = fields.Char(
+        string='LRS BRS Application ID',
+        help='Unique identifier for the LRS BRS application'
     )
     
     # Scheme information

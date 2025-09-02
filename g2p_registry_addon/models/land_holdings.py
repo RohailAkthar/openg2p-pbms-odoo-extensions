@@ -8,14 +8,6 @@ class G2PLandHoldings(models.Model):
     _description = "Land Holdings Registry"
     _inherit = "g2p.registry"
 
-    id = fields.Integer(
-        string='ID',
-        help='Primary key identifier for the land holding record'
-    )
-    ration_card_application_id = fields.Char(
-        string='Ration Card Application ID',
-        help='Unique identifier for the ration card application'
-    )
     individual_registry_id = fields.Integer(
         string='Individual Registry ID',
         help='Reference to individual registry record'
@@ -24,7 +16,7 @@ class G2PLandHoldings(models.Model):
         string='Individual Unique ID',
         help='MOSIP generated unique ID for individual'
     )
-    applicant_aadhaar = fields.Char(
+    aadhaar_id = fields.Char(
         string='Applicant Aadhaar',
         help='Aadhaar number of the applicant'
     )
@@ -35,6 +27,10 @@ class G2PLandHoldings(models.Model):
     family_registry_id = fields.Integer(
         string='Family Registry ID',
         help='Reference to family registry record'
+    )
+    property_id_tax_records = fields.Char(
+        string='Property Tax Records',
+        help='Tax records of the property'
     )
     land_area_in_acres = fields.Float(
         string='Land Area (in Acres)',

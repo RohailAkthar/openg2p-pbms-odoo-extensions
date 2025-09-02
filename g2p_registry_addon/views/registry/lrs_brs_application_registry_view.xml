@@ -16,12 +16,12 @@
                     <group>
                         <field name="id"/>
                         <field name="unique_id"/>
-                        <field name="ration_card_application_id"/>
                         <field name="individual_registry_id"/>
                         <field name="individual_unique_id"/>
-                        <field name="applicant_aadhaar"/>
+                        <field name="aadhaar_id"/>
                         <field name="family_unique_id"/>
                         <field name="family_registry_id"/>
+                        <field name="lrs_brs_application_id"/>
                         <field name="scheme"/>
                     </group>
                 </sheet>
@@ -35,12 +35,12 @@
             <tree string="G2P LRS BRS Application Registry">
                 <field name="id"/>
                 <field name="unique_id"/>
-                <field name="ration_card_application_id"/>
                 <field name="individual_registry_id"/>
                 <field name="individual_unique_id"/>
-                <field name="applicant_aadhaar"/>
+                <field name="aadhaar_id"/>
                 <field name="family_unique_id"/>
                 <field name="family_registry_id"/>
+                <field name="lrs_brs_application_id"/>
                 <field name="scheme"/>
                 <button name="action_open_view" type="object" class="fa fa-eye" title="View"/>
             </tree>
