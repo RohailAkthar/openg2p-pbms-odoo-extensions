@@ -16,6 +16,7 @@
         "views/registry/worker_registry_view.xml",
         "views/registry/worker_daily_registry_view.xml",
         "views/registry/worker_monthly_registry_view.xml",
+        "views/bgtask/bgtask_view.xml",
         "views/menu.xml",
     ],
     "assets": {

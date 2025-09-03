@@ -9,16 +9,6 @@
             <!-- Inject domain widgets inside the <group> -->
             <xpath expr="//form/sheet/group" position="inside">
 
-                <!-- Domain widget for the 'farmer' type -->
-                <field name="pbms_domain" widget="domain"
-                       options="{'model': 'g2p.farmer.registry'}"
-                       invisible="target_registry != 'farmer'"/>
-
-                <!-- Domain widget for the 'student' type -->
-                <field name="pbms_domain" widget="domain"
-                       options="{'model': 'g2p.student.registry'}"
-                       invisible="target_registry != 'student'"/>
-
                 <!-- Domain widget for the 'worker' types -->
                 <field name="pbms_domain" widget="domain"
                        options="{'model': 'g2p.worker.registry'}"
