@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Actions -->
+    <record id="action_g2p_residential_houses_registry" model="ir.actions.act_window">
+        <field name="name">Residential Houses Registry</field>
+        <field name="res_model">g2p.registry.residential.houses</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    
+    <record id="view_g2p_residential_houses_registry_form" model="ir.ui.view">
+        <field name="name">g2p.registry.residential.houses.form</field>
+        <field name="model">g2p.registry.residential.houses</field>
+        <field name="arch" type="xml">
+            <form string="G2P Residential Houses Registry">
+                <sheet>
+                    <group>
+                        <field name="id"/>
+                        <field name="unique_id"/>
+                        <field name="individual_registry_id"/>
+                        <field name="individual_unique_id"/>
+                        <field name="aadhaar_id"/>
+                        <field name="family_unique_id"/>
+                        <field name="family_registry_id"/>
+                        <field name="property_id_tax_records"/>
+                        <field name="built_up_area_in_sq_feet"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_g2p_residential_houses_registry_tree" model="ir.ui.view">
+        <field name="name">g2p.registry.residential.houses.tree</field>
+        <field name="model">g2p.registry.residential.houses</field>
+        <field name="arch" type="xml">
+            <tree string="G2P Residential Houses Registry">
+                <field name="id"/>
+                <field name="unique_id"/>
+                <field name="individual_registry_id"/>
+                <field name="individual_unique_id"/>
+                <field name="aadhaar_id"/>
+                <field name="family_unique_id"/>
+                <field name="family_registry_id"/>
+                <field name="property_id_tax_records"/>
+                <field name="built_up_area_in_sq_feet"/>
+                <button name="action_open_view" type="object" class="fa fa-eye" title="View"/>
+            </tree>
+        </field>
+    </record>
+</odoo>

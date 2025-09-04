@@ -1,6 +1,30 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-g2p_student_registry_read,Read Student Registry,model_g2p_student_registry,g2p_pbms.group_beneficiary_list_viewer,1,0,0,0
-g2p_student_registry_write,Write Student Registry,model_g2p_student_registry,g2p_pbms.group_beneficiary_list_editor,1,1,1,1
+g2p_registry_individuals_read,Read G2P Registry Individuals,model_g2p_registry_individuals,g2p_pbms.group_beneficiary_list_viewer,1,0,0,0
+g2p_registry_individuals_write,Write G2P Registry Individuals,model_g2p_registry_individuals,g2p_pbms.group_beneficiary_list_editor,1,1,1,1
 
-g2p_farmer_registry_read,Read Farmer Registry,model_g2p_farmer_registry,g2p_pbms.group_beneficiary_list_viewer,1,0,0,0
-g2p_farmer_registry_write,Write Farmer Registry,model_g2p_farmer_registry,g2p_pbms.group_beneficiary_list_editor,1,1,1,1
+g2p_registry_residential_houses_read,Read G2P Registry Residential Houses,model_g2p_registry_residential_houses,g2p_pbms.group_beneficiary_list_viewer,1,0,0,0
+g2p_registry_residential_houses_write,Write G2P Registry Residential Houses,model_g2p_registry_residential_houses,g2p_pbms.group_beneficiary_list_editor,1,1,1,1
+
+g2p_registry_elec_monthly_avg_read,Read G2P Registry Elec Monthly Avg,model_g2p_registry_elec_monthly_avg,g2p_pbms.group_beneficiary_list_viewer,1,0,0,0
+g2p_registry_elec_monthly_avg_write,Write G2P Registry Elec Monthly Avg,model_g2p_registry_elec_monthly_avg,g2p_pbms.group_beneficiary_list_editor,1,1,1,1
+
+g2p_registry_govt_employees_read,Read G2P Registry Govt Employees,model_g2p_registry_govt_employees,g2p_pbms.group_beneficiary_list_viewer,1,0,0,0
+g2p_registry_govt_employees_write,Write G2P Registry Govt Employees,model_g2p_registry_govt_employees,g2p_pbms.group_beneficiary_list_editor,1,1,1,1
+
+g2p_registry_land_holdings_read,Read G2P Registry Land Holdings,model_g2p_registry_land_holdings,g2p_pbms.group_beneficiary_list_viewer,1,0,0,0
+g2p_registry_land_holdings_write,Write G2P Registry Land Holdings,model_g2p_registry_land_holdings,g2p_pbms.group_beneficiary_list_editor,1,1,1,1
+
+g2p_registry_lrs_brs_application_read,Read G2P Registry LRS BRS Application,model_g2p_registry_lrs_brs_application,g2p_pbms.group_beneficiary_list_viewer,1,0,0,0
+g2p_registry_lrs_brs_application_write,Write G2P Registry LRS BRS Application,model_g2p_registry_lrs_brs_application,g2p_pbms.group_beneficiary_list_editor,1,1,1,1
+
+g2p_registry_professional_tax_payers_read,Read G2P Registry Professional Tax Payers,model_g2p_registry_professional_tax_payers,g2p_pbms.group_beneficiary_list_viewer,1,0,0,0
+g2p_registry_professional_tax_payers_write,Write G2P Registry Professional Tax Payers,model_g2p_registry_professional_tax_payers,g2p_pbms.group_beneficiary_list_editor,1,1,1,1
+
+g2p_registry_ration_card_applicants_read,Read G2P Registry Ration Card Applicants,model_g2p_registry_ration_card_applicants,g2p_pbms.group_beneficiary_list_viewer,1,0,0,0
+g2p_registry_ration_card_applicants_write,Write G2P Registry Ration Card Applicants,model_g2p_registry_ration_card_applicants,g2p_pbms.group_beneficiary_list_editor,1,1,1,1
+
+g2p_registry_families_read,Read G2P Registry Families,model_g2p_registry_families,g2p_pbms.group_beneficiary_list_viewer,1,0,0,0
+g2p_registry_families_write,Write G2P Registry Families,model_g2p_registry_families,g2p_pbms.group_beneficiary_list_editor,1,1,1,1
+
+g2p_registry_vehicle_ownership_read,Read G2P Registry Vehicle Ownership,model_g2p_registry_vehicle_ownership,g2p_pbms.group_beneficiary_list_viewer,1,0,0,0
+g2p_registry_vehicle_ownership_write,Write G2P Registry Vehicle Ownership,model_g2p_registry_vehicle_ownership,g2p_pbms.group_beneficiary_list_editor,1,1,1,1

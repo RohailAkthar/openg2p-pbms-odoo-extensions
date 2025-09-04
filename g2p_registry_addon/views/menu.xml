@@ -1,15 +1,62 @@
 <odoo>
-    <!-- Add Farmer Registry menu under Registry -->
-    <menuitem id="menu_g2p_farmer_registry"
-              name="Farmer Registry"
+    <!-- Add Registry Families menu under Registry -->
+    <menuitem id="menu_g2p_registry_families_registry"
+              name="Registry Families"
               parent="g2p_pbms.menu_g2p_registry"
-              action="action_g2p_farmer_registry"
+              action="action_g2p_registry_families_registry"
               sequence="1"/>
-    <!-- Add Student Registry menu under Registry -->
-    <menuitem id="menu_g2p_student_registry"
-              name="Student Registry"
+    <!-- Add Registry Individuals menu under Registry -->
+    <menuitem id="menu_g2p_registry_individuals_registry"
+              name="Registry Individuals"
               parent="g2p_pbms.menu_g2p_registry"
-              action="action_g2p_student_registry"
+              action="action_g2p_registry_individuals_registry"
               sequence="2"/>
+    <!-- Add Land Holdings Registry menu under Registry -->
+    <menuitem id="menu_g2p_land_holdings_registry"
+              name="Land Holdings Registry"
+              parent="g2p_pbms.menu_g2p_registry"
+              action="action_g2p_land_holdings_registry"
+              sequence="3"/>
+    <!-- Add Vehicle Ownership Registry menu under Registry -->
+    <menuitem id="menu_g2p_vehicle_ownership_registry"
+              name="Vehicle Ownership Registry"
+              parent="g2p_pbms.menu_g2p_registry"
+              action="action_g2p_vehicle_ownership_registry"
+              sequence="4"/>
+    <!-- Add Residential Houses Registry menu under Registry -->
+    <menuitem id="menu_g2p_residential_houses_registry"
+              name="Residential Houses Registry"
+              parent="g2p_pbms.menu_g2p_registry"
+              action="action_g2p_residential_houses_registry"
+              sequence="5"/>
+    <!-- Add LRS BRS Application Registry menu under Registry -->
+    <menuitem id="menu_g2p_lrs_brs_application_registry"
+              name="LRS BRS Application Registry"
+              parent="g2p_pbms.menu_g2p_registry"
+              action="action_g2p_lrs_brs_application_registry"
+              sequence="6"/>
+    <!-- Add Ration Card Applicants Registry menu under Registry -->
+    <menuitem id="menu_g2p_ration_card_applicants_registry"
+              name="Ration Card Applicants Registry"
+              parent="g2p_pbms.menu_g2p_registry"
+              action="action_g2p_ration_card_applicants_registry"
+              sequence="7"/>
+    <!-- Add Professional Tax Payers Registry menu under Registry -->
+    <menuitem id="menu_g2p_professional_tax_payers_registry"
+              name="Professional Tax Payers Registry"
+              parent="g2p_pbms.menu_g2p_registry"
+              action="action_g2p_professional_tax_payers_registry"
+              sequence="8"/>
+    <!-- Add Government Employees Registry menu under Registry -->
+    <menuitem id="menu_g2p_govt_employees_registry"
+              name="Government Employees Registry"
+              parent="g2p_pbms.menu_g2p_registry"
+              action="action_g2p_govt_employees_registry"
+              sequence="9"/>
+    <!-- Add Electricity Monthly Average Registry menu under Registry -->
+    <menuitem id="menu_g2p_elec_monthly_avg_registry"
+              name="Electricity Monthly Average Registry"
+              parent="g2p_pbms.menu_g2p_registry"
+              action="action_g2p_elec_monthly_avg_registry"
+              sequence="10"/>
 </odoo>
-
