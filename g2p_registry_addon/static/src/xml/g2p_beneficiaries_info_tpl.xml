@@ -47,7 +47,6 @@
                             <t t-if="state.target_registry === 'worker'">
                                 <td><t t-esc="record.name"/></td>
                                 <td><t t-esc="record.email"/></td>
-                                <td><t t-esc="record.age_group"/></td>
                                 <td><t t-esc="record.province_id"/></td>
                                 <td><t t-esc="record.district_id"/></td>
                                 <td><t t-esc="record.constituency_id"/></td>

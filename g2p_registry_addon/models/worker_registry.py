@@ -10,7 +10,6 @@ class G2PWorkerRegistry(models.Model):
     email = fields.Char(string="Email", required=True)
     phone = fields.Char(string="Phone", required=True)
 
-    age_group = fields.Selection([("18_35", "18-35"), ("36_54", "36-54"), ("55_plus", "55 & Above")])
     province_id = fields.Integer(string="Province ID")
     district_id = fields.Integer(string="District ID")
     constituency_id = fields.Integer(string="Constituency ID")

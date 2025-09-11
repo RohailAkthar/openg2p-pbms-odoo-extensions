@@ -6,7 +6,6 @@ SELECT
     name            AS name,
     email           AS email,
     phone           AS phone,
-    age_group       AS age_group,
     province_id     AS province_id,
     district_id     AS district_id,
     constituency_id AS constituency_id,
