@@ -30,7 +30,6 @@
                         <t t-if="state.target_registry === 'worker'">
                             <th><t t-esc="('Name')"/></th>
                             <th><t t-esc="('Email')"/></th>
-                            <th><t t-esc="('Age Group')"/></th>
                             <th><t t-esc="('Province ID')"/></th>
                             <th><t t-esc="('District ID')"/></th>
                             <th><t t-esc="('Constituency ID')"/></th>
@@ -47,7 +46,6 @@
                             <t t-if="state.target_registry === 'worker'">
                                 <td><t t-esc="record.name"/></td>
                                 <td><t t-esc="record.email"/></td>
-                                <td><t t-esc="record.age_group"/></td>
                                 <td><t t-esc="record.province_id"/></td>
                                 <td><t t-esc="record.district_id"/></td>
                                 <td><t t-esc="record.constituency_id"/></td>

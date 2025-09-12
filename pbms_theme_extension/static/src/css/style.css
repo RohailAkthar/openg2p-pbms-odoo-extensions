@@ -44,7 +44,7 @@ body {
 }
 
 .o_menu_sections {
-    background-image: url("/pbms_theme/static/src/img/openg2p-white.png");
+    background-image: url("/pbms_theme_extension/static/src/img/openg2p-white.png");
     background-repeat: no-repeat;
     background-position-y: center;
     background-position-x: 60%;
