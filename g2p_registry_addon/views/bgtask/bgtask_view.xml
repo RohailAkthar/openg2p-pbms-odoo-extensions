@@ -7,7 +7,7 @@
       <xpath expr="//page[.//field[@name='target_registry']]/group" position="after">
         <!-- Only one beneficiary_search field is shown based on registry type -->
         <group name="beneficiary_search_worker" invisible="target_registry != 'worker'">
-          <widget name="g2p_beneficiaries_widget" model="g2p.registry.worker" id="worker_beneficiary_search_widget"/>
+          <widget name="g2p_beneficiaries_widget" model="g2p.worker.registry" id="worker_beneficiary_search_widget"/>
         </group>
       </xpath>
     </field>
