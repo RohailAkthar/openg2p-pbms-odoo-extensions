@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <!-- Actions -->
-    <record id="action_g2p_worker_registry" model="ir.actions.act_window">
-        <field name="name">Worker Registry</field>
-        <field name="res_model">g2p.worker.registry</field>
+    <record id="action_g2p_registry_worker" model="ir.actions.act_window">
+        <field name="name">Registry Worker</field>
+        <field name="res_model">g2p.registry.worker</field>
         <field name="view_mode">tree,form</field>
     </record>
     
-    <record id="view_g2p_worker_registry_form" model="ir.ui.view">
-        <field name="name">g2p.worker.registry.form</field>
-        <field name="model">g2p.worker.registry</field>
+    <record id="view_g2p_registry_worker_form" model="ir.ui.view">
+        <field name="name">g2p.registry.worker.form</field>
+        <field name="model">g2p.registry.worker</field>
         <field name="arch" type="xml">
-            <form string="G2P Worker Registry">
+            <form string="G2P Registry Worker">
                 <sheet>
                     <group>
                         <field name="unique_id"/>
@@ -27,11 +27,11 @@
             </form>
         </field>
     </record>
-    <record id="view_g2p_worker_registry_tree" model="ir.ui.view">
-        <field name="name">g2p.worker.registry.tree</field>
-        <field name="model">g2p.worker.registry</field>
+    <record id="view_g2p_registry_worker_tree" model="ir.ui.view">
+        <field name="name">g2p.registry.worker.tree</field>
+        <field name="model">g2p.registry.worker</field>
         <field name="arch" type="xml">
-            <tree string="G2P Worker Registry">
+            <tree string="G2P Registry Worker">
                 <field name="unique_id"/>
                 <field name="name"/>
                 <field name="email"/>

@@ -1,21 +1,21 @@
 <odoo>
-    <!-- Add Worker Registry menu under Registry -->
-    <menuitem id="menu_g2p_worker_registry"
+    <!-- Add Registry Worker menu under Registry -->
+    <menuitem id="menu_g2p_registry_worker"
               name="Worker Registry"
               parent="g2p_pbms.menu_g2p_registry"
-              action="action_g2p_worker_registry"
+              action="action_g2p_registry_worker"
               sequence="1"/>
-    <!-- Add Worker Daily Registry menu under Registry -->
-    <menuitem id="menu_g2p_worker_daily_registry"
-              name="Worker Daily Registry"
+    <!-- Add Registry Monthly Attendance menu under Registry -->
+    <menuitem id="menu_g2p_registry_monthly_attendance"
+              name="Worker Monthly Attendance"
               parent="g2p_pbms.menu_g2p_registry"
-              action="action_g2p_worker_daily_registry"
+              action="action_g2p_registry_monthly_attendance"
               sequence="2"/>
-    <!-- Add Worker Monthly Registry menu under Registry -->
-    <menuitem id="menu_g2p_worker_monthly_registry"
-              name="Worker Monthly Registry"
+    <!-- Add Registry Monthly Availability menu under Registry -->
+    <menuitem id="menu_g2p_registry_monthly_availability"
+              name="Worker Monthly Availability"
               parent="g2p_pbms.menu_g2p_registry"
-              action="action_g2p_worker_monthly_registry"
+              action="action_g2p_registry_monthly_availability"
               sequence="3"/>
 </odoo>
 

@@ -1,5 +1,5 @@
--- Worker Registry View
-CREATE OR REPLACE VIEW g2p_worker_registry AS
+-- Registry Worker View
+CREATE OR REPLACE VIEW g2p_registry_worker AS
 SELECT 
     id              AS id,
     CAST(id AS VARCHAR) AS unique_id,
@@ -15,24 +15,26 @@ WHERE is_registrant = True
   AND is_group = False 
   AND active = True;
 
-
--- Worker Monthly Registry View
-CREATE OR REPLACE VIEW g2p_worker_monthly_registry AS
+-- Monthly Availability Registry View
+CREATE OR REPLACE VIEW g2p_registry_monthly_availability AS
 SELECT 
-    id                    AS id,
-    CAST(partner_id AS VARCHAR) AS unique_id,
-    name                  AS name,
-    data_collection_month AS attendance_month,
-    source_type           AS source_type
-FROM g2p_enumerator;
+    enumerator.id AS id,
+    CAST(enumerator.partner_id AS VARCHAR) AS unique_id,
+    enumerator.name AS name,
+    enumerator.data_collection_month AS attendance_month_str,
+    DATE_TRUNC('month', enumerator.data_collection_date) AS attendance_month,
+    enumerator.source_type AS source_type
+FROM g2p_enumerator enumerator
+WHERE enumerator.partner_id IS NOT NULL
 
-
--- Worker Daily Registry View
-CREATE OR REPLACE VIEW g2p_worker_daily_registry AS
+# TODO: update model names
+-- Monthly Attendance Registry View
+CREATE OR REPLACE VIEW g2p_registry_monthly_attendance AS
 SELECT 
-    id               AS id,
+    ROW_NUMBER() OVER () AS id,
     CAST(worker_id AS VARCHAR) AS unique_id,
     nrc_number       AS nrc_number,
-    date_of_work     AS attendance_date,
-    task             AS task
-FROM g2p_worker_attendance;
+    DATE_TRUNC('month', date_of_work)     AS attendance_month,
+    COUNT(date_of_work) AS number_of_days
+FROM g2p_worker_attendance
+GROUP BY unique_id, nrc_number, attendance_month

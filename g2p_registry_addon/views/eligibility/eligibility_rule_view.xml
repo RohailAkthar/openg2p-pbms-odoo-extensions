@@ -11,16 +11,16 @@
 
                 <!-- Domain widget for the 'worker' types -->
                 <field name="pbms_domain" widget="domain"
-                       options="{'model': 'g2p.worker.registry'}"
+                       options="{'model': 'g2p.registry.worker'}"
                        invisible="target_registry != 'worker'"/>
 
                 <field name="pbms_domain" widget="domain"
-                       options="{'model': 'g2p.worker.daily.registry'}"
-                       invisible="target_registry != 'worker_daily'"/>
+                       options="{'model': 'g2p.registry.monthly.attendance'}"
+                       invisible="target_registry != 'monthly_attendance'"/>
 
                 <field name="pbms_domain" widget="domain"
-                       options="{'model': 'g2p.worker.monthly.registry'}"
-                       invisible="target_registry != 'worker_monthly'"/>
+                       options="{'model': 'g2p.registry.monthly.availability'}"
+                       invisible="target_registry != 'monthly_availability'"/>
 
             </xpath>
         </field>
