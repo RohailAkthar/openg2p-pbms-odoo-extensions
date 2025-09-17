@@ -9,7 +9,7 @@ class G2PRegistry(models.AbstractModel):
         string='ID',
         help='Primary key identifier for the record'
     )
-    unique_id = fields.Char(string="Unique ID", required=False)
+    link_registry_id = fields.Char(string="Link Registry ID", required=False)
 
     def action_open_view(self):
         return {

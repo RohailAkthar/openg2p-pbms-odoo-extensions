@@ -19,7 +19,7 @@
                         <field name="hof_individual_registry_id"/>
                         <field name="hof_individual_unique_id"/>
                         <field name="hof_individual_name"/>
-                        <field name="unique_id"/>
+                        <field name="link_registry_id"/>
                     </group>
                 </sheet>
             </form>
@@ -35,7 +35,7 @@
                 <field name="hof_individual_registry_id"/>
                 <field name="hof_individual_unique_id"/>
                 <field name="hof_individual_name"/>
-                <field name="unique_id"/>
+                <field name="link_registry_id"/>
                 <button name="action_open_view" type="object" class="fa fa-eye" title="View"/>
             </tree>
         </field>

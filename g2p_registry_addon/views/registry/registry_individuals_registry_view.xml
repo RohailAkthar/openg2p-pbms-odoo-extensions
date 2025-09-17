@@ -15,7 +15,7 @@
                 <sheet>
                     <group>
                         <field name="id"/>
-                        <field name="unique_id"/>
+                        <field name="link_registry_id"/>
                         <field name="individual_unique_id"/>
                         <field name="aadhaar_id"/>
                         <field name="family_unique_id"/>
@@ -42,7 +42,7 @@
         <field name="arch" type="xml">
             <tree string="G2P Registry Individuals">
                 <field name="id"/>
-                <field name="unique_id"/>
+                <field name="link_registry_id"/>
                 <field name="individual_unique_id"/>
                 <field name="aadhaar_id"/>
                 <field name="family_unique_id"/>
