@@ -14,7 +14,7 @@
             <form string="G2P Registry Worker">
                 <sheet>
                     <group>
-                        <field name="unique_id"/>
+                        <field name="link_registry_id"/>
                         <field name="name"/>
                         <field name="email"/>
                         <field name="phone"/>
@@ -32,7 +32,7 @@
         <field name="model">g2p.registry.worker</field>
         <field name="arch" type="xml">
             <tree string="G2P Registry Worker">
-                <field name="unique_id"/>
+                <field name="link_registry_id"/>
                 <field name="name"/>
                 <field name="email"/>
                 <field name="phone"/>

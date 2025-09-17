@@ -14,7 +14,7 @@
             <form string="G2P Registry Monthly Availability">
                 <sheet>
                     <group>
-                        <field name="unique_id"/>
+                        <field name="link_registry_id"/>
                         <field name="name"/>
                         <field name="attendance_month"/>
                         <field name="attendance_month_str"/>
@@ -29,7 +29,7 @@
         <field name="model">g2p.registry.monthly.availability</field>
         <field name="arch" type="xml">
             <tree string="G2P Registry Monthly Availability">
-                <field name="unique_id"/>
+                <field name="link_registry_id"/>
                 <field name="name"/>
                 <field name="attendance_month"/>
                 <field name="attendance_month_str"/>
