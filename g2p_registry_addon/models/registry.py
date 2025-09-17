@@ -5,7 +5,7 @@ class G2PRegistry(models.AbstractModel):
     _name = "g2p.registry"
     _description = "Abstract G2P Registry"
 
-    unique_id = fields.Char(string="Unique ID", required=False)
+    link_registry_id = fields.Char(string="Link Registry ID", required=False)
 
     def action_open_view(self):
         return {

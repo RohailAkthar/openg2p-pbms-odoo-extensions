@@ -14,7 +14,7 @@
             <form string="G2P Student Registry">
                 <sheet>
                     <group>
-                        <field name="unique_id"/>
+                        <field name="link_registry_id"/>
                         <field name="name"/>
                         <field name="institution_name"/>
                         <field name="date_of_birth"/>
@@ -28,7 +28,7 @@
         <field name="model">g2p.student.registry</field>
         <field name="arch" type="xml">
             <tree string="G2P Student Registry">
-                <field name="unique_id"/>
+                <field name="link_registry_id"/>
                 <field name="name"/>
                 <field name="institution_name"/>
                 <field name="date_of_birth"/>

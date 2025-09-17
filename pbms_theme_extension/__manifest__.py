@@ -14,11 +14,11 @@
     ],
     "assets": {
         "web.assets_backend": [
-            "pbms_theme/static/src/js/g2p_window_title.js",
-            "pbms_theme/static/src/css/style.css",
+            "pbms_theme_extension/static/src/js/g2p_window_title.js",
+            "pbms_theme_extension/static/src/css/style.css",
         ],
         "web.assets_frontend": [
-            "pbms_theme/static/src/scss/new_login_page.scss",
+            "pbms_theme_extension/static/src/scss/new_login_page.scss",
         ],
     },
     "demo": [],

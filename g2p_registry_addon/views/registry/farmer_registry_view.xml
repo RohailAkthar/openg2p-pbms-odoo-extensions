@@ -14,7 +14,7 @@
             <form string="G2P Farmer Registry">
                 <sheet>
                     <group>
-                        <field name="unique_id"/>
+                        <field name="link_registry_id"/>
                         <field name="name"/>
                         <field name="land_area"/>
                         <field name="no_of_cattle_heads"/>
@@ -29,7 +29,7 @@
         <field name="model">g2p.farmer.registry</field>
         <field name="arch" type="xml">
             <tree string="G2P Farmer Registry">
-                <field name="unique_id"/>
+                <field name="link_registry_id"/>
                 <field name="name"/>
                 <field name="land_area"/>
                 <field name="no_of_cattle_heads"/>
