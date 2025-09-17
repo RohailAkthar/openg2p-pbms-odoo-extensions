@@ -24,7 +24,7 @@
             <table class="table table-bordered" style="width: 150%; font-size: 16px;">
                 <thead>
                     <tr>
-                        <th><t t-esc="('Unique ID')"/></th>
+                        <th><t t-esc="('Link Registry ID')"/></th>
 
                         <!-- Conditional columns (worker) -->
                         <t t-if="state.target_registry === 'worker'">
@@ -40,7 +40,7 @@
                 <tbody>
                     <t t-foreach="state.records" t-as="record" t-key="record.id">
                         <tr>
-                            <td><t t-esc="record.unique_id"/></td>
+                            <td><t t-esc="record.link_registry_id"/></td>
 
                             <!-- Conditional cells (worker) -->
                             <t t-if="state.target_registry === 'worker'">

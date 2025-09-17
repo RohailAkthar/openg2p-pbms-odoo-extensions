@@ -1,9 +1,9 @@
 from odoo import models, fields
 
 
-class G2PWorkerRegistry(models.Model):
-    _name = "g2p.worker.registry"
-    _description = "Worker Registry"
+class G2PRegistryWorker(models.Model):
+    _name = "g2p.registry.worker"
+    _description = "Registry Worker"
     _inherit = "g2p.registry"
 
     name = fields.Char(string="Name", required=True)

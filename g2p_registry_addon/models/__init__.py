@@ -1,4 +1,4 @@
 from .registry import G2PRegistry
-from .worker_registry import G2PWorkerRegistry
-from .worker_daily_registry import G2PWorkerDailyRegistry
-from .worker_monthly_registry import G2PWorkerMonthlyRegistry
+from .registry_worker import G2PRegistryWorker
+from .registry_monthly_attendance import G2PRegistryMonthlyAttendance
+from .registry_monthly_availability import G2PRegistryMonthlyAvailability
