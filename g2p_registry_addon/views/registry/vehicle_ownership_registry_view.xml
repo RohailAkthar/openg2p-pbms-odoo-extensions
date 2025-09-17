@@ -15,7 +15,7 @@
                 <sheet>
                     <group>
                         <field name="id"/>
-                        <field name="unique_id"/>
+                        <field name="link_registry_id"/>
                         <field name="vehicle_registration_id"/>
                         <field name="individual_registry_id"/>
                         <field name="individual_unique_id"/>
@@ -40,7 +40,7 @@
         <field name="arch" type="xml">
             <tree string="G2P Vehicle Ownership Registry">
                 <field name="id"/>
-                <field name="unique_id"/>
+                <field name="link_registry_id"/>
                 <field name="vehicle_registration_id"/>
                 <field name="individual_registry_id"/>
                 <field name="individual_unique_id"/>
