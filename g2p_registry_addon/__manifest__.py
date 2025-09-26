@@ -1,9 +1,9 @@
 {
     "name": "PBMS Registry Addon",
     "version": "1.0",
-    "summary": "OpenG2P Registry Addon",
-    "description": "OpenG2P Registry Addon",
-    "category": "OpenG2P",
+    "summary": "OpenG2P PBMS Registry Addon",
+    "description": "OpenG2P PBMS Registry Addon",
+    "category": "G2P",
     "license": "LGPL-3",
     "depends": ["base_setup", "web", "g2p_pbms"],
     "data": [
@@ -26,5 +26,5 @@
     },
     "installable": True,
     "application": True,
-    "auto_install": False,
+    "auto_install": True,
 }
