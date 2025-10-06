@@ -5,7 +5,6 @@
         <field name="name">Farmer Registry</field>
         <field name="res_model">g2p.farmer.registry</field>
         <field name="view_mode">tree,form</field>
-        <field name="create" eval="0"/>
     </record>
     
     <record id="view_g2p_farmer_registry_form" model="ir.ui.view">

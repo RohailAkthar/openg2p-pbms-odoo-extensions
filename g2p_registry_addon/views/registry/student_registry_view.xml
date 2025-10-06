@@ -5,7 +5,6 @@
         <field name="name">Student Registry</field>
         <field name="res_model">g2p.student.registry</field>
         <field name="view_mode">tree,form</field>
-        <field name="create" eval="0"/>
     </record>
     
     <record id="view_g2p_student_registry_form" model="ir.ui.view">
