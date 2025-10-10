@@ -11,13 +11,18 @@
         <field name="name">g2p.student.registry.form</field>
         <field name="model">g2p.student.registry</field>
         <field name="arch" type="xml">
-            <form string="G2P Student Registry">
+            <form string="G2P Student Registry" create="0">
                 <sheet>
                     <group>
                         <field name="link_registry_id"/>
                         <field name="name"/>
+                        <field name="gender"/>
                         <field name="institution_name"/>
                         <field name="date_of_birth"/>
+                        <field name="large_area_id"/>
+                        <field name="large_area_code"/>
+                        <field name="small_area_id"/>
+                        <field name="small_area_code"/>
                     </group>
                 </sheet>
             </form>
@@ -27,11 +32,16 @@
         <field name="name">g2p.student.registry.tree</field>
         <field name="model">g2p.student.registry</field>
         <field name="arch" type="xml">
-            <tree string="G2P Student Registry">
+            <tree string="G2P Student Registry" create="0">
                 <field name="link_registry_id"/>
                 <field name="name"/>
+                <field name="gender"/>
                 <field name="institution_name"/>
                 <field name="date_of_birth"/>
+                <field name="large_area_id"/>
+                <field name="large_area_code"/>
+                <field name="small_area_id"/>
+                <field name="small_area_code"/>
                 <button name="action_open_view" type="object" class="fa fa-eye" title="View"/>
             </tree>
         </field>

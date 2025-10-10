@@ -3,7 +3,7 @@
     "version": "3.0.0",
     "summary": "OpenG2P Registry Addon",
     "description": "OpenG2P Registry Addon",
-    "category": "OpenG2P",
+    "category": "G2P",
     "license": "LGPL-3",
     "depends": ["base_setup", "web", "g2p_pbms"],
     "data": [

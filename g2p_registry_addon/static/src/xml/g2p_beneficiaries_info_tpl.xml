@@ -42,7 +42,9 @@
                             <th><t t-esc="('Name')"/></th>
                             <th><t t-esc="('Gender')"/></th>
                             <th><t t-esc="('Institution Name')"/></th>
-                            <th><t t-esc="('Date of Birth')"/></th>
+                            <th><t t-esc="('DOB')"/></th>
+                            <th><t t-esc="('Small Area Code')"/></th>
+                            <th><t t-esc="('Large Area Code')"/></th>
                         </t>
                     </tr>
                 </thead>
@@ -68,6 +70,8 @@
                                 <td><t t-esc="record.gender"/></td>
                                 <td><t t-esc="record.institution_name"/></td>
                                 <td><t t-esc="record.date_of_birth"/></td>
+                                <td><t t-esc="record.small_area_code"/></td>
+                                <td><t t-esc="record.large_area_code"/></td>
                             </t>
                         </tr>
                     </t>

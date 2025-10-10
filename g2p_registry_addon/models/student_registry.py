@@ -14,3 +14,7 @@ class G2PStudentRegistry(models.Model):
     )
     institution_name = fields.Char(string="Institution Name")
     date_of_birth = fields.Date(string="Date of Birth")
+    large_area_id = fields.Integer(string="Large Area ID")
+    large_area_code = fields.Char(string="Large Area Code")
+    small_area_id = fields.Integer(string="Small Area ID")
+    small_area_code = fields.Char(string="Small Area Code")
