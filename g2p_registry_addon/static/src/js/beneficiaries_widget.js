@@ -16,9 +16,12 @@ export class G2PBeneficiariesComponent extends Component {
     static props = {
         context: { type: Object, optional: true },
         resModel: { type: String, optional: true },
+        record: { type: Object, optional: true },
+        readonly: { type: Boolean, optional: true },
     };
 
     setup() {
+        const recordData = this.props.record?.data || {};
         this.state = useState({
             title: _t("Beneficiaries"),
             records: [],
@@ -26,9 +29,9 @@ export class G2PBeneficiariesComponent extends Component {
             pageSize: 3,
             totalCount: 0,
             totalPages: 1,
-            target_registry : this.props.record.data.target_registry,
-            searched: false,  // initially hidden title and pagination
-            domain : "[]",
+            target_registry: recordData.target_registry || null,
+            searched: false,
+            domain: "[]",
         });
         this.orm = useService("orm");
         console.log(this);
