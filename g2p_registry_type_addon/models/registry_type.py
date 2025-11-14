@@ -19,7 +19,6 @@ class G2PTargetModelMapping:
 class G2PRegistryType(Enum):
     FARMER = "farmer"
     STUDENT = "student"
-    OTHER = "other"
 
     @classmethod
     def selection(cls):
