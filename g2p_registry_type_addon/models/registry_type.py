@@ -8,6 +8,7 @@ class G2PTargetModelMapping:
     MODEL_MAPPING = {
         "student": "g2p.student.registry",
         "farmer": "g2p.farmer.registry",
+        "individual": "g2p.individual.registry",
     }
 
     @classmethod
@@ -19,6 +20,7 @@ class G2PTargetModelMapping:
 class G2PRegistryType(Enum):
     FARMER = "farmer"
     STUDENT = "student"
+    INDIVIDUAL = "individual"
     OTHER = "other"
 
     @classmethod

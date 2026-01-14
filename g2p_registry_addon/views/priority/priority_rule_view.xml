@@ -19,6 +19,11 @@
                        options="{'model': 'g2p.student.registry', 'allowed_fields': ['priority_rank']}"
                        invisible="target_registry != 'student'"/>
 
+                <!-- Domain widget for the 'individual' type -->
+                <field name="pbms_domain" widget="domain"
+                       options="{'model': 'g2p.individual.registry', 'allowed_fields': ['priority_rank']}"
+                       invisible="target_registry != 'individual'"/>
+
             </xpath>
         </field>
     </record>
