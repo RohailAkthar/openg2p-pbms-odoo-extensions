@@ -21,7 +21,7 @@
                 
                 <!-- Domain widget for the 'Individual' type -->
                 <field name="pbms_domain" widget="domain"
-                       options="{'model': 'g2p.individual.registry'}"
+                       options="{'model': 'res.partner'}"
                        invisible="target_registry != 'individual'"/>
 
                 
