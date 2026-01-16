@@ -8,7 +8,7 @@ class G2PTargetModelMapping:
     MODEL_MAPPING = {
         "student": "g2p.student.registry",
         "farmer": "g2p.farmer.registry",
-        "individual": "g2p.individual.registry",
+        "individual": "res.partner",
     }
 
     @classmethod
