@@ -6,12 +6,6 @@
     <field name="arch" type="xml">
       <xpath expr="//page[.//field[@name='target_registry']]/group" position="after">
         <!-- Only one beneficiary_search field is shown based on registry type -->
-        <group name="beneficiary_search_farmer" invisible="target_registry != 'farmer'">
-          <widget name="g2p_beneficiaries_widget" model="g2p.farmer.registry" id="farmer_beneficiary_search_widget"/>
-        </group>
-        <group name="beneficiary_search_student" invisible="target_registry != 'student'">
-          <widget name="g2p_beneficiaries_widget" model="g2p.student.registry" id="student_beneficiary_search_widget"/>
-        </group>
         <group name="beneficiary_search_individual" invisible="target_registry != 'individual'">
           <widget name="g2p_beneficiaries_widget" model="res.partner" id="individual_beneficiary_search_widget"/>
         </group>
