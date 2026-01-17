@@ -7,23 +7,16 @@
         <field name="arch" type="xml">
 
             <!-- Inject domain widgets inside the <group> -->
-            <xpath expr="//form/sheet/group" position="inside">
+            <!-- Hide base dynamic domain if Individual is selected (to use filtered one below) -->
+            <xpath expr="//field[@name='pbms_domain']" position="attributes">
+                <attribute name="invisible">target_registry == 'individual'</attribute>
+            </xpath>
 
-                <!-- Domain widget for the 'farmer' type -->
+            <!-- Inject filtered domain widget for 'Individual' type -->
+            <xpath expr="//field[@name='pbms_domain']" position="after">
                 <field name="pbms_domain" widget="domain"
-                       options="{'model': 'g2p.farmer.registry', 'allowed_fields': ['priority_rank']}"
-                       invisible="target_registry != 'farmer'"/>
-
-                <!-- Domain widget for the 'student' type -->
-                <field name="pbms_domain" widget="domain"
-                       options="{'model': 'g2p.student.registry', 'allowed_fields': ['priority_rank']}"
-                       invisible="target_registry != 'student'"/>
-
-                <!-- Domain widget for the 'individual' type -->
-                <field name="pbms_domain" widget="domain"
-                       options="{'model': 'res.partner', 'allowed_fields': ['priority_rank']}"
+                       options="{'model': 'res.partner', 'allowed_fields': ['name', 'gender', 'birthdate', 'age', 'street', 'city', 'state_id', 'country_id', 'zip', 'email', 'phone', 'mobile', 'active']}"
                        invisible="target_registry != 'individual'"/>
-
             </xpath>
         </field>
     </record>

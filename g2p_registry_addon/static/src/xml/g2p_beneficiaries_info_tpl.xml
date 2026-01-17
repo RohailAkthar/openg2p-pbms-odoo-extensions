@@ -24,7 +24,10 @@
             <table class="table table-bordered" style="width: 150%; font-size: 16px;">
                 <thead>
                     <tr>
-                        <th><t t-esc="('Link Registry ID')"/></th>
+                        <th>
+                            <t t-if="state.target_registry === 'individual'">ID</t>
+                            <t t-else="">Link Registry ID</t>
+                        </th>
                         <!-- <th><t t-esc="('Registration Date')"/></th> -->
 
                         <!-- Conditional columns (farmer) -->
@@ -46,12 +49,21 @@
                             <th><t t-esc="('Small Area Code')"/></th>
                             <th><t t-esc="('Large Area Code')"/></th>
                         </t>
+                        <!-- Conditional columns (individual) -->
+                        <t t-if="state.target_registry === 'individual'">
+                            <th><t t-esc="('Name')"/></th>
+                            <th><t t-esc="('Gender')"/></th>
+                            <th><t t-esc="('DOB')"/></th>
+                        </t>
                     </tr>
                 </thead>
                 <tbody>
                     <t t-foreach="state.records" t-as="record" t-key="record.id">
                         <tr>
-                            <td><t t-esc="record.link_registry_id"/></td>
+                            <td>
+                                <t t-if="state.target_registry === 'individual'"><t t-esc="record.id"/></t>
+                                <t t-else=""><t t-esc="record.link_registry_id"/></t>
+                            </td>
                             <!-- <td><t t-esc="record.registration_date"/></td> -->
 
                             <!-- Conditional cells (farmer) -->
@@ -72,6 +84,12 @@
                                 <td><t t-esc="record.date_of_birth"/></td>
                                 <td><t t-esc="record.small_area_code"/></td>
                                 <td><t t-esc="record.large_area_code"/></td>
+                            </t>
+                            <!-- Conditional cells (individual) -->
+                            <t t-if="state.target_registry === 'individual'">
+                                <td><t t-esc="record.name"/></td>
+                                <td><t t-esc="record.gender"/></td>
+                                <td><t t-esc="record.birthdate"/></td>
                             </t>
                         </tr>
                     </t>
