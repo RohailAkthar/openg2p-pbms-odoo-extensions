@@ -37,6 +37,13 @@
                             <th><t t-esc="('Gender')"/></th>
                             <th><t t-esc="('DOB')"/></th>
                             <th><t t-esc="('Region')"/></th>
+                            <th><t t-esc="('District')"/></th>
+                            <th><t t-esc="('Zan ID')"/></th>
+                            <th><t t-esc="('Nominee Name')"/></th>
+                            <th><t t-esc="('Nominee Gender')"/></th>
+                            <th><t t-esc="('Nominee Zan ID')"/></th>
+                            <th><t t-esc="('Nominee Region')"/></th>
+                            <th><t t-esc="('Nominee District')"/></th>
                         </t>
                     </tr>
                 </thead>
@@ -56,6 +63,13 @@
                                 <td><t t-esc="record.gender"/></td>
                                 <td><t t-esc="record.birthdate"/></td>
                                 <td><t t-esc="record.region_name"/></td>
+                                <td><t t-esc="record.district_name"/></td>
+                                <td><t t-esc="record.benf_zan_id"/></td>
+                                <td><t t-esc="record.nominee_first_name"/></td>
+                                <td><t t-esc="record.nominee_gender"/></td>
+                                <td><t t-esc="record.nominee_zanid"/></td>
+                                <td><t t-esc="record.nominee_region"/></td>
+                                <td><t t-esc="record.nominee_district"/></td>
                             </t>
                         </tr>
                     </t>
