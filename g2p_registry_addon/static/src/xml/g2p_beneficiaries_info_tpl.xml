@@ -21,17 +21,14 @@
             <t t-if="state.searched">
                 <h3><t t-esc="state.title"/></h3>
             </t>
-            <table class="table table-bordered" style="width: 150%; font-size: 16px;">
+            <table class="table table-bordered table-hover" style="font-size: 16px;">
                 <thead>
                     <tr>
+                        <th style="width: 40px;"></th> <!-- Toggle arrow -->
                         <th>
                             <t t-if="state.target_registry === 'individual'">ID</t>
                             <t t-else="">Link Registry ID</t>
                         </th>
-                        <!-- <th><t t-esc="('Registration Date')"/></th> -->
-
-
-
                         <t t-if="state.target_registry === 'individual'">
                             <th><t t-esc="('Name')"/></th>
                             <th><t t-esc="('Gender')"/></th>
@@ -39,25 +36,20 @@
                             <th><t t-esc="('Region')"/></th>
                             <th><t t-esc="('District')"/></th>
                             <th><t t-esc="('Zan ID')"/></th>
-                            <th><t t-esc="('Nominee Name')"/></th>
-                            <th><t t-esc="('Nominee Gender')"/></th>
-                            <th><t t-esc="('Nominee Zan ID')"/></th>
-                            <th><t t-esc="('Nominee Region')"/></th>
-                            <th><t t-esc="('Nominee District')"/></th>
                         </t>
                     </tr>
                 </thead>
                 <tbody>
                     <t t-foreach="state.records" t-as="record" t-key="record.id">
-                        <tr>
+                        <!-- Main Information Row -->
+                        <tr t-on-click="() => this.toggleDetails(record.id)" style="cursor: pointer;">
+                            <td class="text-center">
+                                <i t-attf-class="fa #{state.expandedRecordId === record.id ? 'fa-chevron-down' : 'fa-chevron-right'} text-primary"/>
+                            </td>
                             <td>
                                 <t t-if="state.target_registry === 'individual'"><t t-esc="record.id"/></t>
                                 <t t-else=""><t t-esc="record.link_registry_id"/></t>
                             </td>
-                            <!-- <td><t t-esc="record.registration_date"/></td> -->
-
-
-
                             <t t-if="state.target_registry === 'individual'">
                                 <td><t t-esc="record.name"/></td>
                                 <td><t t-esc="record.gender"/></td>
@@ -65,12 +57,32 @@
                                 <td><t t-esc="record.region_name"/></td>
                                 <td><t t-esc="record.district_name"/></td>
                                 <td><t t-esc="record.benf_zan_id"/></td>
-                                <td><t t-esc="record.nominee_first_name"/></td>
-                                <td><t t-esc="record.nominee_gender"/></td>
-                                <td><t t-esc="record.nominee_zanid"/></td>
-                                <td><t t-esc="record.nominee_region"/></td>
-                                <td><t t-esc="record.nominee_district"/></td>
                             </t>
+                        </tr>
+                        <!-- Detailed Nominee Row (Expandable) -->
+                        <tr t-if="state.expandedRecordId === record.id" class="bg-light">
+                            <td colspan="8">
+                                <div class="p-3 border rounded shadow-sm bg-white m-2">
+                                    <div class="row">
+                                        <div class="col-md-4 border-right">
+                                            <h6 class="text-primary border-bottom pb-1"><i class="fa fa-user-circle mr-2"/>Nominee Information</h6>
+                                            <div class="mb-2"><strong>Name:</strong> <t t-esc="record.nominee_first_name or '-'"/></div>
+                                            <div class="mb-2"><strong>Gender:</strong> <t t-esc="record.nominee_gender or '-'"/></div>
+                                            <div class="mb-2"><strong>Zan ID:</strong> <t t-esc="record.nominee_zanid or '-'"/></div>
+                                        </div>
+                                        <div class="col-md-4 border-right">
+                                            <h6 class="text-primary border-bottom pb-1"><i class="fa fa-map-marker mr-2"/>Nominee Location</h6>
+                                            <div class="mb-2"><strong>Region:</strong> <t t-esc="record.nominee_region or '-'"/></div>
+                                            <div class="mb-2"><strong>District:</strong> <t t-esc="record.nominee_district or '-'"/></div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <h6 class="text-primary border-bottom pb-1"><i class="fa fa-info-circle mr-2"/>Beneficiary Summary</h6>
+                                            <div class="mb-2"><strong>Full Name:</strong> <t t-esc="record.name"/></div>
+                                            <div class="mb-2"><strong>Database ID:</strong> <t t-esc="record.id"/></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
                         </tr>
                     </t>
                 </tbody>
