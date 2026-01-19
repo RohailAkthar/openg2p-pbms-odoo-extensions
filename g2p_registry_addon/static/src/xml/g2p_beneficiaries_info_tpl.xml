@@ -36,6 +36,7 @@
                             <th><t t-esc="('Name')"/></th>
                             <th><t t-esc="('Gender')"/></th>
                             <th><t t-esc="('DOB')"/></th>
+                            <th><t t-esc="('Region')"/></th>
                         </t>
                     </tr>
                 </thead>
@@ -54,6 +55,7 @@
                                 <td><t t-esc="record.name"/></td>
                                 <td><t t-esc="record.gender"/></td>
                                 <td><t t-esc="record.birthdate"/></td>
+                                <td><t t-esc="record.region_name"/></td>
                             </t>
                         </tr>
                     </t>
