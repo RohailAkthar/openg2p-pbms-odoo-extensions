@@ -32,9 +32,18 @@ export class G2PBeneficiariesComponent extends Component {
             target_registry: recordData.target_registry || null,
             searched: false,
             domain: "[]",
+            expandedRecordId: null,
         });
         this.orm = useService("orm");
         console.log(this);
+    }
+
+    toggleDetails(recordId) {
+        if (this.state.expandedRecordId === recordId) {
+            this.state.expandedRecordId = null;
+        } else {
+            this.state.expandedRecordId = recordId;
+        }
     }
 
     onDomainChange(newDomain) {
@@ -57,7 +66,7 @@ export class G2PBeneficiariesComponent extends Component {
         const result = await this.orm.call(
             'g2p.bgtask.summary.wizard',
             'get_beneficiaries',
-            [this.props.record.resId , this.state.page, this.state.pageSize, this.getEvaluatedDomain()],
+            [this.props.record.resId, this.state.page, this.state.pageSize, this.getEvaluatedDomain()],
             {},
         );
         if (result.message) {
