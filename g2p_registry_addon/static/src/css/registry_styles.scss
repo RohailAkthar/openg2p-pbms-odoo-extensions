@@ -3,8 +3,81 @@
     box-sizing: border-box;
 }
 
-.o_form_view .o_notebook > .tab-content > .tab-pane > :first-child:not(.o_group) .o_field_x2many.o_field_x2many_list .o_list_renderer,
-.o_form_view .o_notebook > .tab-content > .tab-pane > .o_invisible_modifier:first-child .o_field_x2many.o_field_x2many_list .o_list_renderer {
+.o_form_view .o_notebook>.tab-content>.tab-pane> :first-child:not(.o_group) .o_field_x2many.o_field_x2many_list .o_list_renderer,
+.o_form_view .o_notebook>.tab-content>.tab-pane>.o_invisible_modifier:first-child .o_field_x2many.o_field_x2many_list .o_list_renderer {
     --ListRenderer-margin-x: 0 !important;
 }
-  
+
+/* Custom Registry Styles */
+.g2p-beneficiaries-table {
+    border-collapse: separate;
+    border-spacing: 0 8px;
+    /* Adds space between rows */
+    background-color: transparent;
+}
+
+.g2p-beneficiaries-table thead th {
+    background-color: #6c757d;
+    /* Dark grey header */
+    color: white;
+    border: none;
+    padding: 12px 15px;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+}
+
+.g2p-beneficiaries-table thead th:first-child {
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+
+.g2p-beneficiaries-table thead th:last-child {
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+.g2p-beneficiaries-table tbody tr {
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    /* Subtle shadow for depth */
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.g2p-beneficiaries-table tbody tr:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #f8f9fa;
+}
+
+.g2p-beneficiaries-table td {
+    border: none;
+    padding: 15px;
+    vertical-align: middle;
+}
+
+.g2p-beneficiaries-table td:first-child {
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+
+.g2p-beneficiaries-table td:last-child {
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+.badge-info {
+    background-color: #17a2b8;
+    color: white;
+}
+
+.badge-danger {
+    background-color: #dc3545;
+    color: white;
+}
+
+.badge-secondary {
+    background-color: #6c757d;
+    color: white;
+}
