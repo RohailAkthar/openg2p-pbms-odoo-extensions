@@ -13,7 +13,7 @@ class ResPartner(models.Model):
 
     name = fields.Char(translate=False)
     birthdate = fields.Date("Date of Birth")
-    age = fields.Integer(string="Age", compute="_compute_age", store=False, readonly=True,search=False)
+    age = fields.Integer(string="Age", compute="_compute_age", search="_search_age", store=False, readonly=True)
     gender = fields.Selection(
         selection=[("male", "Male"), ("female", "Female")], string="Gender"
     )
@@ -38,3 +38,37 @@ class ResPartner(models.Model):
             if rec.birthdate and rec.birthdate > fields.Date.today():
                 raise ValidationError(_("You can't select a date of birth greater than today"))
 
+
+    def _search_age(self, operator, value):
+        today = fields.Date.context_today(self)
+        try:
+            years = int(value)
+        except (ValueError, TypeError):
+            return [('id', '=', False)]
+
+        start = today - relativedelta(years=years)
+        end = today - relativedelta(years=years + 1)
+
+        if operator == '>=':
+            return [('birthdate', '<=', start)]
+        if operator == '>':
+            return [('birthdate', '<=', end)]
+        if operator == '<=':
+            return [('birthdate', '>', end)]
+        if operator == '<':
+            return [('birthdate', '>', start)]
+        if operator == '=':
+            return [
+                '&',
+                ('birthdate', '<=', start),
+                ('birthdate', '>', end),
+            ]
+        if operator == '!=':
+            return [
+                '|',
+                ('birthdate', '>', start),
+                ('birthdate', '<=', end),
+            ]
+
+        _logger.warning("Unsupported operator '%s' for age search", operator)
+        return [('id', '=', False)]
