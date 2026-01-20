@@ -26,15 +26,14 @@
                     <tr>
                         <th style="width: 40px;"></th> <!-- Toggle arrow -->
                         <t t-if="state.target_registry === 'individual'">
-                            <th>Name</th>
-                            <th>Gender</th>
-                            <th>DOB</th>
-                            <th>Region</th>
-                            <th>District</th>
-                            <th>Zan ID</th>
-                            <th>Address</th>
-                            <th>Phone</th>
-                            <th>Post Code</th>
+                            <th class="text-center">Name</th>
+                            <th class="text-center">Gender</th>
+                            <th class="text-center">DOB</th>
+                            <th class="text-center">Region</th>
+                            <th class="text-center">District</th>
+                            <th class="text-center">Zan ID</th>
+                            <th class="text-center">Address</th>
+                            <th class="text-center">Phone</th>
                         </t>
                     </tr>
                 </thead>
@@ -46,70 +45,139 @@
                                 <i t-attf-class="fa #{state.expandedRecordId === record.id ? 'fa-chevron-down' : 'fa-chevron-right'} text-primary"/>
                             </td>
                             <t t-if="state.target_registry === 'individual'">
-                                <td class="align-middle font-weight-bold"><t t-esc="record.name"/></td>
-                                <td class="align-middle">
+                                <td class="align-middle font-weight-bold text-center"><t t-esc="record.name"/></td>
+                                <td class="align-middle text-center">
                                     <span t-attf-class="badge #{record.gender === 'Male' ? 'badge-info' : record.gender === 'Female' ? 'badge-danger' : 'badge-secondary'} p-2">
                                         <t t-esc="record.gender"/>
                                     </span>
                                 </td>
-                                <td class="align-middle"><t t-esc="record.birthdate"/></td>
-                                <td class="align-middle"><t t-esc="record.region_name"/></td>
-                                <td class="align-middle"><t t-esc="record.district_name"/></td>
-                                <td class="align-middle text-monospace text-muted"><t t-esc="record.benf_zan_id"/></td>
-                                <td class="align-middle"><t t-esc="record.street"/></td>
-                                <td class="align-middle"><t t-esc="record.phone"/></td>
-                                <td class="align-middle"><t t-esc="record.benf_post_code"/></td>
+                                <td class="align-middle text-center"><t t-esc="record.birthdate"/></td>
+                                <td class="align-middle text-center"><t t-esc="record.region_name"/></td>
+                                <td class="align-middle text-center"><t t-esc="record.district_name"/></td>
+                                <td class="align-middle text-monospace text-muted text-center"><t t-esc="record.benf_zan_id"/></td>
+                                <td class="align-middle text-center"><t t-esc="record.street"/></td>
+                                <td class="align-middle text-center"><t t-esc="record.phone"/></td>
                             </t>
                         </tr>
                         <!-- Detailed Nominee Row (Expandable) -->
                         <tr t-if="state.expandedRecordId === record.id" class="bg-light">
-                            <td colspan="10">
+                            <td colspan="10" class="g2p-expanded-cell">
                                 <div class="p-3 border rounded shadow-sm bg-white m-2">
                                     <div class="row">
                                         <!-- Beneficiary Details Column -->
                                         <div class="col-md-6 border-right">
-                                            <h6 class="text-primary border-bottom pb-1"><i class="fa fa-info-circle mr-2"/>Beneficiary Details</h6>
+                                            <h6 class="text-primary border-bottom pb-1 mb-3"><i class="fa fa-info-circle mr-2"/>Beneficiary Details</h6>
                                             <div class="row">
                                                 <div class="col-md-6">
-                                                    <div class="mb-2"><strong>Disability:</strong> <t t-esc="record.disability or '-'"/></div>
-                                                    <div class="mb-2"><strong>Allowance:</strong> <t t-esc="record.is_receiving_allowance or '-'"/></div>
-                                                    <div class="mb-2"><strong>Health Ins.:</strong> <t t-esc="record.has_health_insurance or '-'"/></div>
+                                                    <div class="row mb-2">
+                                                        <div class="col-5 font-weight-bold">Disability:</div>
+                                                        <div class="col-7"><t t-esc="record.disability or '-'"/></div>
+                                                    </div>
+                                                    <div class="row mb-2">
+                                                        <div class="col-5 font-weight-bold">Allowance:</div>
+                                                        <div class="col-7"><t t-esc="record.is_receiving_allowance or '-'"/></div>
+                                                    </div>
+                                                    <div class="row mb-2">
+                                                        <div class="col-5 font-weight-bold">Health Ins.:</div>
+                                                        <div class="col-7"><t t-esc="record.has_health_insurance or '-'"/></div>
+                                                    </div>
+                                                    <hr class="my-2"/>
+                                                    <div class="row mb-2">
+                                                        <div class="col-5 font-weight-bold">Other ID:</div>
+                                                        <div class="col-7"><t t-esc="record.other_id_available or '-'"/></div>
+                                                    </div>
+                                                    <t t-if="record.other_id_available === 'yes' or record.other_id_available === 'True'">
+                                                         <div class="row mb-1 ml-2">
+                                                            <div class="col-5 text-muted small">Type:</div>
+                                                            <div class="col-7 small"><t t-esc="record.other_id_type or '-'"/></div>
+                                                         </div>
+                                                         <div class="row mb-1 ml-2">
+                                                            <div class="col-5 text-muted small">Name:</div>
+                                                            <div class="col-7 small"><t t-esc="record.other_id_name or '-'"/></div>
+                                                         </div>
+                                                         <div class="row mb-1 ml-2">
+                                                            <div class="col-5 text-muted small">Number:</div>
+                                                            <div class="col-7 small"><t t-esc="record.other_id_number or '-'"/></div>
+                                                         </div>
+                                                    </t>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <div class="mb-2"><strong>Payment Mode:</strong> <t t-esc="record.payment_mode or '-'"/></div>
-                                                    <div class="mb-2"><strong>Bank:</strong> <t t-esc="record.bank_name or '-'"/></div>
-                                                    <div class="mb-2"><strong>Account:</strong> <t t-esc="record.account_num or '-'"/> (<t t-esc="record.account_name or '-'"/>)</div>
-                                                    <div class="mb-2"><strong>Mobile Wallet:</strong> <t t-esc="record.mobile_wallet or '-'"/></div>
+                                                    <div class="row mb-2">
+                                                        <div class="col-5 font-weight-bold">Payment Mode:</div>
+                                                        <div class="col-7"><t t-esc="record.payment_mode or '-'"/></div>
+                                                    </div>
+                                                    <div class="row mb-2">
+                                                        <div class="col-5 font-weight-bold">Bank:</div>
+                                                        <div class="col-7"><t t-esc="record.bank_name or '-'"/></div>
+                                                    </div>
+                                                    <div class="row mb-2">
+                                                        <div class="col-5 font-weight-bold">Account:</div>
+                                                        <div class="col-7"><t t-esc="record.account_num or '-'"/> (<t t-esc="record.account_name or '-'"/>)</div>
+                                                    </div>
+                                                    <div class="row mb-2">
+                                                        <div class="col-5 font-weight-bold">Mobile Wallet:</div>
+                                                        <div class="col-7"><t t-esc="record.mobile_wallet or '-'"/></div>
+                                                    </div>
+                                                    <div class="row mb-2">
+                                                        <div class="col-5 font-weight-bold">Post Code:</div>
+                                                        <div class="col-7"><t t-esc="record.benf_post_code or '-'"/></div>
+                                                    </div>
+                                                    <hr class="my-2"/>
+                                                    <div class="row mb-2">
+                                                        <div class="col-5 font-weight-bold">Other Pension:</div>
+                                                        <div class="col-7"><t t-esc="record.other_pension or '-'"/></div>
+                                                    </div>
+                                                    <div class="row mb-2">
+                                                        <div class="col-5 font-weight-bold">Scheme Name:</div>
+                                                        <div class="col-7"><t t-esc="record.scheme_name or '-'"/></div>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="mt-2 border-top pt-2">
-                                                <div class="mb-2"><strong>Other ID:</strong> <t t-esc="record.other_id_available or '-'"/></div>
-                                                <t t-if="record.other_id_available === 'yes' or record.other_id_available === 'True'">
-                                                     <div class="mb-1 ml-2"><small>Type: <t t-esc="record.other_id_type or '-'"/></small></div>
-                                                     <div class="mb-1 ml-2"><small>Name: <t t-esc="record.other_id_name or '-'"/></small></div>
-                                                     <div class="mb-1 ml-2"><small>Number: <t t-esc="record.other_id_number or '-'"/></small></div>
-                                                </t>
-                                                <div class="mb-2"><strong>Other Pension:</strong> <t t-esc="record.other_pension or '-'"/></div>
-                                                <div class="mb-2"><strong>Scheme Name:</strong> <t t-esc="record.scheme_name or '-'"/></div>
                                             </div>
                                         </div>
 
                                         <!-- Nominee Information Column -->
                                         <div class="col-md-6">
-                                            <h6 class="text-primary border-bottom pb-1"><i class="fa fa-user-circle mr-2"/>Nominee Information</h6>
+                                            <h6 class="text-primary border-bottom pb-1 mb-3"><i class="fa fa-user-circle mr-2"/>Nominee Information</h6>
                                             <div class="row">
                                                 <div class="col-md-6">
-                                                    <div class="mb-2"><strong>Name:</strong> <t t-esc="record.nominee_first_name or '-'"/> <t t-esc="record.nominee_last_name or ''"/></div>
-                                                    <div class="mb-2"><strong>Gender:</strong> <t t-esc="record.nominee_gender or '-'"/></div>
-                                                    <div class="mb-2"><strong>Relation:</strong> <t t-esc="record.nominee_rel_benf or '-'"/></div>
-                                                    <div class="mb-2"><strong>Zan ID:</strong> <t t-esc="record.nominee_zanid or '-'"/></div>
+                                                    <div class="row mb-2">
+                                                        <div class="col-4 font-weight-bold">Name:</div>
+                                                        <div class="col-8"><t t-esc="record.nominee_first_name or '-'"/> <t t-esc="record.nominee_last_name or ''"/></div>
+                                                    </div>
+                                                    <div class="row mb-2">
+                                                        <div class="col-4 font-weight-bold">Gender:</div>
+                                                        <div class="col-8"><t t-esc="record.nominee_gender or '-'"/></div>
+                                                    </div>
+                                                    <div class="row mb-2">
+                                                        <div class="col-4 font-weight-bold">Relation:</div>
+                                                        <div class="col-8"><t t-esc="record.nominee_rel_benf or '-'"/></div>
+                                                    </div>
+                                                    <div class="row mb-2">
+                                                        <div class="col-4 font-weight-bold">Zan ID:</div>
+                                                        <div class="col-8"><t t-esc="record.nominee_zanid or '-'"/></div>
+                                                    </div>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <div class="mb-2"><strong>Mobile:</strong> <t t-esc="record.nominee_mobile or '-'"/></div>
-                                                    <div class="mb-2"><strong>Location:</strong> <t t-esc="record.nominee_region or '-'"/> / <t t-esc="record.nominee_district or '-'"/></div>
-                                                    <div class="mb-2"><strong>Shehia:</strong> <t t-esc="record.nominee_shehia or '-'"/></div>
-                                                    <div class="mb-2"><strong>Address:</strong> <t t-esc="record.nominee_house_street or '-'"/></div>
-                                                    <div class="mb-2"><strong>Post Code:</strong> <t t-esc="record.nominee_post_code or '-'"/></div>
+                                                    <div class="row mb-2">
+                                                        <div class="col-4 font-weight-bold">Mobile:</div>
+                                                        <div class="col-8"><t t-esc="record.nominee_mobile or '-'"/></div>
+                                                    </div>
+                                                    <div class="row mb-2">
+                                                        <div class="col-4 font-weight-bold">Location:</div>
+                                                        <div class="col-8"><t t-esc="record.nominee_region or '-'"/> / <t t-esc="record.nominee_district or '-'"/></div>
+                                                    </div>
+                                                    <div class="row mb-2">
+                                                        <div class="col-4 font-weight-bold">Shehia:</div>
+                                                        <div class="col-8"><t t-esc="record.nominee_shehia or '-'"/></div>
+                                                    </div>
+                                                    <div class="row mb-2">
+                                                        <div class="col-4 font-weight-bold">Address:</div>
+                                                        <div class="col-8"><t t-esc="record.nominee_house_street or '-'"/></div>
+                                                    </div>
+                                                    <div class="row mb-2">
+                                                        <div class="col-4 font-weight-bold">Post Code:</div>
+                                                        <div class="col-8"><t t-esc="record.nominee_post_code or '-'"/></div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

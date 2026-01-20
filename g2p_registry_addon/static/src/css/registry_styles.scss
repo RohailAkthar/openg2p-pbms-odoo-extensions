@@ -61,6 +61,12 @@
     text-align: center;
 }
 
+/* Fix for expanded cell overlap */
+.g2p-beneficiaries-table td.g2p-expanded-cell {
+    white-space: normal !important;
+    text-align: left !important;
+}
+
 .g2p-beneficiaries-table td:first-child {
     border-top-left-radius: 8px;
     border-bottom-left-radius: 8px;
