@@ -25,10 +25,6 @@
                 <thead>
                     <tr>
                         <th style="width: 40px;"></th> <!-- Toggle arrow -->
-                        <th>
-                            <t t-if="state.target_registry === 'individual'">ID</t>
-                            <t t-else="">Link Registry ID</t>
-                        </th>
                         <t t-if="state.target_registry === 'individual'">
                             <th><t t-esc="('Name')"/></th>
                             <th><t t-esc="('Gender')"/></th>
@@ -46,10 +42,6 @@
                             <td class="text-center">
                                 <i t-attf-class="fa #{state.expandedRecordId === record.id ? 'fa-chevron-down' : 'fa-chevron-right'} text-primary"/>
                             </td>
-                            <td>
-                                <t t-if="state.target_registry === 'individual'"><t t-esc="record.id"/></t>
-                                <t t-else=""><t t-esc="record.link_registry_id"/></t>
-                            </td>
                             <t t-if="state.target_registry === 'individual'">
                                 <td><t t-esc="record.name"/></td>
                                 <td><t t-esc="record.gender"/></td>
@@ -61,7 +53,7 @@
                         </tr>
                         <!-- Detailed Nominee Row (Expandable) -->
                         <tr t-if="state.expandedRecordId === record.id" class="bg-light">
-                            <td colspan="8">
+                            <td colspan="7">
                                 <div class="p-3 border rounded shadow-sm bg-white m-2">
                                     <div class="row">
                                         <div class="col-md-4 border-right">
@@ -76,9 +68,9 @@
                                             <div class="mb-2"><strong>District:</strong> <t t-esc="record.nominee_district or '-'"/></div>
                                         </div>
                                         <div class="col-md-4">
-                                            <h6 class="text-primary border-bottom pb-1"><i class="fa fa-info-circle mr-2"/>Beneficiary Summary</h6>
-                                            <div class="mb-2"><strong>Full Name:</strong> <t t-esc="record.name"/></div>
-                                            <div class="mb-2"><strong>Database ID:</strong> <t t-esc="record.id"/></div>
+                                            <h6 class="text-primary border-bottom pb-1"><i class="fa fa-info-circle mr-2"/>other Summary</h6>
+                                            <!-- <div class="mb-2"><strong>Full Name:</strong> <t t-esc="record.name"/></div>
+                                            <div class="mb-2"><strong>Database ID:</strong> <t t-esc="record.id"/></div> -->
                                         </div>
                                     </div>
                                 </div>

@@ -13,7 +13,7 @@ class ResPartner(models.Model):
 
     name = fields.Char(translate=False)
     birthdate = fields.Date("Date of Birth")
-    age = fields.Integer(string="Age", compute="_compute_age", store=True, readonly=True)
+    age = fields.Integer(string="Age", compute="_compute_age", store=False, readonly=True,search=False)
     gender = fields.Selection(
         selection=[("male", "Male"), ("female", "Female")], string="Gender"
     )
@@ -38,8 +38,3 @@ class ResPartner(models.Model):
             if rec.birthdate and rec.birthdate > fields.Date.today():
                 raise ValidationError(_("You can't select a date of birth greater than today"))
 
-    @api.model
-    def _cron_update_age(self):
-        _logger.info("Updating age for all partners")
-        partners = self.search([("birthdate", "!=", False)])
-        partners._compute_age()
