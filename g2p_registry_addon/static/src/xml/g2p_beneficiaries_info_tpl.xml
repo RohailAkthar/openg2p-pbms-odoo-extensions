@@ -1,21 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <templates xml:space="preserve">
     <t t-name="g2p_beneficiaries_info_tpl">
-        <div>
-            <DomainSelector
-                resModel="props.resModel"
-                domain="state.domain"
-                update.bind="onDomainChange"
-                readonly="false"
-                isDebugMode="!!env.debug"
-                className="'o_edit_mode'"
-            />
-        </div>
-        <div class="o_x2m_control_panel d-empty-none mb-4">
-            <button type="button" class="btn btn-secondary" t-on-click="searchRegistrants">
-                <i class="fa fa-search"/>
-            </button>
-        </div>
         <div class="g2p-beneficiaries" style="font-size: 18px;">
             <!-- Search input with search and arch buttons -->
             <t t-if="state.searched">

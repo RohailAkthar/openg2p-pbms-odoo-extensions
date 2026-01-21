@@ -1,18 +1,13 @@
 /** @odoo-module **/
 
-import { Component, useState } from "@odoo/owl";
-import { DomainSelector } from "@web/core/domain_selector/domain_selector";
-// import { Domain, InvalidDomainError } from "@web/core/domain";
-// import { EvaluationError } from "@web/core/py_js/py_builtin";
+import { Component, useState, onWillStart } from "@odoo/owl";
 import { useService } from "@web/core/utils/hooks";
 import { _t } from "@web/core/l10n/translation";
 import { registry } from "@web/core/registry";
 
 export class G2PBeneficiariesComponent extends Component {
     static template = "g2p_beneficiaries_info_tpl";
-    static components = {
-        DomainSelector
-    };
+    static components = {};
     static props = {
         context: { type: Object, optional: true },
         resModel: { type: String, optional: true },
@@ -26,16 +21,19 @@ export class G2PBeneficiariesComponent extends Component {
             title: _t("Beneficiaries"),
             records: [],
             page: 1,
-            pageSize: 3,
+            pageSize: 50,
             totalCount: 0,
             totalPages: 1,
             target_registry: recordData.target_registry || null,
-            searched: false,
+            searched: true,
             domain: "[]",
             expandedRecordId: null,
         });
         this.orm = useService("orm");
-        console.log(this);
+
+        onWillStart(async () => {
+            await this._fetchRecords();
+        });
     }
 
     toggleDetails(recordId) {
@@ -46,27 +44,11 @@ export class G2PBeneficiariesComponent extends Component {
         }
     }
 
-    onDomainChange(newDomain) {
-        this.state.domain = newDomain;
-        this.render();
-    }
-
-    getEvaluatedDomain() {
-        return this.state.domain;
-    }
-
-    searchRegistrants() {
-        this.state.searched = true;  // show title and pagination when search is clicked
-        this.state.page = 1;
-        this.state.pageSize = 20;
-        this._fetchRecords();
-    }
-
     async _fetchRecords() {
         const result = await this.orm.call(
             'g2p.bgtask.summary.wizard',
             'get_beneficiaries',
-            [this.props.record.resId, this.state.page, this.state.pageSize, this.getEvaluatedDomain()],
+            [this.props.record.resId, this.state.page, this.state.pageSize, [['active', '=', true]]],
             {},
         );
         if (result.message) {
@@ -97,7 +79,6 @@ export class G2PBeneficiariesComponent extends Component {
 export const g2pBeneficiariesWidget = {
     component: G2PBeneficiariesComponent,
     extractProps({ attrs }, dynamicInfo) {
-        console.log(attrs, dynamicInfo)
         return {
             resModel: attrs.model,
             context: dynamicInfo.context,
