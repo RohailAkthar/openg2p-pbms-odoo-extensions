@@ -17,6 +17,9 @@ export class G2PBeneficiariesComponent extends Component {
 
     setup() {
         const recordData = this.props.record?.data || {};
+        console.log("G2PBeneficiariesComponent SETUP recordData:", recordData);
+        console.log("G2PBeneficiariesComponent SETUP target_registry:", recordData.target_registry);
+
         this.state = useState({
             title: _t("Beneficiaries"),
             records: [],
@@ -32,9 +35,18 @@ export class G2PBeneficiariesComponent extends Component {
         this.orm = useService("orm");
 
         useEffect(() => {
+            if (this.props.record?.data?.target_registry) {
+                this.state.target_registry = this.props.record.data.target_registry;
+            }
+        }, () => [this.props.record?.data?.target_registry]);
+
+        useEffect(() => {
+            console.log("G2PBeneficiariesComponent props.record:", this.props.record);
             if (this.props.record?.resId) {
-                console.log("Fetching beneficiaries for", this.props.record.resId);
+                console.log("Fetching beneficiaries for resId:", this.props.record.resId);
                 this._fetchRecords();
+            } else {
+                console.log("Skipping fetch: No resId");
             }
         }, () => [this.props.record?.resId]);
     }
@@ -51,7 +63,13 @@ export class G2PBeneficiariesComponent extends Component {
         const result = await this.orm.call(
             'g2p.bgtask.summary.wizard',
             'get_beneficiaries',
-            [this.props.record.resId, this.state.page, this.state.pageSize, [['active', '=', true]]],
+            [
+                [],
+                this.props.record.resId,
+                this.state.page,
+                this.state.pageSize,
+                "[('active', '=', True)]"
+            ],
             {},
         );
         if (result.message) {
