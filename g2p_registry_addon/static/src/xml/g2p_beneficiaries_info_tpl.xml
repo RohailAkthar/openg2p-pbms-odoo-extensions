@@ -56,7 +56,7 @@
                                                     Personal Information
                                                 </h5>
                                                 <div class="badge badge-light border p-2 text-muted">
-                                                    ZANID: <t t-esc="record.benf_zan_id or '-'"/>
+                                                    Zan ID: <t t-esc="record.benf_zan_id or '-'"/>
                                                 </div>
                                             </div>
                                             <div class="card-body pt-4">
@@ -112,7 +112,7 @@
                                                     Nominee Information
                                                 </h5>
                                                 <div class="badge badge-light border p-2 text-muted">
-                                                    ZANID: <t t-esc="record.nominee_zanid or '-'"/>
+                                                    Zan ID: <t t-esc="record.nominee_zanid or '-'"/>
                                                 </div>
                                             </div>
                                             <div class="card-body pt-4">

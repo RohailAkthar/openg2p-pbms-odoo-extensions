@@ -1,0 +1,203 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* g2p_registry_addon
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-01-21 00:00+0000\n"
+"PO-Revision-Date: 2024-01-21 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: sw\n"
+
+#. module: g2p_registry_addon
+#: code:addons/g2p_registry_addon/static/src/js/beneficiaries_widget.js:0
+#, python-format
+msgid "Beneficiaries"
+msgstr "Walengwa"
+
+#. module: g2p_registry_addon
+#: code:addons/g2p_registry_addon/static/src/xml/g2p_beneficiaries_info_tpl.xml:0
+#, python-format
+msgid "Name"
+msgstr "Jina"
+
+#. module: g2p_registry_addon
+#: code:addons/g2p_registry_addon/static/src/xml/g2p_beneficiaries_info_tpl.xml:0
+#, python-format
+msgid "Gender"
+msgstr "Jinsia"
+
+#. module: g2p_registry_addon
+#: code:addons/g2p_registry_addon/static/src/xml/g2p_beneficiaries_info_tpl.xml:0
+#, python-format
+msgid "DOB"
+msgstr "Tarehe ya Kuzaliwa"
+
+#. module: g2p_registry_addon
+#: code:addons/g2p_registry_addon/static/src/xml/g2p_beneficiaries_info_tpl.xml:0
+#, python-format
+msgid "Region"
+msgstr "Mkoa"
+
+#. module: g2p_registry_addon
+#: code:addons/g2p_registry_addon/static/src/xml/g2p_beneficiaries_info_tpl.xml:0
+#, python-format
+msgid "District"
+msgstr "Wilaya"
+
+#. module: g2p_registry_addon
+#: code:addons/g2p_registry_addon/static/src/xml/g2p_beneficiaries_info_tpl.xml:0
+#, python-format
+msgid "Zan ID"
+msgstr "Kitambulisho cha Zanzibar"
+
+#. module: g2p_registry_addon
+#: code:addons/g2p_registry_addon/static/src/xml/g2p_beneficiaries_info_tpl.xml:0
+#, python-format
+msgid "Address"
+msgstr "Anwani"
+
+#. module: g2p_registry_addon
+#: code:addons/g2p_registry_addon/static/src/xml/g2p_beneficiaries_info_tpl.xml:0
+#, python-format
+msgid "Phone"
+msgstr "Simu"
+
+#. module: g2p_registry_addon
+#: code:addons/g2p_registry_addon/static/src/xml/g2p_beneficiaries_info_tpl.xml:0
+#, python-format
+msgid "Personal Information"
+msgstr "Taarifa Binafsi"
+
+#. module: g2p_registry_addon
+#: code:addons/g2p_registry_addon/static/src/xml/g2p_beneficiaries_info_tpl.xml:0
+#, python-format
+msgid "Do you have any disability?"
+msgstr "Je, una ulemavu wowote?"
+
+#. module: g2p_registry_addon
+#: code:addons/g2p_registry_addon/static/src/xml/g2p_beneficiaries_info_tpl.xml:0
+#, python-format
+msgid "Are you receiving any allowance?"
+msgstr "Je, unapokea posho yoyote?"
+
+#. module: g2p_registry_addon
+#: code:addons/g2p_registry_addon/static/src/xml/g2p_beneficiaries_info_tpl.xml:0
+#, python-format
+msgid "Do you have health insurance?"
+msgstr "Je, una bima ya afya?"
+
+#. module: g2p_registry_addon
+#: code:addons/g2p_registry_addon/static/src/xml/g2p_beneficiaries_info_tpl.xml:0
+#, python-format
+msgid "Post Code"
+msgstr "Msimbo wa Posta"
+
+#. module: g2p_registry_addon
+#: code:addons/g2p_registry_addon/static/src/xml/g2p_beneficiaries_info_tpl.xml:0
+#, python-format
+msgid "Do you have other ID?"
+msgstr "Je, una kitambulisho kingine?"
+
+#. module: g2p_registry_addon
+#: code:addons/g2p_registry_addon/static/src/xml/g2p_beneficiaries_info_tpl.xml:0
+#, python-format
+msgid "Other ID Type"
+msgstr "Aina ya Kitambulisho Kingine"
+
+#. module: g2p_registry_addon
+#: code:addons/g2p_registry_addon/static/src/xml/g2p_beneficiaries_info_tpl.xml:0
+#, python-format
+msgid "Other ID Name"
+msgstr "Jina kwenye Kitambulisho Kingine"
+
+#. module: g2p_registry_addon
+#: code:addons/g2p_registry_addon/static/src/xml/g2p_beneficiaries_info_tpl.xml:0
+#, python-format
+msgid "Other ID Number"
+msgstr "Nambari ya Kitambulisho Kingine"
+
+#. module: g2p_registry_addon
+#: code:addons/g2p_registry_addon/static/src/xml/g2p_beneficiaries_info_tpl.xml:0
+#, python-format
+msgid "Nominee Information"
+msgstr "Taarifa za Mrithi"
+
+#. module: g2p_registry_addon
+#: code:addons/g2p_registry_addon/static/src/xml/g2p_beneficiaries_info_tpl.xml:0
+#, python-format
+msgid "Relation"
+msgstr "Uhusiano"
+
+#. module: g2p_registry_addon
+#: code:addons/g2p_registry_addon/static/src/xml/g2p_beneficiaries_info_tpl.xml:0
+#, python-format
+msgid "Mobile"
+msgstr "Simu ya Mkononi"
+
+#. module: g2p_registry_addon
+#: code:addons/g2p_registry_addon/static/src/xml/g2p_beneficiaries_info_tpl.xml:0
+#, python-format
+msgid "Location"
+msgstr "Eneo"
+
+#. module: g2p_registry_addon
+#: code:addons/g2p_registry_addon/static/src/xml/g2p_beneficiaries_info_tpl.xml:0
+#, python-format
+msgid "Shehia"
+msgstr "Shehia"
+
+#. module: g2p_registry_addon
+#: code:addons/g2p_registry_addon/static/src/xml/g2p_beneficiaries_info_tpl.xml:0
+#, python-format
+msgid "Pension Information"
+msgstr "Taarifa za Pensheni"
+
+#. module: g2p_registry_addon
+#: code:addons/g2p_registry_addon/static/src/xml/g2p_beneficiaries_info_tpl.xml:0
+#, python-format
+msgid "Are you receiving any other pension?"
+msgstr "Je, unapokea pensheni nyingine yoyote?"
+
+#. module: g2p_registry_addon
+#: code:addons/g2p_registry_addon/static/src/xml/g2p_beneficiaries_info_tpl.xml:0
+#, python-format
+msgid "Scheme Name"
+msgstr "Jina la Mfuko"
+
+#. module: g2p_registry_addon
+#: code:addons/g2p_registry_addon/static/src/xml/g2p_beneficiaries_info_tpl.xml:0
+#, python-format
+msgid "Payment Preference"
+msgstr "Mapendeleo ya Malipo"
+
+#. module: g2p_registry_addon
+#: code:addons/g2p_registry_addon/static/src/xml/g2p_beneficiaries_info_tpl.xml:0
+#, python-format
+msgid "Preferred Payment Method"
+msgstr "Njia ya Malipo Inayopendekezwa"
+
+#. module: g2p_registry_addon
+#: code:addons/g2p_registry_addon/static/src/xml/g2p_beneficiaries_info_tpl.xml:0
+#, python-format
+msgid "Mobile Wallet"
+msgstr "Mkoba wa Simu"
+
+#. module: g2p_registry_addon
+#: code:addons/g2p_registry_addon/static/src/xml/g2p_beneficiaries_info_tpl.xml:0
+#, python-format
+msgid "Bank"
+msgstr "Benki"
+
+#. module: g2p_registry_addon
+#: code:addons/g2p_registry_addon/static/src/xml/g2p_beneficiaries_info_tpl.xml:0
+#, python-format
+msgid "Account"
+msgstr "Akaunti"
