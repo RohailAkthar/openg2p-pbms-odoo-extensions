@@ -46,7 +46,7 @@ export class G2PBeneficiariesComponent extends Component {
                 console.log("Fetching beneficiaries for resId:", this.props.record.resId);
                 this._fetchRecords();
             } else {
-                console.log("Skipping fetch: No resId");
+                console.log("No record selected or record not yet available. Please select a record.");
             }
         }, () => [this.props.record?.resId]);
     }
@@ -64,7 +64,6 @@ export class G2PBeneficiariesComponent extends Component {
             'g2p.bgtask.summary.wizard',
             'get_beneficiaries',
             [
-                [],
                 this.props.record.resId,
                 this.state.page,
                 this.state.pageSize,
@@ -99,11 +98,13 @@ export class G2PBeneficiariesComponent extends Component {
 
 export const g2pBeneficiariesWidget = {
     component: G2PBeneficiariesComponent,
-    extractProps({ attrs, record }, dynamicInfo) {
+    extractProps(nodeInfo, dynamicInfo) {
+        console.log("G2PBeneficiariesWidget extractProps nodeInfo:", nodeInfo);
+        console.log("G2PBeneficiariesWidget extractProps dynamicInfo:", dynamicInfo);
         return {
-            resModel: attrs.model,
+            resModel: nodeInfo.attrs.model,
             context: dynamicInfo.context,
-            record,
+            record: dynamicInfo.record || nodeInfo.record,
         };
     },
 };
