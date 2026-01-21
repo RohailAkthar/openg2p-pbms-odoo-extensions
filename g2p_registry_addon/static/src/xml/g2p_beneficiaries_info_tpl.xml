@@ -177,13 +177,10 @@
                                 <div class="row mt-4">
                                     <!-- Pension Information Card -->
                                     <div class="col-md-6">
-                                        <div class="d-flex align-items-center mb-3">
-                                            <div class="bg-warning text-white rounded p-2 mr-2" style="opacity: 0.8;">
-                                                <i class="fa fa-file-text-o"/>
-                                            </div>
-                                            <h6 class="text-uppercase font-weight-bold text-dark mb-0">Pension Information</h6>
-                                        </div>
                                         <div class="card shadow-sm border h-100">
+                                            <div class="card-header bg-white border-bottom-0 pb-0 pt-3">
+                                                <h6 class="text-uppercase font-weight-bold text-dark mb-0">Pension Information</h6>
+                                            </div>
                                             <div class="card-body">
                                                 <div class="row">
                                                     <div class="col-md-12 mb-3">
@@ -203,13 +200,10 @@
 
                                     <!-- Payment Preference Card -->
                                     <div class="col-md-6">
-                                        <div class="d-flex align-items-center mb-3">
-                                            <div class="bg-success text-white rounded p-2 mr-2" style="opacity: 0.8;">
-                                                 <i class="fa fa-credit-card"/>
-                                            </div>
-                                            <h6 class="text-uppercase font-weight-bold text-dark mb-0">Payment Preference</h6>
-                                        </div>
                                         <div class="card shadow-sm border h-100">
+                                            <div class="card-header bg-white border-bottom-0 pb-0 pt-3">
+                                                <h6 class="text-uppercase font-weight-bold text-dark mb-0">Payment Preference</h6>
+                                            </div>
                                             <div class="card-body">
                                                 <div class="row">
                                                     <div class="col-md-6 mb-3">
