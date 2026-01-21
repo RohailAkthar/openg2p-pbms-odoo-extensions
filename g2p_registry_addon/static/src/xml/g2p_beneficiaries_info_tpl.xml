@@ -69,67 +69,67 @@
                                             <h6 class="text-primary border-bottom pb-1 mb-3"><i class="fa fa-info-circle mr-2"/>Beneficiary Details</h6>
                                             <div class="row">
                                                 <div class="col-md-6">
-                                                    <div class="row mb-2">
-                                                        <div class="col-5 font-weight-bold">Disability:</div>
-                                                        <div class="col-7"><t t-esc="record.disability or '-'"/></div>
+                                                    <div class="mb-3">
+                                                        <div class="text-uppercase text-muted small">Do you have any disability?</div>
+                                                        <div class="font-weight-bold"><t t-esc="record.disability or '-'"/></div>
                                                     </div>
-                                                    <div class="row mb-2">
-                                                        <div class="col-5 font-weight-bold">Allowance:</div>
-                                                        <div class="col-7"><t t-esc="record.is_receiving_allowance or '-'"/></div>
+                                                    <div class="mb-3">
+                                                        <div class="text-uppercase text-muted small">Are you receiving any allowance?</div>
+                                                        <div class="font-weight-bold"><t t-esc="record.is_receiving_allowance or '-'"/></div>
                                                     </div>
-                                                    <div class="row mb-2">
-                                                        <div class="col-5 font-weight-bold">Health Ins.:</div>
-                                                        <div class="col-7"><t t-esc="record.has_health_insurance or '-'"/></div>
+                                                    <div class="mb-3">
+                                                        <div class="text-uppercase text-muted small">Do you have health insurance?</div>
+                                                        <div class="font-weight-bold"><t t-esc="record.has_health_insurance or '-'"/></div>
                                                     </div>
                                                     <hr class="my-2"/>
-                                                    <div class="row mb-2">
-                                                        <div class="col-5 font-weight-bold">Other ID:</div>
-                                                        <div class="col-7"><t t-esc="record.other_id_available or '-'"/></div>
+                                                    <div class="mb-3">
+                                                        <div class="text-uppercase text-muted small">Do you have other ID?</div>
+                                                        <div class="font-weight-bold"><t t-esc="record.other_id_available or '-'"/></div>
                                                     </div>
                                                     <t t-if="record.other_id_available === 'yes' or record.other_id_available === 'True'">
-                                                         <div class="row mb-1 ml-2">
-                                                            <div class="col-5 text-muted small">Type:</div>
-                                                            <div class="col-7 small"><t t-esc="record.other_id_type or '-'"/></div>
+                                                         <div class="mb-3 ml-2">
+                                                            <div class="text-uppercase text-muted small">Other ID Type</div>
+                                                            <div class="font-weight-bold"><t t-esc="record.other_id_type or '-'"/></div>
                                                          </div>
-                                                         <div class="row mb-1 ml-2">
-                                                            <div class="col-5 text-muted small">Name:</div>
-                                                            <div class="col-7 small"><t t-esc="record.other_id_name or '-'"/></div>
+                                                         <div class="mb-3 ml-2">
+                                                            <div class="text-uppercase text-muted small">Other ID Name</div>
+                                                            <div class="font-weight-bold"><t t-esc="record.other_id_name or '-'"/></div>
                                                          </div>
-                                                         <div class="row mb-1 ml-2">
-                                                            <div class="col-5 text-muted small">Number:</div>
-                                                            <div class="col-7 small"><t t-esc="record.other_id_number or '-'"/></div>
+                                                         <div class="mb-3 ml-2">
+                                                            <div class="text-uppercase text-muted small">Other ID Number</div>
+                                                            <div class="font-weight-bold"><t t-esc="record.other_id_number or '-'"/></div>
                                                          </div>
                                                     </t>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <div class="row mb-2">
-                                                        <div class="col-5 font-weight-bold">Payment Mode:</div>
-                                                        <div class="col-7"><t t-esc="record.payment_mode or '-'"/></div>
+                                                    <div class="mb-3">
+                                                        <div class="text-uppercase text-muted small">Payment Mode</div>
+                                                        <div class="font-weight-bold"><t t-esc="record.payment_mode or '-'"/></div>
                                                     </div>
-                                                    <div class="row mb-2">
-                                                        <div class="col-5 font-weight-bold">Bank:</div>
-                                                        <div class="col-7"><t t-esc="record.bank_name or '-'"/></div>
+                                                    <div class="mb-3">
+                                                        <div class="text-uppercase text-muted small">Bank</div>
+                                                        <div class="font-weight-bold"><t t-esc="record.bank_name or '-'"/></div>
                                                     </div>
-                                                    <div class="row mb-2">
-                                                        <div class="col-5 font-weight-bold">Account:</div>
-                                                        <div class="col-7"><t t-esc="record.account_num or '-'"/> (<t t-esc="record.account_name or '-'"/>)</div>
+                                                    <div class="mb-3">
+                                                        <div class="text-uppercase text-muted small">Account</div>
+                                                        <div class="font-weight-bold"><t t-esc="record.account_num or '-'"/> (<t t-esc="record.account_name or '-'"/>)</div>
                                                     </div>
-                                                    <div class="row mb-2">
-                                                        <div class="col-5 font-weight-bold">Mobile Wallet:</div>
-                                                        <div class="col-7"><t t-esc="record.mobile_wallet or '-'"/></div>
+                                                    <div class="mb-3">
+                                                        <div class="text-uppercase text-muted small">Mobile Wallet</div>
+                                                        <div class="font-weight-bold"><t t-esc="record.mobile_wallet or '-'"/></div>
                                                     </div>
-                                                    <div class="row mb-2">
-                                                        <div class="col-5 font-weight-bold">Post Code:</div>
-                                                        <div class="col-7"><t t-esc="record.benf_post_code or '-'"/></div>
+                                                    <div class="mb-3">
+                                                        <div class="text-uppercase text-muted small">Post Code</div>
+                                                        <div class="font-weight-bold"><t t-esc="record.benf_post_code or '-'"/></div>
                                                     </div>
                                                     <hr class="my-2"/>
-                                                    <div class="row mb-2">
-                                                        <div class="col-5 font-weight-bold">Other Pension:</div>
-                                                        <div class="col-7"><t t-esc="record.other_pension or '-'"/></div>
+                                                    <div class="mb-3">
+                                                        <div class="text-uppercase text-muted small">Other Pension</div>
+                                                        <div class="font-weight-bold"><t t-esc="record.other_pension or '-'"/></div>
                                                     </div>
-                                                    <div class="row mb-2">
-                                                        <div class="col-5 font-weight-bold">Scheme Name:</div>
-                                                        <div class="col-7"><t t-esc="record.scheme_name or '-'"/></div>
+                                                    <div class="mb-3">
+                                                        <div class="text-uppercase text-muted small">Scheme Name</div>
+                                                        <div class="font-weight-bold"><t t-esc="record.scheme_name or '-'"/></div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -140,43 +140,43 @@
                                             <h6 class="text-primary border-bottom pb-1 mb-3"><i class="fa fa-user-circle mr-2"/>Nominee Information</h6>
                                             <div class="row">
                                                 <div class="col-md-6">
-                                                    <div class="row mb-2">
-                                                        <div class="col-4 font-weight-bold">Name:</div>
-                                                        <div class="col-8"><t t-esc="record.nominee_first_name or '-'"/> <t t-esc="record.nominee_last_name or ''"/></div>
+                                                    <div class="mb-3">
+                                                        <div class="text-uppercase text-muted small">Name</div>
+                                                        <div class="font-weight-bold"><t t-esc="record.nominee_first_name or '-'"/> <t t-esc="record.nominee_last_name or ''"/></div>
                                                     </div>
-                                                    <div class="row mb-2">
-                                                        <div class="col-4 font-weight-bold">Gender:</div>
-                                                        <div class="col-8"><t t-esc="record.nominee_gender or '-'"/></div>
+                                                    <div class="mb-3">
+                                                        <div class="text-uppercase text-muted small">Gender</div>
+                                                        <div class="font-weight-bold"><t t-esc="record.nominee_gender or '-'"/></div>
                                                     </div>
-                                                    <div class="row mb-2">
-                                                        <div class="col-4 font-weight-bold">Relation:</div>
-                                                        <div class="col-8"><t t-esc="record.nominee_rel_benf or '-'"/></div>
+                                                    <div class="mb-3">
+                                                        <div class="text-uppercase text-muted small">Relation</div>
+                                                        <div class="font-weight-bold"><t t-esc="record.nominee_rel_benf or '-'"/></div>
                                                     </div>
-                                                    <div class="row mb-2">
-                                                        <div class="col-4 font-weight-bold">Zan ID:</div>
-                                                        <div class="col-8"><t t-esc="record.nominee_zanid or '-'"/></div>
+                                                    <div class="mb-3">
+                                                        <div class="text-uppercase text-muted small">Zan ID</div>
+                                                        <div class="font-weight-bold"><t t-esc="record.nominee_zanid or '-'"/></div>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <div class="row mb-2">
-                                                        <div class="col-4 font-weight-bold">Mobile:</div>
-                                                        <div class="col-8"><t t-esc="record.nominee_mobile or '-'"/></div>
+                                                    <div class="mb-3">
+                                                        <div class="text-uppercase text-muted small">Mobile</div>
+                                                        <div class="font-weight-bold"><t t-esc="record.nominee_mobile or '-'"/></div>
                                                     </div>
-                                                    <div class="row mb-2">
-                                                        <div class="col-4 font-weight-bold">Location:</div>
-                                                        <div class="col-8"><t t-esc="record.nominee_region or '-'"/> / <t t-esc="record.nominee_district or '-'"/></div>
+                                                    <div class="mb-3">
+                                                        <div class="text-uppercase text-muted small">Location</div>
+                                                        <div class="font-weight-bold"><t t-esc="record.nominee_region or '-'"/> / <t t-esc="record.nominee_district or '-'"/></div>
                                                     </div>
-                                                    <div class="row mb-2">
-                                                        <div class="col-4 font-weight-bold">Shehia:</div>
-                                                        <div class="col-8"><t t-esc="record.nominee_shehia or '-'"/></div>
+                                                    <div class="mb-3">
+                                                        <div class="text-uppercase text-muted small">Shehia</div>
+                                                        <div class="font-weight-bold"><t t-esc="record.nominee_shehia or '-'"/></div>
                                                     </div>
-                                                    <div class="row mb-2">
-                                                        <div class="col-4 font-weight-bold">Address:</div>
-                                                        <div class="col-8"><t t-esc="record.nominee_house_street or '-'"/></div>
+                                                    <div class="mb-3">
+                                                        <div class="text-uppercase text-muted small">Address</div>
+                                                        <div class="font-weight-bold"><t t-esc="record.nominee_house_street or '-'"/></div>
                                                     </div>
-                                                    <div class="row mb-2">
-                                                        <div class="col-4 font-weight-bold">Post Code:</div>
-                                                        <div class="col-8"><t t-esc="record.nominee_post_code or '-'"/></div>
+                                                    <div class="mb-3">
+                                                        <div class="text-uppercase text-muted small">Post Code</div>
+                                                        <div class="font-weight-bold"><t t-esc="record.nominee_post_code or '-'"/></div>
                                                     </div>
                                                 </div>
                                             </div>
