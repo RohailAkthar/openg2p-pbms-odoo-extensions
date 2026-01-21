@@ -1,6 +1,6 @@
 /** @odoo-module **/
 
-import { Component, useState, onWillStart } from "@odoo/owl";
+import { Component, useState, onWillStart, useEffect } from "@odoo/owl";
 import { useService } from "@web/core/utils/hooks";
 import { _t } from "@web/core/l10n/translation";
 import { registry } from "@web/core/registry";
@@ -31,9 +31,12 @@ export class G2PBeneficiariesComponent extends Component {
         });
         this.orm = useService("orm");
 
-        onWillStart(async () => {
-            await this._fetchRecords();
-        });
+        useEffect(() => {
+            if (this.props.record?.resId) {
+                console.log("Fetching beneficiaries for", this.props.record.resId);
+                this._fetchRecords();
+            }
+        }, () => [this.props.record?.resId]);
     }
 
     toggleDetails(recordId) {
@@ -78,10 +81,11 @@ export class G2PBeneficiariesComponent extends Component {
 
 export const g2pBeneficiariesWidget = {
     component: G2PBeneficiariesComponent,
-    extractProps({ attrs }, dynamicInfo) {
+    extractProps({ attrs, record }, dynamicInfo) {
         return {
             resModel: attrs.model,
             context: dynamicInfo.context,
+            record,
         };
     },
 };
