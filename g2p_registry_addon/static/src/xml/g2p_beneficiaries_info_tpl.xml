@@ -11,14 +11,14 @@
                     <tr>
                         <th style="width: 40px;"></th> <!-- Toggle arrow -->
                         <t t-if="state.target_registry === 'individual'">
-                            <th class="text-center">Name</th>
-                            <th class="text-center">Gender</th>
-                            <th class="text-center">DOB</th>
-                            <th class="text-center">Region</th>
-                            <th class="text-center">District</th>
-                            <th class="text-center">Zan ID</th>
-                            <th class="text-center">Address</th>
-                            <th class="text-center">Phone</th>
+                            <th class="text-center"><t t-esc="_t('Name')"/></th>
+                            <th class="text-center"><t t-esc="_t('Gender')"/></th>
+                            <th class="text-center"><t t-esc="_t('DOB')"/></th>
+                            <th class="text-center"><t t-esc="_t('Region')"/></th>
+                            <th class="text-center"><t t-esc="_t('District')"/></th>
+                            <th class="text-center"><t t-esc="_t('Zan ID')"/></th>
+                            <th class="text-center"><t t-esc="_t('Address')"/></th>
+                            <th class="text-center"><t t-esc="_t('Phone')"/></th>
                         </t>
                     </tr>
                 </thead>
@@ -53,25 +53,25 @@
                                         <div class="card shadow-sm border h-100">
                                             <div class="card-header bg-white border-bottom-0 pt-4 pb-0 d-flex justify-content-between align-items-center">
                                                 <h5 class="text-dark font-weight-bold mb-0">
-                                                    Personal Information
+                                                    <t t-esc="_t('Personal Information')"/>
                                                 </h5>
                                                 <div class="badge badge-light border p-2 text-muted">
-                                                    Zan ID: <t t-esc="record.benf_zan_id or '-'"/>
+                                                    <t t-esc="_t('Zan ID')"/>: <t t-esc="record.benf_zan_id or '-'"/>
                                                 </div>
                                             </div>
                                             <div class="card-body pt-4">
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="mb-3">
-                                                            <div class="text-uppercase text-muted small">Do you have any disability?</div>
+                                                            <div class="text-uppercase text-muted small"><t t-esc="_t('Do you have any disability?')"/></div>
                                                             <div class="font-weight-bold"><t t-esc="record.disability or '-'"/></div>
                                                         </div>
                                                         <div class="mb-3">
-                                                            <div class="text-uppercase text-muted small">Are you receiving any allowance?</div>
+                                                            <div class="text-uppercase text-muted small"><t t-esc="_t('Are you receiving any allowance?')"/></div>
                                                             <div class="font-weight-bold"><t t-esc="record.is_receiving_allowance or '-'"/></div>
                                                         </div>
                                                         <div class="mb-3">
-                                                            <div class="text-uppercase text-muted small">Do you have health insurance?</div>
+                                                            <div class="text-uppercase text-muted small"><t t-esc="_t('Do you have health insurance?')"/></div>
                                                             <div class="font-weight-bold"><t t-esc="record.has_health_insurance or '-'"/></div>
                                                         </div>
                                                         <div class="mb-3">
@@ -81,20 +81,20 @@
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="mb-3">
-                                                            <div class="text-uppercase text-muted small">Do you have other ID?</div>
+                                                            <div class="text-uppercase text-muted small"><t t-esc="_t('Do you have other ID?')"/></div>
                                                             <div class="font-weight-bold"><t t-esc="record.other_id_available or '-'"/></div>
                                                         </div>
                                                         <t t-if="record.other_id_available === 'yes' or record.other_id_available === 'True'">
                                                              <div class="mb-3">
-                                                                <div class="text-uppercase text-muted small">Other ID Type</div>
+                                                                <div class="text-uppercase text-muted small"><t t-esc="_t('Other ID Type')"/></div>
                                                                 <div class="font-weight-bold"><t t-esc="record.other_id_type or '-'"/></div>
                                                              </div>
                                                              <div class="mb-3">
-                                                                <div class="text-uppercase text-muted small">Other ID Name</div>
+                                                                <div class="text-uppercase text-muted small"><t t-esc="_t('Other ID Name')"/></div>
                                                                 <div class="font-weight-bold"><t t-esc="record.other_id_name or '-'"/></div>
                                                              </div>
                                                              <div class="mb-3">
-                                                                <div class="text-uppercase text-muted small">Other ID Number</div>
+                                                                <div class="text-uppercase text-muted small"><t t-esc="_t('Other ID Number')"/></div>
                                                                 <div class="font-weight-bold"><t t-esc="record.other_id_number or '-'"/></div>
                                                              </div>
                                                         </t>
@@ -109,43 +109,43 @@
                                         <div class="card shadow-sm border h-100">
                                             <div class="card-header bg-white border-bottom-0 pt-4 pb-0 d-flex justify-content-between align-items-center">
                                                 <h5 class="text-dark font-weight-bold mb-0">
-                                                    Nominee Information
+                                                    <t t-esc="_t('Nominee Information')"/>
                                                 </h5>
                                                 <div class="badge badge-light border p-2 text-muted">
-                                                    Zan ID: <t t-esc="record.nominee_zanid or '-'"/>
+                                                    <t t-esc="_t('Zan ID')"/>: <t t-esc="record.nominee_zanid or '-'"/>
                                                 </div>
                                             </div>
                                             <div class="card-body pt-4">
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="mb-3">
-                                                            <div class="text-uppercase text-muted small">Name</div>
+                                                            <div class="text-uppercase text-muted small"><t t-esc="_t('Name')"/></div>
                                                             <div class="font-weight-bold"><t t-esc="record.nominee_first_name or '-'"/> <t t-esc="record.nominee_last_name or ''"/></div>
                                                         </div>
                                                         <div class="mb-3">
-                                                            <div class="text-uppercase text-muted small">Gender</div>
+                                                            <div class="text-uppercase text-muted small"><t t-esc="_t('Gender')"/></div>
                                                             <div class="font-weight-bold"><t t-esc="record.nominee_gender or '-'"/></div>
                                                         </div>
                                                         <div class="mb-3">
-                                                            <div class="text-uppercase text-muted small">Relation</div>
+                                                            <div class="text-uppercase text-muted small"><t t-esc="_t('Relation')"/></div>
                                                             <div class="font-weight-bold"><t t-esc="record.nominee_rel_benf or '-'"/></div>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="mb-3">
-                                                            <div class="text-uppercase text-muted small">Mobile</div>
+                                                            <div class="text-uppercase text-muted small"><t t-esc="_t('Mobile')"/></div>
                                                             <div class="font-weight-bold"><t t-esc="record.nominee_mobile or '-'"/></div>
                                                         </div>
                                                         <div class="mb-3">
-                                                            <div class="text-uppercase text-muted small">Location</div>
+                                                            <div class="text-uppercase text-muted small"><t t-esc="_t('Location')"/></div>
                                                             <div class="font-weight-bold"><t t-esc="record.nominee_region or '-'"/> / <t t-esc="record.nominee_district or '-'"/></div>
                                                         </div>
                                                         <div class="mb-3">
-                                                            <div class="text-uppercase text-muted small">Shehia</div>
+                                                            <div class="text-uppercase text-muted small"><t t-esc="_t('Shehia')"/></div>
                                                             <div class="font-weight-bold"><t t-esc="record.nominee_shehia or '-'"/></div>
                                                         </div>
                                                         <div class="mb-3">
-                                                            <div class="text-uppercase text-muted small">Address</div>
+                                                            <div class="text-uppercase text-muted small"><t t-esc="_t('Address')"/></div>
                                                             <div class="font-weight-bold"><t t-esc="record.nominee_house_street or '-'"/></div>
                                                         </div>
                                                         <div class="mb-3">
@@ -164,17 +164,17 @@
                                     <div class="col-md-6">
                                         <div class="card shadow-sm border h-100">
                                             <div class="card-header bg-white border-bottom-0 pb-0 pt-3">
-                                                <h6 class="text-uppercase font-weight-bold text-dark mb-0">Pension Information</h6>
+                                                <h6 class="text-uppercase font-weight-bold text-dark mb-0"><t t-esc="_t('Pension Information')"/></h6>
                                             </div>
                                             <div class="card-body">
                                                 <div class="row">
                                                     <div class="col-md-12 mb-3">
-                                                        <div class="text-uppercase text-muted small">Are you receiving any other pension?</div>
+                                                        <div class="text-uppercase text-muted small"><t t-esc="_t('Are you receiving any other pension?')"/></div>
                                                         <div class="font-weight-bold"><t t-esc="record.other_pension or '-'"/></div>
                                                     </div>
                                                     <t t-if="record.other_pension === 'Yes'">
                                                         <div class="col-md-12 mb-3">
-                                                            <div class="text-uppercase text-muted small">Scheme Name</div>
+                                                            <div class="text-uppercase text-muted small"><t t-esc="_t('Scheme Name')"/></div>
                                                             <div class="font-weight-bold"><t t-esc="record.scheme_name or '-'"/></div>
                                                         </div>
                                                     </t>
@@ -187,27 +187,27 @@
                                     <div class="col-md-6">
                                         <div class="card shadow-sm border h-100">
                                             <div class="card-header bg-white border-bottom-0 pb-0 pt-3">
-                                                <h6 class="text-uppercase font-weight-bold text-dark mb-0">Payment Preference</h6>
+                                                <h6 class="text-uppercase font-weight-bold text-dark mb-0"><t t-esc="_t('Payment Preference')"/></h6>
                                             </div>
                                             <div class="card-body">
                                                 <div class="row">
                                                     <div class="col-md-6 mb-3">
-                                                        <div class="text-uppercase text-muted small">Preferred Payment Method</div>
+                                                        <div class="text-uppercase text-muted small"><t t-esc="_t('Preferred Payment Method')"/></div>
                                                         <div class="font-weight-bold"><t t-esc="record.payment_mode or '-'"/></div>
                                                     </div>
                                                     <t t-if="record.payment_mode === 'Mobile Wallet'">
                                                         <div class="col-md-6 mb-3">
-                                                            <div class="text-uppercase text-muted small">Mobile Wallet</div>
+                                                            <div class="text-uppercase text-muted small"><t t-esc="_t('Mobile Wallet')"/></div>
                                                             <div class="font-weight-bold"><t t-esc="record.mobile_wallet or '-'"/></div>
                                                         </div>
                                                     </t>
                                                     <t t-if="record.payment_mode === 'Bank'">
                                                         <div class="col-md-6 mb-3">
-                                                            <div class="text-uppercase text-muted small">Bank</div>
+                                                            <div class="text-uppercase text-muted small"><t t-esc="_t('Bank')"/></div>
                                                             <div class="font-weight-bold"><t t-esc="record.bank_name or '-'"/></div>
                                                         </div>
                                                         <div class="col-md-6 mb-3">
-                                                            <div class="text-uppercase text-muted small">Account</div>
+                                                            <div class="text-uppercase text-muted small"><t t-esc="_t('Account')"/></div>
                                                             <div class="font-weight-bold"><t t-esc="record.account_num or '-'"/> (<t t-esc="record.account_name or '-'"/>)</div>
                                                         </div>
                                                     </t>

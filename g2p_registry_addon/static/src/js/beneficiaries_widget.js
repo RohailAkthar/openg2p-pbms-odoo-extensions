@@ -13,6 +13,7 @@ export class G2PBeneficiariesComponent extends Component {
         record: { type: Object, optional: true },
         readonly: { type: Boolean, optional: true },
     };
+    _t = _t;
 
     setup() {
         // Fallback: Try to get record from the environment model if props are missing
