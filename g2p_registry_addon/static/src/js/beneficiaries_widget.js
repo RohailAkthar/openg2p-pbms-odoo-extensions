@@ -137,45 +137,6 @@ export class G2PBeneficiariesComponent extends Component {
             }
         }
     }
-    translate(text) {
-        return _t(text);
-    }
-
-    // Explicitly define strings to ensuring Odoo exports them to the client translation dictionary
-    static get translationKeys() {
-        return [
-            _t("Name"),
-            _t("Gender"),
-            _t("DOB"),
-            _t("Region"),
-            _t("District"),
-            _t("Zan ID"),
-            _t("Address"),
-            _t("Phone"),
-            _t("Personal Information"),
-            _t("Do you have any disability?"),
-            _t("Are you receiving any allowance?"),
-            _t("Do you have health insurance?"),
-            _t("Post Code"),
-            _t("Do you have other ID?"),
-            _t("Other ID Type"),
-            _t("Other ID Name"),
-            _t("Other ID Number"),
-            _t("Nominee Information"),
-            _t("Relation"),
-            _t("Mobile"),
-            _t("Location"),
-            _t("Shehia"),
-            _t("Pension Information"),
-            _t("Are you receiving any other pension?"),
-            _t("Scheme Name"),
-            _t("Payment Preference"),
-            _t("Preferred Payment Method"),
-            _t("Mobile Wallet"),
-            _t("Bank"),
-            _t("Account")
-        ];
-    }
 }
 
 export const g2pBeneficiariesWidget = {
