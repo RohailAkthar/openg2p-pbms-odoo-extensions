@@ -284,7 +284,11 @@ msgid "Age"
 msgstr "Umri"
 
 #. module: g2p_registry_addon
-#: model_terms:ir.ui.view,arch_db:g2p_registry_addon.view_g2p_individual_registry_form
 #: model_terms:ir.ui.view,arch_db:g2p_registry_addon.view_g2p_individual_registry_tree
 msgid "Birthdate"
 msgstr "Tarehe ya Kuzaliwa"
+
+#. module: g2p_registry_addon
+#: model:ir.model,name:g2p_registry_addon.model_g2p_individual_registry
+msgid "Individual Registry"
+msgstr "Usajili wa Mtu Binafsi"
