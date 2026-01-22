@@ -137,6 +137,9 @@ export class G2PBeneficiariesComponent extends Component {
             }
         }
     }
+    translate(text) {
+        return _t(text);
+    }
 }
 
 export const g2pBeneficiariesWidget = {
