@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_g2p_entitlement_verification_rule_definition_form" model="ir.ui.view">
+        <field name="name">g2p.entitlement.verification.rule.definition.form</field>
+        <field name="model">g2p.entitlement.verification.rule.definition</field>
+        <field name="arch" type="xml">
+            <form string="Entitlement Verification Rule">
+                <sheet>
+                    <group>
+                        <field name="program_id" invisible="1"/>
+                        <field name="sequence"/>
+                        <field name="state"/>
+                        <field name="group_id"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_g2p_entitlement_verification_rule_definition_tree" model="ir.ui.view">
+        <field name="name">g2p.entitlement.verification.rule.definition.tree</field>
+        <field name="model">g2p.entitlement.verification.rule.definition</field>
+        <field name="arch" type="xml">
+            <tree string="Entitlement Verification Rules" editable="bottom">
+                <field name="sequence" widget="handle"/>
+                <field name="state"/>
+                <field name="group_id"/>
+            </tree>
+        </field>
+    </record>
+</odoo>
