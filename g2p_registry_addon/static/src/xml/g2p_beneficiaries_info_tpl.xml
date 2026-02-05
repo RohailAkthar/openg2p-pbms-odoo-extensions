@@ -24,54 +24,40 @@
             <table class="table table-bordered" style="width: 150%; font-size: 16px;">
                 <thead>
                     <tr>
-                        <th><t t-esc="('Link Registry ID')"/></th>
+                        <th><t t-esc="('Internal Record ID')"/></th>
                         <!-- <th><t t-esc="('Registration Date')"/></th> -->
 
-                        <!-- Conditional columns (farmer) -->
-                        <t t-if="state.target_registry === 'farmer'">
-                            <th><t t-esc="('Name')"/></th>
-                            <th><t t-esc="('Land Area')"/></th>
-                            <th><t t-esc="('Cattle Heads')"/></th>
-                            <th><t t-esc="('Poultry Heads')"/></th>
-                            <th><t t-esc="('Annual Income')"/></th>
-                            <th><t t-esc="('Small Area Code')"/></th>
-                            <th><t t-esc="('Large Area Code')"/></th>
-                        </t>
-                        <!-- Conditional columns (student) -->
-                        <t t-if="state.target_registry === 'student'">
-                            <th><t t-esc="('Name')"/></th>
-                            <th><t t-esc="('Gender')"/></th>
-                            <th><t t-esc="('Institution Name')"/></th>
-                            <th><t t-esc="('DOB')"/></th>
-                            <th><t t-esc="('Small Area Code')"/></th>
-                            <th><t t-esc="('Large Area Code')"/></th>
+                        <!-- Conditional columns (families) -->
+                        <t t-if="state.target_registry === 'families'">
+                            <th><t t-esc="('Family Name')"/></th>
+                            <th><t t-esc="('Type of Housing')"/></th>
+                            <th><t t-esc="('House Condition')"/></th>
+                            <th><t t-esc="('Sanitation Condition')"/></th>
+                            <th><t t-esc="('Water Access')"/></th>
+                            <th><t t-esc="('Electricity Access')"/></th>
+                            <th><t t-esc="('Ethnic Group')"/></th>
+                            <th><t t-esc="('Belong to Protected Groups')"/></th>
+                            <th><t t-esc="('Under Other Vulnerable Status')"/></th>
                         </t>
                     </tr>
                 </thead>
                 <tbody>
                     <t t-foreach="state.records" t-as="record" t-key="record.id">
                         <tr>
-                            <td><t t-esc="record.link_registry_id"/></td>
+                            <td><t t-esc="record.internal_record_id"/></td>
                             <!-- <td><t t-esc="record.registration_date"/></td> -->
 
-                            <!-- Conditional cells (farmer) -->
-                            <t t-if="state.target_registry === 'farmer'">
-                                <td><t t-esc="record.name"/></td>
-                                <td><t t-esc="record.land_area"/></td>
-                                <td><t t-esc="record.no_of_cattle_heads"/></td>
-                                <td><t t-esc="record.no_of_poultry_heads"/></td>
-                                <td><t t-esc="record.annual_income"/></td>
-                                <td><t t-esc="record.small_area_code"/></td>
-                                <td><t t-esc="record.large_area_code"/></td>
-                            </t>
-                            <!-- Conditional cells (student) -->
-                            <t t-if="state.target_registry === 'student'">
-                                <td><t t-esc="record.name"/></td>
-                                <td><t t-esc="record.gender"/></td>
-                                <td><t t-esc="record.institution_name"/></td>
-                                <td><t t-esc="record.date_of_birth"/></td>
-                                <td><t t-esc="record.small_area_code"/></td>
-                                <td><t t-esc="record.large_area_code"/></td>
+                            <!-- Conditional cells (families) -->
+                            <t t-if="state.target_registry === 'families'">
+                                <td><t t-esc="record.family_name"/></td>
+                                <td><t t-esc="record.type_of_housing"/></td>
+                                <td><t t-esc="record.house_condition"/></td>
+                                <td><t t-esc="record.sanitation_condition"/></td>
+                                <td><t t-esc="record.water_access"/></td>
+                                <td><t t-esc="record.electricity_access"/></td>
+                                <td><t t-esc="record.ethnic_group"/></td>
+                                <td><t t-esc="record.belong_to_protected_groups"/></td>
+                                <td><t t-esc="record.under_other_vulnerable_status"/></td>
                             </t>
                         </tr>
                     </t>
