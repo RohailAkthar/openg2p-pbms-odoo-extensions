@@ -15,7 +15,7 @@
                 <sheet>
                     <group>
                         <field name="internal_record_id"/>
-
+                        <field name="functional_record_id"/>
                         <field name="family_name"/>
                         <field name="type_of_housing"/>
                         <field name="house_condition"/>
@@ -37,6 +37,7 @@
         <field name="arch" type="xml">
             <tree string="G2P Register Families" create="0">
                 <field name="internal_record_id"/>
+                <field name="functional_record_id"/>
                 <field name="family_name"/>
                 <field name="type_of_housing"/>
                 <field name="house_condition"/>
