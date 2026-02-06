@@ -24,11 +24,12 @@
             <table class="table table-bordered" style="width: 150%; font-size: 16px;">
                 <thead>
                     <tr>
-                        <th><t t-esc="('Internal Record ID')"/></th>
+                        <!-- <th><t t-esc="('Internal Record ID')"/></th> -->
                         <!-- <th><t t-esc="('Registration Date')"/></th> -->
 
                         <!-- Conditional columns (families) -->
                         <t t-if="state.target_registry === 'families'">
+                            <th><t t-esc="('Functional ID')"/></th>
                             <th><t t-esc="('Family Name')"/></th>
                             <th><t t-esc="('Type of Housing')"/></th>
                             <th><t t-esc="('House Condition')"/></th>
@@ -36,19 +37,21 @@
                             <th><t t-esc="('Water Access')"/></th>
                             <th><t t-esc="('Electricity Access')"/></th>
                             <th><t t-esc="('Ethnic Group')"/></th>
-                            <th><t t-esc="('Belong to Protected Groups')"/></th>
-                            <th><t t-esc="('Under Other Vulnerable Status')"/></th>
+                            <th><t t-esc="('# of Children')"/></th>
+                            <!-- <th><t t-esc="('Belong to Protected Groups')"/></th>
+                            <th><t t-esc="('Under Other Vulnerable Status')"/></th> -->
                         </t>
                     </tr>
                 </thead>
                 <tbody>
                     <t t-foreach="state.records" t-as="record" t-key="record.id">
                         <tr>
-                            <td><t t-esc="record.internal_record_id"/></td>
+                            <!-- <td><t t-esc="record.internal_record_id"/></td> -->
                             <!-- <td><t t-esc="record.registration_date"/></td> -->
 
                             <!-- Conditional cells (families) -->
                             <t t-if="state.target_registry === 'families'">
+                                <td><t t-esc="record.functional_record_id"/></td>
                                 <td><t t-esc="record.family_name"/></td>
                                 <td><t t-esc="record.type_of_housing"/></td>
                                 <td><t t-esc="record.house_condition"/></td>
@@ -56,8 +59,10 @@
                                 <td><t t-esc="record.water_access"/></td>
                                 <td><t t-esc="record.electricity_access"/></td>
                                 <td><t t-esc="record.ethnic_group"/></td>
-                                <td><t t-esc="record.belong_to_protected_groups"/></td>
-                                <td><t t-esc="record.under_other_vulnerable_status"/></td>
+                                <td><t t-esc="record.no_of_children"/></td>
+                                
+                                <!-- <td><t t-esc="record.belong_to_protected_groups"/></td>
+                                <td><t t-esc="record.under_other_vulnerable_status"/></td> -->
                             </t>
                         </tr>
                     </t>

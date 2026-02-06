@@ -9,6 +9,7 @@ class G2PRegisterFamilies(models.Model):
     _description = "Register Families"
     _inherit = "g2p.registry"
 
+    functional_record_id = fields.Char(string="Functional Record ID")
     family_name = fields.Char(string="Family Name")
     type_of_housing = fields.Char(string="Type of Housing")
     house_condition = fields.Char(string="House Condition")
