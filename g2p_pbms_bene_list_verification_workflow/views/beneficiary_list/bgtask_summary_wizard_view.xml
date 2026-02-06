@@ -1,19 +1,27 @@
-<?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="view_g2p_eligibility_summary_wizard_form_inherit_entitlement" model="ir.ui.view">
-        <field name="name">g2p.bgtask.summary.wizard.form.inherit.entitlement</field>
+    <record id="view_g2p_bgtask_summary_wizard_form_inherit" model="ir.ui.view">
+        <field name="name">g2p.bgtask.summary.wizard.form.inherit</field>
         <field name="model">g2p.bgtask.summary.wizard</field>
         <field name="inherit_id" ref="g2p_pbms.view_g2p_eligibility_summary_wizard_form"/>
         <field name="arch" type="xml">
-            <!-- Add computed field -->
             <field name="show_approve_enrolment_button" position="after">
                 <field name="show_verification_stage_enrolment_button" invisible="1"/>
+            </field>
+
+            <field name="show_approve_disbursement_button" position="after">
+                <field name="show_verification_stage_disbursement_button" invisible="1"/>
             </field>
 
             <!-- Modify Enrollment 'Add a Verification' button -->
             <xpath expr="//button[@name='action_record_verifications'][1]" position="attributes">
                 <attribute name="groups"></attribute> <!-- Remove groups attribute -->
                 <attribute name="invisible">not(show_verification_stage_enrolment_button and list_stage == 'enrollment' and list_workflow_status == 'initiated')</attribute>
+            </xpath>
+
+            <!-- Modify Disbursement 'Add a Verification' button -->
+            <xpath expr="//button[@name='action_record_verifications'][2]" position="attributes">
+                <attribute name="groups"></attribute> <!-- Remove groups attribute -->
+                <attribute name="invisible">not(show_verification_stage_disbursement_button and list_stage == 'disbursement' and list_workflow_status == 'initiated')</attribute>
             </xpath>
         </field>
     </record>
