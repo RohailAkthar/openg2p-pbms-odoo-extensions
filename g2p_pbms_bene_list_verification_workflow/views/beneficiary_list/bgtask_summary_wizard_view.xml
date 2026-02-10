@@ -29,7 +29,7 @@
                 name="action_export_beneficiaries_csv"
                 type="object"
                 string="Export Beneficiaries"
-                class="btn-secondary"/>
+                class="oe_highlight"/>
         </xpath>
         </field>
     </record>
