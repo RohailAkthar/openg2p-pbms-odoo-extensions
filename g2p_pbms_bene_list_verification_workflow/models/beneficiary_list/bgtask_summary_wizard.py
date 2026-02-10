@@ -96,4 +96,11 @@ class G2PBGTaskSummaryWizard(models.TransientModel):
             self.env['g2p.beneficiary.list'].browse(self.beneficiary_list_id).verification_state = new_state
 
 
+    def action_export_beneficiaries_csv(self):
+        self.ensure_one()
+        return {
+            "type": "ir.actions.act_url",
+            "url": "/g2p_pbms/export/beneficiaries/%s" % self.id,
+            "target": "self",
+        }
 
