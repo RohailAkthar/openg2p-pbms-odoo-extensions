@@ -11,11 +11,10 @@ from .registry import G2PRegistry
 class ResPartner(models.Model):
     _inherit = "res.partner"
 
-    pensioner_zanid = fields.Char(
+    benf_zan_id = fields.Char(
             string="Zan ID",
             index=True,
             copy=False,
-            store=True,
         )
     name = fields.Char(translate=False)
     birthdate = fields.Date("Date of Birth")
