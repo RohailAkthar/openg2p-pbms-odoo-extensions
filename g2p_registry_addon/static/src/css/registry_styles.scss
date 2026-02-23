@@ -1,8 +1,7 @@
 .o_widget.o_widget_g2p_beneficiaries_widget {
     width: 100% !important;
     box-sizing: border-box;
-    padding-right: 15px;
-    /* Added padding to ensure space for the right-aligned pager */
+    padding: 0;
 }
 
 .o_form_view .o_notebook>.tab-content>.tab-pane> :first-child:not(.o_group) .o_field_x2many.o_field_x2many_list .o_list_renderer,
@@ -12,10 +11,12 @@
 
 /* Custom Registry Styles */
 .g2p-beneficiaries-table {
+    width: 100% !important;
     border-collapse: separate;
     border-spacing: 0 8px;
     /* Adds space between rows */
     background-color: transparent;
+    table-layout: auto;
 }
 
 .g2p-beneficiaries-table thead th {
