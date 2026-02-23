@@ -29,12 +29,13 @@ export class G2PBeneficiariesComponent extends Component {
             title: _t("Beneficiaries"),
             records: [],
             page: 1,
-            pageSize: 50,
+            pageSize: 20,
             totalCount: 0,
             totalPages: 1,
             target_registry: recordData.target_registry || null,
             expandedRecordId: null,
             loading: false,
+            searched: false,
         });
 
         this.orm = useService("orm");
@@ -100,6 +101,7 @@ export class G2PBeneficiariesComponent extends Component {
                 this.state.records = result.records;
                 this.state.totalCount = result.total_count;
             }
+            this.state.searched = true;
             this.state.totalPages = Math.ceil(this.state.totalCount / this.state.pageSize) || 1;
         } catch (e) {
             console.error("Error fetching beneficiaries:", e);

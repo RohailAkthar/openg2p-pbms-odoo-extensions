@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-inherit="web.UserMenu" t-inherit-mode="extension" owl="1">
+        <xpath expr="//small[hasclass('oe_topbar_name')]" position="attributes">
+            <attribute name="class">oe_topbar_name d-inline-block ms-2 text-start smaller lh-1 text-truncate</attribute>
+        </xpath>
+        <xpath expr="//mark[hasclass('font-monospace')]" position="attributes">
+            <attribute name="class">d-none</attribute>
+        </xpath>
+    </t>
+
+</templates>

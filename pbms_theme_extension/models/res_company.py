@@ -10,7 +10,7 @@ class ResCompany(models.Model):
     def get_g2p_favicon(self, img_path_module="", img_path_rel=""):
         img_path = get_resource_path(
             img_path_module if img_path_module else "pbms_theme_extension",
-            img_path_rel if img_path_rel else "static/src/img/favicon-white-background.png",
+            img_path_rel if img_path_rel else "static/src/img/favicon.png",
         )
         with tools.file_open(img_path, "rb") as f:
             return base64.b64encode(f.read())
