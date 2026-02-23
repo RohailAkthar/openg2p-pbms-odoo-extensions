@@ -10,6 +10,15 @@
 }
 
 /* Custom Registry Styles */
+.g2p-beneficiaries {
+    width: 100% !important;
+    display: block;
+}
+
+.g2p-beneficiaries .d-flex.justify-content-between {
+    width: 100% !important;
+}
+
 .g2p-beneficiaries-table {
     width: 100% !important;
     border-collapse: separate;
