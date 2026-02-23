@@ -4,6 +4,13 @@
     padding: 0;
 }
 
+/* Force parent container to 110% width to remove white space */
+.o_cell:has(> .o_widget_g2p_beneficiaries_widget) {
+    width: 110% !important;
+    flex: 0 0 110% !important;
+    max-width: 110% !important;
+}
+
 .o_form_view .o_notebook>.tab-content>.tab-pane> :first-child:not(.o_group) .o_field_x2many.o_field_x2many_list .o_list_renderer,
 .o_form_view .o_notebook>.tab-content>.tab-pane>.o_invisible_modifier:first-child .o_field_x2many.o_field_x2many_list .o_list_renderer {
     --ListRenderer-margin-x: 0 !important;
