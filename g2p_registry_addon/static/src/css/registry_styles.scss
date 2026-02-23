@@ -1,6 +1,8 @@
 .o_widget.o_widget_g2p_beneficiaries_widget {
-    width: 180% !important;
+    width: 100% !important;
     box-sizing: border-box;
+    padding-right: 15px;
+    /* Added padding to ensure space for the right-aligned pager */
 }
 
 .o_form_view .o_notebook>.tab-content>.tab-pane> :first-child:not(.o_group) .o_field_x2many.o_field_x2many_list .o_list_renderer,
@@ -90,4 +92,66 @@
 .badge-secondary {
     background-color: #6c757d;
     color: white;
+}
+
+/* Pagination Styles */
+.o_beneficiary_pager_top {
+    background: #ffffff;
+    padding: 2px 8px;
+    border-radius: 4px;
+    border: 1px solid #ced4da;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+
+    span {
+        font-size: 0.85rem;
+        min-width: 50px;
+        text-align: center;
+        color: #495057;
+    }
+
+    .btn-light {
+        background-color: transparent;
+        border: none;
+        padding: 2px 6px;
+        font-size: 0.8rem;
+        color: #6c757d;
+
+        &:hover {
+            background-color: #f8f9fa;
+            color: #212529;
+        }
+
+        &:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+    }
+}
+
+.table-responsive {
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.o_beneficiary_pager {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    gap: 15px;
+
+    span {
+        font-weight: 600;
+        color: #6c757d;
+    }
+
+    .btn-secondary {
+        border-radius: 50%;
+        width: 36px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+    }
 }
