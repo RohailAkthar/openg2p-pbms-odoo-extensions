@@ -114,10 +114,9 @@ class PBMSDashboardLogic(models.Model):
                 # Assuming ID mapping for simplicity, but search_read handles both if using proper domain.
                 
                 # We use a raw SQL query on Odoo side for demographic aggregations for speed
-                enrolled_ids_sql = tuple(enrolled_ids) if len(enrolled_ids) > 1 else f"('{enrolled_ids[0]}')"
                 
                 # Filter by demographics if provided in frontend
-                dem_where = "id IN %s"
+                dem_where = "benf_zan_id IN %s"
                 dem_params = [tuple(enrolled_ids)]
                 
                 # Gender Distribution
