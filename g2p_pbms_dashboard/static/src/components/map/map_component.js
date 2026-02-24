@@ -14,6 +14,9 @@ export class MapComponent extends Component {
         this.currentLevel = "province";
         this.selectedProvinceCode = null;
         this.provinceData = {};
+        this.PEMBA_PROVINCE_CODES = ["TZ06", "TZ10"];
+        this.SHIFT_X = 0;
+        this.SHIFT_Y = -0.3;
 
         onWillStart(async () => {
             try {
@@ -35,26 +38,27 @@ export class MapComponent extends Component {
 
                 // --- CONFIGURATION ---
                 const zanzibarCodes = ["TZ06", "TZ07", "TZ10", "TZ11", "TZ15"];
-                const PEMBA_CODES = ["TZ06", "TZ10"]; 
-
-                const SHIFT_X = 0;
-                const SHIFT_Y = -0.3;
-
-                const transform = (f, code) =>
-                    PEMBA_CODES.includes(code) ? this.shiftFeature(f, SHIFT_X, SHIFT_Y) : f;
 
                 this.provinceGeoJson = {
                     type: "FeatureCollection",
                     features: fullProvinceData.features
                         .filter((f) => zanzibarCodes.includes(f.properties?.id))
-                        .map((f) => transform(f, f.properties.id)),
+                        .map((f) =>
+                            this.PEMBA_PROVINCE_CODES.includes(f.properties.id)
+                                ? this.shiftFeature(f, this.SHIFT_X, this.SHIFT_Y)
+                                : f
+                        ),
                 };
 
                 this.districtGeoJson = {
                     type: "FeatureCollection",
-                    features: fullDistrictData.features
+                    features: (fullDistrictData.features || [])
                         .filter((f) => zanzibarCodes.includes(f.properties?.province_code))
-                        .map((f) => transform(f, f.properties?.province_code)),
+                        .map((f) =>
+                            this.PEMBA_PROVINCE_CODES.includes(f.properties?.province_code)
+                                ? this.shiftFeature(f, this.SHIFT_X, this.SHIFT_Y)
+                                : f
+                        ),
                 };
 
                 this.provinceData = this.computeProvinceData(this.props.data || {});
@@ -73,11 +77,29 @@ export class MapComponent extends Component {
                 this.currentLevel = "province";
                 this.selectedProvinceCode = null;
                 this.renderProvinceLayer();
+            } else if (nextProps.filters.region && this.currentLevel === "province") {
+                const code = this.resolveProvinceCode(nextProps.filters.region);
+                if (code) {
+                    this.currentLevel = "district";
+                    this.selectedProvinceCode = code;
+                    this.renderDistrictLayer(code);
+                } else {
+                    this.refreshCurrentLayer();
+                }
             } else {
                 this.refreshCurrentLayer();
             }
         });
         onWillUnmount(() => this.map && this.map.remove());
+    }
+
+    onBackClick() {
+        if (this.props.onMapClick) {
+            this.props.onMapClick({ region: null, district: null });
+        }
+        this.currentLevel = "province";
+        this.selectedProvinceCode = null;
+        this.renderProvinceLayer();
     }
 
     shiftFeature(feature, dx, dy) {
@@ -99,6 +121,24 @@ export class MapComponent extends Component {
             if (p) result[p] = (result[p] || 0) + (mapData[d] || 0);
         }
         return result;
+    }
+
+    resolveProvinceCode(regionFilter) {
+        if (!regionFilter || !this.provinceGeoJson?.features) return null;
+        const rf = String(regionFilter).trim();
+        const rfLower = rf.toLowerCase();
+
+        // direct code match
+        const direct = this.provinceGeoJson.features.find(
+            (f) => String(f.properties?.id || "").toLowerCase() === rfLower
+        );
+        if (direct) return direct.properties.id;
+
+        // name match
+        const byName = this.provinceGeoJson.features.find(
+            (f) => String(f.properties?.name || "").toLowerCase() === rfLower
+        );
+        return byName ? byName.properties.id : null;
     }
 
     getGradientColor(baseColor, value, max = 1000) {
@@ -186,7 +226,9 @@ export class MapComponent extends Component {
                     },
 
                     click: () => {
-                        this.props.onMapClick({region: f.properties.name});
+                        if (this.props.onMapClick) {
+                            this.props.onMapClick({ region: f.properties.id, district: null });
+                        }
                         this.drillDownToProvince(f.properties.id);
                     },
                 });
@@ -252,11 +294,13 @@ export class MapComponent extends Component {
                         mouseout: (e) => {
                             this.geoJsonLayer.resetStyle(e.target);
                         },
-                        click: (e) => {
-                            this.props.onMapClick({region: null});
-                            this.currentLevel = "province";
-                            this.selectedProvinceCode = null;
-                            this.renderProvinceLayer();
+                        click: () => {
+                            if (this.props.onMapClick) {
+                                this.props.onMapClick({
+                                    region: this.selectedProvinceCode,
+                                    district: f.properties.shapeName,
+                                });
+                            }
                         },
                     });
                 },
