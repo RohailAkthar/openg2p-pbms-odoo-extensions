@@ -1,7 +1,7 @@
 /** @odoo-module **/
-import {Component, onWillStart, useRef, onMounted, onWillUpdateProps, onWillUnmount} from "@odoo/owl";
-import {useService} from "@web/core/utils/hooks";
-import {loadJS, loadCSS} from "@web/core/assets";
+import { Component, onWillStart, useRef, onMounted, onWillUpdateProps, onWillUnmount } from "@odoo/owl";
+import { useService } from "@web/core/utils/hooks";
+import { loadJS, loadCSS } from "@web/core/assets";
 
 
 export class MapComponent extends Component {
@@ -35,7 +35,7 @@ export class MapComponent extends Component {
 
                 // --- CONFIGURATION ---
                 const zanzibarCodes = ["TZ06", "TZ07", "TZ10", "TZ11", "TZ15"];
-                const PEMBA_CODES = ["TZ06", "TZ10"]; 
+                const PEMBA_CODES = ["TZ06", "TZ10"];
 
                 const SHIFT_X = 0;
                 const SHIFT_Y = -0.3;
@@ -86,7 +86,7 @@ export class MapComponent extends Component {
 
         return {
             ...feature,
-            geometry: {...feature.geometry, coordinates: shift(feature.geometry.coordinates)},
+            geometry: { ...feature.geometry, coordinates: shift(feature.geometry.coordinates) },
         };
     }
 
@@ -115,7 +115,7 @@ export class MapComponent extends Component {
         this.map = L.map(this.mapRef.el, {
             zoomControl: false,
             attributionControl: false,
-            zoomSnap: 0.1, 
+            zoomSnap: 0.1,
             scrollWheelZoom: false,
             doubleClickZoom: false,
         });
@@ -140,12 +140,12 @@ export class MapComponent extends Component {
             iconSize: [0, 0],
             iconAnchor: [0, 0],
         });
-        L.marker(latlng, {icon, interactive: false}).addTo(this.markerLayer);
+        L.marker(latlng, { icon, interactive: false }).addTo(this.markerLayer);
     }
 
     fitToLayer() {
         if (!this.map || !this.geoJsonLayer) return;
-        this.map.fitBounds(this.geoJsonLayer.getBounds(), {padding: [5, 5], animate: true});
+        this.map.fitBounds(this.geoJsonLayer.getBounds(), { padding: [5, 5], animate: true });
     }
 
     renderProvinceLayer() {
@@ -179,14 +179,14 @@ export class MapComponent extends Component {
                 );
                 layer.on({
                     mouseover: (e) => {
-                        e.target.setStyle({weight: 3, fillOpacity: 1});
+                        e.target.setStyle({ weight: 3, fillOpacity: 1 });
                     },
                     mouseout: (e) => {
                         this.geoJsonLayer.resetStyle(e.target);
                     },
 
                     click: () => {
-                        this.props.onMapClick({region: f.properties.name});
+                        this.props.onMapClick({ region: f.properties.name });
                         this.drillDownToProvince(f.properties.id);
                     },
                 });
@@ -224,7 +224,7 @@ export class MapComponent extends Component {
         );
 
         this.geoJsonLayer = L.geoJson(
-            {type: "FeatureCollection", features},
+            { type: "FeatureCollection", features },
             {
                 style: (f) => ({
                     fillColor: this.getGradientColor(
@@ -247,12 +247,13 @@ export class MapComponent extends Component {
                     );
                     layer.on({
                         mouseover: (e) => {
-                            e.target.setStyle({weight: 3, fillOpacity: 1});
+                            e.target.setStyle({ weight: 3, fillOpacity: 1 });
                         },
                         mouseout: (e) => {
                             this.geoJsonLayer.resetStyle(e.target);
                         },
                         click: (e) => {
+                            this.props.onMapClick({ region: null });
                             this.currentLevel = "province";
                             this.selectedProvinceCode = null;
                             this.renderProvinceLayer();
@@ -267,7 +268,7 @@ export class MapComponent extends Component {
 
 MapComponent.template = "g2p_pbms_dashboard.MapComponent";
 MapComponent.props = {
-    data: {type: Object, optional: true},
-    filters: {type: Object, optional: true},
-    onMapClick: {type: Function, optional: true},
+    data: { type: Object, optional: true },
+    filters: { type: Object, optional: true },
+    onMapClick: { type: Function, optional: true },
 };

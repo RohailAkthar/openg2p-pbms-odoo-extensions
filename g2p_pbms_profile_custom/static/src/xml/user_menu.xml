@@ -6,7 +6,8 @@
             <attribute name="class">oe_topbar_name d-inline-block ms-2 text-start smaller lh-1 text-truncate</attribute>
         </xpath>
         <xpath expr="//mark[hasclass('font-monospace')]" position="attributes">
-            <attribute name="class">d-none</attribute>
+            <attribute name="t-att-class">{'d-none': !env.debug}</attribute>
+            <attribute name="class">d-block font-monospace text-truncate</attribute>
         </xpath>
     </t>
 
