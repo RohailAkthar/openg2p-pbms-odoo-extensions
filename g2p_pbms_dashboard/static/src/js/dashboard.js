@@ -113,8 +113,14 @@ export class PBMSDashboard extends Component {
             const key = payload.label;
             this.state.filters.age_bucket = this.state.filters.age_bucket === key ? null : key;
         } else if (payload.chartType === "region") {
-            this.state.filters.region = this.state.filters.region === payload.label ? null : payload.label;
-            this.state.filters.district = null; 
+            const level = (this.state.charts?.region_data && this.state.charts.region_data.level) || "province";
+            const key = payload.key || payload.label;
+            if (level === "district") {
+                this.state.filters.district = this.state.filters.district === key ? null : key;
+            } else {
+                this.state.filters.region = this.state.filters.region === key ? null : key;
+                this.state.filters.district = null;
+            }
         }
         this.fetchData();
     }
