@@ -14,7 +14,7 @@
                     <div class="o_sidebar_section_title">Refine Data</div>
 
                     <label class="o_input_label">Program</label>
-                    <select class="o_prof_select"
+                    <select t-attf-class="o_prof_select #{state.filters.program_id ? 'is-active' : ''}"
                         t-on-change="(ev) => this.setFilterProgram(ev.target.value || null)">
                         <option value="">All Programs</option>
                         <t t-foreach="state.programs" t-as="program" t-key="program.id">
@@ -25,7 +25,7 @@
                     </select>
 
                     <label class="o_input_label">Gender</label>
-                    <select class="o_prof_select"
+                    <select t-attf-class="o_prof_select #{state.filters.gender ? 'is-active' : ''}"
                         t-on-change="(ev) => this.setFilterGender(ev.target.value || null)">
                         <option value="">All Genders</option>
                         <option value="male" t-att-selected="state.filters.gender == 'male'">Male</option>
@@ -33,7 +33,7 @@
                     </select>
 
                     <label class="o_input_label">Age Bracket</label>
-                    <select class="o_prof_select"
+                    <select t-attf-class="o_prof_select #{state.filters.age_bucket ? 'is-active' : ''}"
                         t-on-change="(ev) => this.setFilterAgeBucket(ev.target.value || null)">
                         <option value="">All Ages</option>
                         <option value="18-69" t-att-selected="state.filters.age_bucket == '18-69'">18 - 69</option>
@@ -66,17 +66,23 @@
                         onMapClick="applyFilterFromMap"
                     />
                     <div class="o_map_kpi_floating">
-                        <div class="o_map_kpi_label">Enrolled Beneficiaries</div>
-                        <div class="o_map_kpi_value">
-                            <t t-esc="state.kpi.total_enrolled || 0" />
+                        <div class="o_map_kpi_card">
+                            <div class="o_map_kpi_label">Enrolled Beneficiaries</div>
+                            <div class="o_map_kpi_value">
+                                <t t-esc="state.kpi.total_enrolled || 0" />
+                            </div>
                         </div>
-                        <div class="o_map_kpi_label mt-3">Disbursed Amount</div>
-                        <div class="o_map_kpi_value">
-                            <t t-esc="state.kpi.total_disbursed_amount.toLocaleString() || 0" />
+                        <div class="o_map_kpi_card">
+                            <div class="o_map_kpi_label">Disbursed Amount</div>
+                            <div class="o_map_kpi_value">
+                                <t t-esc="state.kpi.total_disbursed_amount.toLocaleString() || 0" />
+                            </div>
                         </div>
-                        <div class="o_map_kpi_label mt-3">Budget Allocated</div>
-                        <div class="o_map_kpi_value" style="font-size: 1.5rem;">
-                            <t t-esc="state.kpi.total_budget_allocated.toLocaleString() || 0" />
+                        <div class="o_map_kpi_card">
+                            <div class="o_map_kpi_label">Budget Allocated</div>
+                            <div class="o_map_kpi_value" style="font-size: 1.5rem;">
+                                <t t-esc="state.kpi.total_budget_allocated.toLocaleString() || 0" />
+                            </div>
                         </div>
                     </div>
 
@@ -124,6 +130,7 @@
                                 t-if="state.charts.region_data"
                                 type="'bar'"
                                 labels="state.charts.region_data ? state.charts.region_data.labels || [] : []"
+                                keys="state.charts.region_data ? state.charts.region_data.keys || [] : []"
                                 data="(state.charts.region_data and state.charts.region_data.datasets and state.charts.region_data.datasets[0]) ? state.charts.region_data.datasets[0].data : []"
                                 data_label="'Registrations'"
                                 backgroundColor="['#3b82f6']"
