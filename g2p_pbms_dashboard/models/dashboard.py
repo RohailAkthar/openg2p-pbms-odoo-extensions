@@ -44,7 +44,7 @@ class PBMSDashboardLogic(models.Model):
             return None
 
     @api.model
-    def get_dashboard_data(self, filters=None):
+    def get_dashboard_data(self, filters=None, dashboard_type='beneficiary'):
         filters = filters or {}
         bg_conn = self._get_bg_task_db_conn()
         sr_conn = None
@@ -74,7 +74,7 @@ class PBMSDashboardLogic(models.Model):
         try:
             bg_cr = bg_conn.cursor()
             
-            # 2. Identify Enrolled IDs (Unique Beneficiaries in Approved Enrollment Lists)
+            # 2. Identify Enrolled IDs and their amounts
             # -------------------------------------------------------------------------
             odoo_list_domain = [
                 ('list_stage', '=', 'enrollment'),
@@ -86,16 +86,21 @@ class PBMSDashboardLogic(models.Model):
             enrollment_lists = self.env['g2p.beneficiary.list'].search(odoo_list_domain)
             enrollment_uuids = enrollment_lists.mapped('beneficiary_list_id')
 
-            enrolled_ids = []
+            beneficiary_amounts = {} # registrant_id -> amount
             if enrollment_uuids:
+                # We try to get amount from registrant_details json or assumed from disbursement_quantity if exists
                 query_enrolled = f"""
-                    SELECT DISTINCT jsonb_array_elements(registrant_details::jsonb)->>'registrant_id'
+                    SELECT 
+                        jsonb_array_elements(registrant_details::jsonb)->>'registrant_id' as rid,
+                        COALESCE((jsonb_array_elements(registrant_details::jsonb)->>'amount')::float, 0.0) as amt
                     FROM beneficiary_list_details
                     WHERE beneficiary_list_id IN ({','.join(['%s']*len(enrollment_uuids))})
                 """
                 bg_cr.execute(query_enrolled, tuple(enrollment_uuids))
-                enrolled_ids = [r[0] for r in bg_cr.fetchall()]
+                for rid, amt in bg_cr.fetchall():
+                    beneficiary_amounts[rid] = beneficiary_amounts.get(rid, 0) + amt
             
+            enrolled_ids = list(beneficiary_amounts.keys())
             result['kpi']['total_enrolled'] = len(enrolled_ids)
 
             # 3. Calculate Disbursed and Allocated Amounts from BG Task DB
@@ -130,6 +135,109 @@ class PBMSDashboardLogic(models.Model):
                 return result
 
             sr_cr = sr_conn.cursor()
+
+            region_filter_name = None
+            if filters.get("region"):
+                input_val = str(filters["region"]).strip()
+                sr_cr.execute(
+                    "SELECT name FROM g2p_region WHERE code = %s OR UPPER(name) = UPPER(%s) LIMIT 1",
+                    [input_val, input_val],
+                )
+                row = sr_cr.fetchone()
+                if row: region_filter_name = row[0]
+
+            where = ["p.benf_zan_id = ANY(%s)"]
+            params = [enrolled_ids]
+
+            if region_filter_name:
+                where.append("r.name = %s")
+                params.append(region_filter_name)
+
+            if filters.get("district"):
+                where.append("d.id = %s")
+                params.append(int(filters["district"]))
+
+            if filters.get("gender"):
+                where.append("p.gender = %s")
+                params.append(filters["gender"])
+
+            where_sql = " AND ".join(where)
+
+            # Fetch raw demographic data for all relevant beneficiaries
+            sr_cr.execute(
+                f"""
+                SELECT
+                    p.benf_zan_id,
+                    p.gender,
+                    EXTRACT(YEAR FROM age(current_date, p.birthdate)) AS age_val,
+                    COALESCE(r.name, 'Unknown') AS region_name,
+                    COALESCE(d.name, 'Unknown') AS district_name
+                FROM res_partner p
+                LEFT JOIN g2p_region r ON p.region = r.id
+                LEFT JOIN g2p_district d ON p.district = d.id
+                WHERE {where_sql}
+                """,
+                params,
+            )
+            
+            raw_data = sr_cr.fetchall()
+            
+            # Aggregate locally based on dashboard_type
+            gender_agg = {}
+            age_agg = {
+                "Unknown": 0, "70-75": 0, "76-80": 0, "81-85": 0, 
+                "86-90": 0, "91-95": 0, "96-100": 0, "101+": 0
+            }
+            region_agg = {}
+            district_agg = {}
+
+            for rid, gender, age, region, district in raw_data:
+                val = beneficiary_amounts.get(rid, 0) if dashboard_type == 'monetary' else 1
+                
+                # Gender
+                g_key = (gender or 'Unknown').capitalize()
+                gender_agg[g_key] = gender_agg.get(g_key, 0) + val
+                
+                # Age
+                if age is None:
+                    age_agg["Unknown"] += val
+                elif 70 <= age <= 75: age_agg["70-75"] += val
+                elif 76 <= age <= 80: age_agg["76-80"] += val
+                elif 81 <= age <= 85: age_agg["81-85"] += val
+                elif 86 <= age <= 90: age_agg["86-90"] += val
+                elif 91 <= age <= 95: age_agg["91-95"] += val
+                elif 96 <= age <= 100: age_agg["96-100"] += val
+                elif age > 100: age_agg["101+"] += val
+                
+                # Region/District
+                region_agg[region] = region_agg.get(region, 0) + val
+                district_agg[district] = district_agg.get(district, 0) + val
+
+            result["charts"]["gender"] = gender_agg
+            result["charts"]["age"] = age_agg
+            result["map_data"] = district_agg # Still used for map shading
+
+            # Region Bar Data
+            if not region_filter_name:
+                sorted_regions = sorted(region_agg.items(), key=lambda x: x[0])
+                labels = [n for n, _ in sorted_regions]
+                result["charts"]["region_data"] = {
+                    "level": "province",
+                    "labels": labels,
+                    "keys": labels,
+                    "datasets": [{"label": "Amount" if dashboard_type == 'monetary' else "Enrolled", "data": [v for _, v in sorted_regions], "backgroundColor": "#3b82f6"}]
+                }
+            else:
+                sorted_districts = sorted(district_agg.items(), key=lambda x: x[0])
+                labels = [n for n, _ in sorted_districts]
+                result["charts"]["region_data"] = {
+                    "level": "district",
+                    "labels": labels,
+                    "keys": labels,
+                    "datasets": [{"label": "Amount" if dashboard_type == 'monetary' else "Enrolled", "data": [v for _, v in sorted_districts], "backgroundColor": "#3b82f6"}]
+                }
+
+            return result
 
             # -----------------------------------------------------------------
             # Region filter: accept either code OR name → always filter by NAME
