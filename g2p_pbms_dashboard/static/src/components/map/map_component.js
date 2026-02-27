@@ -201,7 +201,7 @@ export class MapComponent extends Component {
             className: "o_map_text_label",
             html: `
                 <span class="o_map_label_name">${name} <br/></span>
-                <span class="o_map_label_value">${value.toLocaleString()}</span>
+                <span class="o_map_label_value">${value.toLocaleString()} (${percent.toFixed(1)}%)</span>
             `,
             iconSize: [0, 0],
             iconAnchor: [0, 0],
@@ -306,12 +306,13 @@ export class MapComponent extends Component {
                 }),
                 onEachFeature: (f, layer) => {
                     const val = this.getFuzzyValue(f.properties.shapeName, this.props.data);
+                    const total = features.reduce((acc, feat) => acc + this.getFuzzyValue(feat.properties.shapeName, this.props.data), 0);
 
                     this.addValueMarker(
                         layer.getBounds().getCenter(),
                         f.properties.shapeName,
                         val,
-                        0
+                        total ? (val / total) * 100 : 0
                     );
                     layer.on({
                         mouseover: (e) => {
