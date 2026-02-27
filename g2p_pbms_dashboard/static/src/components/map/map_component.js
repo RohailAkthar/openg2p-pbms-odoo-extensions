@@ -73,33 +73,33 @@ export class MapComponent extends Component {
         onWillUpdateProps((nextProps) => {
             this.provinceData = this.computeProvinceData(nextProps.data || {});
 
-            if (!nextProps.filters.region && this.currentLevel === "district") {
-                this.currentLevel = "province";
-                this.selectedProvinceCode = null;
-                this.renderProvinceLayer();
-            } else if (nextProps.filters.region && this.currentLevel === "province") {
-                const code = this.resolveProvinceCode(nextProps.filters.region);
-                if (code) {
-                    this.currentLevel = "district";
-                    this.selectedProvinceCode = code;
-                    this.renderDistrictLayer(code);
+            if (!nextProps.filters.region) {
+                if (this.currentLevel !== "province") {
+                    this.currentLevel = "province";
+                    this.selectedProvinceCode = null;
+                    this.renderProvinceLayer();
                 } else {
                     this.refreshCurrentLayer();
                 }
             } else {
-                this.refreshCurrentLayer();
+                const incomingCode = this.resolveProvinceCode(nextProps.filters.region);
+                if (incomingCode && incomingCode !== this.selectedProvinceCode) {
+                    this.currentLevel = "district";
+                    this.selectedProvinceCode = incomingCode;
+                    this.renderDistrictLayer(incomingCode);
+                } else {
+                    this.refreshCurrentLayer();
+                }
             }
         });
         onWillUnmount(() => this.map && this.map.remove());
     }
 
     onBackClick() {
+        if (this.currentLevel === "province") return;
         if (this.props.onMapClick) {
             this.props.onMapClick({ region: null, district: null });
         }
-        this.currentLevel = "province";
-        this.selectedProvinceCode = null;
-        this.renderProvinceLayer();
     }
 
     shiftFeature(feature, dx, dy) {
@@ -112,13 +112,39 @@ export class MapComponent extends Component {
         };
     }
 
+    getFuzzyValue(shapeName, mapData) {
+        if (!mapData || typeof mapData !== 'object') return 0;
+        
+        // 1. Direct match (best case)
+        if (mapData[shapeName] !== undefined) return mapData[shapeName];
+
+        const sn = String(shapeName).toLowerCase().trim();
+        let total = 0;
+        let found = false;
+
+        // 2. Fuzzy match: Odoo might have "Magharibi A" but map has "Magharibi"
+        // We look for any keys that contain the shapeName as a whole word or prefix
+        for (const [key, value] of Object.entries(mapData)) {
+            const k = String(key).toLowerCase().trim();
+            if (k === sn || k.startsWith(sn + " ") || k.endsWith(" " + sn) || k.includes(" " + sn + " ")) {
+                total += value;
+                found = true;
+            }
+        }
+        
+        return found ? total : 0;
+    }
+
     computeProvinceData(mapData) {
         const result = {};
         if (!this.districtGeoJson?.features) return result;
         for (const f of this.districtGeoJson.features) {
             const d = f.properties?.shapeName;
             const p = f.properties?.province_code;
-            if (p) result[p] = (result[p] || 0) + (mapData[d] || 0);
+            if (p) {
+                const val = this.getFuzzyValue(d, mapData);
+                result[p] = (result[p] || 0) + val;
+            }
         }
         return result;
     }
@@ -175,7 +201,7 @@ export class MapComponent extends Component {
             className: "o_map_text_label",
             html: `
                 <span class="o_map_label_name">${name} <br/></span>
-                <span class="o_map_label_value">${value.toLocaleString()}</span>
+                <span class="o_map_label_value">${value.toLocaleString()} (${percent.toFixed(1)}%)</span>
             `,
             iconSize: [0, 0],
             iconAnchor: [0, 0],
@@ -271,7 +297,7 @@ export class MapComponent extends Component {
                 style: (f) => ({
                     fillColor: this.getGradientColor(
                         parentColor,
-                        this.props.data[f.properties.shapeName] || 0,
+                        this.getFuzzyValue(f.properties.shapeName, this.props.data),
                         500
                     ),
                     weight: 1.5,
@@ -279,13 +305,14 @@ export class MapComponent extends Component {
                     fillOpacity: 0.85,
                 }),
                 onEachFeature: (f, layer) => {
-                    const val = this.props.data[f.properties.shapeName] || 0;
+                    const val = this.getFuzzyValue(f.properties.shapeName, this.props.data);
+                    const total = features.reduce((acc, feat) => acc + this.getFuzzyValue(feat.properties.shapeName, this.props.data), 0);
 
                     this.addValueMarker(
                         layer.getBounds().getCenter(),
                         f.properties.shapeName,
                         val,
-                        0
+                        total ? (val / total) * 100 : 0
                     );
                     layer.on({
                         mouseover: (e) => {

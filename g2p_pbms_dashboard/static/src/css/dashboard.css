@@ -89,6 +89,30 @@
     display: block;
 }
 
+.o_filter_pill {
+    display: flex;
+    align-items: center;
+    background: #334155;
+    color: #fff;
+    border: 1px solid #475569;
+    border-radius: 4px;
+    padding: 6px 10px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.o_filter_pill .fa-times-circle:hover {
+    color: #f87171;
+}
+
+.text-muted.small.italic {
+    font-size: 0.8rem;
+    color: #64748b;
+    font-style: italic;
+    margin-bottom: 0.5rem;
+}
+
 .o_prof_select {
     width: 100%;
     background: #1e293b;
