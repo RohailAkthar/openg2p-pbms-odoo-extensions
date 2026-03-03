@@ -57,17 +57,24 @@ export class G2PBeneficiariesComponent extends Component {
         const result = await this.orm.call(
             'g2p.bgtask.summary.wizard',
             'get_beneficiaries',
-            [this.props.record.resId , this.state.page, this.state.pageSize, this.getEvaluatedDomain()],
+            [this.props.record.resId, this.state.page, this.state.pageSize, this.getEvaluatedDomain()],
             {},
         );
-        if (result.message) {
-            this.state.records = result.message.beneficiaries;
-            this.state.totalCount = result.message.total_beneficiary_count;
-        } else {
-            this.state.records = result.records;
-            this.state.totalCount = result.total_count;
+
+        if (result?.response_body) {
+            const body = result.response_body;
+            this.state.records = body.response_payload?.beneficiaries || [];
+            this.state.totalCount = body.pagination_response?.number_of_items || 0;
+            this.state.totalPages = body.pagination_response?.number_of_pages || 1;
+        } else if (result?.message) {
+            this.state.records = result.message.beneficiaries || [];
+            this.state.totalCount = result.message.total_beneficiary_count || 0;
+            this.state.totalPages = Math.ceil(this.state.totalCount / this.state.pageSize) || 1;
+        } else if (result) {
+            this.state.records = result.records || [];
+            this.state.totalCount = result.total_count || 0;
+            this.state.totalPages = Math.ceil(this.state.totalCount / this.state.pageSize) || 1;
         }
-        this.state.totalPages = Math.ceil(this.state.totalCount / this.state.pageSize) || 1;
     }
 
     async nextPage() {
