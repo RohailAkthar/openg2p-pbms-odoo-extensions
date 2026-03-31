@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <templates xml:space="preserve">
     <t t-name="g2p_beneficiaries_info_tpl">
-        <div class="g2p-beneficiaries" style="font-size: 18px;">
+        <div class="g2p-beneficiaries" style="font-size: 14px;">
             <!-- Search input with search and arch buttons -->
             <t t-if="state.searched">
                 <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h3 class="mb-0"><t t-esc="state.title"/></h3>
+                    <h3 class="mb-0 fs-5"><t t-esc="state.title"/></h3>
                     <div class="o_beneficiary_pager_top d-flex align-items-center">
                         <button type="button" class="btn btn-sm btn-light border mr-2" t-on-click="prevPage" t-att-disabled="state.page &lt;= 1">
                             <i class="fa fa-chevron-left"/>
@@ -25,14 +25,12 @@
                             <tr>
                                 <th style="width: 40px;"></th> <!-- Toggle arrow -->
                                 <t t-if="state.target_registry === 'individual'">
-                                    <th class="text-center">Name</th>
+                                    <th class="text-left">Name</th>
                                     <th class="text-center">Gender</th>
                                     <th class="text-center">DOB</th>
                                     <th class="text-center">Region</th>
                                     <th class="text-center">District</th>
                                     <th class="text-center">Zan ID</th>
-                                    <th class="text-center">Address</th>
-                                    <th class="text-center">Phone</th>
                                 </t>
                             </tr>
                         </thead>
@@ -44,7 +42,7 @@
                                         <i t-attf-class="fa #{state.expandedRecordId === record.id ? 'fa-chevron-down' : 'fa-chevron-right'} text-primary"/>
                                     </td>
                                     <t t-if="state.target_registry === 'individual'">
-                                        <td class="align-middle font-weight-bold text-center"><t t-esc="record.name"/></td>
+                                        <td class="align-middle font-weight-bold text-left"><t t-esc="record.name"/></td>
                                         <td class="align-middle text-center">
                                             <span t-attf-class="badge #{record.gender === 'Male' ? 'badge-info' : record.gender === 'Female' ? 'badge-danger' : 'badge-secondary'} p-2">
                                                 <t t-esc="record.gender"/>
@@ -54,8 +52,6 @@
                                         <td class="align-middle text-center"><t t-esc="record.region_name"/></td>
                                         <td class="align-middle text-center"><t t-esc="record.district_name"/></td>
                                         <td class="align-middle text-monospace text-muted text-center"><t t-esc="record.benf_zan_id"/></td>
-                                        <td class="align-middle text-center"><t t-esc="record.street"/></td>
-                                        <td class="align-middle text-center"><t t-esc="record.phone"/></td>
                                     </t>
                                 </tr>
                                 <!-- Detailed Nominee Row (Expandable) -->
@@ -87,6 +83,14 @@
                                                                 <div class="mb-3">
                                                                     <div class="text-uppercase text-muted small">Do you have health insurance?</div>
                                                                     <div class="font-weight-bold"><t t-esc="record.has_health_insurance or '-'"/></div>
+                                                                </div>
+                                                                <div class="mb-3">
+                                                                    <div class="text-uppercase text-muted small">Address</div>
+                                                                    <div class="font-weight-bold"><t t-esc="record.street or '-'"/></div>
+                                                                </div>
+                                                                <div class="mb-3">
+                                                                    <div class="text-uppercase text-muted small">Phone</div>
+                                                                    <div class="font-weight-bold"><t t-esc="record.phone or '-'"/></div>
                                                                 </div>
                                                                 <div class="mb-3">
                                                                     <div class="text-uppercase text-muted small">Post Code</div>

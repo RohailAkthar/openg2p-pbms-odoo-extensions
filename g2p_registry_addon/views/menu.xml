@@ -4,7 +4,7 @@
     <menuitem id="menu_g2p_individual_registry"
               name="Individual Registry"
               parent="g2p_pbms.menu_g2p_registry"
-              action="action_g2p_individual_registry"
+              action="g2p_registry_addon.action_g2p_individual_registry"
               sequence="3"/>
 </odoo>
 

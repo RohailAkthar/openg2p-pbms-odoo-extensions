@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <!-- Actions -->
-    <record id="action_g2p_individual_registry" model="ir.actions.act_window">
+    <!-- <record id="action_g2p_individual_registry" model="ir.actions.act_window">
         <field name="name">Individual Registry</field>
         <field name="res_model">res.partner</field>
+        <field name="domain">[('is_registrant', '=', True)]</field>
         <field name="view_mode">tree,form</field>
-    </record>
+    </record> -->
     
-    <record id="view_g2p_individual_registry_form" model="ir.ui.view">
-        <field name="name">g2p.individual.registry.form</field>
+    <record id="view_g2p_individual_registry_form_custom" model="ir.ui.view">
+        <field name="name">g2p.individual.registry.form_custom</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="model">res.partner</field>
+        <!-- <field name="context">{'default_is_registrant': True}</field> -->
         <field name="arch" type="xml">
+            <xpath expr="//form" position="replace">
             <form string="G2P Individual Registry" create="0">
                 <sheet>
                     <group>
@@ -23,10 +27,11 @@
                     </group>
                 </sheet>
             </form>
+            </xpath>
         </field>
     </record>
-    <record id="view_g2p_individual_registry_tree" model="ir.ui.view">
-        <field name="name">g2p.individual.registry.tree</field>
+    <!-- <record id="base.view_partner_tree" model="ir.ui.view">
+        <field name="name">g2p.individual.registry.tree_custom</field>
         <field name="model">res.partner</field>
         <field name="arch" type="xml">
             <tree string="G2P Individual Registry" create="0">
@@ -37,5 +42,41 @@
                 <field name="gender"/>
             </tree>
         </field>
+    </record> -->
+
+    <record id="view_partner_tree_g2p_individual_registry" model="ir.ui.view">
+        <field name="name">res.partner.tree.g2p.individual.registry</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_tree"/>
+        <!-- Optional: higher priority = applied later if multiple inheritances exist -->
+        <!-- <field name="priority" eval="20"/> -->
+        
+        <field name="arch" type="xml">
+            <!-- This completely replaces the original <tree> tag and all its content -->
+            <xpath expr="//tree" position="replace">
+                <tree string="G2P Individual Registry" create="0">
+                    <field name="id"/>
+                    <field name="name"/>
+                    <field name="birthdate"/>
+                    <field name="age"/>
+                    <field name="gender"/>
+                    <field name="benf_zan_id"/>
+                    <!-- Add more of your custom fields here if needed, e.g. -->
+                    <!-- <field name="your_g2p_registry_number"/> -->
+                    <!-- <field name="registration_date"/> -->
+                </tree>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_g2p_individual_registry" model="ir.actions.act_window">
+        <field name="name">Individual Registry</field>
+        <field name="res_model">res.partner</field>
+        <field name="domain">[('is_registrant', '=', True)]</field>
+        <field name="views" eval="[
+        (ref('g2p_registry_addon.view_partner_tree_g2p_individual_registry'), 'tree'),
+        (ref('g2p_registry_addon.view_g2p_individual_registry_form_custom'), 'form')
+    ]"/>
+    <field name="context">{'default_is_registrant': True}</field>
     </record>
 </odoo>

@@ -22,6 +22,7 @@ class ResPartner(models.Model):
     gender = fields.Selection(
         selection=[("male", "Male"), ("female", "Female")], string="Gender"
     )
+    is_registrant = fields.Boolean(string="Is Registrant", default=False)
 
     @api.depends("birthdate")
     def _compute_age(self):

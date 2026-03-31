@@ -40,7 +40,7 @@
 		</xpath>
 		<button type="submit" name="redirect" position="replace" />
 
-		<xpath expr="//label[@for='password']" position="after">
+		<xpath expr="//div[contains(@t-attf-class, 'oe_login_buttons')]" position="inside">
 			<span class="reset-password">
 				<a t-if="reset_password_enabled" t-attf-href="/web/reset_password?{{ keep_query() }}">Reset Password</a>
 			</span>

@@ -5,7 +5,7 @@
     "description": "OpenG2P Registry Addon",
     "category": "G2P",
     "license": "LGPL-3",
-    "depends": ["base_setup", "web", "g2p_pbms"],
+    "depends": ["base_setup", "web", "g2p_pbms","base"],
     "data": [
         "security/ir.model.access.csv",
         "views/eligibility/eligibility_rule_view.xml",
@@ -14,6 +14,7 @@
         "views/registry/individual_registry_view.xml",
         "views/bgtask/bgtask_view.xml",
         "views/menu.xml",
+        
     ],
     "assets": {
         "web.assets_backend": [

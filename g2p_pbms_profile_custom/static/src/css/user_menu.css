@@ -4,3 +4,11 @@
     font-size: 14px;
     vertical-align: middle;
 }
+
+/* Hide Discuss and Activities icons in the navbar */
+.o-mail-MessagingMenu, 
+.o-mail-ActivityMenu,
+.o_MessagingMenu,
+.o_ActivityMenu {
+    display: none !important;
+}

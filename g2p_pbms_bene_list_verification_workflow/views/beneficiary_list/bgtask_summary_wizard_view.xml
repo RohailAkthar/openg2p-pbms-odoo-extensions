@@ -29,7 +29,8 @@
                 name="action_export_beneficiaries_csv"
                 type="object"
                 string="Export Beneficiaries"
-                class="oe_highlight"/>
+                class="oe_highlight"
+                invisible="not((list_stage == 'enrollment' and (show_approve_enrolment_button or list_workflow_status != 'initiated')) or (list_stage == 'disbursement' and (show_approve_disbursement_button or list_workflow_status != 'initiated')))"/>
         </xpath>
         </field>
     </record>

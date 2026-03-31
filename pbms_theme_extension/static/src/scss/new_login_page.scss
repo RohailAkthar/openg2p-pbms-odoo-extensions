@@ -27,6 +27,16 @@ main:has(.g2p_login) {
 .g2p_login .oe_login_buttons .btn-primary {
     background-color: #e0711a;
     border-color: #e0711a;
+    width: 100% !important;
+    margin: 0 !important;
+}
+
+.g2p_login .oe_login_buttons {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 10px;
+    margin-top: 20px;
 }
 
 /* Button hover style */
@@ -101,12 +111,18 @@ main:has(.g2p_login) {
 // .g2p_login .oe_reset_password_form {
 //     height: 400px !important;
 // }
-.g2p_login .reset-password,
+.g2p_login .reset-password {
+    color: #e0711a;
+    text-decoration: none;
+    font-size: 13px;
+    white-space: nowrap;
+    text-align: right;
+    width: 100% !important;
+}
+
 .g2p_login .reset-password a {
     color: #e0711a;
     text-decoration: none;
-    float: right;
-    font-size: 13px;
 }
 
 .g2p_login form label {
