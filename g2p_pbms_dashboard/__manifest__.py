@@ -2,7 +2,7 @@
     'name': 'G2P PBMS Dashboard',
     'version': '1.0',
     'category': 'OpenG2P',
-    'depends': ['web', 'g2p_pbms'],
+    'depends': ['web', 'g2p_pbms', 'g2p_social_registry'],
     'data': [
         'security/ir.model.access.csv',
         'views/dashboard_menu.xml',

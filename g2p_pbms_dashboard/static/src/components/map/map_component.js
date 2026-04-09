@@ -25,42 +25,7 @@ export class MapComponent extends Component {
                 await loadCSS("https://unpkg.com/leaflet@1.9.4/dist/leaflet.css");
                 await loadJS("https://unpkg.com/leaflet@1.9.4/dist/leaflet.js");
 
-                // Fetch Data from local module
-                const [provinceRes, districtRes] = await Promise.all([
-                    fetch("/g2p_pbms_dashboard/static/lib/tz.json"),
-                    fetch("/g2p_pbms_dashboard/static/lib/geoBoundaries-TZA-ADM2.geojson"),
-                ]);
-
-                if (!provinceRes.ok || !districtRes.ok) throw new Error("GeoJSON Load Error");
-
-                const fullProvinceData = await provinceRes.json();
-                const fullDistrictData = await districtRes.json();
-
-                // --- CONFIGURATION ---
-                const zanzibarCodes = ["TZ06", "TZ07", "TZ10", "TZ11", "TZ15"];
-
-                this.provinceGeoJson = {
-                    type: "FeatureCollection",
-                    features: fullProvinceData.features
-                        .filter((f) => zanzibarCodes.includes(f.properties?.id))
-                        .map((f) =>
-                            this.PEMBA_PROVINCE_CODES.includes(f.properties.id)
-                                ? this.shiftFeature(f, this.SHIFT_X, this.SHIFT_Y)
-                                : f
-                        ),
-                };
-
-                this.districtGeoJson = {
-                    type: "FeatureCollection",
-                    features: (fullDistrictData.features || [])
-                        .filter((f) => zanzibarCodes.includes(f.properties?.province_code))
-                        .map((f) =>
-                            this.PEMBA_PROVINCE_CODES.includes(f.properties?.province_code)
-                                ? this.shiftFeature(f, this.SHIFT_X, this.SHIFT_Y)
-                                : f
-                        ),
-                };
-
+                this.syncGeoJson(this.props.map_geojson);
                 this.provinceData = this.computeProvinceData(this.props.data || {});
             } catch (err) {
                 console.error("Map Init Failed:", err);
@@ -70,7 +35,11 @@ export class MapComponent extends Component {
         onMounted(() => {
             if (this.mapRef.el) this.renderMap();
         });
+
         onWillUpdateProps((nextProps) => {
+            if (JSON.stringify(nextProps.map_geojson) !== JSON.stringify(this.props.map_geojson)) {
+                this.syncGeoJson(nextProps.map_geojson);
+            }
             this.provinceData = this.computeProvinceData(nextProps.data || {});
 
             if (!nextProps.filters.region) {
@@ -93,6 +62,38 @@ export class MapComponent extends Component {
             }
         });
         onWillUnmount(() => this.map && this.map.remove());
+    }
+
+    syncGeoJson(mapGeojson) {
+        if (!mapGeojson) {
+            this.provinceGeoJson = { type: "FeatureCollection", features: [] };
+            this.districtGeoJson = { type: "FeatureCollection", features: [] };
+            return;
+        }
+        
+        const zanzibarCodes = ["TZ06", "TZ07", "TZ10", "TZ11", "TZ15"];
+
+        this.provinceGeoJson = {
+            type: "FeatureCollection",
+            features: (mapGeojson.provinces?.features || [])
+                .filter((f) => zanzibarCodes.includes(f.properties?.id))
+                .map((f) =>
+                    this.PEMBA_PROVINCE_CODES.includes(f.properties.id)
+                        ? this.shiftFeature(f, this.SHIFT_X, this.SHIFT_Y)
+                        : f
+                ),
+        };
+
+        this.districtGeoJson = {
+            type: "FeatureCollection",
+            features: (mapGeojson.districts?.features || [])
+                .filter((f) => zanzibarCodes.includes(f.properties?.province_code))
+                .map((f) =>
+                    this.PEMBA_PROVINCE_CODES.includes(f.properties?.province_code)
+                        ? this.shiftFeature(f, this.SHIFT_X, this.SHIFT_Y)
+                        : f
+                ),
+        };
     }
 
     onBackClick() {
@@ -201,7 +202,7 @@ export class MapComponent extends Component {
             className: "o_map_text_label",
             html: `
                 <span class="o_map_label_name">${name} <br/></span>
-                <span class="o_map_label_value">${value.toLocaleString()} (${percent.toFixed(1)}%)</span>
+                <span class="o_map_label_value">${value.toLocaleString()}</span>
             `,
             iconSize: [0, 0],
             iconAnchor: [0, 0],
@@ -215,6 +216,7 @@ export class MapComponent extends Component {
     }
 
     renderProvinceLayer() {
+        if (!this.provinceGeoJson || !this.provinceGeoJson.features.length) return;
         if (this.geoJsonLayer) this.map.removeLayer(this.geoJsonLayer);
         this.markerLayer.clearLayers();
 
@@ -276,6 +278,7 @@ export class MapComponent extends Component {
     }
 
     renderDistrictLayer(code) {
+        if (!this.districtGeoJson) return;
         if (this.geoJsonLayer) this.map.removeLayer(this.geoJsonLayer);
         this.markerLayer.clearLayers();
 
@@ -306,13 +309,12 @@ export class MapComponent extends Component {
                 }),
                 onEachFeature: (f, layer) => {
                     const val = this.getFuzzyValue(f.properties.shapeName, this.props.data);
-                    const total = features.reduce((acc, feat) => acc + this.getFuzzyValue(feat.properties.shapeName, this.props.data), 0);
 
                     this.addValueMarker(
                         layer.getBounds().getCenter(),
                         f.properties.shapeName,
                         val,
-                        total ? (val / total) * 100 : 0
+                        0
                     );
                     layer.on({
                         mouseover: (e) => {
@@ -340,6 +342,7 @@ export class MapComponent extends Component {
 MapComponent.template = "g2p_pbms_dashboard.MapComponent";
 MapComponent.props = {
     data: {type: Object, optional: true},
+    map_geojson: {type: Object, optional: true},
     filters: {type: Object, optional: true},
     onMapClick: {type: Function, optional: true},
 };

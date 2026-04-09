@@ -26,6 +26,10 @@ export class PBMSDashboard extends Component {
                 monetary_region_data: {},
             },
             map_data: {},
+            map_geojson: {
+                provinces: { type: "FeatureCollection", features: [] },
+                districts: { type: "FeatureCollection", features: [] }
+            },
             programs: [],
             loading: true,
             filters: {
@@ -82,6 +86,11 @@ export class PBMSDashboard extends Component {
                 
                 // Update map data
                 this.state.map_data = data.map_data;
+                
+                // Update map GeoJSON
+                if (data.map_geojson) {
+                    this.state.map_geojson = data.map_geojson;
+                }
                 
                 // Load programs
                 this.state.programs = data.programs;
