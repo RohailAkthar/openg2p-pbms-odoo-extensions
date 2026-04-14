@@ -23,6 +23,14 @@
                 <attribute name="groups"></attribute> <!-- Remove groups attribute -->
                 <attribute name="invisible">not(show_verification_stage_disbursement_button and list_stage == 'disbursement' and list_workflow_status == 'initiated')</attribute>
             </xpath>
+            <!-- Export Beneficiaries CSV button (PBMS only) -->
+            <xpath expr="//button[@name='action_record_verifications'][1]" position="after">
+            <button
+                name="action_export_beneficiaries_csv"
+                type="object"
+                string="Export Beneficiaries"
+                class="oe_highlight"/>
+        </xpath>
         </field>
     </record>
 </odoo>

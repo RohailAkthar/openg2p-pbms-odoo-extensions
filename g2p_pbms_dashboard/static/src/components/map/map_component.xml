@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates>
+    <t t-name="g2p_pbms_dashboard.MapComponent" owl="1">
+        <div class="o_map_root">
+            <div t-ref="map" class="o_map_container"></div>
+            <button
+                t-if="props.filters and props.filters.region"
+                class="o_map_back_btn"
+                t-on-click="onBackClick"
+                type="button"
+            >
+                Back to provinces
+            </button>
+        </div>
+    </t>
+</templates>
