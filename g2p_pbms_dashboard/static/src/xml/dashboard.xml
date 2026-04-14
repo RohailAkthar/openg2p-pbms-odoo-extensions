@@ -78,6 +78,7 @@
                 <div class="o_main_map_section">
                     <MapComponent
                         data="state.map_data"
+                        map_geojson="state.map_geojson"
                         filters="state.filters"
                         onMapClick="applyFilterFromMap"
                     />
@@ -87,12 +88,6 @@
                                 <div class="o_map_kpi_label">Enrolled Beneficiaries</div>
                                 <div class="o_map_kpi_value">
                                     <t t-esc="state.kpi.total_enrolled || 0" />
-                                </div>
-                            </div>
-                            <div class="o_map_kpi_card">
-                                <div class="o_map_kpi_label">Active Programs</div>
-                                <div class="o_map_kpi_value">
-                                    <t t-esc="state.kpi.program_count || 0" />
                                 </div>
                             </div>
                         </t>
