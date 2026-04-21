@@ -4,8 +4,8 @@
     'category': 'OpenG2P',
     'depends': ['web', 'g2p_pbms'],
     'data': [
-        'security/ir.model.access.csv',
         'security/pbms_dashboard_security.xml',
+        'security/ir.model.access.csv',
         'views/dashboard_menu.xml',
         'views/dashboard_template.xml',
         'views/res_config_settings_view.xml',
