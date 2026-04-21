@@ -2,19 +2,31 @@
 
 :root {
     /* Palette: Corporate Blue & Slate */
-    --z-sidebar-bg: #0f172a;      /* Darkest Navy */
+    --z-sidebar-bg: #0f172a;
+    /* Darkest Navy */
 
     --z-sidebar-width: 260px;
     --z-chart-panel-width: 520px;
-    
-    --z-primary: #2563eb;         /* Professional Blue */
+
+    --z-primary: #2563eb;
+    /* Professional Blue */
     --z-primary-hover: #1d4ed8;
-    
-    --z-bg-body: #f8fafc;         /* Very Light Grey/White */
+
+    --z-bg-body: #f8fafc;
+    /* Very Light Grey/White */
     --z-border: #e2e8f0;
     --z-text-main: #334155;
     --z-text-light: #64748b;
-    
+
+}
+
+/* Hide Odoo top navbar while dashboard action is active */
+body.o_pbms_dashboard_mode .o_main_navbar {
+    display: none !important;
+}
+
+body.o_pbms_dashboard_mode .o_action_manager {
+    top: 0 !important;
 }
 
 .o_zanzibar_dashboard {
@@ -38,7 +50,7 @@
     gap: 2rem;
     flex-shrink: 0;
     z-index: 50;
-    box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .o_sidebar_header h1 {
@@ -54,11 +66,12 @@
 
 /* Sidebar KPI */
 .o_sidebar_kpi {
-    border-top: 1px solid rgba(255,255,255,0.1);
-    border-bottom: 1px solid rgba(255,255,255,0.1);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     padding: 1.5rem 0;
     text-align: left;
 }
+
 .o_kpi_label_sidebar {
     display: block;
     font-size: 0.75rem;
@@ -66,6 +79,7 @@
     color: #94a3b8;
     margin-bottom: 5px;
 }
+
 .o_kpi_val_sidebar {
     font-size: 2rem;
     font-weight: 700;
@@ -130,10 +144,25 @@
     background-size: 5px 5px, 5px 5px;
     background-repeat: no-repeat;
 }
-.o_prof_select:focus { border-color: var(--z-primary); }
+
+.o_prof_select:focus {
+    border-color: var(--z-primary);
+}
+
 .o_prof_select.is-active {
     border-color: rgba(37, 99, 235, 0.7);
     box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
+}
+
+/* Improve native dropdown list readability across browsers */
+.o_prof_select option {
+    color: #0f172a;
+    background: #ffffff;
+}
+
+.o_prof_select option:checked {
+    color: #ffffff;
+    background: #2563eb;
 }
 
 .o_btn_apply {
@@ -148,7 +177,10 @@
     cursor: pointer;
     transition: background 0.2s;
 }
-.o_btn_apply:hover { background: var(--z-primary-hover); }
+
+.o_btn_apply:hover {
+    background: var(--z-primary-hover);
+}
 
 .o_btn_clear {
     background: transparent;
@@ -160,11 +192,157 @@
     font-size: 0.85rem;
     cursor: pointer;
 }
-.o_btn_clear:hover { color: #fff; }
+
+.o_btn_clear:hover {
+    color: #fff;
+}
+
+.o_sidebar_lang_switcher {
+    margin-top: 0.9rem;
+    padding-top: 0.8rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.o_sidebar_lang_label {
+    display: block;
+    color: #cbd5e1;
+    font-size: 0.78rem;
+    margin-bottom: 0.45rem;
+}
+
+.o_lang_btn_group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.45rem;
+}
+
+.o_lang_btn {
+    border: 1px solid #475569;
+    background: #1e293b;
+    color: #cbd5e1;
+    border-radius: 4px;
+    padding: 0.38rem 0.55rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    cursor: pointer;
+}
+
+.o_lang_btn:hover {
+    color: #ffffff;
+    border-color: #64748b;
+}
+
+.o_lang_btn.active {
+    color: #ffffff;
+    border-color: rgba(37, 99, 235, 0.8);
+    background: rgba(37, 99, 235, 0.35);
+}
+
+.o_sidebar_user_panel {
+    margin-top: 1rem;
+    padding-top: 0.9rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.o_sidebar_user_name {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #e2e8f0;
+    font-size: 0.85rem;
+    background: rgba(148, 163, 184, 0.12);
+    border: 1px solid rgba(148, 163, 184, 0.22);
+    border-radius: 6px;
+    padding: 0.5rem 0.65rem;
+}
+
+.o_sidebar_user_name i {
+    color: #93c5fd;
+}
+
+.o_sidebar_user_name span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.o_btn_logout {
+    width: 100%;
+    padding: 9px 10px;
+    background: transparent;
+    color: #fca5a5;
+    border: 1px solid rgba(248, 113, 113, 0.35);
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 0.88rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.o_btn_logout:hover {
+    background: rgba(220, 38, 38, 0.2);
+    color: #fecaca;
+}
 
 
 /* ----- 2. MAIN AREA ----- */
 .o_dashboard_main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Dashboard Tabs */
+.o_dashboard_tabs {
+    display: flex;
+    background: white;
+    border-bottom: 1px solid var(--z-border);
+    padding: 0 1.5rem;
+    gap: 0.5rem;
+}
+
+.o_tab_btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 1rem 1.5rem;
+    background: transparent;
+    border: none;
+    border-bottom: 3px solid transparent;
+    color: var(--z-text-light);
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-radius: 0;
+    margin-bottom: -1px;
+}
+
+.o_tab_btn:hover {
+    color: var(--z-text-main);
+    background: rgba(37, 99, 235, 0.05);
+}
+
+.o_tab_btn.active {
+    color: var(--z-primary);
+    border-bottom-color: var(--z-primary);
+    background: rgba(37, 99, 235, 0.08);
+}
+
+.o_tab_btn i {
+    font-size: 1rem;
+}
+
+/* Main content area with tabs */
+.o_main_content_area {
     flex: 1;
     display: flex;
     flex-direction: row;
@@ -182,8 +360,10 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1.25rem;
-    align-content: start;           /* prevents stretching issues */
+    align-content: start;
+    /* prevents stretching issues */
 }
+
 /* Generic Card Style */
 .o_chart_card {
     display: flex;
@@ -191,8 +371,9 @@
     min-height: 260px;
     background: white;
     border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-    overflow: hidden;               /* important */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    /* important */
 }
 
 .o_chart_header {
@@ -211,7 +392,8 @@
 .o_chart_body {
     flex: 1 1 auto;
     position: relative;
-    min-height: 0;                  /* CRITICAL fix for flex overflow */
+    min-height: 0;
+    /* CRITICAL fix for flex overflow */
     padding: 0.75rem;
     overflow: hidden;
 }
@@ -226,13 +408,16 @@
 }
 
 .o_card_region {
-    grid-column: 1 / -1;            /* span both columns */
-    min-height: 380px;              /* more space for bar chart */
+    grid-column: 1 / -1;
+    /* span both columns */
+    min-height: 380px;
+    /* more space for bar chart */
 }
 
 .o_card_region .o_chart_body {
     padding: 5rem 1.25rem 1.25rem;
 }
+
 /* --- RIGHT PANEL: MAP --- */
 .o_main_map_section {
     flex: 1;
@@ -253,7 +438,7 @@
     background: #fff;
     padding: 0.5rem 1rem;
     border-radius: 4px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     z-index: 1000;
     font-size: 0.85rem;
     font-weight: 600;

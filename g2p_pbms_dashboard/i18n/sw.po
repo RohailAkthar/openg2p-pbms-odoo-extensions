@@ -1,0 +1,157 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* g2p_pbms_dashboard
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-04-15 00:00+0000\n"
+"PO-Revision-Date: 2026-04-15 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: sw\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: g2p_pbms_dashboard
+msgid "PBMS Dashboard"
+msgstr "Dashibodi ya PBMS"
+
+#. module: g2p_pbms_dashboard
+msgid "Refine Data"
+msgstr "Chuja Data"
+
+#. module: g2p_pbms_dashboard
+msgid "Program"
+msgstr "Mpango"
+
+#. module: g2p_pbms_dashboard
+msgid "All Programs"
+msgstr "Mipango Yote"
+
+#. module: g2p_pbms_dashboard
+msgid "Region"
+msgstr "Mkoa"
+
+#. module: g2p_pbms_dashboard
+msgid "District"
+msgstr "Wilaya"
+
+#. module: g2p_pbms_dashboard
+msgid "Select on map"
+msgstr "Chagua kwenye ramani"
+
+#. module: g2p_pbms_dashboard
+msgid "Gender"
+msgstr "Jinsia"
+
+#. module: g2p_pbms_dashboard
+msgid "All Genders"
+msgstr "Jinsia Zote"
+
+#. module: g2p_pbms_dashboard
+msgid "Male"
+msgstr "Mwanaume"
+
+#. module: g2p_pbms_dashboard
+msgid "Female"
+msgstr "Mwanamke"
+
+#. module: g2p_pbms_dashboard
+msgid "Age Bracket"
+msgstr "Kundi la Umri"
+
+#. module: g2p_pbms_dashboard
+msgid "All Ages"
+msgstr "Umri Wote"
+
+#. module: g2p_pbms_dashboard
+msgid "Apply Filters"
+msgstr "Tumia Vichujio"
+
+#. module: g2p_pbms_dashboard
+msgid "Reset View"
+msgstr "Weka Upya Mwonekano"
+
+#. module: g2p_pbms_dashboard
+msgid "Language"
+msgstr "Lugha"
+
+#. module: g2p_pbms_dashboard
+msgid "Logout"
+msgstr "Toka"
+
+#. module: g2p_pbms_dashboard
+msgid "Beneficiary"
+msgstr "Mnufaika"
+
+#. module: g2p_pbms_dashboard
+msgid "Amount"
+msgstr "Kiasi"
+
+#. module: g2p_pbms_dashboard
+msgid "Enrolled Beneficiaries"
+msgstr "Wanufaika Walioandikishwa"
+
+#. module: g2p_pbms_dashboard
+msgid "Total Disbursed"
+msgstr "Jumla Iliyolipwa"
+
+#. module: g2p_pbms_dashboard
+msgid "Budget Allocated"
+msgstr "Bajeti Iliyotengwa"
+
+#. module: g2p_pbms_dashboard
+msgid "Age Distribution (Count)"
+msgstr "Mgawanyo wa Umri (Idadi)"
+
+#. module: g2p_pbms_dashboard
+msgid "Age Distribution (Amount)"
+msgstr "Mgawanyo wa Umri (Kiasi)"
+
+#. module: g2p_pbms_dashboard
+msgid "Gender Distribution (Count)"
+msgstr "Mgawanyo wa Jinsia (Idadi)"
+
+#. module: g2p_pbms_dashboard
+msgid "Gender Distribution (Amount)"
+msgstr "Mgawanyo wa Jinsia (Kiasi)"
+
+#. module: g2p_pbms_dashboard
+msgid "Regional Distribution (Count)"
+msgstr "Mgawanyo wa Kieneo (Idadi)"
+
+#. module: g2p_pbms_dashboard
+msgid "Regional Distribution (Amount)"
+msgstr "Mgawanyo wa Kieneo (Kiasi)"
+
+#. module: g2p_pbms_dashboard
+msgid "Updating Data..."
+msgstr "Inasasisha data..."
+
+#. module: g2p_pbms_dashboard
+msgid "No data available"
+msgstr "Hakuna data inayopatikana"
+
+#. module: g2p_pbms_dashboard
+msgid "Dashboard Viewer"
+msgstr "Mtazamaji wa Dashibodi"
+
+#. module: g2p_pbms_dashboard
+msgid "PBMS Dashboard Access"
+msgstr "Ufikiaji wa Dashibodi ya PBMS"
+
+#. module: g2p_pbms_dashboard
+msgid "Access Denied"
+msgstr "Ufikiaji Umekataliwa"
+
+#. module: g2p_pbms_dashboard
+msgid "You do not have access to view the dashboard."
+msgstr "Huna ruhusa ya kuona dashibodi."
+
+#. module: g2p_pbms_dashboard
+msgid "You do not have access to this dashboard."
+msgstr "Huna ruhusa ya kufikia dashibodi hii."

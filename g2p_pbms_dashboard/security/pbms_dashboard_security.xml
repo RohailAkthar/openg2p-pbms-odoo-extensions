@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Security Group for Dashboard Viewer -->
+    <record id="group_dashboard_viewer" model="res.groups">
+        <field name="name">Dashboard Viewer</field>
+        <field name="category_id" ref="base.module_category_usability"/>
+        <field name="comment">Users in this group can access the minimal dashboard view.</field>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+
+</odoo>

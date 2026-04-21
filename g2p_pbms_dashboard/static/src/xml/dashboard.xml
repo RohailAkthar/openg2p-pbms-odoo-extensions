@@ -6,17 +6,17 @@
                 <div class="o_sidebar_header">
                     <h1>
                         <i class="fa fa-dashboard" />
-                        <span> PBMS Dashboard</span>
+                        <span><t t-esc="this.translate('PBMS Dashboard')"/></span>
                     </h1>
                 </div>
 
                 <div class="o_sidebar_filters">
-                    <div class="o_sidebar_section_title">Refine Data</div>
+                    <div class="o_sidebar_section_title"><t t-esc="this.translate('Refine Data')"/></div>
 
-                    <label class="o_input_label">Program</label>
+                    <label class="o_input_label"><t t-esc="this.translate('Program')"/></label>
                     <select t-attf-class="o_prof_select #{state.filters.program_id ? 'is-active' : ''}"
                         t-on-change="(ev) => this.setFilterProgram(ev.target.value || null)">
-                        <option value="">All Programs</option>
+                        <option value=""><t t-esc="this.translate('All Programs')"/></option>
                         <t t-foreach="state.programs" t-as="program" t-key="program.id">
                             <option t-att-value="program.id" t-att-selected="state.filters.program_id == program.id">
                                 <t t-esc="program.name"/>
@@ -24,33 +24,33 @@
                         </t>
                     </select>
 
-                    <label class="o_input_label">Region</label>
+                    <label class="o_input_label"><t t-esc="this.translate('Region')"/></label>
                     <div class="o_filter_pill" t-if="state.filters.region">
                         <span t-esc="state.filters.region"/>
                         <i class="fa fa-times-circle ms-auto" style="cursor: pointer;" t-on-click="() => this.applyFilterFromMap({region: null})"/>
                     </div>
-                    <div t-else="" class="text-muted small italic">Select on map</div>
+                    <div t-else="" class="text-muted small italic"><t t-esc="this.translate('Select on map')"/></div>
 
-                    <label class="o_input_label">District</label>
+                    <label class="o_input_label"><t t-esc="this.translate('District')"/></label>
                     <div class="o_filter_pill" t-if="state.filters.district">
                         <span t-esc="state.filters.district"/>
                         <i class="fa fa-times-circle ms-auto" style="cursor: pointer;" t-on-click="() => this.applyFilterFromMap({district: null})"/>
                     </div>
-                    <div t-else="" class="text-muted small italic">Select on map</div>
+                    <div t-else="" class="text-muted small italic"><t t-esc="this.translate('Select on map')"/></div>
 
                     <t t-if="this.dashboardType == 'beneficiary'">
-                        <label class="o_input_label">Gender</label>
+                        <label class="o_input_label"><t t-esc="this.translate('Gender')"/></label>
                         <select t-attf-class="o_prof_select #{state.filters.gender ? 'is-active' : ''}"
                             t-on-change="(ev) => this.setFilterGender(ev.target.value || null)">
-                            <option value="">All Genders</option>
-                            <option value="male" t-att-selected="state.filters.gender == 'male'">Male</option>
-                            <option value="female" t-att-selected="state.filters.gender == 'female'">Female</option>
+                            <option value=""><t t-esc="this.translate('All Genders')"/></option>
+                            <option value="male" t-att-selected="state.filters.gender == 'male'"><t t-esc="this.translate('Male')"/></option>
+                            <option value="female" t-att-selected="state.filters.gender == 'female'"><t t-esc="this.translate('Female')"/></option>
                         </select>
 
-                        <label class="o_input_label">Age Bracket</label>
+                        <label class="o_input_label"><t t-esc="this.translate('Age Bracket')"/></label>
                         <select t-attf-class="o_prof_select #{state.filters.age_bucket ? 'is-active' : ''}"
                             t-on-change="(ev) => this.setFilterAgeBucket(ev.target.value || null)">
-                            <option value="">All Ages</option>
+                            <option value=""><t t-esc="this.translate('All Ages')"/></option>
                             <option value="18-69" t-att-selected="state.filters.age_bucket == '18-69'">18 - 69</option>
                             <option value="70-75" t-att-selected="state.filters.age_bucket == '70-75'">70 - 75</option>
                             <option value="76-80" t-att-selected="state.filters.age_bucket == '76-80'">76 - 80</option>
@@ -63,48 +63,85 @@
                     </t>
 
                     <button class="o_btn_apply mt-3" t-on-click="fetchData">
-                        Apply Filters
+                        <t t-esc="this.translate('Apply Filters')"/>
                     </button>
 
                     <t t-if="hasActiveFilters">
                         <button class="o_btn_clear" t-on-click="clearFilters">
-                            Reset View
+                            <t t-esc="this.translate('Reset View')"/>
                         </button>
                     </t>
+
+                    <div class="o_sidebar_lang_switcher">
+                        <span class="o_sidebar_lang_label"><t t-esc="this.translate('Language')"/></span>
+                        <div class="o_lang_btn_group">
+                            <button
+                                t-attf-class="o_lang_btn #{(state.currentLang || '').toLowerCase().indexOf('en') === 0 ? 'active' : ''}"
+                                t-on-click="() => this.switchLanguage('en_US')"
+                            >
+                                ENG
+                            </button>
+                            <button
+                                t-attf-class="o_lang_btn #{(state.currentLang || '').toLowerCase().indexOf('sw') === 0 ? 'active' : ''}"
+                                t-on-click="() => this.switchLanguage('sw')"
+                            >
+                                SW
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="o_sidebar_user_panel">
+                        <div class="o_sidebar_user_name" t-att-title="state.currentUserName">
+                            <i class="fa fa-user-circle" />
+                            <span t-esc="state.currentUserName" />
+                        </div>
+                        <button class="o_btn_logout" t-on-click="logout">
+                            <i class="fa fa-sign-out" />
+                            <span><t t-esc="this.translate('Logout')"/></span>
+                        </button>
+                    </div>
                 </div>
             </div>
 
             <div class="o_dashboard_main">
-                <div class="o_main_map_section">
+                <div class="o_dashboard_tabs">
+                    <button t-attf-class="o_tab_btn #{this.dashboardType == 'beneficiary' ? 'active' : ''}"
+                            t-on-click="() => this.switchDashboardType('beneficiary')">
+                        <i class="fa fa-users" />
+                        <span><t t-esc="this.translate('Beneficiary')"/></span>
+                    </button>
+                    <button t-attf-class="o_tab_btn #{this.dashboardType == 'monetary' ? 'active' : ''}"
+                            t-on-click="() => this.switchDashboardType('monetary')">
+                        <i class="fa fa-money" />
+                        <span><t t-esc="this.translate('Amount')"/></span>
+                    </button>
+                </div>
+                <div class="o_main_content_area">
+                    <div class="o_main_map_section">
                     <MapComponent
                         data="state.map_data"
+                        map_geojson="state.map_geojson"
                         filters="state.filters"
                         onMapClick="applyFilterFromMap"
                     />
                     <div class="o_map_kpi_floating">
                         <t t-if="this.dashboardType == 'beneficiary'">
                             <div class="o_map_kpi_card">
-                                <div class="o_map_kpi_label">Enrolled Beneficiaries</div>
+                                <div class="o_map_kpi_label"><t t-esc="this.translate('Enrolled Beneficiaries')"/></div>
                                 <div class="o_map_kpi_value">
                                     <t t-esc="state.kpi.total_enrolled || 0" />
-                                </div>
-                            </div>
-                            <div class="o_map_kpi_card">
-                                <div class="o_map_kpi_label">Active Programs</div>
-                                <div class="o_map_kpi_value">
-                                    <t t-esc="state.kpi.program_count || 0" />
                                 </div>
                             </div>
                         </t>
                         <t t-else="">
                             <div class="o_map_kpi_card">
-                                <div class="o_map_kpi_label">Total Disbursed</div>
+                                <div class="o_map_kpi_label"><t t-esc="this.translate('Total Disbursed')"/></div>
                                 <div class="o_map_kpi_value">
                                     <t t-esc="state.kpi.total_disbursed_amount.toLocaleString() || 0" />
                                 </div>
                             </div>
                             <div class="o_map_kpi_card">
-                                <div class="o_map_kpi_label">Budget Allocated</div>
+                                <div class="o_map_kpi_label"><t t-esc="this.translate('Budget Allocated')"/></div>
                                 <div class="o_map_kpi_value">
                                     <t t-esc="state.kpi.total_budget_allocated.toLocaleString() || 0" />
                                 </div>
@@ -114,15 +151,15 @@
 
                     <div t-if="state.loading" class="o_map_loader">
                         <i class="fa fa-spinner fa-spin" />
-                        <span>Updating Data...</span>
+                        <span><t t-esc="this.translate('Updating Data...')"/></span>
                     </div>
                 </div>
                 <div class="o_main_charts_section" t-if="!state.loading">
                     <div class="o_chart_card o_card_age">
                         <div class="o_chart_header">
                             <span class="title">
-                                <t t-if="this.dashboardType == 'beneficiary'">Age Distribution (Count)</t>
-                                <t t-else="">Age Distribution (Amount)</t>
+                                <t t-if="this.dashboardType == 'beneficiary'"><t t-esc="this.translate('Age Distribution (Count)')"/></t>
+                                <t t-else=""><t t-esc="this.translate('Age Distribution (Amount)')"/></t>
                             </span>
                         </div>
                         <div class="o_chart_body">
@@ -141,8 +178,8 @@
                     <div class="o_chart_card o_card_gender">
                         <div class="o_chart_header">
                             <span class="title">
-                                <t t-if="this.dashboardType == 'beneficiary'">Gender Distribution (Count)</t>
-                                <t t-else="">Gender Distribution (Amount)</t>
+                                <t t-if="this.dashboardType == 'beneficiary'"><t t-esc="this.translate('Gender Distribution (Count)')"/></t>
+                                <t t-else=""><t t-esc="this.translate('Gender Distribution (Amount)')"/></t>
                             </span>
                         </div>
                         <div class="o_chart_body">
@@ -162,8 +199,8 @@
                     <div class="o_chart_card o_card_region">
                         <div class="o_chart_header">
                             <span class="title">
-                                <t t-if="this.dashboardType == 'beneficiary'">Regional Distribution (Count)</t>
-                                <t t-else="">Regional Distribution (Amount)</t>
+                                <t t-if="this.dashboardType == 'beneficiary'"><t t-esc="this.translate('Regional Distribution (Count)')"/></t>
+                                <t t-else=""><t t-esc="this.translate('Regional Distribution (Amount)')"/></t>
                             </span>
                         </div>
                         <div class="o_chart_body">
@@ -179,9 +216,10 @@
                                 onSegmentClick="applyFilterFromChart"
                                 options="{ maintainAspectRatio: false, responsive: true,indexAxis: 'y', plugins: { legend: { position: 'bottom', labels: { boxWidth: 12,padding: 12, font: { size: 11 } } } }, scales: { y: { grid: { color: '#f1f5f9' },tick:{display: false}, x: { grid: { display: false } } } } }"
                             />
-                            <div t-else="" class="text-center text-muted small mt-4">No data available</div>
+                            <div t-else="" class="text-center text-muted small mt-4"><t t-esc="this.translate('No data available')"/></div>
                         </div>
                     </div>
+                </div>
                 </div>
             </div>
         </div>

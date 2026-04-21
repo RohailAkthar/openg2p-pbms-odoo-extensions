@@ -48,75 +48,78 @@ class G2PBeneficiaryExportController(http.Controller):
         auth="user"
     )
     def export_beneficiaries(self, wizard_id, **kw):
-
         wizard = request.env["g2p.bgtask.summary.wizard"].sudo().browse(wizard_id)
 
         if not wizard.exists():
             return request.not_found()
 
-        page = 1
-        page_size = 500
-        all_rows = []
-
-        # you clearly said : NO filter
-        odoo_domain = None
-
-        while True:
-            res = wizard.get_beneficiaries(
-                wizard.id,
-                page,
-                page_size,
-                odoo_domain
-            )
-
-            message = res.get("message", {})
-            beneficiaries = message.get("beneficiaries", [])
-
-            if not beneficiaries:
-                break
-
-            all_rows.extend(beneficiaries)
-
-            if len(beneficiaries) < page_size:
-                break
-
-            page += 1
-
-        output = io.StringIO()
-
-        if not all_rows:
-            writer = csv.writer(output)
-            writer.writerow(["No data"])
-        else:
-            # Build friendly headers
-            friendly_headers = [header for _, header in self.EXPORT_COLUMNS]
-            writer = csv.writer(output)
-            writer.writerow(friendly_headers)
-
-            for row in all_rows:
-                # Merge nominee first + middle + last name into single "Nominee Name"
-                nominee_parts = []
-                for name_field in ("nominee_first_name", "nominee_middle_name", "nominee_last_name"):
-                    val = row.get(name_field)
-                    if val and str(val).strip():
-                        nominee_parts.append(str(val).strip())
-                row["nominee_name"] = " ".join(nominee_parts) if nominee_parts else ""
-
-                csv_row = []
-                for field, _ in self.EXPORT_COLUMNS:
-                    val = row.get(field)
-                    if isinstance(val, (dict, list)):
-                        val = json.dumps(val)
-                    csv_row.append(val if val is not None else "")
-                writer.writerow(csv_row)
-
         filename = "beneficiaries_%s.csv" % wizard.id
 
+        def stream_csv():
+            output = io.StringIO()
+            writer = csv.writer(output)
+
+            page = 1
+            page_size = 500
+            # you clearly said : NO filter
+            odoo_domain = None
+            first_batch = True
+
+            while True:
+                res = wizard.get_beneficiaries(
+                    wizard.id,
+                    page,
+                    page_size,
+                    odoo_domain
+                )
+
+                message = res.get("message", {})
+                beneficiaries = message.get("beneficiaries", [])
+
+                if not beneficiaries:
+                    if first_batch:
+                        writer.writerow(["No data"])
+                        yield output.getvalue()
+                    break
+
+                if first_batch:
+                    # Build friendly headers
+                    friendly_headers = [header for _, header in self.EXPORT_COLUMNS]
+                    writer.writerow(friendly_headers)
+                    first_batch = False
+
+                for row in beneficiaries:
+                    # Merge nominee first + middle + last name into single "Nominee Name"
+                    nominee_parts = []
+                    for name_field in ("nominee_first_name", "nominee_middle_name", "nominee_last_name"):
+                        val = row.get(name_field)
+                        if val and str(val).strip():
+                            nominee_parts.append(str(val).strip())
+                    row["nominee_name"] = " ".join(nominee_parts) if nominee_parts else ""
+
+                    csv_row = []
+                    for field, _ in self.EXPORT_COLUMNS:
+                        val = row.get(field)
+                        if isinstance(val, (dict, list)):
+                            val = json.dumps(val)
+                        csv_row.append(val if val is not None else "")
+                    writer.writerow(csv_row)
+
+                # Yield current buffer and clear it for the next batch
+                yield output.getvalue()
+                output.truncate(0)
+                output.seek(0)
+
+                if len(beneficiaries) < page_size:
+                    break
+
+                page += 1
+
         return request.make_response(
-            output.getvalue(),
+            stream_csv(),
             headers=[
                 ("Content-Type", "text/csv; charset=utf-8"),
-                ("Content-Disposition", 'attachment; filename="%s"' % filename)
+                ("Content-Disposition", f'attachment; filename="{filename}"')
             ]
         )
 

@@ -1,7 +1,9 @@
 # Part of OpenG2P. See LICENSE file for full copyright and licensing details.
 import logging
 import psycopg2
-from odoo import api, models, fields
+import json
+from odoo import api, models, fields, _
+from odoo.exceptions import AccessError
 
 _logger = logging.getLogger(__name__)
 
@@ -9,15 +11,26 @@ class PBMSDashboardLogic(models.Model):
     _name = "g2p.pbms.dashboard.logic"
     _description = "PBMS Dashboard Logic"
 
+    def _parse_geojson_feature(self, raw_geojson):
+        if not raw_geojson:
+            return False
+        try:
+            parsed = json.loads(raw_geojson) if isinstance(raw_geojson, str) else raw_geojson
+        except (TypeError, ValueError):
+            return False
+        if isinstance(parsed, dict) and parsed.get("type") == "Feature":
+            return parsed
+        return False
+
     def _get_bg_task_db_conn(self):
         """Establish connection to the BG Task Database"""
         get_param = self.env['ir.config_parameter'].sudo().get_param
         try:
             conn = psycopg2.connect(
-                host=get_param('g2p_pbms_dashboard.bg_task_db_host', 'localhost'),
+                host=get_param('g2p_pbms_dashboard.bg_task_db_host', 'pbms-gen2-postgresql'),
                 port=get_param('g2p_pbms_dashboard.bg_task_db_port', '5432'),
                 user=get_param('g2p_pbms_dashboard.bg_task_db_user', 'postgres'),
-                password=get_param('g2p_pbms_dashboard.bg_task_db_password', ''),
+                password=get_param('g2p_pbms_dashboard.bg_task_db_password', '8RNvbkjo7l'),
                 dbname=get_param('g2p_pbms_dashboard.bg_task_db_name', 'bgtaskdb'),
                 connect_timeout=5
             )
@@ -43,12 +56,26 @@ class PBMSDashboardLogic(models.Model):
             _logger.error("Failed to connect to SR DB: %s", str(e))
             return None
 
+    def _get_benefit_code_for_program(self, program_id):
+        """Fetch benefit_code_id from g2p_program_benefit_codes for a given program"""
+        if not program_id:
+            return None
+        benefit_code = self.env['g2p.program.benefit.codes'].sudo().search([
+            ('program_id', '=', int(program_id))
+        ], limit=1, order='id')
+        if benefit_code:
+            # Convert to string for JSON key lookup!
+            return str(benefit_code.benefit_code_id)
+        return None
+
     @api.model
     def get_dashboard_data(self, filters=None, dashboard_type='beneficiary'):
+        if not self.env.user.has_group("g2p_pbms_dashboard.group_dashboard_viewer"):
+            raise AccessError(_("You do not have access to this dashboard."))
         filters = filters or {}
         bg_conn = self._get_bg_task_db_conn()
         sr_conn = None
-        
+
         result = {
             'kpi': {
                 'total_enrolled': 0,
@@ -58,11 +85,12 @@ class PBMSDashboardLogic(models.Model):
             },
             'charts': {'age': {}, 'gender': {}, 'region_data': {}},
             'map_data': {},
+            'map_geojson': {'provinces': {'type': 'FeatureCollection', 'features': []}, 'districts': {'type': 'FeatureCollection', 'features': []}},
             'programs': []
         }
 
         # 1. Fetch Programs from Odoo DB
-        programs = self.env['g2p.program.definition'].search_read(
+        programs = self.env['g2p.program.definition'].sudo().search_read(
             [], ['id', 'program_mnemonic'], order='program_mnemonic'
         )
         result['programs'] = [{"id": p['id'], "name": p['program_mnemonic']} for p in programs]
@@ -73,8 +101,16 @@ class PBMSDashboardLogic(models.Model):
 
         try:
             bg_cr = bg_conn.cursor()
-            
-            # 2. Identify Enrolled IDs and their amounts
+
+            # 2. Get Benefit Code for selected program (if filter applied)
+            # -------------------------------------------------------------------------
+            benefit_code_id_str = None
+            if filters.get('program_id'):
+                benefit_code_id_str = self._get_benefit_code_for_program(filters['program_id'])
+                _logger.info("Resolved benefit_code_id: %s for program_id: %s", 
+                           benefit_code_id_str, filters['program_id'])
+
+            # 3. Identify Enrolled IDs and their amounts
             # -------------------------------------------------------------------------
             odoo_list_domain = [
                 ('list_stage', '=', 'enrollment'),
@@ -82,33 +118,51 @@ class PBMSDashboardLogic(models.Model):
             ]
             if filters.get('program_id'):
                 odoo_list_domain.append(('program_id', '=', int(filters['program_id'])))
-            
-            enrollment_lists = self.env['g2p.beneficiary.list'].search(odoo_list_domain)
+
+            enrollment_lists = self.env['g2p.beneficiary.list'].sudo().search(odoo_list_domain)
             enrollment_uuids = enrollment_lists.mapped('beneficiary_list_id')
 
-            beneficiary_amounts = {} # registrant_id -> amount
+            beneficiary_amounts = {}  # registrant_id -> amount
             if enrollment_uuids:
-                # We try to get amount from registrant_details json or assumed from disbursement_quantity if exists
-                query_enrolled = f"""
-                    SELECT 
-                        jsonb_array_elements(registrant_details::jsonb)->>'registrant_id' as rid,
-                        COALESCE((jsonb_array_elements(registrant_details::jsonb)->>'amount')::float, 0.0) as amt
-                    FROM beneficiary_list_details
-                    WHERE beneficiary_list_id IN ({','.join(['%s']*len(enrollment_uuids))})
-                """
-                bg_cr.execute(query_enrolled, tuple(enrollment_uuids))
+                # FIXED: Use benefit_code_id as string key for JSON lookup
+                if benefit_code_id_str:
+                    # Use the benefit code from g2p_program_benefit_codes
+                    query_enrolled = f"""
+                        SELECT 
+                            elem->>'registrant_id' as rid,
+                            COALESCE((elem->'entitlement'->>%s)::float, 0.0) as amt
+                        FROM beneficiary_list_details,
+                        LATERAL jsonb_array_elements(registrant_details::jsonb) AS elem
+                        WHERE beneficiary_list_id IN ({','.join(['%s']*len(enrollment_uuids))})
+                    """
+                    # benefit_code_id_str is FIRST parameter (converted to string!)
+                    params = [benefit_code_id_str] + list(enrollment_uuids)
+                    bg_cr.execute(query_enrolled, tuple(params))
+                else:
+                    # Fallback: sum all entitlement values if no specific benefit code
+                    query_enrolled = f"""
+                        SELECT 
+                            elem->>'registrant_id' as rid,
+                            COALESCE((elem->>'amount')::float, 0.0) as amt
+                        FROM beneficiary_list_details,
+                        LATERAL jsonb_array_elements(registrant_details::jsonb) AS elem
+                        WHERE beneficiary_list_id IN ({','.join(['%s']*len(enrollment_uuids))})
+                    """
+                    bg_cr.execute(query_enrolled, tuple(enrollment_uuids))
+                
                 for rid, amt in bg_cr.fetchall():
-                    beneficiary_amounts[rid] = beneficiary_amounts.get(rid, 0) + amt
-            
+                    if rid:  # Ensure rid is not None
+                        beneficiary_amounts[rid] = beneficiary_amounts.get(rid, 0) + amt
+
             enrolled_ids = list(beneficiary_amounts.keys())
             result['kpi']['total_enrolled'] = len(enrolled_ids)
 
-            # 3. Calculate Disbursed and Allocated Amounts from BG Task DB
+            # 4. Calculate Disbursed and Allocated Amounts from BG Task DB
             # -----------------------------------------------------------
             disb_list_filter = ""
             disb_params = []
             if filters.get('program_id'):
-                disb_lists = self.env['g2p.beneficiary.list'].search([
+                disb_lists = self.env['g2p.beneficiary.list'].sudo().search([
                     ('program_id', '=', int(filters['program_id'])),
                     ('list_stage', '=', 'disbursement')
                 ])
@@ -119,13 +173,19 @@ class PBMSDashboardLogic(models.Model):
                 else:
                     disb_list_filter = "AND 1=0"
 
-            bg_cr.execute(f"SELECT SUM(total_disbursement_quantity) FROM disbursement_batch WHERE disbursement_status = 'complete' {disb_list_filter}", disb_params)
+            bg_cr.execute(
+                f"SELECT SUM(total_disbursement_quantity) FROM disbursement_batch WHERE disbursement_status = 'complete' {disb_list_filter}", 
+                disb_params
+            )
             result['kpi']['total_disbursed_amount'] = float(bg_cr.fetchone()[0] or 0)
 
-            bg_cr.execute(f"SELECT SUM(total_disbursement_quantity) FROM disbursement_batch WHERE 1=1 {disb_list_filter}", disb_params)
+            bg_cr.execute(
+                f"SELECT SUM(total_disbursement_quantity) FROM disbursement_batch WHERE 1=1 {disb_list_filter}", 
+                disb_params
+            )
             result['kpi']['total_budget_allocated'] = float(bg_cr.fetchone()[0] or 0)
 
-            # 4. Fetch Demographics from SR DB for Enrolled IDs (by benf_zan_id)
+            # 5. Fetch Demographics from SR DB for Enrolled IDs (by benf_zan_id)
             # -----------------------------------------------------------------
             if not enrolled_ids:
                 return result
@@ -136,6 +196,43 @@ class PBMSDashboardLogic(models.Model):
 
             sr_cr = sr_conn.cursor()
 
+            # --- Fetch GeoJSON features from SR DB ---
+            try:
+                sr_cr.execute("SELECT code, name, geojson_feature FROM g2p_region WHERE geojson_feature IS NOT NULL")
+                province_features = []
+                for r_code, r_name, r_geojson in sr_cr.fetchall():
+                    f = self._parse_geojson_feature(r_geojson)
+                    if f:
+                        props = f.get("properties") or {}
+                        props.setdefault("id", r_code or r_name)
+                        props.setdefault("name", r_name)
+                        f["properties"] = props
+                        province_features.append(f)
+
+                sr_cr.execute("""
+                    SELECT d.code, d.name, d.geojson_feature, r.code
+                    FROM g2p_district d
+                    LEFT JOIN g2p_region r ON d.province_id = r.id
+                    WHERE d.geojson_feature IS NOT NULL
+                """)
+                district_features = []
+                for d_code, d_name, d_geojson, p_code in sr_cr.fetchall():
+                    f = self._parse_geojson_feature(d_geojson)
+                    if f:
+                        props = f.get("properties") or {}
+                        props.setdefault("id", d_code or d_name)
+                        props.setdefault("shapeName", d_name)
+                        props.setdefault("province_code", p_code)
+                        f["properties"] = props
+                        district_features.append(f)
+
+                result['map_geojson'] = {
+                    'provinces': {'type': 'FeatureCollection', 'features': province_features},
+                    'districts': {'type': 'FeatureCollection', 'features': district_features}
+                }
+            except Exception as e:
+                _logger.warning("Failed to fetch GeoJSON from SR DB: %s", str(e))
+
             region_filter_name = None
             if filters.get("region"):
                 input_val = str(filters["region"]).strip()
@@ -144,7 +241,8 @@ class PBMSDashboardLogic(models.Model):
                     [input_val, input_val],
                 )
                 row = sr_cr.fetchone()
-                if row: region_filter_name = row[0]
+                if row: 
+                    region_filter_name = row[0]
 
             where = ["p.benf_zan_id = ANY(%s)"]
             params = [enrolled_ids]
@@ -154,8 +252,13 @@ class PBMSDashboardLogic(models.Model):
                 params.append(region_filter_name)
 
             if filters.get("district"):
-                where.append("d.id = %s")
-                params.append(int(filters["district"]))
+                # Handle both numeric ID and name for district filter
+                if isinstance(filters["district"], int) or (isinstance(filters["district"], str) and filters["district"].isdigit()):
+                    where.append("d.id = %s")
+                    params.append(int(filters["district"]))
+                else:
+                    where.append("d.name = %s")
+                    params.append(str(filters["district"]))
 
             if filters.get("gender"):
                 where.append("p.gender = %s")
@@ -179,9 +282,9 @@ class PBMSDashboardLogic(models.Model):
                 """,
                 params,
             )
-            
+
             raw_data = sr_cr.fetchall()
-            
+
             # Aggregate locally based on dashboard_type
             gender_agg = {}
             age_agg = {
@@ -193,11 +296,11 @@ class PBMSDashboardLogic(models.Model):
 
             for rid, gender, age, region, district in raw_data:
                 val = beneficiary_amounts.get(rid, 0) if dashboard_type == 'monetary' else 1
-                
+
                 # Gender
                 g_key = (gender or 'Unknown').capitalize()
                 gender_agg[g_key] = gender_agg.get(g_key, 0) + val
-                
+
                 # Age
                 if age is None:
                     age_agg["Unknown"] += val
@@ -208,14 +311,14 @@ class PBMSDashboardLogic(models.Model):
                 elif 91 <= age <= 95: age_agg["91-95"] += val
                 elif 96 <= age <= 100: age_agg["96-100"] += val
                 elif age > 100: age_agg["101+"] += val
-                
+
                 # Region/District
                 region_agg[region] = region_agg.get(region, 0) + val
                 district_agg[district] = district_agg.get(district, 0) + val
 
             result["charts"]["gender"] = gender_agg
             result["charts"]["age"] = age_agg
-            result["map_data"] = district_agg # Still used for map shading
+            result["map_data"] = district_agg  # Still used for map shading
 
             # Region Bar Data
             if not region_filter_name:
@@ -235,191 +338,6 @@ class PBMSDashboardLogic(models.Model):
                     "labels": labels,
                     "keys": labels,
                     "datasets": [{"label": "Amount" if dashboard_type == 'monetary' else "Enrolled", "data": [v for _, v in sorted_districts], "backgroundColor": "#3b82f6"}]
-                }
-
-            return result
-
-            # -----------------------------------------------------------------
-            # Region filter: accept either code OR name → always filter by NAME
-            # (no hardcoded TZ codes anywhere)
-            # -----------------------------------------------------------------
-            region_filter_name = None
-            if filters.get("region"):
-                input_val = str(filters["region"]).strip()
-                # Resolve input (could be code like "TZ06" or a name) to the actual region name
-                sr_cr.execute(
-                    """
-                    SELECT name
-                    FROM g2p_region
-                    WHERE code = %s OR UPPER(name) = UPPER(%s)
-                    LIMIT 1
-                    """,
-                    [input_val, input_val],
-                )
-                row = sr_cr.fetchone()
-                if row:
-                    region_filter_name = row[0]
-                else:
-                    # Fallback: use input as-is (might be a name that doesn't exist yet)
-                    region_filter_name = input_val
-
-            where = ["p.benf_zan_id = ANY(%s)"]
-            params = [enrolled_ids]
-
-            if region_filter_name:
-                where.append("r.name = %s")
-                params.append(region_filter_name)
-
-            if filters.get("district"):
-                where.append("d.id = %s")
-                params.append(int(filters["district"]))
-
-            if filters.get("gender"):
-                where.append("p.gender = %s")
-                params.append(filters["gender"])
-
-            where_sql = " AND ".join(where)
-
-            # ---------------------------------------------------------------
-            # SINGLE AGGREGATED QUERY (gender/age/kpi)
-            # ---------------------------------------------------------------
-            sr_cr.execute(
-                f"""
-                WITH base AS (
-                    SELECT
-                        p.id,
-                        p.gender,
-                        p.birthdate,
-                        r.name AS region_name,
-                        d.id AS district_id,
-                        d.name AS district_name,
-                        EXTRACT(YEAR FROM age(current_date, p.birthdate)) AS age_val
-                    FROM res_partner p
-                    LEFT JOIN g2p_region r ON p.region = r.id
-                    LEFT JOIN g2p_district d ON p.district = d.id
-                    WHERE {where_sql}
-                )
-
-                SELECT
-                    COUNT(*) AS total_count,
-
-                    COUNT(*) FILTER (WHERE LOWER(gender) = 'male') AS male_count,
-                    COUNT(*) FILTER (WHERE LOWER(gender) = 'female') AS female_count,
-                    COUNT(*) FILTER (WHERE LOWER(gender) = 'other') AS other_count,
-                    COUNT(*) FILTER (WHERE gender IS NULL) AS unknown_gender_count,
-
-                    COUNT(*) FILTER (WHERE birthdate IS NULL) AS age_unknown,
-                    COUNT(*) FILTER (WHERE age_val BETWEEN 70 AND 75) AS age_70_75,
-                    COUNT(*) FILTER (WHERE age_val BETWEEN 76 AND 80) AS age_76_80,
-                    COUNT(*) FILTER (WHERE age_val BETWEEN 81 AND 85) AS age_81_85,
-                    COUNT(*) FILTER (WHERE age_val BETWEEN 86 AND 90) AS age_86_90,
-                    COUNT(*) FILTER (WHERE age_val BETWEEN 91 AND 95) AS age_91_95,
-                    COUNT(*) FILTER (WHERE age_val BETWEEN 96 AND 100) AS age_96_100,
-                    COUNT(*) FILTER (WHERE age_val > 101) AS age_101_plus
-                FROM base
-                """,
-                params,
-            )
-
-            row = sr_cr.fetchone()
-            (
-                total_count,
-                male,
-                female,
-                other,
-                unknown_gender,
-                age_unknown,
-                age_70_75,
-                age_76_80,
-                age_81_85,
-                age_86_90,
-                age_91_95,
-                age_96_100,
-                age_101_plus,
-            ) = row or (0, 0, 0, 0, 0, 0, 0, 0, 0)
-
-            result["kpi"]["total_enrolled"] = int(total_count)
-
-            result["charts"]["gender"] = {
-                "Male": int(male),
-                "Female": int(female),
-                "Other": int(other),
-                "Unknown": int(unknown_gender),
-            }
-
-            result["charts"]["age"] = {
-                "Unknown": int(age_unknown),
-                "70-75": int(age_70_75),
-                "76-80": int(age_76_80),
-                "81-85": int(age_81_85),
-                "86-90": int(age_86_90),
-                "91-95": int(age_91_95),
-                "96-100": int(age_96_100),
-                "101+": int(age_101_plus),
-            }
-
-            # ---------------------------------------------------------------
-            # DISTRICT MAP + REGION BAR (grouped by NAME, no hard-coded codes)
-            # ---------------------------------------------------------------
-            sr_cr.execute(
-                f"""
-                SELECT
-                    COALESCE(d.name, 'Unknown') AS district_name,
-                    COALESCE(r.name, 'Unknown') AS region_name,
-                    COUNT(*)
-                FROM res_partner p
-                LEFT JOIN g2p_region r ON p.region = r.id
-                LEFT JOIN g2p_district d ON p.district = d.id
-                WHERE {where_sql}
-                GROUP BY district_name, region_name
-                """,
-                params,
-            )
-
-            rows = sr_cr.fetchall()
-
-            district_counts = {}
-            region_counts = {}
-
-            for district_name, region_name, count in rows:
-                district_counts[district_name] = count
-                region_counts[region_name] = region_counts.get(region_name, 0) + count
-
-            result["map_data"] = district_counts
-
-            # Province-level bar → uses region NAMES (sorted alphabetically)
-            if not region_filter_name:
-                sorted_regions = sorted(region_counts.items(), key=lambda x: x[0])  # alphabetical by name
-
-                labels = [name for name, _ in sorted_regions]
-                values = [count for _, count in sorted_regions]
-                keys = labels  # keys = names (what frontend will send back as filter.region)
-
-                result["charts"]["region_data"] = {
-                    "level": "province",
-                    "labels": labels,
-                    "keys": keys,
-                    "datasets": [
-                        {"label": "Enrolled", "data": values, "backgroundColor": "#3b82f6"}
-                    ],
-                }
-
-            # District-level bar (when a region is selected)
-            else:
-                district_labels = []
-                district_values = []
-
-                for district_name, count in sorted(district_counts.items(), key=lambda x: x[0]):
-                    district_labels.append(district_name)
-                    district_values.append(count)
-
-                result["charts"]["region_data"] = {
-                    "level": "district",
-                    "labels": district_labels,
-                    "keys": district_labels,
-                    "datasets": [
-                        {"label": "Enrolled", "data": district_values, "backgroundColor": "#3b82f6"}
-                    ],
                 }
 
             return result
