@@ -56,64 +56,77 @@ class G2PBeneficiaryExportController(http.Controller):
         filename = "beneficiaries_%s.csv" % wizard.id
 
         def stream_csv():
-            output = io.StringIO()
-            writer = csv.writer(output)
+            from odoo import api
+            # Open a new cursor for the stream to avoid 'Cursor already closed' errors
+            new_cr = request.env.registry.cursor()
+            try:
+                new_env = api.Environment(new_cr, request.env.uid, request.env.context)
+                new_wizard = wizard.with_env(new_env)
 
-            page = 1
-            page_size = 500
-            # you clearly said : NO filter
-            odoo_domain = None
-            first_batch = True
+                output = io.StringIO()
+                # Write UTF-8 BOM once for Excel compatibility on Windows.
+                # It will be included in the first yielded chunk.
+                output.write('\ufeff')
+                writer = csv.writer(output)
 
-            while True:
-                res = wizard.get_beneficiaries(
-                    wizard.id,
-                    page,
-                    page_size,
-                    odoo_domain
-                )
+                page = 1
+                page_size = 500
+                odoo_domain = None
+                first_batch = True
 
-                message = res.get("message", {})
-                beneficiaries = message.get("beneficiaries", [])
+                # Precompute field names for optimization
+                field_names = [f[0] for f in self.EXPORT_COLUMNS]
+                friendly_headers = [f[1] for f in self.EXPORT_COLUMNS]
 
-                if not beneficiaries:
+                while True:
+                    res = new_wizard.get_beneficiaries(
+                        new_wizard.id,
+                        page,
+                        page_size,
+                        odoo_domain
+                    )
+
+                    message = res.get("message", {})
+                    beneficiaries = message.get("beneficiaries", [])
+
+                    if not beneficiaries:
+                        if first_batch:
+                            writer.writerow(["No data"])
+                            yield output.getvalue()
+                        break
+
                     if first_batch:
-                        writer.writerow(["No data"])
-                        yield output.getvalue()
-                    break
+                        writer.writerow(friendly_headers)
+                        first_batch = False
 
-                if first_batch:
-                    # Build friendly headers
-                    friendly_headers = [header for _, header in self.EXPORT_COLUMNS]
-                    writer.writerow(friendly_headers)
-                    first_batch = False
+                    for row in beneficiaries:
+                        # Merge nominee first + middle + last name into single "Nominee Name"
+                        nominee_parts = []
+                        for name_field in ("nominee_first_name", "nominee_middle_name", "nominee_last_name"):
+                            val = row.get(name_field)
+                            if val and str(val).strip():
+                                nominee_parts.append(str(val).strip())
+                        row["nominee_name"] = " ".join(nominee_parts) if nominee_parts else ""
 
-                for row in beneficiaries:
-                    # Merge nominee first + middle + last name into single "Nominee Name"
-                    nominee_parts = []
-                    for name_field in ("nominee_first_name", "nominee_middle_name", "nominee_last_name"):
-                        val = row.get(name_field)
-                        if val and str(val).strip():
-                            nominee_parts.append(str(val).strip())
-                    row["nominee_name"] = " ".join(nominee_parts) if nominee_parts else ""
+                        csv_row = []
+                        for field in field_names:
+                            val = row.get(field)
+                            if isinstance(val, (dict, list)):
+                                val = json.dumps(val)
+                            csv_row.append(val if val is not None else "")
+                        writer.writerow(csv_row)
 
-                    csv_row = []
-                    for field, _ in self.EXPORT_COLUMNS:
-                        val = row.get(field)
-                        if isinstance(val, (dict, list)):
-                            val = json.dumps(val)
-                        csv_row.append(val if val is not None else "")
-                    writer.writerow(csv_row)
+                    # Yield current buffer and clear it for the next batch
+                    yield output.getvalue()
+                    output.seek(0)
+                    output.truncate(0)
 
-                # Yield current buffer and clear it for the next batch
-                yield output.getvalue()
-                output.truncate(0)
-                output.seek(0)
+                    if len(beneficiaries) < page_size:
+                        break
 
-                if len(beneficiaries) < page_size:
-                    break
-
-                page += 1
+                    page += 1
+            finally:
+                new_cr.close()
 
         return request.make_response(
             stream_csv(),
