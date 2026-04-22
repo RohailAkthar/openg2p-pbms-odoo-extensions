@@ -14,3 +14,4 @@ class G2PStudentRegistry(models.Model):
     )
     institution_name = fields.Char(string="Institution Name")
     date_of_birth = fields.Date(string="Date of Birth")
+    link_registry_id = fields.Char(string="Link Registry ID")
