@@ -20,3 +20,4 @@ class G2PFarmerRegistry(models.Model):
     large_area_code = fields.Char(string="Large Area Code")
     small_area_id = fields.Integer(string="Small Area ID")
     small_area_code = fields.Char(string="Small Area Code")
+    link_registry_id = fields.Char(string="Link Registry ID")
