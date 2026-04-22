@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Actions -->
+    <record id="action_g2p_register_families" model="ir.actions.act_window">
+        <field name="name">Register Families</field>
+        <field name="res_model">g2p.register.families</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    
+    <record id="view_g2p_register_families_form" model="ir.ui.view">
+        <field name="name">g2p.register.families.form</field>
+        <field name="model">g2p.register.families</field>
+        <field name="arch" type="xml">
+            <form string="G2P Register Families" create="0">
+                <sheet>
+                    <group>
+                        <field name="internal_record_id"/>
+                        <field name="functional_record_id"/>
+                        <field name="family_name"/>
+                        <field name="type_of_housing"/>
+                        <field name="house_condition"/>
+                        <field name="sanitation_condition"/>
+                        <field name="water_access"/>
+                        <field name="electricity_access"/>
+                        <field name="ethnic_group"/>
+                        <field name="belong_to_protected_groups"/>
+                        <field name="under_other_vulnerable_status"/>
+                        <field name="no_of_children"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_g2p_register_families_tree" model="ir.ui.view">
+        <field name="name">g2p.register.families.tree</field>
+        <field name="model">g2p.register.families</field>
+        <field name="arch" type="xml">
+            <tree string="G2P Register Families" create="0">
+                <field name="internal_record_id"/>
+                <field name="functional_record_id"/>
+                <field name="family_name"/>
+                <field name="type_of_housing"/>
+                <field name="house_condition"/>
+                <field name="sanitation_condition"/>
+                <field name="water_access"/>
+                <field name="electricity_access"/>
+                <field name="ethnic_group"/>
+                <field name="belong_to_protected_groups"/>
+                <field name="under_other_vulnerable_status"/>
+                <field name="no_of_children"/>
+                <button name="action_open_view" type="object" class="fa fa-eye" title="View"/>
+            </tree>
+        </field>
+    </record>
+</odoo>

@@ -3,7 +3,7 @@
     "category": "G2P",
     "version": "3.0.0",
     "sequence": 1,
-    "author": "OpenG2P",
+    "author": "G2P",
     "website": "https://openg2p.org",
     "license": "LGPL-3",
     "depends": ["base", "web", "auth_signup", "website"],

@@ -6,8 +6,8 @@ class G2PTargetModelMapping:
     """Static mapping from registry type key to model name."""
 
     MODEL_MAPPING = {
-        "student": "g2p.student.registry",
-        "farmer": "g2p.farmer.registry",
+        # "family_members": "g2p.register.family.members",
+        "families": "g2p.register.families",
     }
 
     @classmethod
@@ -17,9 +17,8 @@ class G2PTargetModelMapping:
 
 
 class G2PRegistryType(Enum):
-    FARMER = "farmer"
-    STUDENT = "student"
-    OTHER = "other"
+    FAMILIES = "families"
+    # FAMILY_MEMBERS = "family_members"
 
     @classmethod
     def selection(cls):

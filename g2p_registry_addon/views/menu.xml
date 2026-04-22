@@ -1,15 +1,15 @@
 <odoo>
-    <!-- Add Farmer Registry menu under Registry -->
-    <menuitem id="menu_g2p_farmer_registry"
-              name="Farmer Registry"
+    <!-- Add Register Families menu under Registry -->
+    <menuitem id="menu_g2p_register_families"
+              name="Register Families"
               parent="g2p_pbms.menu_g2p_registry"
-              action="action_g2p_farmer_registry"
+              action="action_g2p_register_families"
               sequence="1"/>
-    <!-- Add Student Registry menu under Registry -->
-    <menuitem id="menu_g2p_student_registry"
-              name="Student Registry"
+    <!-- Add Family Members menu under Registry -->
+    <!-- <menuitem id="menu_g2p_register_family_members"
+              name="Family Members"
               parent="g2p_pbms.menu_g2p_registry"
-              action="action_g2p_student_registry"
-              sequence="2"/>
+              action="action_g2p_register_family_members"
+              sequence="2"/> -->
 </odoo>
 
