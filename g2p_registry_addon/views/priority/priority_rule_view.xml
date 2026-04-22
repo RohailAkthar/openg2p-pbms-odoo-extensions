@@ -9,15 +9,15 @@
             <!-- Inject domain widgets inside the <group> -->
             <xpath expr="//form/sheet/group" position="inside">
 
-                <!-- Domain widget for the 'farmer' type -->
+                <!-- Domain widget for the 'families' type -->
                 <field name="pbms_domain" widget="domain"
-                       options="{'model': 'g2p.farmer.registry', 'allowed_fields': ['priority_rank']}"
-                       invisible="target_registry != 'farmer'"/>
+                       options="{'model': 'g2p.register.families', 'allowed_fields': ['priority_rank']}"
+                       invisible="target_registry != 'families'"/>
 
-                <!-- Domain widget for the 'student' type -->
-                <field name="pbms_domain" widget="domain"
-                       options="{'model': 'g2p.student.registry', 'allowed_fields': ['priority_rank']}"
-                       invisible="target_registry != 'student'"/>
+                <!-- Domain widget for the 'family_members' type -->
+                <!-- <field name="pbms_domain" widget="domain"
+                       options="{'model': 'g2p.register.family.members', 'allowed_fields': ['priority_rank']}"
+                       invisible="target_registry != 'family_members'"/> -->
 
             </xpath>
         </field>

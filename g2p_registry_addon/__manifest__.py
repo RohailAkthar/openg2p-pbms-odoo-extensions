@@ -1,9 +1,9 @@
 {
     "name": "PBMS Registry Addon",
-    "version": "3.0.0",
+    "version": "3.1.0",
     "summary": "OpenG2P Registry Addon",
     "description": "OpenG2P Registry Addon",
-    "category": "OpenG2P",
+    "category": "G2P",
     "license": "LGPL-3",
     "depends": ["base_setup", "web", "g2p_pbms"],
     "data": [
@@ -13,6 +13,7 @@
         "views/priority/priority_rule_view.xml",
         "views/registry/farmer_registry_view.xml",
         "views/registry/student_registry_view.xml",
+        "views/registry/register_families_view.xml",
         "views/bgtask/bgtask_view.xml",
         "views/menu.xml",
     ],
