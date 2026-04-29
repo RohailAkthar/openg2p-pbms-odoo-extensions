@@ -236,9 +236,11 @@ class PBMSDashboardLogic(models.Model):
             region_filter_name = None
             if filters.get("region"):
                 input_val = str(filters["region"]).strip()
+                # Dynamically search the code, name, AND the geojson_feature for the map's ID
+                # This ensures we don't need a hardcoded dictionary if new regions are added!
                 sr_cr.execute(
-                    "SELECT name FROM g2p_region WHERE code = %s OR UPPER(name) = UPPER(%s) LIMIT 1",
-                    [input_val, input_val],
+                    "SELECT name FROM g2p_region WHERE code = %s OR UPPER(name) = UPPER(%s) OR geojson_feature LIKE %s LIMIT 1",
+                    [input_val, input_val, f'%"{input_val}"%'],
                 )
                 row = sr_cr.fetchone()
                 if row: 
@@ -261,8 +263,28 @@ class PBMSDashboardLogic(models.Model):
                     params.append(str(filters["district"]))
 
             if filters.get("gender"):
-                where.append("p.gender = %s")
+                where.append("UPPER(p.gender) = UPPER(%s)")
                 params.append(filters["gender"])
+
+            if filters.get("age_bucket"):
+                bucket = filters["age_bucket"]
+                age_expr = "EXTRACT(YEAR FROM age(current_date, p.birthdate))"
+                if bucket == "18-69":
+                    where.append(f"{age_expr} >= 18 AND {age_expr} <= 69")
+                elif bucket == "70-75":
+                    where.append(f"{age_expr} >= 70 AND {age_expr} <= 75")
+                elif bucket == "76-80":
+                    where.append(f"{age_expr} >= 76 AND {age_expr} <= 80")
+                elif bucket == "81-85":
+                    where.append(f"{age_expr} >= 81 AND {age_expr} <= 85")
+                elif bucket == "86-90":
+                    where.append(f"{age_expr} >= 86 AND {age_expr} <= 90")
+                elif bucket == "91-95":
+                    where.append(f"{age_expr} >= 91 AND {age_expr} <= 95")
+                elif bucket == "96-100":
+                    where.append(f"{age_expr} >= 96 AND {age_expr} <= 100")
+                elif bucket == "101+":
+                    where.append(f"{age_expr} > 100")
 
             where_sql = " AND ".join(where)
 
@@ -294,7 +316,14 @@ class PBMSDashboardLogic(models.Model):
             region_agg = {}
             district_agg = {}
 
+            seen_rids = set()
+
             for rid, gender, age, region, district in raw_data:
+                # FIX: Deduplicate based on registrant ID to avoid inflating numbers
+                if rid in seen_rids:
+                    continue
+                seen_rids.add(rid)
+
                 val = beneficiary_amounts.get(rid, 0) if dashboard_type == 'monetary' else 1
 
                 # Gender
@@ -315,6 +344,9 @@ class PBMSDashboardLogic(models.Model):
                 # Region/District
                 region_agg[region] = region_agg.get(region, 0) + val
                 district_agg[district] = district_agg.get(district, 0) + val
+
+            # Update total enrolled to accurately reflect the active filtered count without duplicates
+            result['kpi']['total_enrolled'] = len(seen_rids)
 
             result["charts"]["gender"] = gender_agg
             result["charts"]["age"] = age_agg

@@ -88,12 +88,12 @@ export class ChartComponent extends Component {
                 datalabels: {
                     display: (context) => {
                         const value = context.dataset.data[context.dataIndex];
-                        return value !== 0;
+                        return value !== 0; // Show all non-zero labels
                     },
                     color: '#ffffff',
                     font: {
                         weight: 'bold',
-                        size: 11
+                        size: 9
                     },
                     anchor: 'center',
                     align: 'center',
@@ -102,9 +102,18 @@ export class ChartComponent extends Component {
                         const label = this.props.labels[context.dataIndex] || "";
                         const dataset = context.chart.data.datasets[0].data;
                         const sum = dataset.reduce((a, b) => a + b, 0);
-                        const percentage = sum > 0 ? ((value * 100) / sum).toFixed(0) + "%" : "0%";
-                        return `${label}
-${value} (${percentage})`;
+                        const percValue = sum > 0 ? (value * 100) / sum : 0;
+                        const percentage = percValue.toFixed(0) + "%";
+                        
+                        if (this.props.type === 'bar') {
+                            return `${value} (${percentage})`;
+                        }
+                        
+                        // For very small slices, just show the label to prevent overlap
+                        if (percValue < 4) {
+                            return label;
+                        }
+                        return `${label}\n${percentage}`;
                     },
                     textShadowBlur: 3,
                     textShadowColor: 'rgba(0, 0, 0, 0.5)',

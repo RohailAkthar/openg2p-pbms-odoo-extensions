@@ -24,19 +24,6 @@
                         </t>
                     </select>
 
-                    <label class="o_input_label"><t t-esc="this.translate('Region')"/></label>
-                    <div class="o_filter_pill" t-if="state.filters.region">
-                        <span t-esc="state.filters.region"/>
-                        <i class="fa fa-times-circle ms-auto" style="cursor: pointer;" t-on-click="() => this.applyFilterFromMap({region: null})"/>
-                    </div>
-                    <div t-else="" class="text-muted small italic"><t t-esc="this.translate('Select on map')"/></div>
-
-                    <label class="o_input_label"><t t-esc="this.translate('District')"/></label>
-                    <div class="o_filter_pill" t-if="state.filters.district">
-                        <span t-esc="state.filters.district"/>
-                        <i class="fa fa-times-circle ms-auto" style="cursor: pointer;" t-on-click="() => this.applyFilterFromMap({district: null})"/>
-                    </div>
-                    <div t-else="" class="text-muted small italic"><t t-esc="this.translate('Select on map')"/></div>
 
                     <t t-if="this.dashboardType == 'beneficiary'">
                         <label class="o_input_label"><t t-esc="this.translate('Gender')"/></label>
@@ -168,7 +155,7 @@
                                 data_label="this.dashboardType == 'beneficiary' ? 'Count' : 'Amount'"
                                 labels="Object.keys(state.charts.age || {})"
                                 data="Object.values(state.charts.age || {})"
-                                options="{ maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 10 } } } } }"
+                                options="{ maintainAspectRatio: false, plugins: { legend: { display: false } } }"
                                 chartType="'age'"
                                 onSegmentClick="applyFilterFromChart"
                             />
@@ -189,7 +176,7 @@
                                 labels="Object.keys(state.charts.gender || {})"
                                 data="Object.values(state.charts.gender || {})"
                                 backgroundColor="['#1e40af', '#94a3b8', '#10b981', '#f59e0b']"
-                                options="{ maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { boxWidth: 12,padding: 12, font: { size: 11 } } } } }"
+                                options="{ maintainAspectRatio: false, plugins: { legend: { display: false } } }"
                                 chartType="'gender'"
                                 onSegmentClick="applyFilterFromChart"
                             />
@@ -214,7 +201,7 @@
                                 backgroundColor="['#3b82f6']"
                                 chartType="'region'"
                                 onSegmentClick="applyFilterFromChart"
-                                options="{ maintainAspectRatio: false, responsive: true,indexAxis: 'y', plugins: { legend: { position: 'bottom', labels: { boxWidth: 12,padding: 12, font: { size: 11 } } } }, scales: { y: { grid: { color: '#f1f5f9' },tick:{display: false}, x: { grid: { display: false } } } } }"
+                                options="{ maintainAspectRatio: false, responsive: true, indexAxis: 'y', plugins: { legend: { display: false } }, scales: { y: { grid: { display: false } }, x: { display: false } } }"
                             />
                             <div t-else="" class="text-center text-muted small mt-4"><t t-esc="this.translate('No data available')"/></div>
                         </div>

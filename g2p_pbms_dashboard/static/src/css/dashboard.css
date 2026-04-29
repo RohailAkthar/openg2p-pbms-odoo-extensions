@@ -31,8 +31,8 @@ body.o_pbms_dashboard_mode .o_action_manager {
 
 .o_zanzibar_dashboard {
     display: flex;
-    height: 95vh;
-    width: 100vw;
+    height: 100vh;
+    width: 100%;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     background: var(--z-bg-body);
     color: var(--z-text-main);
@@ -87,6 +87,24 @@ body.o_pbms_dashboard_mode .o_action_manager {
 }
 
 /* Sidebar Inputs */
+.o_sidebar_filters {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow-y: auto;
+}
+
+.o_sidebar_filters::-webkit-scrollbar {
+    width: 4px;
+}
+.o_sidebar_filters::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+}
+.o_sidebar_filters::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+}
+
 .o_sidebar_section_title {
     font-size: 0.75rem;
     text-transform: uppercase;
@@ -198,7 +216,7 @@ body.o_pbms_dashboard_mode .o_action_manager {
 }
 
 .o_sidebar_lang_switcher {
-    margin-top: 0.9rem;
+    margin-top: auto;
     padding-top: 0.8rem;
     border-top: 1px solid rgba(255, 255, 255, 0.12);
 }
@@ -298,6 +316,8 @@ body.o_pbms_dashboard_mode .o_action_manager {
     flex: 1;
     display: flex;
     flex-direction: column;
+    min-height: 0;
+    overflow: hidden;
 }
 
 /* Dashboard Tabs */
@@ -346,6 +366,8 @@ body.o_pbms_dashboard_mode .o_action_manager {
     flex: 1;
     display: flex;
     flex-direction: row;
+    min-height: 0;
+    overflow: hidden;
 }
 
 /* --- LEFT PANEL: CHART GRID --- */
@@ -359,21 +381,20 @@ body.o_pbms_dashboard_mode .o_action_manager {
 
     display: grid;
     grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1.2fr;
     gap: 1.25rem;
-    align-content: start;
-    /* prevents stretching issues */
+    height: 100%;
 }
 
 /* Generic Card Style */
 .o_chart_card {
     display: flex;
     flex-direction: column;
-    min-height: 260px;
+    min-height: 0;
     background: white;
     border-radius: 8px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
     overflow: hidden;
-    /* important */
 }
 
 .o_chart_header {
@@ -409,13 +430,11 @@ body.o_pbms_dashboard_mode .o_action_manager {
 
 .o_card_region {
     grid-column: 1 / -1;
-    /* span both columns */
-    min-height: 380px;
-    /* more space for bar chart */
+    min-height: 0;
 }
 
 .o_card_region .o_chart_body {
-    padding: 5rem 1.25rem 1.25rem;
+    padding: 1.25rem;
 }
 
 /* --- RIGHT PANEL: MAP --- */
@@ -423,6 +442,21 @@ body.o_pbms_dashboard_mode .o_action_manager {
     flex: 1;
     position: relative;
     background: #e2e8f0;
+    overflow: hidden;
+}
+
+.o_chart_root {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.o_chart_canvas_wrap {
+    flex: 1 1 auto;
+    position: relative;
+    min-height: 0;
+    width: 100%;
+    height: 100%;
 }
 
 .o_map_container {
