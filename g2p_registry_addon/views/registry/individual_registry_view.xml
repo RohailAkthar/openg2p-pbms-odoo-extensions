@@ -60,6 +60,7 @@
                     <field name="birthdate"/>
                     <field name="age"/>
                     <field name="gender"/>
+                    <field name="pensioner_id"/>
                     <field name="benf_zan_id"/>
                     <!-- Add more of your custom fields here if needed, e.g. -->
                     <!-- <field name="your_g2p_registry_number"/> -->

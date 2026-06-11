@@ -16,6 +16,11 @@ class ResPartner(models.Model):
             index=True,
             copy=False,
         )
+    pensioner_id = fields.Char(
+        string="Pensioner ID",
+        index=True,
+        copy=False,
+    )
     name = fields.Char(translate=False)
     birthdate = fields.Date("Date of Birth")
     age = fields.Integer(string="Age", compute="_compute_age", search="_search_age", store=False, readonly=True)

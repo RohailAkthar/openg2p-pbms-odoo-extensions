@@ -185,7 +185,7 @@ class PBMSDashboardLogic(models.Model):
             )
             result['kpi']['total_budget_allocated'] = float(bg_cr.fetchone()[0] or 0)
 
-            # 5. Fetch Demographics from SR DB for Enrolled IDs (by benf_zan_id)
+            # 5. Fetch Demographics from SR DB for Enrolled IDs (by pensioner_id)
             # -----------------------------------------------------------------
             if not enrolled_ids:
                 return result
@@ -246,7 +246,7 @@ class PBMSDashboardLogic(models.Model):
                 if row: 
                     region_filter_name = row[0]
 
-            where = ["p.benf_zan_id = ANY(%s)"]
+            where = ["p.pensioner_id = ANY(%s)"]
             params = [enrolled_ids]
 
             if region_filter_name:
@@ -292,7 +292,7 @@ class PBMSDashboardLogic(models.Model):
             sr_cr.execute(
                 f"""
                 SELECT
-                    p.benf_zan_id,
+                    p.pensioner_id,
                     p.gender,
                     EXTRACT(YEAR FROM age(current_date, p.birthdate)) AS age_val,
                     COALESCE(r.name, 'Unknown') AS region_name,
