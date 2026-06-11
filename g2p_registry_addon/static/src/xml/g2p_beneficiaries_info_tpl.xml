@@ -30,6 +30,8 @@
                                     <th class="text-center">DOB</th>
                                     <th class="text-center">Region</th>
                                     <th class="text-center">District</th>
+                                    <th class="text-center">Mobile</th>
+                                    <th class="text-center">Disability</th>
                                     <th class="text-center">Zan ID</th>
                                 </t>
                             </tr>
@@ -51,6 +53,12 @@
                                         <td class="align-middle text-center"><t t-esc="record.birthdate"/></td>
                                         <td class="align-middle text-center"><t t-esc="record.region_name"/></td>
                                         <td class="align-middle text-center"><t t-esc="record.district_name"/></td>
+                                        <td class="align-middle text-center"><t t-esc="record.phone or '-'"/></td>
+                                        <td class="align-middle text-center">
+                                            <span t-attf-class="badge #{record.disability === 'Yes' || record.disability === 'yes' ? 'badge-warning' : 'badge-light border'} p-2">
+                                                <t t-esc="record.disability or '-'"/>
+                                            </span>
+                                        </td>
                                         <td class="align-middle text-monospace text-muted text-center"><t t-esc="record.benf_zan_id"/></td>
                                     </t>
                                 </tr>
