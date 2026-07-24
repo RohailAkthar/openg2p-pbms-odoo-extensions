@@ -4,3 +4,6 @@ g2p_student_registry_write,Write Student Registry,model_g2p_student_registry,g2p
 
 g2p_farmer_registry_read,Read Farmer Registry,model_g2p_farmer_registry,g2p_pbms.group_beneficiary_list_viewer,1,0,0,0
 g2p_farmer_registry_write,Write Farmer Registry,model_g2p_farmer_registry,g2p_pbms.group_beneficiary_list_editor,1,1,1,1
+
+g2p_household_registry_read,Read Household Registry,model_g2p_household_registry,g2p_pbms.group_beneficiary_list_viewer,1,0,0,0
+g2p_household_registry_write,Write Household Registry,model_g2p_household_registry,g2p_pbms.group_beneficiary_list_editor,1,1,1,1

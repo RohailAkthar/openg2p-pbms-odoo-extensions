@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Actions -->
+    <record id="action_g2p_household_registry" model="ir.actions.act_window">
+        <field name="name">Household Registry</field>
+        <field name="res_model">g2p.household.registry</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    
+    <record id="view_g2p_household_registry_form" model="ir.ui.view">
+        <field name="name">g2p.household.registry.form</field>
+        <field name="model">g2p.household.registry</field>
+        <field name="arch" type="xml">
+            <form string="G2P Household Registry" create="0">
+                <sheet>
+                    <group>
+                        <group string="Household Information">
+                            <field name="link_registry_id"/>
+                            <field name="name"/>
+                            <field name="household_id"/>
+                            <field name="household_size"/>
+                            <field name="children_count"/>
+                            <field name="adult_count"/>
+                            <field name="has_pregnant_member"/>
+                            <field name="has_disabled_member"/>
+                        </group>
+                        <group string="Household Head Information">
+                            <field name="head_name"/>
+                            <field name="head_gender"/>
+                            <field name="head_phone"/>
+                            <field name="head_dob"/>
+                        </group>
+                        <group string="Location Info">
+                            <field name="large_area_id"/>
+                            <field name="large_area_code"/>
+                            <field name="small_area_id"/>
+                            <field name="small_area_code"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_g2p_household_registry_tree" model="ir.ui.view">
+        <field name="name">g2p.household.registry.tree</field>
+        <field name="model">g2p.household.registry</field>
+        <field name="arch" type="xml">
+            <tree string="G2P Household Registry" create="0">
+                <field name="link_registry_id"/>
+                <field name="name"/>
+                <field name="household_size"/>
+                <field name="head_name"/>
+                <field name="head_gender"/>
+                <field name="head_phone"/>
+                <field name="has_pregnant_member"/>
+                <field name="has_disabled_member"/>
+                <field name="small_area_code"/>
+                <field name="large_area_code"/>
+                <button name="action_open_view" type="object" class="fa fa-eye" title="View"/>
+            </tree>
+        </field>
+    </record>
+</odoo>

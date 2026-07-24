@@ -46,6 +46,16 @@
                             <th><t t-esc="('Small Area Code')"/></th>
                             <th><t t-esc="('Large Area Code')"/></th>
                         </t>
+                        <!-- Conditional columns (household) -->
+                        <t t-if="state.target_registry === 'household'">
+                            <th><t t-esc="('Household Name')"/></th>
+                            <th><t t-esc="('Household Size')"/></th>
+                            <th><t t-esc="('Head Name')"/></th>
+                            <th><t t-esc="('Head Gender')"/></th>
+                            <th><t t-esc="('Head Phone')"/></th>
+                            <th><t t-esc="('Small Area Code')"/></th>
+                            <th><t t-esc="('Large Area Code')"/></th>
+                        </t>
                     </tr>
                 </thead>
                 <tbody>
@@ -70,6 +80,16 @@
                                 <td><t t-esc="record.gender"/></td>
                                 <td><t t-esc="record.institution_name"/></td>
                                 <td><t t-esc="record.date_of_birth"/></td>
+                                <td><t t-esc="record.small_area_code"/></td>
+                                <td><t t-esc="record.large_area_code"/></td>
+                            </t>
+                            <!-- Conditional cells (household) -->
+                            <t t-if="state.target_registry === 'household'">
+                                <td><t t-esc="record.name"/></td>
+                                <td><t t-esc="record.household_size"/></td>
+                                <td><t t-esc="record.head_name"/></td>
+                                <td><t t-esc="record.head_gender"/></td>
+                                <td><t t-esc="record.head_phone"/></td>
                                 <td><t t-esc="record.small_area_code"/></td>
                                 <td><t t-esc="record.large_area_code"/></td>
                             </t>

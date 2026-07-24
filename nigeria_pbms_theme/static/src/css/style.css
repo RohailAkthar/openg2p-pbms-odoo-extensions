@@ -1,0 +1,282 @@
+/* Override navbar background to Nigerian Emerald Green */
+.o_main_navbar {
+    background-color: #008751 !important;
+    border-bottom: 1px solid #005c36 !important;
+    --o-navbar-height: 56px;
+}
+
+/* Override navbar center logo */
+.o_menu_sections {
+    background-image: none !important;
+}
+
+/* Navbar branding with logo on the left */
+.o_main_navbar .o_menu_brand {
+    color: #ffffff !important;
+    padding-left: 56px !important;
+    background-image: url("/nigeria_pbms_theme/static/src/img/nigeria_logo.png") !important;
+    background-repeat: no-repeat !important;
+    background-position: left center !important;
+    background-size: 44px !important;
+}
+
+.o_main_navbar .o_menu_sections .o_nav_entry,
+.o_main_navbar .o_menu_sections .dropdown-toggle {
+    background-color: #008751 !important;
+    color: #ffffff !important;
+    border: none;
+    border-bottom: 1px solid #005c36 !important;
+}
+
+.o_main_navbar .o_menu_sections .o_nav_entry:hover,
+.o_main_navbar .o_menu_sections .dropdown-toggle:hover,
+.o_main_navbar .o_menu_sections .dropdown-toggle:focus {
+    background-color: #00663d !important;
+    color: #ffffff !important;
+}
+
+.o_main_navbar .o_navbar_apps_menu .dropdown-toggle {
+    color: #ffffff !important;
+}
+
+/* Primary buttons and outline buttons */
+.btn-primary,
+.btn-primary.active,
+.btn-primary:active,
+.btn-primary:focus,
+.o_list_button_add,
+.o_form_button_save,
+.o_form_button_edit,
+.o_list_button_save,
+.o_list_button_add_program,
+.modal-footer .btn-primary,
+.o_domain_selector .o_domain_add_first_node_button {
+    background-color: #008751 !important;
+    border-color: #008751 !important;
+    color: #ffffff !important;
+}
+
+.btn-outline-primary {
+    background-color: #008751 !important;
+    border-color: #008751 !important;
+    color: #ffffff !important;
+}
+
+.o_list_button_add:hover,
+.o_form_button_save:hover,
+.o_form_button_edit:hover,
+.o_list_button_save:hover,
+.o_list_button_add_program:hover,
+.btn-outline-primary:hover,
+.btn-primary:hover {
+    background-color: #ffffff !important;
+    color: #008751 !important;
+    border-color: #008751 !important;
+}
+
+/* Secondary / Discard / Cancel buttons */
+.o_form_buttons_view .o_form_button_create,
+.o_form_button_cancel,
+.o_list_button_discard,
+.o_technical_modal .modal-footer .btn-secondary,
+.btn-warning {
+    background: #ffffff 0% 0% no-repeat padding-box !important;
+    border: 1px solid #008751 !important;
+    color: #008751 !important;
+}
+
+.o_form_buttons_view .o_form_button_create:hover,
+.o_form_button_cancel:hover,
+.o_list_button_discard:hover {
+    background-color: #f4f9f6 !important;
+    color: #008751 !important;
+}
+
+/* Breadcrumbs */
+.breadcrumb .breadcrumb-item a {
+    color: #008751 !important;
+}
+
+/* Active tab header */
+.o_notebook_headers .nav-item .active {
+    background: #008751 0% 0% no-repeat padding-box !important;
+    border: 2px solid #008751 !important;
+    color: #ffffff !important;
+}
+
+.o_notebook_headers .nav-tabs {
+    border-bottom-color: #008751 !important;
+}
+
+.o_notebook_headers .nav-item a:hover {
+    border-color: #008751 !important;
+}
+
+/* Success button overrides */
+.btn-success,
+.btn-success.active,
+.btn-success:active,
+.btn-success:focus,
+.o_statusbar_buttons .btn-success {
+    background-color: #008751 !important;
+    border-color: #008751 !important;
+    color: #ffffff !important;
+}
+
+/* Action dropdown and list links */
+.o_cp_action_menus .dropdown-toggle,
+.o_cp_action_menus .dropdown-toggle:active,
+.o_list_view .o_field_x2many_list_row_add a {
+    color: #008751 !important;
+}
+
+/* Quick edit links, invalid fields */
+.o_quick_editable a,
+.o_quick_editable > span {
+    color: #008751 !important;
+}
+
+.o_field_invalid,
+.o_required_modifier {
+    --o-input-border-color: #008751 !important;
+}
+
+.o_required_modifier.o_input,
+.o_required_modifier .o_input {
+    background: #f4f9f6 0% 0% no-repeat padding-box !important;
+    border: 1px solid #008751 !important;
+}
+
+.o_horizontal_separator {
+    color: #008751 !important;
+}
+
+.o_form_view .o_form_statusbar .o_statusbar_status .o_arrow_button.btn-primary.disabled {
+    color: #008751 !important;
+}
+
+.o_form_view .o_form_statusbar .o_statusbar_status .o_arrow_button.btn-primary.disabled:after,
+.o_form_view .o_form_statusbar .o_statusbar_status .o_arrow_button.btn-primary.disabled:before {
+    border-left-color: #f4f9f6 !important;
+}
+
+/* Custom Icons and Interactive Elements Override */
+.oe_stat_button .o_button_icon,
+.o_PartnerImStatusIcon_icon.o-online,
+.o_ChatterTopbar_button,
+.o_ChatterTopbar_button:hover,
+.o_FollowerListMenu_buttonFollowers,
+.o_external_button,
+.o_search_panel .o_search_panel_category .o_search_panel_section_icon,
+.o_search_panel .o_search_panel_filter .o_search_panel_section_icon,
+.oi-settings-adjust,
+.oi-cog,
+.fa-cog,
+.o_cog,
+.o_cog_btn {
+    color: #008751 !important;
+}
+
+/* Ensure icons inside primary / green / save / action buttons are white by default */
+.btn-primary .oi,
+.btn-primary .fa,
+.btn-success .oi,
+.btn-success .fa,
+.btn-outline-primary .oi,
+.btn-outline-primary .fa,
+.o_form_button_save .oi,
+.o_form_button_save .fa,
+.o_form_button_edit .oi,
+.o_form_button_edit .fa,
+.o_list_button_add .oi,
+.o_list_button_add .fa,
+.o_form_status_indicator .oi,
+.o_form_status_indicator .fa,
+.o_control_panel .btn-primary .oi,
+.o_control_panel .btn-primary .fa,
+.o_control_panel .btn-outline-primary .oi,
+.o_control_panel .btn-outline-primary .fa,
+.o_control_panel .o_form_button_save .oi,
+.o_control_panel .o_form_button_save .fa {
+    color: #ffffff !important;
+}
+
+/* Icons inside green buttons turn green on hover (matching button text color) */
+.btn-primary:hover .oi,
+.btn-primary:hover .fa,
+.btn-success:hover .oi,
+.btn-success:hover .fa,
+.btn-outline-primary:hover .oi,
+.btn-outline-primary:hover .fa,
+.o_form_button_save:hover .oi,
+.o_form_button_save:hover .fa,
+.o_form_button_edit:hover .oi,
+.o_form_button_edit:hover .fa,
+.o_list_button_add:hover .oi,
+.o_list_button_add:hover .fa,
+.o_control_panel .btn-primary:hover .oi,
+.o_control_panel .btn-primary:hover .fa,
+.o_control_panel .o_form_button_save:hover .oi,
+.o_control_panel .o_form_button_save:hover .fa {
+    color: #008751 !important;
+}
+
+/* Icons inside secondary / cancel / discard / warning buttons */
+.o_form_buttons_view .o_form_button_create .oi,
+.o_form_buttons_view .o_form_button_create .fa,
+.o_form_button_cancel .oi,
+.o_form_button_cancel .fa,
+.o_list_button_discard .oi,
+.o_list_button_discard .fa,
+.btn-warning .oi,
+.btn-warning .fa {
+    color: #008751 !important;
+}
+
+/* Ensure search view facet icons and text on green labels are white */
+.o_searchview_facet_label,
+.o_searchview_facet_label .oi,
+.o_searchview_facet_label .fa {
+    color: #ffffff !important;
+}
+
+/* Hide messaging, activity, and non-user-menu systray items */
+.o_menu_systray > *:not(.o_user_menu),
+.o_systray > *:not(.o_user_menu),
+.o_main_navbar .o_menu_systray > *:not(.o_user_menu),
+.o_main_navbar [data-hotkey="shift+m"],
+.o_main_navbar [data-hotkey="shift+a"],
+.o_messaging_systray,
+.o_mail_systray_item {
+    display: none !important;
+}
+
+/* Hide Support, Shortcuts, Documentation, My Odoo.com account from User Menu dropdown */
+[data-menu="support"],
+[data-menu="shortcuts"],
+[data-menu="odoo_account"],
+[data-menu="account"],
+[data-menu="documentation"],
+a[href*="accounts.odoo.com"],
+a[href*="odoo.com/documentation"],
+.o_user_menu .dropdown-item[data-menu="support"],
+.o_user_menu .dropdown-item[data-menu="shortcuts"],
+.o_user_menu .dropdown-item[data-menu="odoo_account"],
+.o_user_menu .dropdown-item[data-menu="account"],
+.o_user_menu .dropdown-item[data-menu="documentation"],
+.dropdown-menu .dropdown-item[data-menu="support"],
+.dropdown-menu .dropdown-item[data-menu="shortcuts"],
+.dropdown-menu .dropdown-item[data-menu="odoo_account"],
+.dropdown-menu .dropdown-item[data-menu="account"],
+.dropdown-menu .dropdown-item[data-menu="documentation"] {
+    display: none !important;
+}
+
+/* Hide Administrative Areas menu item from top navbar */
+.o_main_navbar [data-menu-xmlid="g2p_pbms.menu_g2p_geography"] {
+    display: none !important;
+}
+
+
+
+

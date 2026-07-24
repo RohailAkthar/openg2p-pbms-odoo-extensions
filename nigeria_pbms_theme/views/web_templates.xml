@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Inherit and override the layout shortcut icon (favicon) and page title -->
+    <template id="custom_web_layout" inherit_id="web.layout" priority="110">
+        <xpath expr="//head/link[@rel='shortcut icon']" position="replace">
+            <link
+                type="image/png"
+                rel="shortcut icon"
+                href="/nigeria_pbms_theme/static/src/img/nigeria_logo.png"
+            />
+            <link
+                type="image/png"
+                rel="icon"
+                href="/nigeria_pbms_theme/static/src/img/nigeria_logo.png"
+            />
+        </xpath>
+        <xpath expr="//head/title" position="replace">
+            <t t-set="clean_title" t-value="(title or '').replace(' | My Website', '').replace('My Website', '').replace(' | Odoo', '').replace('Odoo', '').strip()"/>
+            <title><t t-if="clean_title" t-esc="clean_title"/><t t-if="clean_title"> | </t>PBMS</title>
+        </xpath>
+    </template>
+
+    <!-- Inherit and override the login logo -->
+    <template id="login" inherit_id="pbms_theme_extension.login" name="Nigeria Login Inherit">
+        <xpath expr="//img[contains(@t-attf-src, '/web/binary/company_logo')]" position="attributes">
+            <attribute name="t-attf-src">/nigeria_pbms_theme/static/src/img/nigeria_logo.png{{ '?dbname='+db if db else '' }}</attribute>
+        </xpath>
+    </template>
+
+    <!-- Inherit and override the reset password logo -->
+    <template id="g2p_reset_password" inherit_id="pbms_theme_extension.g2p_reset_password" name="Nigeria Reset Password Inherit">
+        <xpath expr="//img[contains(@t-attf-src, '/web/binary/company_logo')]" position="attributes">
+            <attribute name="t-attf-src">/nigeria_pbms_theme/static/src/img/nigeria_logo.png{{ '?dbname='+db if db else '' }}</attribute>
+        </xpath>
+    </template>
+
+    <!-- Update default website name to PBMS if website module is loaded -->
+    <record id="website.default_website" model="website">
+        <field name="name">PBMS</field>
+    </record>
+
+    <!-- Hide Administrative Areas menu item -->
+    <record id="g2p_pbms.menu_g2p_geography" model="ir.ui.menu">
+        <field name="active" eval="False"/>
+    </record>
+</odoo>
