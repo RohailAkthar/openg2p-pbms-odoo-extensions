@@ -26,15 +26,15 @@ export class G2PBeneficiariesComponent extends Component {
             title: _t("Beneficiaries"),
             records: [],
             page: 1,
-            pageSize: 3,
+            pageSize: 20,
             totalCount: 0,
             totalPages: 1,
             target_registry: recordData.target_registry || null,
-            searched: false,
+            searched: true,
             domain: "[]",
         });
         this.orm = useService("orm");
-        console.log(this);
+        this._fetchRecords();
     }
 
     onDomainChange(newDomain) {
