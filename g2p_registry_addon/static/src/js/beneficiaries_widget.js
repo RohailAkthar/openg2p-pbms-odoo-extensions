@@ -61,11 +61,11 @@ export class G2PBeneficiariesComponent extends Component {
             {},
         );
         if (result.message) {
-            this.state.records = result.message.beneficiaries;
-            this.state.totalCount = result.message.total_beneficiary_count;
+            this.state.records = result.message.beneficiaries || [];
+            this.state.totalCount = result.message.total_beneficiary_count || this.state.records.length || 0;
         } else {
-            this.state.records = result.records;
-            this.state.totalCount = result.total_count;
+            this.state.records = result.records || [];
+            this.state.totalCount = result.total_count || this.state.records.length || 0;
         }
         this.state.totalPages = Math.ceil(this.state.totalCount / this.state.pageSize) || 1;
     }
