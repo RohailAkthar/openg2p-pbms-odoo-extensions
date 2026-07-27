@@ -5,7 +5,16 @@ from datetime import datetime
 from werkzeug.wrappers import Response
 
 from odoo import http, _
-from odoo.http import request, stream_with_context
+from odoo.http import request
+
+try:
+    from werkzeug.wsgi import stream_with_context
+except ImportError:
+    try:
+        from werkzeug.wrappers import stream_with_context
+    except ImportError:
+        def stream_with_context(gen):
+            return gen
 
 _logger = logging.getLogger(__name__)
 
