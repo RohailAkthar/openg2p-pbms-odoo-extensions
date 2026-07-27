@@ -52,13 +52,14 @@ class DisbursementExportController(http.Controller):
                 yield output.getvalue()
 
                 page = 1
-                page_size = 1000
+                page_size = 100
                 more_records = True
 
                 while more_records:
                     output = io.StringIO()
                     writer = csv.writer(output)
 
+                    _logger.info("Export streaming page %s (page_size=%s) for wizard %s", page, page_size, wizard_id)
                     res = request.env['g2p.bgtask.summary.wizard'].get_beneficiaries(
                         wizard_id, page, page_size, domain
                     )
@@ -70,6 +71,7 @@ class DisbursementExportController(http.Controller):
                         beneficiaries = res.get('beneficiaries', [])
 
                     if not beneficiaries:
+                        _logger.info("No more beneficiaries returned for wizard %s at page %s", wizard_id, page)
                         more_records = False
                         break
 
