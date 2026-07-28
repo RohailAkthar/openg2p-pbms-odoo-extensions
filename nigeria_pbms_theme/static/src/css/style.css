@@ -1,7 +1,7 @@
-/* Override navbar background to Nigerian Emerald Green */
+/* Override navbar background to Royal Blue (matching Nigeria Theme) */
 .o_main_navbar {
-    background-color: #008751 !important;
-    border-bottom: 1px solid #005c36 !important;
+    background-color: #1e40af !important;
+    border-bottom: 1px solid #172554 !important;
     --o-navbar-height: 56px;
 }
 
@@ -22,16 +22,16 @@
 
 .o_main_navbar .o_menu_sections .o_nav_entry,
 .o_main_navbar .o_menu_sections .dropdown-toggle {
-    background-color: #008751 !important;
+    background-color: #1e40af !important;
     color: #ffffff !important;
     border: none;
-    border-bottom: 1px solid #005c36 !important;
+    border-bottom: 1px solid #172554 !important;
 }
 
 .o_main_navbar .o_menu_sections .o_nav_entry:hover,
 .o_main_navbar .o_menu_sections .dropdown-toggle:hover,
 .o_main_navbar .o_menu_sections .dropdown-toggle:focus {
-    background-color: #00663d !important;
+    background-color: #1d4ed8 !important;
     color: #ffffff !important;
 }
 
@@ -51,14 +51,14 @@
 .o_list_button_add_program,
 .modal-footer .btn-primary,
 .o_domain_selector .o_domain_add_first_node_button {
-    background-color: #008751 !important;
-    border-color: #008751 !important;
+    background-color: #1e40af !important;
+    border-color: #1e40af !important;
     color: #ffffff !important;
 }
 
 .btn-outline-primary {
-    background-color: #008751 !important;
-    border-color: #008751 !important;
+    background-color: #1e40af !important;
+    border-color: #1e40af !important;
     color: #ffffff !important;
 }
 
@@ -70,8 +70,8 @@
 .btn-outline-primary:hover,
 .btn-primary:hover {
     background-color: #ffffff !important;
-    color: #008751 !important;
-    border-color: #008751 !important;
+    color: #1e40af !important;
+    border-color: #1e40af !important;
 }
 
 /* Secondary / Discard / Cancel buttons */
@@ -81,35 +81,35 @@
 .o_technical_modal .modal-footer .btn-secondary,
 .btn-warning {
     background: #ffffff 0% 0% no-repeat padding-box !important;
-    border: 1px solid #008751 !important;
-    color: #008751 !important;
+    border: 1px solid #1e40af !important;
+    color: #1e40af !important;
 }
 
 .o_form_buttons_view .o_form_button_create:hover,
 .o_form_button_cancel:hover,
 .o_list_button_discard:hover {
-    background-color: #f4f9f6 !important;
-    color: #008751 !important;
+    background-color: #eff6ff !important;
+    color: #1e40af !important;
 }
 
 /* Breadcrumbs */
 .breadcrumb .breadcrumb-item a {
-    color: #008751 !important;
+    color: #1e40af !important;
 }
 
 /* Active tab header */
 .o_notebook_headers .nav-item .active {
-    background: #008751 0% 0% no-repeat padding-box !important;
-    border: 2px solid #008751 !important;
+    background: #1e40af 0% 0% no-repeat padding-box !important;
+    border: 2px solid #1e40af !important;
     color: #ffffff !important;
 }
 
 .o_notebook_headers .nav-tabs {
-    border-bottom-color: #008751 !important;
+    border-bottom-color: #1e40af !important;
 }
 
 .o_notebook_headers .nav-item a:hover {
-    border-color: #008751 !important;
+    border-color: #1e40af !important;
 }
 
 /* Success button overrides */
@@ -118,8 +118,8 @@
 .btn-success:active,
 .btn-success:focus,
 .o_statusbar_buttons .btn-success {
-    background-color: #008751 !important;
-    border-color: #008751 !important;
+    background-color: #1e40af !important;
+    border-color: #1e40af !important;
     color: #ffffff !important;
 }
 
@@ -127,37 +127,37 @@
 .o_cp_action_menus .dropdown-toggle,
 .o_cp_action_menus .dropdown-toggle:active,
 .o_list_view .o_field_x2many_list_row_add a {
-    color: #008751 !important;
+    color: #1e40af !important;
 }
 
 /* Quick edit links, invalid fields */
 .o_quick_editable a,
 .o_quick_editable > span {
-    color: #008751 !important;
+    color: #1e40af !important;
 }
 
 .o_field_invalid,
 .o_required_modifier {
-    --o-input-border-color: #008751 !important;
+    --o-input-border-color: #1e40af !important;
 }
 
 .o_required_modifier.o_input,
 .o_required_modifier .o_input {
-    background: #f4f9f6 0% 0% no-repeat padding-box !important;
-    border: 1px solid #008751 !important;
+    background: #eff6ff 0% 0% no-repeat padding-box !important;
+    border: 1px solid #1e40af !important;
 }
 
 .o_horizontal_separator {
-    color: #008751 !important;
+    color: #1e40af !important;
 }
 
 .o_form_view .o_form_statusbar .o_statusbar_status .o_arrow_button.btn-primary.disabled {
-    color: #008751 !important;
+    color: #1e40af !important;
 }
 
 .o_form_view .o_form_statusbar .o_statusbar_status .o_arrow_button.btn-primary.disabled:after,
 .o_form_view .o_form_statusbar .o_statusbar_status .o_arrow_button.btn-primary.disabled:before {
-    border-left-color: #f4f9f6 !important;
+    border-left-color: #eff6ff !important;
 }
 
 /* Custom Icons and Interactive Elements Override */
@@ -174,7 +174,7 @@
 .fa-cog,
 .o_cog,
 .o_cog_btn {
-    color: #008751 !important;
+    color: #1e40af !important;
 }
 
 /* Ensure icons inside primary / green / save / action buttons are white by default */
@@ -201,7 +201,7 @@
     color: #ffffff !important;
 }
 
-/* Icons inside green buttons turn green on hover (matching button text color) */
+/* Icons inside primary buttons turn blue on hover (matching button text color) */
 .btn-primary:hover .oi,
 .btn-primary:hover .fa,
 .btn-success:hover .oi,
@@ -218,7 +218,7 @@
 .o_control_panel .btn-primary:hover .fa,
 .o_control_panel .o_form_button_save:hover .oi,
 .o_control_panel .o_form_button_save:hover .fa {
-    color: #008751 !important;
+    color: #1e40af !important;
 }
 
 /* Icons inside secondary / cancel / discard / warning buttons */
@@ -230,8 +230,9 @@
 .o_list_button_discard .fa,
 .btn-warning .oi,
 .btn-warning .fa {
-    color: #008751 !important;
+    color: #1e40af !important;
 }
+
 
 /* Ensure search view facet icons and text on green labels are white */
 .o_searchview_facet_label,

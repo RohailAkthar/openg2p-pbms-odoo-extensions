@@ -18,6 +18,7 @@
                             <field name="link_registry_id"/>
                             <field name="name"/>
                             <field name="household_id"/>
+                            <field name="address"/>
                             <field name="household_size"/>
                             <field name="children_count"/>
                             <field name="adult_count"/>
@@ -29,6 +30,8 @@
                             <field name="head_gender"/>
                             <field name="head_phone"/>
                             <field name="head_dob"/>
+                            <field name="head_income" options="{'digits': [16, 2]}"/>
+
                         </group>
                         <group string="Location Info">
                             <field name="large_area_id"/>
@@ -53,6 +56,9 @@
                 <field name="head_name"/>
                 <field name="head_gender"/>
                 <field name="head_phone"/>
+                <field name="head_income" options="{'digits': [16, 2]}"/>
+
+                <field name="address"/>
                 <field name="has_pregnant_member"/>
                 <field name="has_disabled_member"/>
                 <field name="small_area_code"/>

@@ -57,7 +57,7 @@ class DisbursementExportController(http.Controller):
                     writer = csv.writer(output)
 
                     # Write CSV header row
-                    header = ["Household Name", "Household Size", "Head Name", "Head Gender", "Head Phone"]
+                    header = ["Household Name", "Household Size", "Head Name", "Head Gender", "Head Phone", "Head Monthly Income", "Residential Address"]
                     writer.writerow(header)
                     yield output.getvalue()
 
@@ -110,8 +110,17 @@ class DisbursementExportController(http.Controller):
                                 head_gender = ''
 
                             head_phone = str(b.get('head_phone') or b.get('phone') or '').strip()
+                            try:
+                                raw_income = b.get('head_income')
+                                head_income_val = float(raw_income) if raw_income is not None else 0.0
+                                head_income = f"{head_income_val:,.2f}"
+                            except (ValueError, TypeError):
+                                head_income = "0.00"
+                            address = str(b.get('address') or '').strip()
 
-                            writer.writerow([hh_name, hh_size, head_name, head_gender, head_phone])
+                            writer.writerow([hh_name, hh_size, head_name, head_gender, head_phone, head_income, address])
+
+
 
                         yield output.getvalue()
 

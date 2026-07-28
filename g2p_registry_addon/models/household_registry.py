@@ -17,6 +17,8 @@ class G2PHouseholdRegistry(models.Model):
     )
     head_phone = fields.Char(string="Head Phone")
     head_dob = fields.Date(string="Head Date of Birth")
+    head_income = fields.Float(string="Head Monthly Income", digits=(16, 2))
+
     children_count = fields.Integer(string="Children Count")
     adult_count = fields.Integer(string="Adult Count")
     has_pregnant_member = fields.Selection(
@@ -29,3 +31,5 @@ class G2PHouseholdRegistry(models.Model):
     large_area_code = fields.Char(string="Large Area Code")
     small_area_id = fields.Integer(string="Small Area ID")
     small_area_code = fields.Char(string="Small Area Code")
+    address = fields.Text(string="Residential Address")
+
