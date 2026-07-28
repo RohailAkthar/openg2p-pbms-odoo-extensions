@@ -1,6 +1,6 @@
-/* Full screen container styling - Premium Emerald Green Gradient */
+/* Full screen container styling - Premium Royal Blue Gradient */
 main:has(.g2p_login) {
-    background: linear-gradient(135deg, #004d2e 0%, #008751 35%, #ffffff 85%) !important;
+    background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 35%, #ffffff 85%) !important;
 }
 
 /* Remove watermark background image */
@@ -17,40 +17,92 @@ main:has(.g2p_login) {
     background: rgba(255, 255, 255, 0.95) !important;
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.5) !important;
-    box-shadow: 0 10px 45px 0 rgba(0, 77, 46, 0.18) !important;
+    box-shadow: 0 10px 45px 0 rgba(30, 58, 138, 0.18) !important;
 }
 
 /* Button & link styling */
-.g2p_login .oe_login_buttons .btn-primary {
-    background-color: #008751 !important;
-    border-color: #008751 !important;
+.g2p_login .oe_login_buttons .btn-primary,
+.g2p_login .oe_login_form .btn-primary,
+.g2p_login form .btn-primary,
+.g2p_login button.btn-primary,
+.g2p_login .btn-primary,
+.g2p_login button[type="submit"] {
+    background-color: #1e40af !important;
+    background: #1e40af !important;
+    border-color: #1e40af !important;
     color: #ffffff !important;
+    opacity: 1 !important;
 }
 
-.g2p_login .oe_login_buttons .btn-primary:hover {
-    background-color: #00663d !important;
-    border-color: #00663d !important;
+.g2p_login .oe_login_buttons .btn-primary:hover,
+.g2p_login .oe_login_form .btn-primary:hover,
+.g2p_login form .btn-primary:hover,
+.g2p_login button.btn-primary:hover,
+.g2p_login .btn-primary:hover,
+.g2p_login button[type="submit"]:hover {
+    background-color: #1d4ed8 !important;
+    background: #1d4ed8 !important;
+    border-color: #1d4ed8 !important;
+    color: #ffffff !important;
+    opacity: 1 !important;
 }
 
 .g2p_login .oe_login_buttons .btn-primary:active,
-.g2p_login .oe_login_buttons .btn-primary:focus {
-    background-color: #00663d !important;
-    border-color: #00663d !important;
+.g2p_login .oe_login_buttons .btn-primary:focus,
+.g2p_login .oe_login_form .btn-primary:active,
+.g2p_login .oe_login_form .btn-primary:focus,
+.g2p_login form .btn-primary:active,
+.g2p_login form .btn-primary:focus,
+.g2p_login button.btn-primary:active,
+.g2p_login button.btn-primary:focus,
+.g2p_login button[type="submit"]:active,
+.g2p_login button[type="submit"]:focus {
+    background-color: #1d4ed8 !important;
+    background: #1d4ed8 !important;
+    border-color: #1d4ed8 !important;
+    color: #ffffff !important;
+    opacity: 1 !important;
 }
+
 
 .g2p_login .oe_login_buttons a,
 .g2p_login .oe_login_buttons a:hover {
-    color: #008751 !important;
+    color: #1e40af !important;
 }
 
 /* Form fields focus */
 .g2p_login .form-control:focus {
-    border-color: rgba(0, 135, 81, 0.5) !important;
-    box-shadow: 0 0 0 0.1rem rgba(0, 135, 81, 0.25) !important;
+    border-color: rgba(30, 64, 175, 0.5) !important;
+    box-shadow: 0 0 0 0.1rem rgba(30, 64, 175, 0.25) !important;
 }
 
-/* Reset password */
-.g2p_login .reset-password,
-.g2p_login .reset-password a {
-    color: #008751 !important;
+/* Reset password screen styling */
+.g2p_login .reset_g2p_pass {
+    color: #1e40af !important;
+    font-weight: 600;
 }
+
+.g2p_login .reset-password,
+.g2p_login .reset-password a,
+.g2p_login .oe_reset_password_form a,
+.g2p_login .oe_reset_password_form a:hover {
+    color: #1e40af !important;
+}
+
+.g2p_login .oe_reset_password_form .btn-primary,
+.g2p_login .oe_reset_password_form button[type="submit"] {
+    background-color: #1e40af !important;
+    background: #1e40af !important;
+    border-color: #1e40af !important;
+    color: #ffffff !important;
+}
+
+.g2p_login .oe_reset_password_form .btn-primary:hover,
+.g2p_login .oe_reset_password_form button[type="submit"]:hover {
+    background-color: #1d4ed8 !important;
+    background: #1d4ed8 !important;
+    border-color: #1d4ed8 !important;
+    color: #ffffff !important;
+}
+
+
