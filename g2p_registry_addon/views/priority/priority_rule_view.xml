@@ -14,10 +14,15 @@
                        options="{'model': 'g2p.register.families', 'allowed_fields': ['priority_rank']}"
                        invisible="target_registry != 'families'"/>
 
-                <!-- Domain widget for the 'family_members' type -->
-                <!-- <field name="pbms_domain" widget="domain"
-                       options="{'model': 'g2p.register.family.members', 'allowed_fields': ['priority_rank']}"
-                       invisible="target_registry != 'family_members'"/> -->
+                <!-- Domain widget for the 'household' type -->
+                <field name="pbms_domain" widget="domain"
+                       options="{'model': 'g2p.register.household'}"
+                       invisible="target_registry != 'household'"/>
+
+                <!-- Domain widget for the 'individual' type -->
+                <field name="pbms_domain" widget="domain"
+                       options="{'model': 'g2p.register.individual'}"
+                       invisible="target_registry != 'individual'"/>
 
             </xpath>
         </field>

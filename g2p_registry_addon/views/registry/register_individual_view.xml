@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Action -->
+    <record id="action_g2p_register_individual" model="ir.actions.act_window">
+        <field name="name">Individual Registry</field>
+        <field name="res_model">g2p.register.individual</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_g2p_register_individual_form" model="ir.ui.view">
+        <field name="name">g2p.register.individual.form</field>
+        <field name="model">g2p.register.individual</field>
+        <field name="arch" type="xml">
+            <form string="Nigeria NSR Individual" create="0">
+                <sheet>
+                    <group string="Basic Demographics">
+                        <group>
+                            <field name="internal_record_id"/>
+                            <field name="functional_record_id"/>
+                            <field name="full_name"/>
+                            <field name="first_name"/>
+                            <field name="last_name"/>
+                        </group>
+                        <group>
+                            <field name="gender"/>
+                            <field name="birth_date"/>
+                            <field name="estimated_age"/>
+                            <field name="age_method"/>
+                            <field name="citizenship_category"/>
+                        </group>
+                    </group>
+                    <group string="Household Relations &amp; Status">
+                        <group>
+                            <field name="relationship_to_head"/>
+                            <field name="residency_status"/>
+                            <field name="dependency_indicator"/>
+                        </group>
+                        <group>
+                            <field name="phone_numbers"/>
+                            <field name="preferred_contact_method"/>
+                            <field name="contact_person_name"/>
+                            <field name="foundational_id_masked"/>
+                            <field name="foundational_id_verification_status"/>
+                        </group>
+                    </group>
+                    <group string="Vulnerability &amp; Special Categories">
+                        <group>
+                            <field name="disability_status"/>
+                            <field name="plw_status"/>
+                            <field name="plw_status_date" invisible="not plw_status"/>
+                            <field name="orphanhood_flag"/>
+                        </group>
+                        <group>
+                            <field name="chronic_illness_flag"/>
+                            <field name="displacement_status"/>
+                            <field name="pastoralist_classification"/>
+                            <field name="high_mobility_indicator"/>
+                        </group>
+                    </group>
+                    <group string="Livelihood &amp; Economic Activity">
+                        <group>
+                            <field name="primary_livelihood"/>
+                            <field name="secondary_livelihood"/>
+                        </group>
+                        <group>
+                            <field name="employment_status"/>
+                            <field name="coping_strategies_index"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Tree View -->
+    <record id="view_g2p_register_individual_tree" model="ir.ui.view">
+        <field name="name">g2p.register.individual.tree</field>
+        <field name="model">g2p.register.individual</field>
+        <field name="arch" type="xml">
+            <tree string="Nigeria NSR Individual Registry" create="0">
+                <field name="internal_record_id"/>
+                <field name="functional_record_id"/>
+                <field name="full_name"/>
+                <field name="gender"/>
+                <field name="estimated_age"/>
+                <field name="relationship_to_head"/>
+                <field name="disability_status"/>
+                <field name="plw_status"/>
+                <field name="primary_livelihood"/>
+                <field name="employment_status"/>
+                <button name="action_open_view" type="object" class="fa fa-eye" title="View"/>
+            </tree>
+        </field>
+    </record>
+</odoo>

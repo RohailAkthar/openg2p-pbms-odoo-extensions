@@ -1,17 +1,13 @@
 <odoo>
-    <menuitem id="menu_g2p_farmer_registry"
-              name="Farmer Registry"
+
+    <menuitem id="menu_g2p_register_household"
+              name="Household Registry"
               parent="g2p_pbms.menu_g2p_registry"
-              action="action_g2p_farmer_registry"
-              sequence="1"/>
-    <menuitem id="menu_g2p_student_registry"
-              name="Student Registry"
+              action="action_g2p_register_household"
+              sequence="4"/>
+    <menuitem id="menu_g2p_register_individual"
+              name="Individual Registry"
               parent="g2p_pbms.menu_g2p_registry"
-              action="action_g2p_student_registry"
-              sequence="2"/>
-    <menuitem id="menu_g2p_register_families"
-              name="Register Families"
-              parent="g2p_pbms.menu_g2p_registry"
-              action="action_g2p_register_families"
-              sequence="3"/>
+              action="action_g2p_register_individual"
+              sequence="5"/>
 </odoo>

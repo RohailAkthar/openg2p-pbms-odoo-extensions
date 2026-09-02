@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Action -->
+    <record id="action_g2p_register_household" model="ir.actions.act_window">
+        <field name="name">Household Registry</field>
+        <field name="res_model">g2p.register.household</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_g2p_register_household_form" model="ir.ui.view">
+        <field name="name">g2p.register.household.form</field>
+        <field name="model">g2p.register.household</field>
+        <field name="arch" type="xml">
+            <form string="Nigeria NSR Household" create="0">
+                <sheet>
+                    <group string="Household Identification">
+                        <group>
+                            <field name="internal_record_id"/>
+                            <field name="functional_record_id"/>
+                            <field name="household_head_name"/>
+                        </group>
+                        <group>
+                            <field name="household_head_internal_record_id"/>
+                            <field name="headship_type"/>
+                            <field name="husband_dead"/>
+                            <field name="husband_dead_date" invisible="not husband_dead"/>
+                        </group>
+                    </group>
+                    <group string="Household Composition &amp; Demographics">
+                        <group>
+                            <field name="size_total"/>
+                            <field name="size_adults"/>
+                            <field name="size_children_u5"/>
+                            <field name="size_school_age"/>
+                        </group>
+                        <group>
+                            <field name="size_elderly"/>
+                            <field name="number_of_female_members"/>
+                            <field name="number_of_male_members"/>
+                            <field name="elderly_member_present"/>
+                        </group>
+                    </group>
+                    <group string="Housing &amp; Living Conditions">
+                        <group>
+                            <field name="dwelling_type"/>
+                            <field name="roof_material"/>
+                            <field name="wall_material"/>
+                            <field name="floor_material"/>
+                        </group>
+                        <group>
+                            <field name="tenure_status"/>
+                            <field name="rooms_count"/>
+                            <field name="overcrowding_indicator"/>
+                        </group>
+                    </group>
+                    <group string="WASH &amp; Energy Access">
+                        <group>
+                            <field name="water_source_type"/>
+                            <field name="water_distance_minutes"/>
+                            <field name="sanitation_type"/>
+                        </group>
+                        <group>
+                            <field name="lighting_source"/>
+                            <field name="cooking_fuel_type"/>
+                            <field name="mobile_phone_type"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Tree View -->
+    <record id="view_g2p_register_household_tree" model="ir.ui.view">
+        <field name="name">g2p.register.household.tree</field>
+        <field name="model">g2p.register.household</field>
+        <field name="arch" type="xml">
+            <tree string="Nigeria NSR Household Registry" create="0">
+                <field name="internal_record_id"/>
+                <field name="functional_record_id"/>
+                <field name="household_head_name"/>
+                <field name="headship_type"/>
+                <field name="size_total"/>
+                <field name="dwelling_type"/>
+                <field name="water_source_type"/>
+                <field name="sanitation_type"/>
+                <field name="lighting_source"/>
+                <button name="action_open_view" type="object" class="fa fa-eye" title="View"/>
+            </tree>
+        </field>
+    </record>
+</odoo>

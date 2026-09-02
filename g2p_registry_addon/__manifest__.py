@@ -14,6 +14,8 @@
         "views/registry/farmer_registry_view.xml",
         "views/registry/student_registry_view.xml",
         "views/registry/register_families_view.xml",
+        "views/registry/register_household_view.xml",
+        "views/registry/register_individual_view.xml",
         "views/bgtask/bgtask_view.xml",
         "views/menu.xml",
     ],

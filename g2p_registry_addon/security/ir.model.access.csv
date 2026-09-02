@@ -5,3 +5,7 @@ g2p_farmer_registry_read,Read Farmer Registry,model_g2p_farmer_registry,g2p_pbms
 g2p_farmer_registry_write,Write Farmer Registry,model_g2p_farmer_registry,g2p_pbms.group_beneficiary_list_editor,1,1,1,1
 g2p_register_families_read,Read Register Families,model_g2p_register_families,g2p_pbms.group_beneficiary_list_viewer,1,0,0,0
 g2p_register_families_write,Write Register Families,model_g2p_register_families,g2p_pbms.group_beneficiary_list_editor,1,1,1,1
+g2p_register_household_read,Read Register Household,model_g2p_register_household,g2p_pbms.group_beneficiary_list_viewer,1,0,0,0
+g2p_register_household_write,Write Register Household,model_g2p_register_household,g2p_pbms.group_beneficiary_list_editor,1,1,1,1
+g2p_register_individual_read,Read Register Individual,model_g2p_register_individual,g2p_pbms.group_beneficiary_list_viewer,1,0,0,0
+g2p_register_individual_write,Write Register Individual,model_g2p_register_individual,g2p_pbms.group_beneficiary_list_editor,1,1,1,1

@@ -1,0 +1,34 @@
+/* Nigeria Theme Login Styling */
+main:has(.g2p_login) {
+    background: #edf7f1 0% 0% no-repeat padding-box !important;
+}
+
+.nigeria-login-header {
+    margin-bottom: 1.5rem;
+}
+
+.nigeria-coat-of-arms-login {
+    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+}
+
+.g2p_login .oe_login_buttons .btn-primary {
+    background-color: #008751 !important;
+    border-color: #008751 !important;
+}
+
+.g2p_login .oe_login_buttons .btn-primary:hover,
+.g2p_login .oe_login_buttons .btn-primary:active,
+.g2p_login .oe_login_buttons .btn-primary:focus {
+    background-color: #00683e !important;
+    border-color: #00683e !important;
+}
+
+.g2p_login .oe_login_buttons a,
+.g2p_login .oe_login_buttons a:hover {
+    color: #008751 !important;
+}
+
+.g2p_login .form-control:focus {
+    border-color: #008751 !important;
+    box-shadow: 0 0 0 0.15rem rgba(0, 135, 81, 0.25) !important;
+}

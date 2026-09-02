@@ -38,7 +38,29 @@
                 <table class="table table-hover table-striped align-middle mb-0" style="font-size: 0.9rem;">
                     <thead class="table-dark">
                         <tr>
-                            <t t-if="state.target_registry === 'families'">
+                            <t t-if="state.target_registry === 'household'">
+                                <th class="px-3 py-2">Functional ID</th>
+                                <th class="px-3 py-2">Household Head</th>
+                                <th class="px-3 py-2">Headship Type</th>
+                                <th class="px-3 py-2 text-center">Total Size</th>
+                                <th class="px-3 py-2">Dwelling Type</th>
+                                <th class="px-3 py-2">Water Source</th>
+                                <th class="px-3 py-2">Sanitation</th>
+                                <th class="px-3 py-2">Ward / Location</th>
+                                <th class="px-3 py-2 text-center">Status</th>
+                            </t>
+                            <t t-elif="state.target_registry === 'individual'">
+                                <th class="px-3 py-2">Functional ID</th>
+                                <th class="px-3 py-2">Full Name</th>
+                                <th class="px-3 py-2">Gender</th>
+                                <th class="px-3 py-2 text-center">Age</th>
+                                <th class="px-3 py-2">Relation to Head</th>
+                                <th class="px-3 py-2">Disability</th>
+                                <th class="px-3 py-2 text-center">PLW</th>
+                                <th class="px-3 py-2">Primary Livelihood</th>
+                                <th class="px-3 py-2 text-center">Status</th>
+                            </t>
+                            <t t-elif="state.target_registry === 'families'">
                                 <th class="px-3 py-2">Functional ID</th>
                                 <th class="px-3 py-2">Family Name</th>
                                 <th class="px-3 py-2">Type of Housing</th>
@@ -55,7 +77,53 @@
                         <t t-if="state.records and state.records.length">
                             <t t-foreach="state.records" t-as="record" t-key="record.id">
                                 <tr>
-                                    <t t-if="state.target_registry === 'families'">
+                                    <t t-if="state.target_registry === 'household'">
+                                        <td class="px-3 py-2 fw-semibold text-primary">
+                                            <t t-esc="record.functional_record_id"/>
+                                        </td>
+                                        <td class="px-3 py-2"><t t-esc="record.household_head_name"/></td>
+                                        <td class="px-3 py-2"><t t-esc="record.headship_type"/></td>
+                                        <td class="px-3 py-2 text-center">
+                                            <span class="badge bg-info text-dark">
+                                                <t t-esc="record.size_total"/>
+                                            </span>
+                                        </td>
+                                        <td class="px-3 py-2"><t t-esc="record.dwelling_type"/></td>
+                                        <td class="px-3 py-2"><t t-esc="record.water_source_type"/></td>
+                                        <td class="px-3 py-2"><t t-esc="record.sanitation_type"/></td>
+                                        <td class="px-3 py-2"><t t-esc="record.geo_lowest_level_value_id"/></td>
+                                        <td class="px-3 py-2 text-center">
+                                            <span class="badge bg-success">
+                                                <t t-esc="record.record_status or 'ACTIVE'"/>
+                                            </span>
+                                        </td>
+                                    </t>
+                                    <t t-elif="state.target_registry === 'individual'">
+                                        <td class="px-3 py-2 fw-semibold text-primary">
+                                            <t t-esc="record.functional_record_id"/>
+                                        </td>
+                                        <td class="px-3 py-2"><t t-esc="record.full_name"/></td>
+                                        <td class="px-3 py-2 text-capitalize"><t t-esc="record.gender"/></td>
+                                        <td class="px-3 py-2 text-center">
+                                            <span class="badge bg-secondary">
+                                                <t t-esc="record.estimated_age"/>
+                                            </span>
+                                        </td>
+                                        <td class="px-3 py-2"><t t-esc="record.relationship_to_head"/></td>
+                                        <td class="px-3 py-2"><t t-esc="record.disability_status"/></td>
+                                        <td class="px-3 py-2 text-center">
+                                            <span t-attf-class="badge #{record.plw_status ? 'bg-warning text-dark' : 'bg-light text-muted border'}">
+                                                <t t-esc="record.plw_status ? 'YES' : 'NO'"/>
+                                            </span>
+                                        </td>
+                                        <td class="px-3 py-2"><t t-esc="record.primary_livelihood"/></td>
+                                        <td class="px-3 py-2 text-center">
+                                            <span class="badge bg-success">
+                                                <t t-esc="record.record_status or 'ACTIVE'"/>
+                                            </span>
+                                        </td>
+                                    </t>
+                                    <t t-elif="state.target_registry === 'families'">
                                         <td class="px-3 py-2 fw-semibold text-primary">
                                             <t t-esc="record.functional_record_id"/>
                                         </td>

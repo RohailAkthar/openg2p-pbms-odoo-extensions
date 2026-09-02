@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="nigeria_login" inherit_id="pbms_theme_extension.login" priority="100">
+        <xpath expr="//img[contains(@t-attf-src, '/web/binary/company_logo')]" position="replace">
+            <div class="text-center pb-2">
+                <img
+                    src="/pbms_theme_nigeria/static/src/img/nigeria_login_logo.png"
+                    alt="Federal Republic of Nigeria"
+                    style="max-height: 120px; max-width: 100%; width: auto; object-fit: contain;"
+                />
+                <div class="mt-2 text-center">
+                    <h5 class="mb-0 font-weight-bold" style="color: #121111; font-weight: 700; letter-spacing: 0.5px;">FEDERAL REPUBLIC OF NIGERIA</h5>
+                    <div class="small" style="font-size: 13px; font-weight: 600; color: #008751 !important;">PBMS - Social Protection &amp; Beneficiary Operations</div>
+                </div>
+            </div>
+        </xpath>
+    </template>
+</odoo>
