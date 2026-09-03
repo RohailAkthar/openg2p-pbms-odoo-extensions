@@ -60,9 +60,11 @@ class G2PRegisterIndividual(models.Model):
     alias_names = fields.Char(string="Alias Names (JSON)")
     gender = fields.Selection(
         selection=[
-            ("male", "Male"),
+            ("FEMALE", "Female"),
+            ("MALE", "Male"),
+            ("OTHER", "Other"),
             ("female", "Female"),
-            ("other", "Other"),
+            ("male", "Male"),
         ],
         string="Gender",
     )
