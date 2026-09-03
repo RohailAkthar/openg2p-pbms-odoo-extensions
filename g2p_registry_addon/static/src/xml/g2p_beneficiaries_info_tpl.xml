@@ -50,7 +50,6 @@
                                 <th class="px-3 py-2">Contact Number</th>
                                 <th class="px-3 py-2 text-end">Monthly Income</th>
                                 <th class="px-3 py-2 text-center">Pregnant Member</th>
-                                <th class="px-3 py-2 text-center">Status</th>
                             </t>
                             <t t-elif="state.target_registry === 'individual'">
                                 <th class="px-3 py-2">Functional ID</th>
@@ -61,7 +60,6 @@
                                 <th class="px-3 py-2">Disability</th>
                                 <th class="px-3 py-2 text-center">PLW</th>
                                 <th class="px-3 py-2">Primary Livelihood</th>
-                                <th class="px-3 py-2 text-center">Status</th>
                             </t>
                             <t t-elif="state.target_registry === 'families'">
                                 <th class="px-3 py-2">Functional ID</th>
@@ -92,10 +90,10 @@
                                                 <t t-esc="record.size_total or 0"/>
                                             </span>
                                         </td>
-                                        <td class="px-3 py-2"><t t-esc="record.address_line_1 or '-'"/></td>
-                                        <td class="px-3 py-2"><t t-esc="record.address_line_2 or '-'"/></td>
-                                        <td class="px-3 py-2"><t t-esc="record.geo_lowest_level_value_id or '-'"/></td>
-                                        <td class="px-3 py-2"><t t-esc="record.phone_number or '-'"/></td>
+                                        <td class="px-3 py-2"><t t-esc="record.region or '-'"/></td>
+                                        <td class="px-3 py-2"><t t-esc="record.district or '-'"/></td>
+                                        <td class="px-3 py-2"><t t-esc="record.ward or '-'"/></td>
+                                        <td class="px-3 py-2"><t t-esc="record.contact_number or '-'"/></td>
                                         <td class="px-3 py-2 text-end">
                                             <t t-if="record.family_monthly_income">
                                                 ₦<t t-esc="record.family_monthly_income.toLocaleString('en-US', {minimumFractionDigits: 2})"/>
@@ -105,11 +103,6 @@
                                         <td class="px-3 py-2 text-center">
                                             <span t-attf-class="badge #{record.pregnant_member_present ? 'bg-warning text-dark' : 'bg-light text-muted border'}">
                                                 <t t-esc="record.pregnant_member_present ? 'YES' : 'NO'"/>
-                                            </span>
-                                        </td>
-                                        <td class="px-3 py-2 text-center">
-                                            <span class="badge bg-success">
-                                                <t t-esc="record.record_status or 'ACTIVE'"/>
                                             </span>
                                         </td>
                                     </t>
@@ -132,11 +125,6 @@
                                             </span>
                                         </td>
                                         <td class="px-3 py-2"><t t-esc="record.primary_livelihood"/></td>
-                                        <td class="px-3 py-2 text-center">
-                                            <span class="badge bg-success">
-                                                <t t-esc="record.record_status or 'ACTIVE'"/>
-                                            </span>
-                                        </td>
                                     </t>
                                     <t t-elif="state.target_registry === 'families'">
                                         <td class="px-3 py-2 fw-semibold text-primary">
