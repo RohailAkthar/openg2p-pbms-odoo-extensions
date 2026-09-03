@@ -40,13 +40,16 @@
                         <tr>
                             <t t-if="state.target_registry === 'household'">
                                 <th class="px-3 py-2">Functional ID</th>
-                                <th class="px-3 py-2">Household Head</th>
+                                <th class="px-3 py-2">Head National ID</th>
+                                <th class="px-3 py-2">Head Name</th>
                                 <th class="px-3 py-2">Headship Type</th>
                                 <th class="px-3 py-2 text-center">Total Size</th>
-                                <th class="px-3 py-2">Dwelling Type</th>
-                                <th class="px-3 py-2">Water Source</th>
-                                <th class="px-3 py-2">Sanitation</th>
-                                <th class="px-3 py-2">Ward / Location</th>
+                                <th class="px-3 py-2">Region</th>
+                                <th class="px-3 py-2">District</th>
+                                <th class="px-3 py-2">Ward</th>
+                                <th class="px-3 py-2">Contact Number</th>
+                                <th class="px-3 py-2 text-end">Monthly Income</th>
+                                <th class="px-3 py-2 text-center">Pregnant Member</th>
                                 <th class="px-3 py-2 text-center">Status</th>
                             </t>
                             <t t-elif="state.target_registry === 'individual'">
@@ -81,17 +84,29 @@
                                         <td class="px-3 py-2 fw-semibold text-primary">
                                             <t t-esc="record.functional_record_id"/>
                                         </td>
-                                        <td class="px-3 py-2"><t t-esc="record.household_head_name"/></td>
-                                        <td class="px-3 py-2"><t t-esc="record.headship_type"/></td>
+                                        <td class="px-3 py-2"><t t-esc="record.link_foundational_id or '-'"/></td>
+                                        <td class="px-3 py-2 fw-semibold"><t t-esc="record.household_head_name or '-'"/></td>
+                                        <td class="px-3 py-2"><t t-esc="record.headship_type or '-'"/></td>
                                         <td class="px-3 py-2 text-center">
                                             <span class="badge bg-info text-dark">
-                                                <t t-esc="record.size_total"/>
+                                                <t t-esc="record.size_total or 0"/>
                                             </span>
                                         </td>
-                                        <td class="px-3 py-2"><t t-esc="record.dwelling_type"/></td>
-                                        <td class="px-3 py-2"><t t-esc="record.water_source_type"/></td>
-                                        <td class="px-3 py-2"><t t-esc="record.sanitation_type"/></td>
-                                        <td class="px-3 py-2"><t t-esc="record.geo_lowest_level_value_id"/></td>
+                                        <td class="px-3 py-2"><t t-esc="record.address_line_1 or '-'"/></td>
+                                        <td class="px-3 py-2"><t t-esc="record.address_line_2 or '-'"/></td>
+                                        <td class="px-3 py-2"><t t-esc="record.geo_lowest_level_value_id or '-'"/></td>
+                                        <td class="px-3 py-2"><t t-esc="record.phone_number or '-'"/></td>
+                                        <td class="px-3 py-2 text-end">
+                                            <t t-if="record.family_monthly_income">
+                                                ₦<t t-esc="record.family_monthly_income.toLocaleString('en-US', {minimumFractionDigits: 2})"/>
+                                            </t>
+                                            <t t-else="">-</t>
+                                        </td>
+                                        <td class="px-3 py-2 text-center">
+                                            <span t-attf-class="badge #{record.pregnant_member_present ? 'bg-warning text-dark' : 'bg-light text-muted border'}">
+                                                <t t-esc="record.pregnant_member_present ? 'YES' : 'NO'"/>
+                                            </span>
+                                        </td>
                                         <td class="px-3 py-2 text-center">
                                             <span class="badge bg-success">
                                                 <t t-esc="record.record_status or 'ACTIVE'"/>
