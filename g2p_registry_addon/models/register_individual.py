@@ -63,8 +63,6 @@ class G2PRegisterIndividual(models.Model):
             ("FEMALE", "Female"),
             ("MALE", "Male"),
             ("OTHER", "Other"),
-            ("female", "Female"),
-            ("male", "Male"),
         ],
         string="Gender",
     )
