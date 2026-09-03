@@ -86,7 +86,7 @@
                                         </td>
                                         <td class="px-3 py-2"><t t-esc="record.link_foundational_id or '-'"/></td>
                                         <td class="px-3 py-2 fw-semibold"><t t-esc="record.household_head_name or '-'"/></td>
-                                        <td class="px-3 py-2"><t t-esc="record.headship_type or '-'"/></td>
+                                        <td class="px-3 py-2"><t t-esc="formatHeadship(record.headship_type)"/></td>
                                         <td class="px-3 py-2 text-center">
                                             <span class="badge bg-info text-dark">
                                                 <t t-esc="record.size_total or 0"/>

@@ -77,6 +77,18 @@ export class G2PBeneficiariesComponent extends Component {
         }
     }
 
+    formatHeadship(val) {
+        if (!val) return "-";
+        const map = {
+            'MALE_HEADED': 'Male Headed',
+            'FEMALE_HEADED': 'Female Headed',
+            'CHILD_HEADED': 'Child Headed',
+            'ELDERLY_HEADED': 'Elderly Headed',
+            'DISABLED_HEADED': 'Disabled Headed',
+        };
+        return map[val] || val.replace(/_/g, ' ').toLowerCase().replace(/\b\w/g, c => c.toUpperCase());
+    }
+
     async nextPage() {
         if (this.state.page < this.state.totalPages) {
             this.state.page++;
