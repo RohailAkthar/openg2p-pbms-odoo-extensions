@@ -5,13 +5,13 @@
     <field name="inherit_id" ref="g2p_pbms.view_g2p_eligibility_summary_wizard_form"/>
     <field name="arch" type="xml">
       <xpath expr="//page[.//field[@name='target_registry']]/group" position="after">
-        <!-- Only one beneficiary_search field is shown based on registry type -->
-        <group name="beneficiary_search_farmer" invisible="target_registry != 'families'">
-          <widget name="g2p_beneficiaries_widget" model="g2p.register.families" id="farmer_beneficiary_search_widget"/>
+        <!-- Beneficiary search widget per target registry -->
+        <group name="beneficiary_search_household" invisible="target_registry != 'household'">
+          <widget name="g2p_beneficiaries_widget" model="g2p.register.household" id="household_beneficiary_search_widget"/>
         </group>
-        <!-- <group name="beneficiary_search_family_members" invisible="target_registry != 'family_members'">
-          <widget name="g2p_beneficiaries_widget" model="g2p.register.family.members" id="family_members_beneficiary_search_widget"/>
-        </group> -->
+        <group name="beneficiary_search_individual" invisible="target_registry != 'individual'">
+          <widget name="g2p_beneficiaries_widget" model="g2p.register.individual" id="individual_beneficiary_search_widget"/>
+        </group>
       </xpath>
     </field>
   </record>
