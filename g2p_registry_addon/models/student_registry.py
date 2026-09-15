@@ -7,6 +7,7 @@ class G2PStudentRegistry(models.Model):
     _name = "g2p.student.registry"
     _description = "Student Registry"
     _inherit = "g2p.registry"
+    _table = "g2p_register_students"
 
     # Student Identification & Demographics
     student_id = fields.Char(string="Student ID")

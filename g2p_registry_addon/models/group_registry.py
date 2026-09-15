@@ -7,6 +7,7 @@ class G2PGroupRegistry(models.Model):
     _name = "g2p.group.registry"
     _description = "Group Registry"
     _inherit = "g2p.registry"
+    _table = "g2p_register_groups"
 
     # Group Identification & Hierarchy
     group_name = fields.Char(string="Group Name", required=True)

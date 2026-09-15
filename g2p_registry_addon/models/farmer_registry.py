@@ -7,6 +7,7 @@ class G2PFarmerRegistry(models.Model):
     _name = "g2p.farmer.registry"
     _description = "Farmer Registry"
     _inherit = "g2p.registry"
+    _table = "g2p_register_farmers"
 
     # Farmer Identification
     farmer_id = fields.Char(string="Farmer ID")

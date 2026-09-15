@@ -7,6 +7,7 @@ class G2PIndividualRegistry(models.Model):
     _name = "g2p.individual.registry"
     _description = "Individual Registry"
     _inherit = "g2p.registry"
+    _table = "g2p_register_individuals"
 
     # Demographics
     full_name = fields.Char(string="Full Name", required=True)

@@ -7,6 +7,7 @@ class G2PHouseholdRegistry(models.Model):
     _name = "g2p.household.registry"
     _description = "Household Registry"
     _inherit = "g2p.registry"
+    _table = "g2p_register_households"
 
     # Head of Household Details
     household_head_name = fields.Char(string="Head of Household Name")
