@@ -38,54 +38,136 @@
                 <table class="table table-hover table-striped align-middle mb-0" style="font-size: 0.9rem;">
                     <thead class="table-dark">
                         <tr>
-                            <t t-if="state.target_registry === 'families'">
-                                <th class="px-3 py-2">Functional ID</th>
-                                <th class="px-3 py-2">Family Name</th>
-                                <th class="px-3 py-2">Type of Housing</th>
-                                <th class="px-3 py-2">House Condition</th>
-                                <th class="px-3 py-2">Sanitation Condition</th>
-                                <th class="px-3 py-2">Water Access</th>
-                                <th class="px-3 py-2">Electricity Access</th>
-                                <th class="px-3 py-2">Ethnic Group</th>
-                                <th class="px-3 py-2 text-center"># Children</th>
+                            <!-- Individual Header -->
+                            <t t-if="state.target_registry === 'individual'">
+                                <th class="px-3 py-2">Internal ID</th>
+                                <th class="px-3 py-2">Full Name</th>
+                                <th class="px-3 py-2">Gender</th>
+                                <th class="px-3 py-2">Age</th>
+                                <th class="px-3 py-2">District</th>
+                                <th class="px-3 py-2">Block</th>
+                                <th class="px-3 py-2">Village</th>
+                                <th class="px-3 py-2">Mobile</th>
+                                <th class="px-3 py-2">Aadhaar</th>
+                            </t>
+                            <!-- Household Header -->
+                            <t t-elif="state.target_registry === 'household'">
+                                <th class="px-3 py-2">Internal ID</th>
+                                <th class="px-3 py-2">Head Name</th>
+                                <th class="px-3 py-2 text-center">Total Size</th>
+                                <th class="px-3 py-2">Ration Card #</th>
+                                <th class="px-3 py-2">Card Type</th>
+                                <th class="px-3 py-2">District</th>
+                                <th class="px-3 py-2">Block</th>
+                                <th class="px-3 py-2">Village</th>
+                            </t>
+                            <!-- Farmer Header -->
+                            <t t-elif="state.target_registry === 'farmer'">
+                                <th class="px-3 py-2">Farmer ID</th>
+                                <th class="px-3 py-2">Farmer Name</th>
+                                <th class="px-3 py-2">Crop Type</th>
+                                <th class="px-3 py-2 text-center">Land (Acres)</th>
+                                <th class="px-3 py-2 text-center">PM-KISAN</th>
+                                <th class="px-3 py-2">District</th>
+                                <th class="px-3 py-2">Block</th>
+                                <th class="px-3 py-2">Village</th>
+                            </t>
+                            <!-- Student Header -->
+                            <t t-elif="state.target_registry === 'student'">
+                                <th class="px-3 py-2">Student ID</th>
+                                <th class="px-3 py-2">Student Name</th>
+                                <th class="px-3 py-2">Gender</th>
+                                <th class="px-3 py-2">School</th>
+                                <th class="px-3 py-2">Grade</th>
+                                <th class="px-3 py-2">District</th>
+                                <th class="px-3 py-2">Block</th>
+                                <th class="px-3 py-2">Village</th>
+                            </t>
+                            <!-- Group Header -->
+                            <t t-elif="state.target_registry === 'group'">
+                                <th class="px-3 py-2">Internal ID</th>
+                                <th class="px-3 py-2">Group Name</th>
+                                <th class="px-3 py-2">SHG ID</th>
+                                <th class="px-3 py-2">Key Member</th>
+                                <th class="px-3 py-2">Grading</th>
+                                <th class="px-3 py-2 text-end">CCL Limit</th>
+                                <th class="px-3 py-2">District</th>
+                                <th class="px-3 py-2">Block</th>
+                                <th class="px-3 py-2">Village</th>
                             </t>
                         </tr>
                     </thead>
                     <tbody>
                         <t t-if="state.records and state.records.length">
-                            <t t-foreach="state.records" t-as="record" t-key="record.id">
+                            <t t-foreach="state.records" t-as="record" t-key="record.id or record.internal_record_id">
                                 <tr>
-                                    <t t-if="state.target_registry === 'families'">
-                                        <td class="px-3 py-2 fw-semibold text-primary">
-                                            <t t-esc="record.functional_record_id"/>
-                                        </td>
-                                        <td class="px-3 py-2"><t t-esc="record.family_name"/></td>
-                                        <td class="px-3 py-2"><t t-esc="record.type_of_housing"/></td>
-                                        <td class="px-3 py-2"><t t-esc="record.house_condition"/></td>
-                                        <td class="px-3 py-2"><t t-esc="record.sanitation_condition"/></td>
+                                    <!-- Individual Row -->
+                                    <t t-if="state.target_registry === 'individual'">
+                                        <td class="px-3 py-2 fw-semibold text-primary"><t t-esc="record.internal_record_id"/></td>
+                                        <td class="px-3 py-2"><t t-esc="record.full_name"/></td>
+                                        <td class="px-3 py-2"><t t-esc="record.gender"/></td>
+                                        <td class="px-3 py-2"><t t-esc="record.estimated_age"/></td>
+                                        <td class="px-3 py-2"><t t-esc="record.district"/></td>
+                                        <td class="px-3 py-2"><t t-esc="record.block"/></td>
+                                        <td class="px-3 py-2"><t t-esc="record.village"/></td>
+                                        <td class="px-3 py-2"><t t-esc="record.mobile_number"/></td>
+                                        <td class="px-3 py-2"><t t-esc="record.aadhaar_number"/></td>
+                                    </t>
+                                    <!-- Household Row -->
+                                    <t t-elif="state.target_registry === 'household'">
+                                        <td class="px-3 py-2 fw-semibold text-primary"><t t-esc="record.internal_record_id"/></td>
+                                        <td class="px-3 py-2"><t t-esc="record.household_head_name"/></td>
+                                        <td class="px-3 py-2 text-center"><t t-esc="record.size_total"/></td>
+                                        <td class="px-3 py-2"><t t-esc="record.ration_card_number"/></td>
+                                        <td class="px-3 py-2"><t t-esc="record.ration_card_type"/></td>
+                                        <td class="px-3 py-2"><t t-esc="record.district"/></td>
+                                        <td class="px-3 py-2"><t t-esc="record.block"/></td>
+                                        <td class="px-3 py-2"><t t-esc="record.village"/></td>
+                                    </t>
+                                    <!-- Farmer Row -->
+                                    <t t-elif="state.target_registry === 'farmer'">
+                                        <td class="px-3 py-2 fw-semibold text-primary"><t t-esc="record.farmer_id or record.internal_record_id"/></td>
+                                        <td class="px-3 py-2"><t t-esc="record.farmer_name or record.name"/></td>
+                                        <td class="px-3 py-2"><t t-esc="record.crop_type"/></td>
+                                        <td class="px-3 py-2 text-center"><t t-esc="record.land_area_acres or record.land_area"/></td>
                                         <td class="px-3 py-2 text-center">
-                                            <span t-attf-class="badge #{record.water_access ? 'bg-success' : 'bg-danger'}">
-                                                <t t-esc="record.water_access"/>
+                                            <span t-attf-class="badge #{record.pm_kisan_enrolled ? 'bg-success' : 'bg-secondary'}">
+                                                <t t-esc="record.pm_kisan_enrolled ? 'Yes' : 'No'"/>
                                             </span>
                                         </td>
-                                        <td class="px-3 py-2 text-center">
-                                            <span t-attf-class="badge #{record.electricity_access ? 'bg-success' : 'bg-danger'}">
-                                                <t t-esc="record.electricity_access"/>
-                                            </span>
-                                        </td>
-                                        <td class="px-3 py-2"><t t-esc="record.ethnic_group"/></td>
-                                        <td class="px-3 py-2 text-center">
-                                            <span class="badge bg-info text-dark">
-                                                <t t-esc="record.no_of_children"/>
-                                            </span>
-                                        </td>
+                                        <td class="px-3 py-2"><t t-esc="record.district"/></td>
+                                        <td class="px-3 py-2"><t t-esc="record.block"/></td>
+                                        <td class="px-3 py-2"><t t-esc="record.village"/></td>
+                                    </t>
+                                    <!-- Student Row -->
+                                    <t t-elif="state.target_registry === 'student'">
+                                        <td class="px-3 py-2 fw-semibold text-primary"><t t-esc="record.student_id or record.internal_record_id"/></td>
+                                        <td class="px-3 py-2"><t t-esc="record.name"/></td>
+                                        <td class="px-3 py-2"><t t-esc="record.gender"/></td>
+                                        <td class="px-3 py-2"><t t-esc="record.school_name"/></td>
+                                        <td class="px-3 py-2"><t t-esc="record.class_grade"/></td>
+                                        <td class="px-3 py-2"><t t-esc="record.district"/></td>
+                                        <td class="px-3 py-2"><t t-esc="record.block"/></td>
+                                        <td class="px-3 py-2"><t t-esc="record.village"/></td>
+                                    </t>
+                                    <!-- Group Row -->
+                                    <t t-elif="state.target_registry === 'group'">
+                                        <td class="px-3 py-2 fw-semibold text-primary"><t t-esc="record.internal_record_id"/></td>
+                                        <td class="px-3 py-2"><t t-esc="record.group_name"/></td>
+                                        <td class="px-3 py-2"><t t-esc="record.shg_id"/></td>
+                                        <td class="px-3 py-2"><t t-esc="record.key_member_name"/></td>
+                                        <td class="px-3 py-2"><t t-esc="record.shg_grading"/></td>
+                                        <td class="px-3 py-2 text-end"><t t-esc="record.ccl_limit"/></td>
+                                        <td class="px-3 py-2"><t t-esc="record.district"/></td>
+                                        <td class="px-3 py-2"><t t-esc="record.block"/></td>
+                                        <td class="px-3 py-2"><t t-esc="record.village"/></td>
                                     </t>
                                 </tr>
                             </t>
                         </t>
                         <t t-else="">
                             <tr>
-                                <td colspan="9" class="text-center text-muted py-4">
+                                <td colspan="10" class="text-center text-muted py-4">
                                     <i class="fa fa-inbox fa-2x d-block mb-2"/>
                                     No records found.
                                 </td>

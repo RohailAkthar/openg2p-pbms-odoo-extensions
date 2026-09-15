@@ -5,20 +5,26 @@
         <field name="model">g2p.entitlement.rule.definition</field>
         <field name="inherit_id" ref="g2p_pbms.view_g2p_entitlement_rule_definition_form"/>
         <field name="arch" type="xml">
-
-            <!-- Inject domain widgets inside the <group> -->
             <xpath expr="//form/sheet/group" position="inside">
-
-                <!-- Domain widget for the 'families' type -->
                 <field name="pbms_domain" widget="domain"
-                       options="{'model': 'g2p.register.families'}"
-                       invisible="target_registry != 'families'"/>
+                       options="{'model': 'g2p.individual.registry'}"
+                       invisible="target_registry != 'individual'"/>
 
-                <!-- Domain widget for the 'family_members' type -->
-                <!-- <field name="pbms_domain" widget="domain"
-                       options="{'model': 'g2p.register.family.members'}"
-                       invisible="target_registry != 'family_members'"/> -->
+                <field name="pbms_domain" widget="domain"
+                       options="{'model': 'g2p.household.registry'}"
+                       invisible="target_registry != 'household'"/>
 
+                <field name="pbms_domain" widget="domain"
+                       options="{'model': 'g2p.farmer.registry'}"
+                       invisible="target_registry != 'farmer'"/>
+
+                <field name="pbms_domain" widget="domain"
+                       options="{'model': 'g2p.student.registry'}"
+                       invisible="target_registry != 'student'"/>
+
+                <field name="pbms_domain" widget="domain"
+                       options="{'model': 'g2p.group.registry'}"
+                       invisible="target_registry != 'group'"/>
             </xpath>
         </field>
     </record>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_g2p_individual_registry" model="ir.actions.act_window">
+        <field name="name">Individual Registry</field>
+        <field name="res_model">g2p.individual.registry</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="view_g2p_individual_registry_form" model="ir.ui.view">
+        <field name="name">g2p.individual.registry.form</field>
+        <field name="model">g2p.individual.registry</field>
+        <field name="arch" type="xml">
+            <form string="G2P Individual Registry">
+                <sheet>
+                    <group>
+                        <group string="Demographics">
+                            <field name="internal_record_id"/>
+                            <field name="full_name"/>
+                            <field name="gender"/>
+                            <field name="estimated_age"/>
+                            <field name="dob"/>
+                            <field name="citizenship_category"/>
+                            <field name="residency_status"/>
+                        </group>
+                        <group string="Identifiers &amp; Banking">
+                            <field name="aadhaar_number"/>
+                            <field name="mobile_number"/>
+                            <field name="bank_account_no"/>
+                            <field name="ifsc"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Location">
+                            <field name="district"/>
+                            <field name="block"/>
+                            <field name="village"/>
+                            <field name="gp"/>
+                        </group>
+                        <group string="Social &amp; Cross-Registry">
+                            <field name="primary_livelihood"/>
+                            <field name="disability_status"/>
+                            <field name="plw_status"/>
+                            <field name="orphanhood_flag"/>
+                            <field name="chronic_illness_flag"/>
+                            <field name="household_id"/>
+                            <field name="farmer_id"/>
+                            <field name="pm_kisan_enrolled"/>
+                            <field name="ration_card_number"/>
+                            <field name="shg_name"/>
+                            <field name="student_id"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_g2p_individual_registry_tree" model="ir.ui.view">
+        <field name="name">g2p.individual.registry.tree</field>
+        <field name="model">g2p.individual.registry</field>
+        <field name="arch" type="xml">
+            <tree string="G2P Individual Registry">
+                <field name="internal_record_id"/>
+                <field name="full_name"/>
+                <field name="gender"/>
+                <field name="estimated_age"/>
+                <field name="district"/>
+                <field name="block"/>
+                <field name="village"/>
+                <field name="mobile_number"/>
+                <field name="aadhaar_number"/>
+                <button name="action_open_view" type="object" class="fa fa-eye" title="View"/>
+            </tree>
+        </field>
+    </record>
+</odoo>

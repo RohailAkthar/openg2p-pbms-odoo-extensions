@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!-- Actions -->
     <record id="action_g2p_student_registry" model="ir.actions.act_window">
         <field name="name">Student Registry</field>
         <field name="res_model">g2p.student.registry</field>
         <field name="view_mode">tree,form</field>
     </record>
-    
+
     <record id="view_g2p_student_registry_form" model="ir.ui.view">
         <field name="name">g2p.student.registry.form</field>
         <field name="model">g2p.student.registry</field>
@@ -14,24 +13,63 @@
             <form string="G2P Student Registry">
                 <sheet>
                     <group>
-                        <field name="link_registry_id"/>
-                        <field name="name"/>
-                        <field name="institution_name"/>
-                        <field name="date_of_birth"/>
+                        <group string="Student Demographics">
+                            <field name="internal_record_id"/>
+                            <field name="student_id"/>
+                            <field name="name"/>
+                            <field name="gender"/>
+                            <field name="date_of_birth"/>
+                            <field name="social_category"/>
+                        </group>
+                        <group string="Identifiers &amp; Parents">
+                            <field name="udise_student_id"/>
+                            <field name="apaar_id"/>
+                            <field name="pen_number"/>
+                            <field name="father_name"/>
+                            <field name="mother_name"/>
+                            <field name="guardian_name"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="School &amp; Academics">
+                            <field name="school_name"/>
+                            <field name="school_udise_code"/>
+                            <field name="education_level"/>
+                            <field name="class_grade"/>
+                            <field name="medium_of_instruction"/>
+                            <field name="attendance_percentage"/>
+                        </group>
+                        <group string="Banking &amp; Location">
+                            <field name="scholarship_status"/>
+                            <field name="bank_account_no"/>
+                            <field name="bank_name"/>
+                            <field name="ifsc_code"/>
+                            <field name="district"/>
+                            <field name="block"/>
+                            <field name="village"/>
+                            <field name="state"/>
+                            <field name="link_registry_id"/>
+                        </group>
                     </group>
                 </sheet>
             </form>
         </field>
     </record>
+
     <record id="view_g2p_student_registry_tree" model="ir.ui.view">
         <field name="name">g2p.student.registry.tree</field>
         <field name="model">g2p.student.registry</field>
         <field name="arch" type="xml">
             <tree string="G2P Student Registry">
-                <field name="link_registry_id"/>
+                <field name="internal_record_id"/>
+                <field name="student_id"/>
                 <field name="name"/>
-                <field name="institution_name"/>
-                <field name="date_of_birth"/>
+                <field name="gender"/>
+                <field name="school_name"/>
+                <field name="class_grade"/>
+                <field name="district"/>
+                <field name="block"/>
+                <field name="village"/>
                 <button name="action_open_view" type="object" class="fa fa-eye" title="View"/>
             </tree>
         </field>

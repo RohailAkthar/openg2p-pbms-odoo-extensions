@@ -1,4 +1,6 @@
 from .registry import G2PRegistry
+from .individual_registry import G2PIndividualRegistry
+from .household_registry import G2PHouseholdRegistry
 from .farmer_registry import G2PFarmerRegistry
 from .student_registry import G2PStudentRegistry
-from .register_families import G2PRegisterFamilies
+from .group_registry import G2PGroupRegistry

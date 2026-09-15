@@ -1,4 +1,4 @@
-from odoo import models, fields, api
+from odoo import models, fields
 
 from .registry import G2PRegistry
 
@@ -8,10 +8,41 @@ class G2PStudentRegistry(models.Model):
     _description = "Student Registry"
     _inherit = "g2p.registry"
 
+    # Student Identification & Demographics
+    student_id = fields.Char(string="Student ID")
     name = fields.Char(string="Name", required=True)
     gender = fields.Selection(
-        selection=[("male", "Male"), ("female", "Female")], string="Gender"
+        selection=[("male", "Male"), ("female", "Female"), ("other", "Other")],
+        string="Gender",
     )
-    institution_name = fields.Char(string="Institution Name")
     date_of_birth = fields.Date(string="Date of Birth")
+    udise_student_id = fields.Char(string="UDISE Student ID")
+    apaar_id = fields.Char(string="APAAR ID")
+    pen_number = fields.Char(string="PEN Number")
+    father_name = fields.Char(string="Father Name")
+    mother_name = fields.Char(string="Mother Name")
+    guardian_name = fields.Char(string="Guardian Name")
+    social_category = fields.Char(string="Social Category")
+
+    # School & Academics
+    school_name = fields.Char(string="School Name")
+    school_udise_code = fields.Char(string="School UDISE Code")
+    education_level = fields.Char(string="Education Level")
+    class_grade = fields.Char(string="Class / Grade")
+    medium_of_instruction = fields.Char(string="Medium of Instruction")
+    attendance_percentage = fields.Float(string="Attendance Percentage")
+
+    # Entitlements & Banking
+    scholarship_status = fields.Char(string="Scholarship Status")
+    bank_account_no = fields.Char(string="Bank Account Number")
+    bank_name = fields.Char(string="Bank Name")
+    ifsc_code = fields.Char(string="IFSC Code")
+
+    # Geographic Location
+    district = fields.Char(string="District")
+    block = fields.Char(string="Block")
+    village = fields.Char(string="Village")
+    state = fields.Char(string="State")
+
+    # Link identifier
     link_registry_id = fields.Char(string="Link Registry ID")

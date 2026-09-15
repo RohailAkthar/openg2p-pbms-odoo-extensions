@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_g2p_group_registry" model="ir.actions.act_window">
+        <field name="name">Group Registry</field>
+        <field name="res_model">g2p.group.registry</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="view_g2p_group_registry_form" model="ir.ui.view">
+        <field name="name">g2p.group.registry.form</field>
+        <field name="model">g2p.group.registry</field>
+        <field name="arch" type="xml">
+            <form string="G2P Group Registry">
+                <sheet>
+                    <group>
+                        <group string="Group Identification">
+                            <field name="internal_record_id"/>
+                            <field name="group_name"/>
+                            <field name="group_type"/>
+                            <field name="shg_id"/>
+                            <field name="shg_code"/>
+                            <field name="lokos_id"/>
+                            <field name="vo_name"/>
+                            <field name="clf_name"/>
+                        </group>
+                        <group string="Key Member / Office Bearer">
+                            <field name="member_id"/>
+                            <field name="key_member_name"/>
+                            <field name="key_member_role"/>
+                            <field name="key_member_mobile"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Financials">
+                            <field name="bank_name"/>
+                            <field name="bank_account_no"/>
+                            <field name="ifsc_code"/>
+                            <field name="monthly_savings_amount"/>
+                            <field name="internal_loan_outstanding"/>
+                            <field name="ccl_limit"/>
+                            <field name="ccl_utilised"/>
+                        </group>
+                        <group string="Governance &amp; Location">
+                            <field name="shg_grading"/>
+                            <field name="formation_date"/>
+                            <field name="meeting_frequency"/>
+                            <field name="district"/>
+                            <field name="block"/>
+                            <field name="gram_panchayat"/>
+                            <field name="village"/>
+                            <field name="pin_code"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_g2p_group_registry_tree" model="ir.ui.view">
+        <field name="name">g2p.group.registry.tree</field>
+        <field name="model">g2p.group.registry</field>
+        <field name="arch" type="xml">
+            <tree string="G2P Group Registry">
+                <field name="internal_record_id"/>
+                <field name="group_name"/>
+                <field name="group_type"/>
+                <field name="shg_id"/>
+                <field name="key_member_name"/>
+                <field name="district"/>
+                <field name="block"/>
+                <field name="village"/>
+                <field name="ccl_limit"/>
+                <button name="action_open_view" type="object" class="fa fa-eye" title="View"/>
+            </tree>
+        </field>
+    </record>
+</odoo>

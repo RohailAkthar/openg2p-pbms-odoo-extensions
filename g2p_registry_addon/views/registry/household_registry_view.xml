@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_g2p_household_registry" model="ir.actions.act_window">
+        <field name="name">Household Registry</field>
+        <field name="res_model">g2p.household.registry</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="view_g2p_household_registry_form" model="ir.ui.view">
+        <field name="name">g2p.household.registry.form</field>
+        <field name="model">g2p.household.registry</field>
+        <field name="arch" type="xml">
+            <form string="G2P Household Registry">
+                <sheet>
+                    <group>
+                        <group string="Household Head">
+                            <field name="internal_record_id"/>
+                            <field name="household_head_name"/>
+                            <field name="household_head_internal_record_id"/>
+                            <field name="headship_type"/>
+                            <field name="husband_dead"/>
+                        </group>
+                        <group string="Size &amp; Structure">
+                            <field name="size_total"/>
+                            <field name="size_adults"/>
+                            <field name="size_children_u5"/>
+                            <field name="size_school_age"/>
+                            <field name="size_elderly"/>
+                            <field name="number_of_female_members"/>
+                            <field name="number_of_male_members"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Dwelling &amp; Utilities">
+                            <field name="dwelling_type"/>
+                            <field name="roof_material"/>
+                            <field name="wall_material"/>
+                            <field name="floor_material"/>
+                            <field name="tenure_status"/>
+                            <field name="rooms_count"/>
+                            <field name="water_source_type"/>
+                            <field name="sanitation_type"/>
+                            <field name="lighting_source"/>
+                            <field name="cooking_fuel_type"/>
+                        </group>
+                        <group string="PDS &amp; Geography">
+                            <field name="ration_card_number"/>
+                            <field name="ration_card_type"/>
+                            <field name="fps_shop_code"/>
+                            <field name="dealer_name"/>
+                            <field name="monthly_entitlement_kg"/>
+                            <field name="district"/>
+                            <field name="block"/>
+                            <field name="village"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_g2p_household_registry_tree" model="ir.ui.view">
+        <field name="name">g2p.household.registry.tree</field>
+        <field name="model">g2p.household.registry</field>
+        <field name="arch" type="xml">
+            <tree string="G2P Household Registry">
+                <field name="internal_record_id"/>
+                <field name="household_head_name"/>
+                <field name="size_total"/>
+                <field name="ration_card_number"/>
+                <field name="ration_card_type"/>
+                <field name="district"/>
+                <field name="block"/>
+                <field name="village"/>
+                <button name="action_open_view" type="object" class="fa fa-eye" title="View"/>
+            </tree>
+        </field>
+    </record>
+</odoo>

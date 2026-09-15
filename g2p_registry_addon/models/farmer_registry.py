@@ -1,4 +1,4 @@
-from odoo import models, fields, api
+from odoo import models, fields
 
 from .registry import G2PRegistry
 
@@ -8,16 +8,42 @@ class G2PFarmerRegistry(models.Model):
     _description = "Farmer Registry"
     _inherit = "g2p.registry"
 
-    name = fields.Char(string="Name", required=True)
+    # Farmer Identification
+    farmer_id = fields.Char(string="Farmer ID")
+    farmer_name = fields.Char(string="Farmer Name", required=True)
+    relation_name = fields.Char(string="Relation Name")
+    farmer_mobile_number = fields.Char(string="Farmer Mobile Number")
     gender = fields.Selection(
-        selection=[("male", "Male"), ("female", "Female")], string="Gender"
+        selection=[("male", "Male"), ("female", "Female"), ("other", "Other")],
+        string="Gender",
     )
-    land_area = fields.Float(string="Land Area")
+
+    # Land & Agriculture
+    land_area_acres = fields.Float(string="Land Area (Acres)")
+    land_ownership_type = fields.Char(string="Land Ownership Type")
+    crop_type = fields.Char(string="Crop Type")
+    khata_number = fields.Char(string="Khata Number")
+    khesra_number = fields.Char(string="Khesra Number")
+    khatiyan_number = fields.Char(string="Khatiyan Number")
+
+    # Government Schemes
+    pm_kisan_enrolled = fields.Boolean(string="PM-KISAN Enrolled")
+    pmfby_enrolled = fields.Boolean(string="PMFBY Enrolled")
+
+    # Livestock & Income
     no_of_cattle_heads = fields.Integer(string="No of Cattle Heads")
     no_of_poultry_heads = fields.Integer(string="No of Poultry Heads")
     annual_income = fields.Float(string="Annual Income")
-    large_area_id = fields.Integer(string="Large Area ID")
-    large_area_code = fields.Char(string="Large Area Code")
-    small_area_id = fields.Integer(string="Small Area ID")
-    small_area_code = fields.Char(string="Small Area Code")
+
+    # Banking & Financials
+    farmer_bank_account_no = fields.Char(string="Bank Account Number")
+    bank_name = fields.Char(string="Bank Name")
+    ifsc_code = fields.Char(string="IFSC Code")
+
+    # Geographic Location
+    district = fields.Char(string="District")
+    block = fields.Char(string="Block")
+    village = fields.Char(string="Village")
+
+    # Link identifier
     link_registry_id = fields.Char(string="Link Registry ID")
