@@ -65,9 +65,15 @@
                             <t t-elif="state.target_registry === 'farmer'">
                                 <th class="px-3 py-2">Farmer ID</th>
                                 <th class="px-3 py-2">Farmer Name</th>
-                                <th class="px-3 py-2">Crop Type</th>
+                                <th class="px-3 py-2">Aadhaar #</th>
+                                <th class="px-3 py-2">Gender</th>
+                                <th class="px-3 py-2">DOB</th>
+                                <th class="px-3 py-2">Mobile</th>
+                                <th class="px-3 py-2">Standing Crops</th>
                                 <th class="px-3 py-2 text-center">Land (Acres)</th>
+                                <th class="px-3 py-2">Ownership</th>
                                 <th class="px-3 py-2 text-center">PM-KISAN</th>
+                                <th class="px-3 py-2 text-center">PMFBY</th>
                                 <th class="px-3 py-2">District</th>
                                 <th class="px-3 py-2">Block</th>
                                 <th class="px-3 py-2">Village</th>
@@ -76,12 +82,16 @@
                             <t t-elif="state.target_registry === 'student'">
                                 <th class="px-3 py-2">Student ID</th>
                                 <th class="px-3 py-2">Student Name</th>
+                                <th class="px-3 py-2">Aadhaar #</th>
                                 <th class="px-3 py-2">Gender</th>
+                                <th class="px-3 py-2">DOB</th>
                                 <th class="px-3 py-2">School</th>
                                 <th class="px-3 py-2">Grade</th>
                                 <th class="px-3 py-2">District</th>
                                 <th class="px-3 py-2">Block</th>
-                                <th class="px-3 py-2">Village</th>
+                                <th class="px-3 py-2">State</th>
+                                <th class="px-3 py-2 text-center">Attendance</th>
+                                <th class="px-3 py-2 text-center">Scholarship</th>
                             </t>
                             <!-- Group Header -->
                             <t t-elif="state.target_registry === 'group'">
@@ -127,28 +137,51 @@
                                     <!-- Farmer Row -->
                                     <t t-elif="state.target_registry === 'farmer'">
                                         <td class="px-3 py-2 fw-semibold text-primary"><t t-esc="record.farmer_id or record.internal_record_id"/></td>
-                                        <td class="px-3 py-2"><t t-esc="record.farmer_name or record.name"/></td>
-                                        <td class="px-3 py-2"><t t-esc="record.crop_type"/></td>
-                                        <td class="px-3 py-2 text-center"><t t-esc="record.land_area_acres or record.land_area"/></td>
+                                        <td class="px-3 py-2"><t t-esc="record.name or record.farmer_name"/></td>
+                                        <td class="px-3 py-2"><t t-esc="record.aadhaar_number or '-'"/></td>
+                                        <td class="px-3 py-2"><t t-esc="record.gender or '-'"/></td>
+                                        <td class="px-3 py-2"><t t-esc="record.date_of_birth or '-'"/></td>
+                                        <td class="px-3 py-2"><t t-esc="record.mobile_number or '-'"/></td>
+                                        <td class="px-3 py-2"><t t-esc="record.crop_type or '-'"/></td>
+                                        <td class="px-3 py-2 text-center"><t t-esc="record.land_area_acres or record.land_area or '-'"/></td>
+                                        <td class="px-3 py-2"><t t-esc="record.land_ownership_type or '-'"/></td>
                                         <td class="px-3 py-2 text-center">
                                             <span t-attf-class="badge #{record.pm_kisan_enrolled ? 'bg-success' : 'bg-secondary'}">
                                                 <t t-esc="record.pm_kisan_enrolled ? 'Yes' : 'No'"/>
                                             </span>
                                         </td>
-                                        <td class="px-3 py-2"><t t-esc="record.district"/></td>
-                                        <td class="px-3 py-2"><t t-esc="record.block"/></td>
-                                        <td class="px-3 py-2"><t t-esc="record.village"/></td>
+                                        <td class="px-3 py-2 text-center">
+                                            <span t-attf-class="badge #{record.pmfby_enrolled ? 'bg-success' : 'bg-secondary'}">
+                                                <t t-esc="record.pmfby_enrolled ? 'Yes' : 'No'"/>
+                                            </span>
+                                        </td>
+                                        <td class="px-3 py-2"><t t-esc="record.district or '-'"/></td>
+                                        <td class="px-3 py-2"><t t-esc="record.block or '-'"/></td>
+                                        <td class="px-3 py-2"><t t-esc="record.village or '-'"/></td>
                                     </t>
                                     <!-- Student Row -->
                                     <t t-elif="state.target_registry === 'student'">
                                         <td class="px-3 py-2 fw-semibold text-primary"><t t-esc="record.student_id or record.internal_record_id"/></td>
                                         <td class="px-3 py-2"><t t-esc="record.name"/></td>
-                                        <td class="px-3 py-2"><t t-esc="record.gender"/></td>
-                                        <td class="px-3 py-2"><t t-esc="record.school_name"/></td>
-                                        <td class="px-3 py-2"><t t-esc="record.class_grade"/></td>
-                                        <td class="px-3 py-2"><t t-esc="record.district"/></td>
-                                        <td class="px-3 py-2"><t t-esc="record.block"/></td>
-                                        <td class="px-3 py-2"><t t-esc="record.village"/></td>
+                                        <td class="px-3 py-2"><t t-esc="record.aadhaar_number or '-'"/></td>
+                                        <td class="px-3 py-2"><t t-esc="record.gender or '-'"/></td>
+                                        <td class="px-3 py-2"><t t-esc="record.date_of_birth or '-'"/></td>
+                                        <td class="px-3 py-2"><t t-esc="record.school_name or '-'"/></td>
+                                        <td class="px-3 py-2"><t t-esc="record.class_grade or '-'"/></td>
+                                        <td class="px-3 py-2"><t t-esc="record.district or '-'"/></td>
+                                        <td class="px-3 py-2"><t t-esc="record.block or '-'"/></td>
+                                        <td class="px-3 py-2"><t t-esc="record.state or '-'"/></td>
+                                        <td class="px-3 py-2 text-center">
+                                            <t t-if="record.attendance_percentage !== null and record.attendance_percentage !== undefined">
+                                                <t t-esc="record.attendance_percentage"/>%
+                                            </t>
+                                            <t t-else="">-</t>
+                                        </td>
+                                        <td class="px-3 py-2 text-center">
+                                            <span t-attf-class="badge #{record.scholarship_status === 'Active' ? 'bg-success' : 'bg-secondary'}">
+                                                <t t-esc="record.scholarship_status or 'None'"/>
+                                            </span>
+                                        </td>
                                     </t>
                                     <!-- Group Row -->
                                     <t t-elif="state.target_registry === 'group'">

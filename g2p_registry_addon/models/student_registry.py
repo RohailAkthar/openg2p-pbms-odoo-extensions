@@ -8,22 +8,35 @@ class G2PStudentRegistry(models.Model):
     _description = "Student Registry"
     _inherit = "g2p.registry"
     _table = "g2p_register_students"
+    _rec_name = "record_name"
 
     # Student Identification & Demographics
+    record_name = fields.Char(string="Record Name")
+    functional_record_id = fields.Char(string="System ID / Functional ID")
     student_id = fields.Char(string="Student ID")
-    name = fields.Char(string="Name", required=True)
+    udise_student_id = fields.Char(string="UDISE+ Student ID")
+    foundational_id = fields.Char(string="Student Aadhaar Number")
+    first_name = fields.Char(string="First Name")
+    last_name = fields.Char(string="Last Name")
     gender = fields.Selection(
-        selection=[("male", "Male"), ("female", "Female"), ("other", "Other")],
+        selection=[
+            ("MALE", "Male"),
+            ("FEMALE", "Female"),
+            ("male", "Male"),
+            ("female", "Female"),
+            ("other", "Other"),
+        ],
         string="Gender",
     )
-    date_of_birth = fields.Date(string="Date of Birth")
-    udise_student_id = fields.Char(string="UDISE Student ID")
-    apaar_id = fields.Char(string="APAAR ID")
-    pen_number = fields.Char(string="PEN Number")
+    birth_date = fields.Date(string="Date of Birth")
+    guardian_aadhaar_number = fields.Char(string="Guardian Aadhaar Number")
+    guardian_name = fields.Char(string="Guardian Name")
     father_name = fields.Char(string="Father Name")
     mother_name = fields.Char(string="Mother Name")
-    guardian_name = fields.Char(string="Guardian Name")
     social_category = fields.Char(string="Social Category")
+    apaar_id = fields.Char(string="APAAR ID")
+    pen_number = fields.Char(string="PEN Number")
+    mobile_phone_number = fields.Char(string="Mobile Phone Number")
 
     # School & Academics
     school_name = fields.Char(string="School Name")
@@ -44,6 +57,3 @@ class G2PStudentRegistry(models.Model):
     block = fields.Char(string="Block")
     village = fields.Char(string="Village")
     state = fields.Char(string="State")
-
-    # Link identifier
-    link_registry_id = fields.Char(string="Link Registry ID")

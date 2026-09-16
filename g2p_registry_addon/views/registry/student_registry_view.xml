@@ -15,19 +15,25 @@
                     <group>
                         <group string="Student Demographics">
                             <field name="internal_record_id"/>
+                            <field name="functional_record_id"/>
                             <field name="student_id"/>
-                            <field name="name"/>
+                            <field name="udise_student_id"/>
+                            <field name="foundational_id"/>
+                            <field name="first_name"/>
+                            <field name="last_name"/>
+                            <field name="record_name"/>
                             <field name="gender"/>
-                            <field name="date_of_birth"/>
+                            <field name="birth_date"/>
                             <field name="social_category"/>
                         </group>
                         <group string="Identifiers &amp; Parents">
-                            <field name="udise_student_id"/>
                             <field name="apaar_id"/>
                             <field name="pen_number"/>
+                            <field name="guardian_aadhaar_number"/>
+                            <field name="guardian_name"/>
                             <field name="father_name"/>
                             <field name="mother_name"/>
-                            <field name="guardian_name"/>
+                            <field name="mobile_phone_number"/>
                         </group>
                     </group>
                     <group>
@@ -48,7 +54,6 @@
                             <field name="block"/>
                             <field name="village"/>
                             <field name="state"/>
-                            <field name="link_registry_id"/>
                         </group>
                     </group>
                 </sheet>

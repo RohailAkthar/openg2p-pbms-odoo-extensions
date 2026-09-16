@@ -15,11 +15,17 @@
                     <group>
                         <group string="Farmer Details">
                             <field name="internal_record_id"/>
+                            <field name="functional_record_id"/>
                             <field name="farmer_id"/>
+                            <field name="foundational_id"/>
+                            <field name="first_name"/>
+                            <field name="last_name"/>
                             <field name="farmer_name"/>
                             <field name="relation_name"/>
                             <field name="gender"/>
+                            <field name="birth_date"/>
                             <field name="farmer_mobile_number"/>
+                            <field name="mobile_phone_number"/>
                         </group>
                         <group string="Land &amp; Agriculture">
                             <field name="land_area_acres"/>
@@ -31,12 +37,9 @@
                         </group>
                     </group>
                     <group>
-                        <group string="Schemes &amp; Livestock">
+                        <group string="Schemes &amp; Entitlements">
                             <field name="pm_kisan_enrolled"/>
                             <field name="pmfby_enrolled"/>
-                            <field name="no_of_cattle_heads"/>
-                            <field name="no_of_poultry_heads"/>
-                            <field name="annual_income"/>
                         </group>
                         <group string="Banking &amp; Location">
                             <field name="farmer_bank_account_no"/>
@@ -45,7 +48,6 @@
                             <field name="district"/>
                             <field name="block"/>
                             <field name="village"/>
-                            <field name="link_registry_id"/>
                         </group>
                     </group>
                 </sheet>
