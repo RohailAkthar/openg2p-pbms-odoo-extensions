@@ -2,10 +2,18 @@
     <template id="custom_web_layout" name="Custom Web Layout" inherit_id="web.layout" priority="99">
         <xpath expr="//head/link[@rel='shortcut icon']" position="replace">
             <link
-                type="image/x-icon"
+                type="image/png"
                 rel="shortcut icon"
-                t-att-href="x_icon or '/pbms_theme_extension/static/src/img/favicon-white-background.png'"
+                href="/pbms_theme_extension/static/src/img/favicon-gramstack.png?v=2"
             />
+            <link
+                type="image/png"
+                rel="icon"
+                href="/pbms_theme_extension/static/src/img/favicon-gramstack.png?v=2"
+            />
+        </xpath>
+        <xpath expr="//head/title" position="replace">
+            <title t-esc="additional_title and ('%s | Gramstack' % additional_title) or (title and ('%s | Gramstack' % title.split('|')[0].strip()) or 'Gramstack')"/>
         </xpath>
     </template>
 </odoo>

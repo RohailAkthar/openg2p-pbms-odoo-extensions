@@ -3,8 +3,8 @@
     "category": "G2P",
     "version": "3.0.0",
     "sequence": 1,
-    "author": "G2P",
-    "website": "https://openg2p.org",
+    "author": "Gramstack",
+    "website": "https://gramstack.org",
     "license": "LGPL-3",
     "depends": ["base", "web", "auth_signup", "website"],
     "data": [
