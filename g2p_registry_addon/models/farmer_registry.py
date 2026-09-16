@@ -23,8 +23,6 @@ class G2PFarmerRegistry(models.Model):
     mobile_phone_number = fields.Char(string="Mobile Phone Number")
     gender = fields.Selection(
         selection=[
-            ("MALE", "Male"),
-            ("FEMALE", "Female"),
             ("male", "Male"),
             ("female", "Female"),
             ("other", "Other"),

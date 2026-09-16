@@ -20,8 +20,6 @@ class G2PStudentRegistry(models.Model):
     last_name = fields.Char(string="Last Name")
     gender = fields.Selection(
         selection=[
-            ("MALE", "Male"),
-            ("FEMALE", "Female"),
             ("male", "Male"),
             ("female", "Female"),
             ("other", "Other"),
