@@ -1,4 +1,4 @@
-from odoo import models, fields
+from odoo import models, fields, api
 
 from .registry import G2PRegistry
 
@@ -9,6 +9,16 @@ class G2PFarmerRegistry(models.Model):
     _inherit = "g2p.registry"
     _table = "g2p_register_farmers"
     _rec_name = "farmer_name"
+
+    # Compatibility alias
+    name = fields.Char(string="Name", compute="_compute_name", search="_search_name")
+
+    def _compute_name(self):
+        for rec in self:
+            rec.name = rec.farmer_name or rec.record_name or f"{rec.first_name or ''} {rec.last_name or ''}".strip() or ""
+
+    def _search_name(self, operator, value):
+        return [("farmer_name", operator, value)]
 
     # Farmer Identification
     record_name = fields.Char(string="Record Name")

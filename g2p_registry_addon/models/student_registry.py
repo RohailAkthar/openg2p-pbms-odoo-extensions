@@ -1,4 +1,4 @@
-from odoo import models, fields
+from odoo import models, fields, api
 
 from .registry import G2PRegistry
 
@@ -9,6 +9,24 @@ class G2PStudentRegistry(models.Model):
     _inherit = "g2p.registry"
     _table = "g2p_register_students"
     _rec_name = "record_name"
+
+    # Compatibility aliases
+    name = fields.Char(string="Name", compute="_compute_name", search="_search_name")
+    date_of_birth = fields.Date(string="Date of Birth", compute="_compute_date_of_birth", search="_search_date_of_birth")
+
+    def _compute_name(self):
+        for rec in self:
+            rec.name = rec.record_name or f"{rec.first_name or ''} {rec.last_name or ''}".strip() or ""
+
+    def _search_name(self, operator, value):
+        return [("record_name", operator, value)]
+
+    def _compute_date_of_birth(self):
+        for rec in self:
+            rec.date_of_birth = rec.birth_date
+
+    def _search_date_of_birth(self, operator, value):
+        return [("birth_date", operator, value)]
 
     # Student Identification & Demographics
     record_name = fields.Char(string="Record Name")

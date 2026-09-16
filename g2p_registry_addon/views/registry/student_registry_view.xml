@@ -67,8 +67,8 @@
         <field name="arch" type="xml">
             <tree string="G2P Student Registry">
                 <field name="internal_record_id"/>
-                <field name="student_id"/>
-                <field name="name"/>
+                <field name="udise_student_id"/>
+                <field name="record_name"/>
                 <field name="gender"/>
                 <field name="school_name"/>
                 <field name="class_grade"/>
