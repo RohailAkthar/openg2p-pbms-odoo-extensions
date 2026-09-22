@@ -25,6 +25,22 @@
           <widget name="g2p_beneficiaries_widget" model="g2p.gramstack.household.registry" id="gramstackhousehold_beneficiary_search_widget"/>
         </group>
       </xpath>
+
+      <!-- Hide Disbursement Rules tab -->
+      <xpath expr="//page[@string='Disbursement Rules']" position="attributes">
+        <attribute name="invisible">1</attribute>
+      </xpath>
+    </field>
+  </record>
+
+  <record id="view_g2p_disbursement_cycle_form_inherit_hide_disbursement_rules" model="ir.ui.view">
+    <field name="name">g2p.disbursement.cycle.form.inherit.hide.disbursement.rules</field>
+    <field name="model">g2p.disbursement.cycle</field>
+    <field name="inherit_id" ref="g2p_pbms.view_g2p_disbursement_cycle_form"/>
+    <field name="arch" type="xml">
+      <xpath expr="//page[@string='Disbursement Rules']" position="attributes">
+        <attribute name="invisible">1</attribute>
+      </xpath>
     </field>
   </record>
 </odoo>
