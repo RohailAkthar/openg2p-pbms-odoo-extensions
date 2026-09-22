@@ -25,6 +25,10 @@
                 <field name="pbms_domain" widget="domain"
                        options="{'model': 'g2p.group.registry'}"
                        invisible="target_registry != 'group'"/>
+
+                <field name="pbms_domain" widget="domain"
+                       options="{'model': 'g2p.gramstack.household.registry'}"
+                       invisible="target_registry != 'gramstackhousehold'"/>
             </xpath>
         </field>
     </record>

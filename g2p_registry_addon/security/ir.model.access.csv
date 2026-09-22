@@ -9,3 +9,6 @@ g2p_student_registry_read,Read Student Registry,model_g2p_student_registry,g2p_p
 g2p_student_registry_write,Write Student Registry,model_g2p_student_registry,g2p_pbms.group_beneficiary_list_editor,1,1,1,1
 g2p_group_registry_read,Read Group Registry,model_g2p_group_registry,g2p_pbms.group_beneficiary_list_viewer,1,0,0,0
 g2p_group_registry_write,Write Group Registry,model_g2p_group_registry,g2p_pbms.group_beneficiary_list_editor,1,1,1,1
+g2p_gramstack_household_registry_read,Read Gramstack Household Registry,model_g2p_gramstack_household_registry,g2p_pbms.group_beneficiary_list_viewer,1,0,0,0
+g2p_gramstack_household_registry_write,Write Gramstack Household Registry,model_g2p_gramstack_household_registry,g2p_pbms.group_beneficiary_list_editor,1,1,1,1
+g2p_gramstack_household_registry_user,User Gramstack Household Registry,model_g2p_gramstack_household_registry,base.group_user,1,0,0,0

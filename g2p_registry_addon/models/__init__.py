@@ -4,3 +4,4 @@ from .household_registry import G2PHouseholdRegistry
 from .farmer_registry import G2PFarmerRegistry
 from .student_registry import G2PStudentRegistry
 from .group_registry import G2PGroupRegistry
+from .gramstack_household_registry import G2PGramstackHouseholdRegistry

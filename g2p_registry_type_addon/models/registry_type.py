@@ -10,6 +10,7 @@ class G2PTargetModelMapping:
         "farmer": "g2p.farmer.registry",
         "student": "g2p.student.registry",
         "group": "g2p.group.registry",
+        "gramstackhousehold": "g2p.gramstack.household.registry",
     }
 
     @classmethod
@@ -23,7 +24,9 @@ class G2PRegistryType(Enum):
     FARMER = "farmer"
     STUDENT = "student"
     GROUP = "group"
+    GRAMSTACKHOUSEHOLD = "gramstackhousehold"
 
     @classmethod
     def selection(cls):
-        return [(member.value, member.name.replace("_", " ").title()) for member in cls]
+        # Only show Gramstack Household in UI dropdowns; all others are hidden
+        return [(cls.GRAMSTACKHOUSEHOLD.value, "Gramstack Household")]
