@@ -27,7 +27,7 @@
       </xpath>
 
       <!-- Hide Disbursement Rules tab -->
-      <xpath expr="//page[@string='Disbursement Rules']" position="attributes">
+      <xpath expr="//page[.//field[@name='priority_rule_ids']]" position="attributes">
         <attribute name="invisible">1</attribute>
       </xpath>
     </field>
@@ -38,7 +38,7 @@
     <field name="model">g2p.disbursement.cycle</field>
     <field name="inherit_id" ref="g2p_pbms.view_g2p_disbursement_cycle_form"/>
     <field name="arch" type="xml">
-      <xpath expr="//page[@string='Disbursement Rules']" position="attributes">
+      <xpath expr="//page[.//field[@name='priority_rule_ids']]" position="attributes">
         <attribute name="invisible">1</attribute>
       </xpath>
     </field>
