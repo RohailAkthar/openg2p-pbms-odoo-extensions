@@ -1,6 +1,6 @@
 /** @odoo-module **/
 
-import { Component, useState } from "@odoo/owl";
+import { Component, useState, onWillStart } from "@odoo/owl";
 import { DomainSelector } from "@web/core/domain_selector/domain_selector";
 // import { Domain, InvalidDomainError } from "@web/core/domain";
 // import { EvaluationError } from "@web/core/py_js/py_builtin";
@@ -26,15 +26,20 @@ export class G2PBeneficiariesComponent extends Component {
             title: _t("Beneficiaries"),
             records: [],
             page: 1,
-            pageSize: 3,
+            pageSize: 20,
             totalCount: 0,
             totalPages: 1,
             target_registry: recordData.target_registry || null,
-            searched: false,
+            searched: true,
             domain: "[]",
         });
         this.orm = useService("orm");
-        console.log(this);
+
+        onWillStart(async () => {
+            if (this.props.record?.resId) {
+                await this._fetchRecords();
+            }
+        });
     }
 
     onDomainChange(newDomain) {
