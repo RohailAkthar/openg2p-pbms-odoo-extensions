@@ -1,10 +1,33 @@
 .o_widget.o_widget_g2p_beneficiaries_widget {
-    width: 180% !important;
+    width: 100% !important;
+    max-width: 100% !important;
     box-sizing: border-box;
+    overflow: visible;
+}
+
+.o_widget.o_widget_g2p_beneficiaries_widget .g2p-beneficiaries {
+    width: 100%;
+}
+
+.o_widget.o_widget_g2p_beneficiaries_widget .table-responsive {
+    overflow-x: auto !important;
+    max-width: 100% !important;
+    -webkit-overflow-scrolling: touch;
+}
+
+.o_widget.o_widget_g2p_beneficiaries_widget .table {
+    font-size: 0.78rem;
+    margin-bottom: 0;
+}
+
+.o_widget.o_widget_g2p_beneficiaries_widget .table th,
+.o_widget.o_widget_g2p_beneficiaries_widget .table td {
+    max-width: 160px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .o_form_view .o_notebook > .tab-content > .tab-pane > :first-child:not(.o_group) .o_field_x2many.o_field_x2many_list .o_list_renderer,
 .o_form_view .o_notebook > .tab-content > .tab-pane > .o_invisible_modifier:first-child .o_field_x2many.o_field_x2many_list .o_list_renderer {
     --ListRenderer-margin-x: 0 !important;
 }
-  
