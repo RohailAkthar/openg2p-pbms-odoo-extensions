@@ -21,6 +21,9 @@
         <group name="beneficiary_search_group" invisible="target_registry != 'group'">
           <widget name="g2p_beneficiaries_widget" model="g2p.group.registry" id="group_beneficiary_search_widget"/>
         </group>
+        <group name="beneficiary_search_gramstackhousehold" invisible="target_registry != 'gramstackhousehold'">
+          <widget name="g2p_beneficiaries_widget" model="g2p.gramstack.household.registry" id="gramstackhousehold_beneficiary_search_widget"/>
+        </group>
       </xpath>
     </field>
   </record>
