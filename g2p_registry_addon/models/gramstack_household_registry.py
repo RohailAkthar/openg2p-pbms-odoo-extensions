@@ -9,6 +9,8 @@ class G2PGramstackHouseholdRegistry(models.Model):
     _table = "g2p_register_gramstack_households"
 
     # Core Household Attributes
+    household_id = fields.Char(string="Household ID")
+    functional_record_id = fields.Char(string="Functional Record ID")
     household_reference_name = fields.Char(string="Household Reference Name")
     house_reference_no = fields.Char(string="House Reference No")
     lokos_id = fields.Char(string="LokOS ID")

@@ -107,19 +107,29 @@
                             </t>
                             <!-- Gramstack Household Header -->
                             <t t-elif="state.target_registry === 'gramstackhousehold'">
-                                <th class="px-3 py-2">Household ID</th>
-                                <th class="px-3 py-2">Applicant Name</th>
-                                <th class="px-3 py-2">SHG Member</th>
-                                <th class="px-3 py-2">SHG Name</th>
-                                <th class="px-3 py-2">Grading</th>
-                                <th class="px-3 py-2 text-end">Savings (₹)</th>
-                                <th class="px-3 py-2 text-end">CCL Limit</th>
-                                <th class="px-3 py-2">Status</th>
-                                <th class="px-3 py-2">Bank Account</th>
-                                <th class="px-3 py-2">IFSC</th>
-                                <th class="px-3 py-2">District</th>
-                                <th class="px-3 py-2">Block</th>
-                                <th class="px-3 py-2">Village</th>
+                                <th class="px-3 py-2 text-nowrap">Member Name</th>
+                                <th class="px-3 py-2 text-nowrap">SHG Name</th>
+                                <th class="px-3 py-2 text-nowrap">SHG ID</th>
+                                <th class="px-3 py-2 text-nowrap">LokOS Member ID</th>
+                                <th class="px-3 py-2 text-nowrap">SHG Role</th>
+                                <th class="px-3 py-2 text-nowrap">Grading</th>
+                                <th class="px-3 py-2 text-nowrap">Village Org (VO)</th>
+                                <th class="px-3 py-2 text-nowrap">CLF Name</th>
+                                <th class="px-3 py-2 text-end text-nowrap">Monthly Savings (₹)</th>
+                                <th class="px-3 py-2 text-end text-nowrap">Internal Loan (₹)</th>
+                                <th class="px-3 py-2 text-end text-nowrap">CCL Limit (₹)</th>
+                                <th class="px-3 py-2 text-end text-nowrap">CCL Utilized (₹)</th>
+                                <th class="px-3 py-2 text-nowrap">Bank A/C No</th>
+                                <th class="px-3 py-2 text-nowrap">IFSC</th>
+                                <th class="px-3 py-2 text-nowrap">Aadhaar Number</th>
+                                <th class="px-3 py-2 text-nowrap">Mobile Number</th>
+                                <th class="px-3 py-2 text-nowrap">Rel to HoH</th>
+                                <th class="px-3 py-2 text-nowrap">Join Date</th>
+                                <th class="px-3 py-2 text-nowrap">Village</th>
+                                <th class="px-3 py-2 text-nowrap">Block</th>
+                                <th class="px-3 py-2 text-nowrap">District</th>
+                                <th class="px-3 py-2 text-nowrap">LokOS HH ID</th>
+                                <th class="px-3 py-2 text-center text-nowrap">Status</th>
                             </t>
                         </tr>
                     </thead>
@@ -213,28 +223,38 @@
                                     </t>
                                     <!-- Gramstack Household Row -->
                                     <t t-elif="state.target_registry === 'gramstackhousehold'">
-                                        <td class="px-3 py-2 fw-semibold text-primary"><t t-esc="record.internal_record_id"/></td>
-                                        <td class="px-3 py-2"><t t-esc="record.applicant_name or '-'"/></td>
-                                        <td class="px-3 py-2"><t t-esc="record.member_name or '-'"/></td>
-                                        <td class="px-3 py-2"><t t-esc="record.shg_name or '-'"/></td>
-                                        <td class="px-3 py-2"><t t-esc="record.shg_grading or '-'"/></td>
-                                        <td class="px-3 py-2 text-end"><t t-esc="record.monthly_savings_amount or 0"/></td>
-                                        <td class="px-3 py-2 text-end"><t t-esc="record.ccl_limit or 0"/></td>
-                                        <td class="px-3 py-2">
+                                        <td class="px-3 py-2 fw-semibold text-primary text-nowrap"><t t-esc="record.member_name or record.applicant_name or '-'"/></td>
+                                        <td class="px-3 py-2 text-nowrap"><t t-esc="record.shg_name or '-'"/></td>
+                                        <td class="px-3 py-2 text-nowrap"><t t-esc="record.shg_id or '-'"/></td>
+                                        <td class="px-3 py-2 text-nowrap"><t t-esc="record.member_id or '-'"/></td>
+                                        <td class="px-3 py-2 text-nowrap"><t t-esc="record.shg_role or '-'"/></td>
+                                        <td class="px-3 py-2 text-center text-nowrap"><span class="badge bg-secondary"><t t-esc="record.shg_grading or '-'"/></span></td>
+                                        <td class="px-3 py-2 text-nowrap"><t t-esc="record.vo_name or record.vo_id or '-'"/></td>
+                                        <td class="px-3 py-2 text-nowrap"><t t-esc="record.clf_name or record.clf_id or '-'"/></td>
+                                        <td class="px-3 py-2 text-end text-nowrap"><t t-esc="record.monthly_savings_amount or 0"/></td>
+                                        <td class="px-3 py-2 text-end text-nowrap"><t t-esc="record.internal_loan_outstanding or 0"/></td>
+                                        <td class="px-3 py-2 text-end text-nowrap"><t t-esc="record.ccl_limit or 0"/></td>
+                                        <td class="px-3 py-2 text-end text-nowrap"><t t-esc="record.ccl_utilized or 0"/></td>
+                                        <td class="px-3 py-2 text-nowrap"><t t-esc="record.bank_account_no or '-'"/></td>
+                                        <td class="px-3 py-2 text-nowrap"><t t-esc="record.ifsc or '-'"/></td>
+                                        <td class="px-3 py-2 text-nowrap"><t t-esc="record.aadhaar_number or '-'"/></td>
+                                        <td class="px-3 py-2 text-nowrap"><t t-esc="record.mobile_number or '-'"/></td>
+                                        <td class="px-3 py-2 text-nowrap"><t t-esc="record.relationship_to_hoh or '-'"/></td>
+                                        <td class="px-3 py-2 text-nowrap"><t t-esc="record.shg_join_date or '-'"/></td>
+                                        <td class="px-3 py-2 text-nowrap"><t t-esc="record.village or '-'"/></td>
+                                        <td class="px-3 py-2 text-nowrap"><t t-esc="record.block or '-'"/></td>
+                                        <td class="px-3 py-2 text-nowrap"><t t-esc="record.district or '-'"/></td>
+                                        <td class="px-3 py-2 text-nowrap"><t t-esc="record.lokos_id or record.household_id or record.house_reference_no or '-'"/></td>
+                                        <td class="px-3 py-2 text-center text-nowrap">
                                             <span class="badge bg-info"><t t-esc="record.status or 'APPLIED'"/></span>
                                         </td>
-                                        <td class="px-3 py-2"><t t-esc="record.bank_account_no or '-'"/></td>
-                                        <td class="px-3 py-2"><t t-esc="record.ifsc or '-'"/></td>
-                                        <td class="px-3 py-2"><t t-esc="record.district or '-'"/></td>
-                                        <td class="px-3 py-2"><t t-esc="record.block or '-'"/></td>
-                                        <td class="px-3 py-2"><t t-esc="record.village or '-'"/></td>
                                     </t>
                                 </tr>
                             </t>
                         </t>
                         <t t-else="">
                             <tr>
-                                <td colspan="10" class="text-center text-muted py-4">
+                                <td colspan="23" class="text-center text-muted py-4">
                                     <i class="fa fa-inbox fa-2x d-block mb-2"/>
                                     No records found.
                                 </td>
