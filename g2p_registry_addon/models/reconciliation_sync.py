@@ -253,18 +253,12 @@ class G2PDisbursementEnvelopeLineNSRSync(models.TransientModel):
         update_query = f"""
             UPDATE {table_name}
             SET
-                status = 'TRANCHE_' || %s || '_DISBURSED',
-                payment_status = 'RECONCILED_SUCCESS',
-                reconciled_at = NOW(),
-                completed_tranches_count = COALESCE(completed_tranches_count, 0) + 1,
-                total_disbursed_amount = COALESCE(total_disbursed_amount, 0) + %s,
-                last_disbursed_date = NOW(),
-                write_date = NOW()
+                status = 'TRANCHE_' || %s || '_DISBURSED'
             WHERE internal_record_id IN %s
               AND status = 'APPLIED'
             RETURNING internal_record_id;
         """
-        cur.execute(update_query, (str(tranche_num), amount, tuple(record_ids)))
+        cur.execute(update_query, (str(tranche_num), tuple(record_ids)))
         rows = cur.fetchall()
         return [r[0] for r in rows]
 
@@ -276,7 +270,38 @@ class G2PDisbursementEnvelopeLineNSRSync(models.TransientModel):
         """
         Appends immutable transaction records to g2p_registry_transaction_ledger
         with all values pulled dynamically from NSR + PBMS context.
+        Ensures g2p_registry_transaction_ledger exists before inserting.
         """
+        create_ledger_table_sql = """
+            CREATE TABLE IF NOT EXISTS g2p_registry_transaction_ledger (
+                id BIGSERIAL PRIMARY KEY,
+                target_registry VARCHAR(64) NOT NULL,
+                internal_record_id VARCHAR(128) NOT NULL,
+                beneficiary_name VARCHAR(255),
+                beneficiary_mobile VARCHAR(32),
+                aadhaar_number VARCHAR(64),
+                scheme_code VARCHAR(64) NOT NULL,
+                scheme_name VARCHAR(255),
+                program_mnemonic VARCHAR(128),
+                cycle_mnemonic VARCHAR(128),
+                tranche_number INT,
+                source_system VARCHAR(64) DEFAULT 'PBMS',
+                amount NUMERIC(14,2) NOT NULL,
+                currency VARCHAR(10) DEFAULT 'INR',
+                payment_method VARCHAR(32) DEFAULT 'DBT_BANK',
+                bank_account_no VARCHAR(64),
+                ifsc VARCHAR(32),
+                reconciliation_id VARCHAR(128) NOT NULL,
+                bank_reference_number VARCHAR(128),
+                transaction_status VARCHAR(32) NOT NULL DEFAULT 'SUCCESS',
+                error_reason VARCHAR(255),
+                dispatched_at TIMESTAMP WITHOUT TIME ZONE,
+                reconciled_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
+                created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW()
+            );
+        """
+        cur.execute(create_ledger_table_sql)
+
         ledger_query = f"""
             INSERT INTO g2p_registry_transaction_ledger (
                 target_registry,
