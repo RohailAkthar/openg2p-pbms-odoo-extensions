@@ -60,12 +60,101 @@ class G2PDisbursementEnvelopeLineNSRSync(models.TransientModel):
             password=password,
         )
 
+    def _get_bridge_connection(self):
+        """
+        Creates a psycopg2 connection to the G2P Bridge database.
+        Reads host/port/dbname/user from ir.config_parameter (with env var fallbacks).
+        """
+        ICP = self.env["ir.config_parameter"].sudo()
+        host = ICP.get_param(
+            "g2p_registry_addon.bridge_db_host",
+            os.getenv("BRIDGE_DB_HOST", os.getenv("NSR_DB_HOST", "commons-postgresql")),
+        )
+        port = ICP.get_param(
+            "g2p_registry_addon.bridge_db_port",
+            os.getenv("BRIDGE_DB_PORT", os.getenv("NSR_DB_PORT", "5432")),
+        )
+        dbname = ICP.get_param(
+            "g2p_registry_addon.bridge_db_name",
+            os.getenv("BRIDGE_DB_NAME", "g2p_bridge"),
+        )
+        user = ICP.get_param(
+            "g2p_registry_addon.bridge_db_user",
+            os.getenv("BRIDGE_DB_USER", os.getenv("NSR_DB_USER", "postgres")),
+        )
+        password = os.getenv("BRIDGE_DB_PASSWORD", os.getenv("NSR_DB_PASSWORD", ""))
+
+        _logger.info(
+            "Connecting to G2P Bridge database: host=%s port=%s dbname=%s user=%s",
+            host, port, dbname, user,
+        )
+        return psycopg2.connect(
+            host=host,
+            port=int(port),
+            dbname=dbname,
+            user=user,
+            password=password,
+        )
+
+    def _fetch_reconciliation_details_from_bridge(self, envelope_id):
+        """
+        Queries G2P Bridge database for per-beneficiary reconciliation details:
+        returns a tuple: (reconciled_beneficiary_ids, reversed_map)
+        where reversed_map is {beneficiary_id: {'reason': ..., 'bank_ref': ...}}
+        """
+        try:
+            conn = self._get_bridge_connection()
+            with conn.cursor() as cur:
+                cur.execute(
+                    """
+                    SELECT 
+                        d.beneficiary_id,
+                        dr.reversal_found,
+                        COALESCE(dr.reversal_reason, 'PAYMENT_REVERSED_BY_BANK'),
+                        COALESCE(dr.remittance_reference_number, '')
+                    FROM disbursements d
+                    JOIN disbursement_recons dr ON dr.disbursement_id = d.id
+                    WHERE d.disbursement_envelope_id = %s;
+                    """,
+                    (envelope_id,)
+                )
+                rows = cur.fetchall()
+            conn.close()
+
+            reconciled_ids = []
+            reversed_map = {}
+            for row in rows:
+                ben_id = row[0]
+                is_reversed = bool(row[1])
+                rev_reason = row[2]
+                bank_ref = row[3]
+                if is_reversed:
+                    reversed_map[ben_id] = {
+                        "reason": rev_reason,
+                        "bank_ref": bank_ref,
+                    }
+                else:
+                    reconciled_ids.append(ben_id)
+
+            _logger.info(
+                "Fetched bridge recon for envelope %s: %s reconciled, %s reversed",
+                envelope_id, len(reconciled_ids), len(reversed_map),
+            )
+            return reconciled_ids, reversed_map
+        except Exception as e:
+            _logger.warning(
+                "Could not fetch per-beneficiary recon from Bridge DB for envelope %s: %s",
+                envelope_id, e,
+            )
+            return [], {}
+
     def action_view_disbursement_envelope(self):
         """
         Override to trigger NSR sync after the envelope summary is fetched.
         Calls super() first (which fetches reconciliation data from G2P Bridge),
-        then checks if reconciliation is complete (reconciled > 0, reversed == 0).
-        If so, updates NSR household status and appends to transaction ledger.
+        then checks if reconciliation data exists.
+        Updates NSR household status (reconciled -> DISBURSED, reversed -> PAYMENT_FAILED)
+        and appends to transaction ledger.
         """
         # Call the original method — this fetches from G2P Bridge and creates
         # the disbursement.envelope.summary.wizard record
@@ -86,7 +175,8 @@ class G2PDisbursementEnvelopeLineNSRSync(models.TransientModel):
     def _sync_reconciliation_to_nsr(self, action_result):
         """
         Checks the summary wizard created by super() for reconciliation status.
-        If all disbursements are reconciled with zero reversals, updates NSR.
+        Supports partial reconciliation: updates reconciled to DISBURSED,
+        and reversals to PAYMENT_FAILED in NSR.
         """
         # Extract the summary wizard record from the action result
         summary_rec = None
@@ -116,10 +206,10 @@ class G2PDisbursementEnvelopeLineNSRSync(models.TransientModel):
             self.disbursement_envelope_id, reconciled, declared, reversed_disb,
         )
 
-        # Only sync if fully reconciled with zero reversals
-        if reconciled <= 0 or reconciled < declared or reversed_disb > 0:
+        # Proceed if at least one payment is reconciled or reversed
+        if reconciled <= 0 and reversed_disb <= 0:
             _logger.info(
-                "Reconciliation not complete for envelope %s. Skipping NSR sync.",
+                "No reconciliations or reversals yet for envelope %s. Skipping NSR sync.",
                 self.disbursement_envelope_id,
             )
             return
@@ -155,50 +245,113 @@ class G2PDisbursementEnvelopeLineNSRSync(models.TransientModel):
 
         # Determine NSR table name dynamically
         table_name = self._get_nsr_table_name(target_registry)
+        child_scheme_table = self._get_nsr_scheme_table_name(target_registry)
 
         # Get beneficiary internal_record_ids from the bg-task staff portal API
-        record_ids = self._fetch_beneficiary_record_ids(target_registry)
-        if not record_ids:
+        all_record_ids = self._fetch_beneficiary_record_ids(target_registry)
+        if not all_record_ids:
             _logger.warning("No beneficiary record_ids found for registry %s", target_registry)
             return
+
+        # Fetch per-beneficiary recon details from Bridge DB
+        bridge_reconciled_ids, bridge_reversed_map = self._fetch_reconciliation_details_from_bridge(envelope_id)
+
+        # Determine which IDs are reconciled and which are reversed
+        reconciled_ids = []
+        reversed_map = {}
+
+        if bridge_reconciled_ids or bridge_reversed_map:
+            reconciled_ids = [rid for rid in bridge_reconciled_ids if rid in all_record_ids] or bridge_reconciled_ids
+            reversed_map = {bid: val for bid, val in bridge_reversed_map.items() if bid in all_record_ids} or bridge_reversed_map
+        else:
+            # Fallback if bridge query returned nothing (e.g., bridge DB not directly accessible)
+            if reversed_disb == 0 and reconciled >= declared:
+                reconciled_ids = all_record_ids
+            else:
+                _logger.warning(
+                    "Envelope %s has partial reconciliation (%s reconciled, %s reversed) "
+                    "but Bridge DB returned no individual records. Cannot distinguish succeeded from failed beneficiaries.",
+                    envelope_id, reconciled, reversed_disb,
+                )
+                return
 
         # Connect to NSR and run updates
         conn = self._get_nsr_connection()
         try:
             with conn.cursor() as cur:
-                # 1. Update household status in NSR (both main register and child scheme table)
-                updated_ids = self._update_nsr_household_status(
-                    cur, table_name, target_registry, record_ids, tranche_num,
-                    per_beneficiary_amount,
-                )
+                # 1. Update Reconciled Beneficiaries to TRANCHE_X_DISBURSED
+                if reconciled_ids:
+                    status_disbursed = f"TRANCHE_{tranche_num}_DISBURSED"
+                    update_query = f"""
+                        UPDATE {table_name}
+                        SET status = %s
+                        WHERE internal_record_id IN %s;
+                    """
+                    cur.execute(update_query, (status_disbursed, tuple(reconciled_ids)))
 
-                if not updated_ids:
-                    _logger.info("No records found in NSR to update")
-                    conn.rollback()
-                    return
-
-                # 2. Insert transaction ledger record if not already inserted (Idempotency)
-                cur.execute(
-                    "SELECT 1 FROM g2p_registry_transaction_ledger WHERE reconciliation_id = %s LIMIT 1;",
-                    (envelope_id,)
-                )
-                if cur.fetchone():
-                    _logger.info(
-                        "Envelope %s has already been recorded in transaction ledger. Skipping duplicate ledger insert.",
-                        envelope_id,
+                    cur.execute(
+                        "SELECT 1 FROM information_schema.tables WHERE table_schema = 'public' AND table_name = %s;",
+                        (child_scheme_table,)
                     )
-                else:
+                    if cur.fetchone():
+                        child_update_query = f"""
+                            UPDATE {child_scheme_table}
+                            SET status = %s
+                            WHERE link_internal_record_id IN %s;
+                        """
+                        cur.execute(child_update_query, (status_disbursed, tuple(reconciled_ids)))
+                        _logger.info(
+                            "Updated %s rows in child table %s to status %s",
+                            cur.rowcount, child_scheme_table, status_disbursed,
+                        )
+
+                    # Insert SUCCESS in transaction ledger
                     self._insert_transaction_ledger(
-                        cur, table_name, target_registry, updated_ids,
+                        cur, table_name, target_registry, reconciled_ids,
                         program_mnemonic, cycle_mnemonic, benefit_code_mnemonic,
                         tranche_num, per_beneficiary_amount, measurement_unit,
-                        envelope_id, funds_blocked_ref,
+                        envelope_id, funds_blocked_ref, transaction_status="SUCCESS",
+                    )
+
+                # 2. Update Reversed Beneficiaries to TRANCHE_X_PAYMENT_FAILED
+                if reversed_map:
+                    status_failed = f"TRANCHE_{tranche_num}_PAYMENT_FAILED"
+                    for ben_id, rev_info in reversed_map.items():
+                        err_reason = rev_info.get("reason") or "PAYMENT_REVERSED_BY_BANK"
+                        # Update main register table
+                        cur.execute(f"""
+                            UPDATE {table_name}
+                            SET status = %s,
+                                record_status_reason = %s
+                            WHERE internal_record_id = %s;
+                        """, (status_failed, err_reason, ben_id))
+
+                        # Update child scheme table
+                        cur.execute(
+                            "SELECT 1 FROM information_schema.tables WHERE table_schema = 'public' AND table_name = %s;",
+                            (child_scheme_table,)
+                        )
+                        if cur.fetchone():
+                            cur.execute(f"""
+                                UPDATE {child_scheme_table}
+                                SET status = %s,
+                                    record_status_reason = %s
+                                WHERE link_internal_record_id = %s;
+                            """, (status_failed, err_reason, ben_id))
+
+                    # Insert FAILED in transaction ledger
+                    self._insert_transaction_ledger(
+                        cur, table_name, target_registry, list(reversed_map.keys()),
+                        program_mnemonic, cycle_mnemonic, benefit_code_mnemonic,
+                        tranche_num, per_beneficiary_amount, measurement_unit,
+                        envelope_id, funds_blocked_ref, transaction_status="FAILED",
+                        reversed_map=reversed_map,
                     )
 
             conn.commit()
             _logger.info(
-                "Successfully synced %s records to NSR for envelope %s",
-                len(updated_ids), envelope_id,
+                "Successfully synced reconciliation to NSR for envelope %s: %s reconciled, %s reversed",
+                envelope_id, len(reconciled_ids), len(reversed_map),
             )
         except Exception:
             conn.rollback()
@@ -272,57 +425,20 @@ class G2PDisbursementEnvelopeLineNSRSync(models.TransientModel):
             _logger.error("Failed to fetch beneficiary record_ids: %s", e)
             return []
 
-    def _update_nsr_household_status(self, cur, table_name, target_registry, record_ids, tranche_num, amount):
-        """
-        Updates the household status from APPLIED to TRANCHE_X_DISBURSED in NSR,
-        both in the main register table and in the scheme_applications child table (which the UI reads).
-        Returns list of updated internal_record_ids.
-        """
-        status_val = f"TRANCHE_{tranche_num}_DISBURSED"
-
-        # 1. Update main register table (e.g. g2p_register_gramstack_households)
-        update_query = f"""
-            UPDATE {table_name}
-            SET status = %s
-            WHERE internal_record_id IN %s
-            RETURNING internal_record_id;
-        """
-        cur.execute(update_query, (status_val, tuple(record_ids)))
-        rows = cur.fetchall()
-        updated_ids = [r[0] for r in rows]
-
-        target_ids = updated_ids if updated_ids else record_ids
-
-        # 2. Update scheme_applications child table (which the UI Applied Schemes tab displays)
-        child_scheme_table = self._get_nsr_scheme_table_name(target_registry)
-        cur.execute(
-            "SELECT 1 FROM information_schema.tables WHERE table_schema = 'public' AND table_name = %s;",
-            (child_scheme_table,)
-        )
-        if cur.fetchone():
-            child_update_query = f"""
-                UPDATE {child_scheme_table}
-                SET status = %s
-                WHERE link_internal_record_id IN %s;
-            """
-            cur.execute(child_update_query, (status_val, tuple(target_ids)))
-            _logger.info(
-                "Updated %s rows in child table %s to status %s",
-                cur.rowcount, child_scheme_table, status_val,
-            )
-
-        return target_ids
-
     def _insert_transaction_ledger(
-        self, cur, table_name, target_registry, updated_ids,
+        self, cur, table_name, target_registry, target_ids,
         program_mnemonic, cycle_mnemonic, benefit_code_mnemonic,
         tranche_num, amount, measurement_unit, envelope_id, bank_ref,
+        transaction_status="SUCCESS", reversed_map=None,
     ):
         """
         Appends immutable transaction records to g2p_registry_transaction_ledger
         with all values pulled dynamically from NSR + PBMS context.
-        Ensures g2p_registry_transaction_ledger exists before inserting.
+        Supports both SUCCESS and FAILED transaction records.
         """
+        if not target_ids:
+            return
+
         create_ledger_table_sql = """
             CREATE TABLE IF NOT EXISTS g2p_registry_transaction_ledger (
                 id BIGSERIAL PRIMARY KEY,
@@ -353,69 +469,95 @@ class G2PDisbursementEnvelopeLineNSRSync(models.TransientModel):
         """
         cur.execute(create_ledger_table_sql)
 
-        ledger_query = f"""
-            INSERT INTO g2p_registry_transaction_ledger (
+        for target_id in target_ids:
+            # Check idempotency per beneficiary and reconciliation_id and transaction_status
+            cur.execute(
+                """
+                SELECT 1 FROM g2p_registry_transaction_ledger 
+                WHERE reconciliation_id = %s 
+                  AND internal_record_id = %s 
+                  AND transaction_status = %s 
+                LIMIT 1;
+                """,
+                (envelope_id, target_id, transaction_status)
+            )
+            if cur.fetchone():
+                continue
+
+            err_reason = None
+            specific_bank_ref = bank_ref
+            if reversed_map and target_id in reversed_map:
+                err_reason = reversed_map[target_id].get("reason")
+                specific_bank_ref = reversed_map[target_id].get("bank_ref") or bank_ref
+
+            ledger_insert_sql = f"""
+                INSERT INTO g2p_registry_transaction_ledger (
+                    target_registry,
+                    internal_record_id,
+                    beneficiary_name,
+                    beneficiary_mobile,
+                    aadhaar_number,
+                    scheme_code,
+                    scheme_name,
+                    program_mnemonic,
+                    cycle_mnemonic,
+                    tranche_number,
+                    source_system,
+                    amount,
+                    currency,
+                    payment_method,
+                    bank_account_no,
+                    ifsc,
+                    reconciliation_id,
+                    bank_reference_number,
+                    transaction_status,
+                    error_reason,
+                    reconciled_at,
+                    created_at
+                )
+                SELECT
+                    %s,
+                    h.internal_record_id,
+                    COALESCE(h.applicant_name, h.member_name, h.household_reference_name, ''),
+                    COALESCE(h.mobile_number, ''),
+                    COALESCE(h.aadhaar_number, ''),
+                    COALESCE(h.scheme_code, %s),
+                    COALESCE(h.scheme_name, %s),
+                    %s,
+                    %s,
+                    %s,
+                    'PBMS',
+                    %s,
+                    %s,
+                    'DBT_BANK',
+                    COALESCE(h.bank_account_no, ''),
+                    COALESCE(h.ifsc, ''),
+                    %s,
+                    %s,
+                    %s,
+                    %s,
+                    NOW(),
+                    NOW()
+                FROM {table_name} h
+                WHERE h.internal_record_id = %s;
+            """
+            cur.execute(ledger_insert_sql, (
                 target_registry,
-                internal_record_id,
-                beneficiary_name,
-                beneficiary_mobile,
-                aadhaar_number,
-                scheme_code,
-                scheme_name,
+                benefit_code_mnemonic or program_mnemonic,
+                program_mnemonic,
                 program_mnemonic,
                 cycle_mnemonic,
-                tranche_number,
-                source_system,
+                tranche_num,
                 amount,
-                currency,
-                payment_method,
-                bank_account_no,
-                ifsc,
-                reconciliation_id,
-                bank_reference_number,
+                measurement_unit,
+                envelope_id,
+                specific_bank_ref,
                 transaction_status,
-                reconciled_at,
-                created_at
-            )
-            SELECT
-                %s,
-                h.internal_record_id,
-                COALESCE(h.applicant_name, h.member_name, h.household_reference_name, ''),
-                COALESCE(h.mobile_number, ''),
-                COALESCE(h.aadhaar_number, ''),
-                COALESCE(h.scheme_code, %s),
-                COALESCE(h.scheme_name, %s),
-                %s,
-                %s,
-                %s,
-                'PBMS',
-                %s,
-                %s,
-                'DBT_BANK',
-                COALESCE(h.bank_account_no, ''),
-                COALESCE(h.ifsc, ''),
-                %s,
-                %s,
-                'SUCCESS',
-                NOW(),
-                NOW()
-            FROM {table_name} h
-            WHERE h.internal_record_id IN %s;
-        """
-        cur.execute(ledger_query, (
-            target_registry,
-            benefit_code_mnemonic or program_mnemonic,
-            program_mnemonic,
-            program_mnemonic,
-            cycle_mnemonic,
-            tranche_num,
-            amount,
-            measurement_unit,
-            envelope_id,
-            bank_ref,
-            tuple(updated_ids),
-        ))
+                err_reason,
+                target_id,
+            ))
+
         _logger.info(
-            "Inserted %s rows into g2p_registry_transaction_ledger",
-            cur.rowcount,
+            "Inserted %s rows (%s) into g2p_registry_transaction_ledger for envelope %s",
+            len(target_ids), transaction_status, envelope_id,
         )
