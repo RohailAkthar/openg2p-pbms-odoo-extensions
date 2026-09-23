@@ -145,11 +145,11 @@ class G2PDisbursementEnvelopeLineNSRSync(models.TransientModel):
         if number_of_beneficiaries > 0 and total_quantity > 0:
             per_beneficiary_amount = total_quantity / number_of_beneficiaries
 
-        # Derive tranche number from cycle_mnemonic if possible (e.g. "TRANCHE_1")
+        # Derive tranche number exclusively from program_mnemonic (Program Name)
         tranche_num = 1
-        if cycle_mnemonic:
+        if program_mnemonic:
             import re
-            match = re.search(r'(\d+)', cycle_mnemonic)
+            match = re.search(r'(\d+)', program_mnemonic)
             if match:
                 tranche_num = int(match.group(1))
 
@@ -166,6 +166,18 @@ class G2PDisbursementEnvelopeLineNSRSync(models.TransientModel):
         conn = self._get_nsr_connection()
         try:
             with conn.cursor() as cur:
+                # 0. Idempotency Check: Skip if envelope has already been synced to NSR
+                cur.execute(
+                    "SELECT 1 FROM g2p_registry_transaction_ledger WHERE reconciliation_id = %s LIMIT 1;",
+                    (envelope_id,)
+                )
+                if cur.fetchone():
+                    _logger.info(
+                        "Envelope %s has already been synced to NSR transaction ledger. Skipping duplicate sync.",
+                        envelope_id,
+                    )
+                    return
+
                 # 1. Update household status in NSR
                 updated_ids = self._update_nsr_household_status(
                     cur, table_name, record_ids, tranche_num,
@@ -247,20 +259,41 @@ class G2PDisbursementEnvelopeLineNSRSync(models.TransientModel):
 
     def _update_nsr_household_status(self, cur, table_name, record_ids, tranche_num, amount):
         """
-        Updates the household status from APPLIED to TRANCHE_X_DISBURSED in NSR.
+        Updates the household status from APPLIED to TRANCHE_X_DISBURSED in NSR,
+        both in the main register table and in the scheme_applications child table (which the UI reads).
         Returns list of updated internal_record_ids.
         """
+        status_val = f"TRANCHE_{tranche_num}_DISBURSED"
+
+        # 1. Update main register table (e.g. g2p_register_gramstack_households)
         update_query = f"""
             UPDATE {table_name}
-            SET
-                status = 'TRANCHE_' || %s || '_DISBURSED'
+            SET status = %s
             WHERE internal_record_id IN %s
-              AND status = 'APPLIED'
+              AND (status = 'APPLIED' OR status LIKE 'TRANCHE_%%')
             RETURNING internal_record_id;
         """
-        cur.execute(update_query, (str(tranche_num), tuple(record_ids)))
+        cur.execute(update_query, (status_val, tuple(record_ids)))
         rows = cur.fetchall()
-        return [r[0] for r in rows]
+        updated_ids = [r[0] for r in rows]
+
+        target_ids = updated_ids if updated_ids else record_ids
+
+        # 2. Update scheme_applications child table if present (which the UI Applied Schemes tab displays)
+        child_scheme_table = f"{table_name}_scheme_applications"
+        child_update_query = f"""
+            DO $$
+            BEGIN
+                IF EXISTS (SELECT 1 FROM information_schema.tables WHERE table_schema = 'public' AND table_name = '{child_scheme_table}') THEN
+                    UPDATE {child_scheme_table}
+                    SET status = '{status_val}'
+                    WHERE link_internal_record_id IN %s;
+                END IF;
+            END $$;
+        """
+        cur.execute(child_update_query, (tuple(target_ids),))
+
+        return target_ids
 
     def _insert_transaction_ledger(
         self, cur, table_name, target_registry, updated_ids,
