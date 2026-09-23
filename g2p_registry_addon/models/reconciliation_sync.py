@@ -166,36 +166,34 @@ class G2PDisbursementEnvelopeLineNSRSync(models.TransientModel):
         conn = self._get_nsr_connection()
         try:
             with conn.cursor() as cur:
-                # 0. Idempotency Check: Skip if envelope has already been synced to NSR
+                # 1. Update household status in NSR (both main register and child scheme table)
+                updated_ids = self._update_nsr_household_status(
+                    cur, table_name, target_registry, record_ids, tranche_num,
+                    per_beneficiary_amount,
+                )
+
+                if not updated_ids:
+                    _logger.info("No records found in NSR to update")
+                    conn.rollback()
+                    return
+
+                # 2. Insert transaction ledger record if not already inserted (Idempotency)
                 cur.execute(
                     "SELECT 1 FROM g2p_registry_transaction_ledger WHERE reconciliation_id = %s LIMIT 1;",
                     (envelope_id,)
                 )
                 if cur.fetchone():
                     _logger.info(
-                        "Envelope %s has already been synced to NSR transaction ledger. Skipping duplicate sync.",
+                        "Envelope %s has already been recorded in transaction ledger. Skipping duplicate ledger insert.",
                         envelope_id,
                     )
-                    return
-
-                # 1. Update household status in NSR
-                updated_ids = self._update_nsr_household_status(
-                    cur, table_name, record_ids, tranche_num,
-                    per_beneficiary_amount,
-                )
-
-                if not updated_ids:
-                    _logger.info("No APPLIED records found in NSR to update")
-                    conn.rollback()
-                    return
-
-                # 2. Insert transaction ledger records
-                self._insert_transaction_ledger(
-                    cur, table_name, target_registry, updated_ids,
-                    program_mnemonic, cycle_mnemonic, benefit_code_mnemonic,
-                    tranche_num, per_beneficiary_amount, measurement_unit,
-                    envelope_id, funds_blocked_ref,
-                )
+                else:
+                    self._insert_transaction_ledger(
+                        cur, table_name, target_registry, updated_ids,
+                        program_mnemonic, cycle_mnemonic, benefit_code_mnemonic,
+                        tranche_num, per_beneficiary_amount, measurement_unit,
+                        envelope_id, funds_blocked_ref,
+                    )
 
             conn.commit()
             _logger.info(
@@ -222,6 +220,23 @@ class G2PDisbursementEnvelopeLineNSRSync(models.TransientModel):
         return registry_map.get(
             target_registry.lower(),
             f"g2p_register_{target_registry.lower()}s",
+        )
+
+    def _get_nsr_scheme_table_name(self, target_registry):
+        """Derive NSR child scheme applications table name from target_registry string."""
+        registry_map = {
+            "gramstackhousehold": "g2p_register_gramstack_household_scheme_applications",
+            "gramstack_household": "g2p_register_gramstack_household_scheme_applications",
+            "household": "g2p_register_household_scheme_applications",
+            "individual": "g2p_register_individual_scheme_applications",
+            "farmer": "g2p_register_farmer_scheme_applications",
+            "student": "g2p_register_student_scheme_applications",
+            "group": "g2p_register_group_scheme_applications",
+        }
+        reg_clean = target_registry.lower().rstrip('s')
+        return registry_map.get(
+            target_registry.lower(),
+            f"g2p_register_{reg_clean}_scheme_applications",
         )
 
     def _fetch_beneficiary_record_ids(self, target_registry):
@@ -257,7 +272,7 @@ class G2PDisbursementEnvelopeLineNSRSync(models.TransientModel):
             _logger.error("Failed to fetch beneficiary record_ids: %s", e)
             return []
 
-    def _update_nsr_household_status(self, cur, table_name, record_ids, tranche_num, amount):
+    def _update_nsr_household_status(self, cur, table_name, target_registry, record_ids, tranche_num, amount):
         """
         Updates the household status from APPLIED to TRANCHE_X_DISBURSED in NSR,
         both in the main register table and in the scheme_applications child table (which the UI reads).
@@ -270,7 +285,6 @@ class G2PDisbursementEnvelopeLineNSRSync(models.TransientModel):
             UPDATE {table_name}
             SET status = %s
             WHERE internal_record_id IN %s
-              AND (status = 'APPLIED' OR status LIKE 'TRANCHE_%%')
             RETURNING internal_record_id;
         """
         cur.execute(update_query, (status_val, tuple(record_ids)))
@@ -279,19 +293,23 @@ class G2PDisbursementEnvelopeLineNSRSync(models.TransientModel):
 
         target_ids = updated_ids if updated_ids else record_ids
 
-        # 2. Update scheme_applications child table if present (which the UI Applied Schemes tab displays)
-        child_scheme_table = f"{table_name}_scheme_applications"
-        child_update_query = f"""
-            DO $$
-            BEGIN
-                IF EXISTS (SELECT 1 FROM information_schema.tables WHERE table_schema = 'public' AND table_name = '{child_scheme_table}') THEN
-                    UPDATE {child_scheme_table}
-                    SET status = '{status_val}'
-                    WHERE link_internal_record_id IN %s;
-                END IF;
-            END $$;
-        """
-        cur.execute(child_update_query, (tuple(target_ids),))
+        # 2. Update scheme_applications child table (which the UI Applied Schemes tab displays)
+        child_scheme_table = self._get_nsr_scheme_table_name(target_registry)
+        cur.execute(
+            "SELECT 1 FROM information_schema.tables WHERE table_schema = 'public' AND table_name = %s;",
+            (child_scheme_table,)
+        )
+        if cur.fetchone():
+            child_update_query = f"""
+                UPDATE {child_scheme_table}
+                SET status = %s
+                WHERE link_internal_record_id IN %s;
+            """
+            cur.execute(child_update_query, (status_val, tuple(target_ids)))
+            _logger.info(
+                "Updated %s rows in child table %s to status %s",
+                cur.rowcount, child_scheme_table, status_val,
+            )
 
         return target_ids
 
