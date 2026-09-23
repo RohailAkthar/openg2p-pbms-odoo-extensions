@@ -8,6 +8,7 @@
     "depends": ["base_setup", "web", "g2p_pbms"],
     "data": [
         "security/ir.model.access.csv",
+        "data/nsr_config_data.xml",
         "views/eligibility/eligibility_rule_view.xml",
         "views/entitlement/entitlement_rule_view.xml",
         "views/priority/priority_rule_view.xml",

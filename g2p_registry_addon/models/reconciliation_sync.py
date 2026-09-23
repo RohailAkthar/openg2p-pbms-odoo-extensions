@@ -1,72 +1,258 @@
 import logging
 import json
-import requests
-from odoo import models, fields, _
+import os
+import psycopg2
+from odoo import models, fields, api, _
 
 _logger = logging.getLogger(__name__)
 
 
-class G2PBeneficiaryListReconciliation(models.Model):
-    _inherit = "g2p.beneficiary.list"
+class G2PDisbursementEnvelopeLineNSRSync(models.TransientModel):
+    """
+    Extends G2PAPIDisbursementEnvelopeLine to sync reconciliation
+    results directly to the NSR database using psycopg2.
+    """
+    _inherit = "g2p.api.disbursement.envelope.line"
 
-    def action_process_reconciliation_success(self, bank_reference=None):
+    def _get_nsr_connection(self):
         """
-        Dynamically syncs reconciliation to NSR and appends to g2p_registry_transaction_ledger.
-        No hardcoding: derives registry, scheme, amount, tranche, and UTR dynamically.
+        Creates a psycopg2 connection to the NSR database.
+        Reads host/port/dbname/user from ir.config_parameter (with env var fallbacks).
+        Password comes exclusively from the NSR_DB_PASSWORD environment variable,
+        which is mounted from K8s secret 'nsr' key 'nsr-db-user'.
         """
-        self.ensure_one()
-
-        target_reg = self.program_id.target_registry
-        if not target_reg:
-            return False
-
-        # 1. Fetch beneficiary IDs dynamically from bgtask
-        wizard = self.env['g2p.bgtask.summary.wizard'].new({
-            'beneficiary_list_uuid': self.beneficiary_list_id,
-            'target_registry': target_reg,
-        })
-        search_res = wizard.get_beneficiaries(page=1, page_size=1000)
-        beneficiaries = (
-            search_res.get("response_body", {})
-            .get("response_payload", {})
-            .get("beneficiaries", [])
+        ICP = self.env["ir.config_parameter"].sudo()
+        host = ICP.get_param(
+            "g2p_registry_addon.nsr_db_host",
+            os.getenv("NSR_DB_HOST", "commons-postgresql"),
         )
-        record_ids = [b.get("internal_record_id") for b in beneficiaries if b.get("internal_record_id")]
+        port = ICP.get_param(
+            "g2p_registry_addon.nsr_db_port",
+            os.getenv("NSR_DB_PORT", "5432"),
+        )
+        dbname = ICP.get_param(
+            "g2p_registry_addon.nsr_db_name",
+            os.getenv("NSR_DB_NAME", "nsr"),
+        )
+        user = ICP.get_param(
+            "g2p_registry_addon.nsr_db_user",
+            os.getenv("NSR_DB_USER", "nsr_user"),
+        )
+        # Password from K8s secret via env var only — never stored in Odoo DB
+        password = os.getenv("NSR_DB_PASSWORD", "")
 
+        if not password:
+            _logger.warning(
+                "NSR_DB_PASSWORD environment variable is not set. "
+                "Ensure the PBMS deployment mounts K8s secret 'nsr' key 'nsr-db-user' "
+                "as NSR_DB_PASSWORD."
+            )
+
+        _logger.info(
+            "Connecting to NSR database: host=%s port=%s dbname=%s user=%s",
+            host, port, dbname, user,
+        )
+        return psycopg2.connect(
+            host=host,
+            port=int(port),
+            dbname=dbname,
+            user=user,
+            password=password,
+        )
+
+    def action_view_disbursement_envelope(self):
+        """
+        Override to trigger NSR sync after the envelope summary is fetched.
+        Calls super() first (which fetches reconciliation data from G2P Bridge),
+        then checks if reconciliation is complete (reconciled > 0, reversed == 0).
+        If so, updates NSR household status and appends to transaction ledger.
+        """
+        # Call the original method — this fetches from G2P Bridge and creates
+        # the disbursement.envelope.summary.wizard record
+        res = super().action_view_disbursement_envelope()
+
+        try:
+            self._sync_reconciliation_to_nsr(res)
+        except Exception as e:
+            _logger.error(
+                "NSR reconciliation sync failed for envelope %s: %s",
+                self.disbursement_envelope_id, e,
+                exc_info=True,
+            )
+            # Don't break the existing flow — just log the error
+
+        return res
+
+    def _sync_reconciliation_to_nsr(self, action_result):
+        """
+        Checks the summary wizard created by super() for reconciliation status.
+        If all disbursements are reconciled with zero reversals, updates NSR.
+        """
+        # Extract the summary wizard record from the action result
+        summary_rec = None
+        if isinstance(action_result, dict):
+            res_id = action_result.get("res_id") or action_result.get("data", {}).get("ids", [None])[0] if action_result.get("data") else action_result.get("res_id")
+            if res_id:
+                summary_rec = self.env["g2p.disbursement.envelope.summary.wizard"].browse(res_id)
+
+        if not summary_rec:
+            # Try searching for the latest summary for this envelope
+            summary_rec = self.env["g2p.disbursement.envelope.summary.wizard"].search(
+                [("disbursement_envelope_id", "=", self.disbursement_envelope_id)],
+                order="id desc",
+                limit=1,
+            )
+
+        if not summary_rec:
+            _logger.debug("No summary wizard found for envelope %s", self.disbursement_envelope_id)
+            return
+
+        reconciled = summary_rec.number_of_disbursements_reconciled or 0
+        declared = summary_rec.number_of_disbursements_declared or 0
+        reversed_disb = summary_rec.number_of_disbursements_reversed or 0
+
+        _logger.info(
+            "Envelope %s status: reconciled=%s, declared=%s, reversed=%s",
+            self.disbursement_envelope_id, reconciled, declared, reversed_disb,
+        )
+
+        # Only sync if fully reconciled with zero reversals
+        if reconciled <= 0 or reconciled < declared or reversed_disb > 0:
+            _logger.info(
+                "Reconciliation not complete for envelope %s. Skipping NSR sync.",
+                self.disbursement_envelope_id,
+            )
+            return
+
+        # Gather dynamic metadata from the envelope line
+        target_registry = self.wizard_id.target_registry if self.wizard_id else ""
+        if not target_registry:
+            _logger.warning("No target_registry found, skipping NSR sync")
+            return
+
+        program_mnemonic = self.benefit_program_mnemonic or ""
+        cycle_mnemonic = self.cycle_code_mnemonic or ""
+        benefit_code_mnemonic = self.benefit_code_mnemonic or ""
+        envelope_id = self.disbursement_envelope_id or ""
+        disbursement_cycle_id = self.disbursement_cycle_id or ""
+        number_of_beneficiaries = self.number_of_beneficiaries or 0
+        total_quantity = self.total_disbursement_quantity or 0.0
+        measurement_unit = self.measurement_unit or "INR"
+        funds_blocked_ref = summary_rec.funds_blocked_reference_number or ""
+
+        # Compute per-beneficiary amount dynamically
+        per_beneficiary_amount = 0.0
+        if number_of_beneficiaries > 0 and total_quantity > 0:
+            per_beneficiary_amount = total_quantity / number_of_beneficiaries
+
+        # Derive tranche number from cycle_mnemonic if possible (e.g. "TRANCHE_1")
+        tranche_num = 1
+        if cycle_mnemonic:
+            import re
+            match = re.search(r'(\d+)', cycle_mnemonic)
+            if match:
+                tranche_num = int(match.group(1))
+
+        # Determine NSR table name dynamically
+        table_name = self._get_nsr_table_name(target_registry)
+
+        # Get beneficiary internal_record_ids from the bg-task staff portal API
+        record_ids = self._fetch_beneficiary_record_ids(target_registry)
         if not record_ids:
-            return False
+            _logger.warning("No beneficiary record_ids found for registry %s", target_registry)
+            return
 
-        # 2. Derive dynamic program metadata
-        prog = self.program_id
-        cycle = self.disbursement_cycle_id
-        cycle_name = cycle.cycle_name if cycle else ""
-        prog_name = prog.program_mnemonic or ""
-        envelope_id = (cycle.bridge_envelope_id if cycle else "") or ""
-        utr = bank_reference or ""
+        # Connect to NSR and run updates
+        conn = self._get_nsr_connection()
+        try:
+            with conn.cursor() as cur:
+                # 1. Update household status in NSR
+                updated_ids = self._update_nsr_household_status(
+                    cur, table_name, record_ids, tranche_num,
+                    per_beneficiary_amount,
+                )
 
-        # Determine tranche number dynamically from cycle or mnemonic if present
-        tranche_num = cycle.cycle_number if (cycle and cycle.cycle_number) else 1
+                if not updated_ids:
+                    _logger.info("No APPLIED records found in NSR to update")
+                    conn.rollback()
+                    return
 
-        # Determine amount dynamically from program or cycle
-        disb_amount = 0.0
-        if hasattr(self, "disbursement_quantity") and self.disbursement_quantity:
-            try:
-                dq = json.loads(self.disbursement_quantity)
-                if isinstance(dq, dict):
-                    disb_amount = float(list(dq.values())[0])
-                elif isinstance(dq, list) and dq:
-                    disb_amount = float(dq[0])
-            except Exception:
-                disb_amount = 0.0
-        if not disb_amount and hasattr(prog, "entitlement_amount") and prog.entitlement_amount:
-            disb_amount = float(prog.entitlement_amount)
+                # 2. Insert transaction ledger records
+                self._insert_transaction_ledger(
+                    cur, table_name, target_registry, updated_ids,
+                    program_mnemonic, cycle_mnemonic, benefit_code_mnemonic,
+                    tranche_num, per_beneficiary_amount, measurement_unit,
+                    envelope_id, funds_blocked_ref,
+                )
 
-        # 3. Dynamic SQL update for the target registry table (works for gramstackhousehold, household, etc.)
-        table_name = "g2p_register_gramstack_households" if target_reg in ("gramstackhousehold", "gramstack_household") else f"g2p_register_{target_reg}s"
+            conn.commit()
+            _logger.info(
+                "Successfully synced %s records to NSR for envelope %s",
+                len(updated_ids), envelope_id,
+            )
+        except Exception:
+            conn.rollback()
+            raise
+        finally:
+            conn.close()
 
+    def _get_nsr_table_name(self, target_registry):
+        """Derive NSR table name from target_registry string."""
+        registry_map = {
+            "gramstackhousehold": "g2p_register_gramstack_households",
+            "gramstack_household": "g2p_register_gramstack_households",
+            "household": "g2p_register_households",
+            "individual": "g2p_register_individuals",
+            "farmer": "g2p_register_farmers",
+            "student": "g2p_register_students",
+            "group": "g2p_register_groups",
+        }
+        return registry_map.get(
+            target_registry.lower(),
+            f"g2p_register_{target_registry.lower()}s",
+        )
+
+    def _fetch_beneficiary_record_ids(self, target_registry):
+        """
+        Fetch beneficiary internal_record_ids via the bg-task staff portal API
+        (same HTTP call the wizard uses).
+        """
+        try:
+            wizard = self.wizard_id
+            if not wizard:
+                _logger.warning("No wizard_id available on envelope line")
+                return []
+
+            search_result = wizard.get_beneficiaries(
+                wizard_id=wizard.id,
+                page=1,
+                page_size=10000,
+                odoo_domain=[],
+            )
+            beneficiaries = (
+                search_result.get("response_body", {})
+                .get("response_payload", {})
+                .get("beneficiaries", [])
+            )
+            record_ids = [
+                b.get("internal_record_id")
+                for b in beneficiaries
+                if b.get("internal_record_id")
+            ]
+            _logger.info("Fetched %s beneficiary record_ids from staff portal", len(record_ids))
+            return record_ids
+        except Exception as e:
+            _logger.error("Failed to fetch beneficiary record_ids: %s", e)
+            return []
+
+    def _update_nsr_household_status(self, cur, table_name, record_ids, tranche_num, amount):
+        """
+        Updates the household status from APPLIED to TRANCHE_X_DISBURSED in NSR.
+        Returns list of updated internal_record_ids.
+        """
         update_query = f"""
             UPDATE {table_name}
-            SET 
+            SET
                 status = 'TRANCHE_' || %s || '_DISBURSED',
                 payment_status = 'RECONCILED_SUCCESS',
                 reconciled_at = NOW(),
@@ -78,15 +264,19 @@ class G2PBeneficiaryListReconciliation(models.Model):
               AND status = 'APPLIED'
             RETURNING internal_record_id;
         """
-        self.env.cr.execute(update_query, (tranche_num, disb_amount, tuple(record_ids)))
-        updated_rows = self.env.cr.fetchall()
+        cur.execute(update_query, (str(tranche_num), amount, tuple(record_ids)))
+        rows = cur.fetchall()
+        return [r[0] for r in rows]
 
-        if not updated_rows:
-            return 0
-
-        updated_ids = [r[0] for r in updated_rows]
-
-        # 4. Insert dynamic records into g2p_registry_transaction_ledger
+    def _insert_transaction_ledger(
+        self, cur, table_name, target_registry, updated_ids,
+        program_mnemonic, cycle_mnemonic, benefit_code_mnemonic,
+        tranche_num, amount, measurement_unit, envelope_id, bank_ref,
+    ):
+        """
+        Appends immutable transaction records to g2p_registry_transaction_ledger
+        with all values pulled dynamically from NSR + PBMS context.
+        """
         ledger_query = f"""
             INSERT INTO g2p_registry_transaction_ledger (
                 target_registry,
@@ -108,9 +298,10 @@ class G2PBeneficiaryListReconciliation(models.Model):
                 reconciliation_id,
                 bank_reference_number,
                 transaction_status,
-                reconciled_at
+                reconciled_at,
+                created_at
             )
-            SELECT 
+            SELECT
                 %s,
                 h.internal_record_id,
                 COALESCE(h.applicant_name, h.member_name, h.household_reference_name, ''),
@@ -123,70 +314,32 @@ class G2PBeneficiaryListReconciliation(models.Model):
                 %s,
                 'PBMS',
                 %s,
-                'INR',
+                %s,
                 'DBT_BANK',
                 COALESCE(h.bank_account_no, ''),
                 COALESCE(h.ifsc, ''),
                 %s,
                 %s,
                 'SUCCESS',
+                NOW(),
                 NOW()
             FROM {table_name} h
             WHERE h.internal_record_id IN %s;
         """
-        self.env.cr.execute(ledger_query, (
-            target_reg,
-            prog_name,
-            prog_name,
-            prog_name,
-            cycle_name,
+        cur.execute(ledger_query, (
+            target_registry,
+            benefit_code_mnemonic or program_mnemonic,
+            program_mnemonic,
+            program_mnemonic,
+            cycle_mnemonic,
             tranche_num,
-            disb_amount,
+            amount,
+            measurement_unit,
             envelope_id,
-            utr,
+            bank_ref,
             tuple(updated_ids),
         ))
-
-        _logger.info("Successfully reconciled %s records dynamically for %s", len(updated_ids), target_reg)
-        return len(updated_ids)
-
-
-class G2PBGTaskSummaryWizardReconciliation(models.TransientModel):
-    _inherit = "g2p.bgtask.summary.wizard"
-
-    def action_generate_disbursement_envelope_summary(self):
-        """
-        Extend the envelope summary report action to dynamically trigger reconciliation sync
-        when the bridge confirms 100% reconciled disbursements with zero reversals.
-        """
-        res = super().action_generate_disbursement_envelope_summary()
-
-        try:
-            # Check reconciliation status from the latest envelope summary wizard created
-            summary_id = res.get("res_id") if isinstance(res, dict) else None
-            summary_rec = self.env["g2p.disbursement.envelope.summary.wizard"].browse(summary_id) if summary_id else False
-
-            if not summary_rec:
-                # Check recent wizard for this envelope
-                summary_rec = self.env["g2p.disbursement.envelope.summary.wizard"].search(
-                    [("disbursement_envelope_id", "=", self.disbursement_envelope_id)],
-                    order="id desc", limit=1
-                )
-
-            if summary_rec:
-                reconciled = summary_rec.number_of_disbursements_reconciled or 0
-                declared = summary_rec.number_of_disbursements_declared or 0
-                reversed_disb = summary_rec.number_of_disbursements_reversed or 0
-
-                if reconciled > 0 and reconciled >= declared and reversed_disb == 0:
-                    list_id = self.beneficiary_list_id or (self.wizard_id.beneficiary_list_id if self.wizard_id else False)
-                    if list_id:
-                        list_rec = self.env["g2p.beneficiary.list"].browse(int(list_id))
-                        if list_rec:
-                            bank_ref = summary_rec.funds_blocked_reference_number or "UTR_RECON_OK"
-                            updated = list_rec.action_process_reconciliation_success(bank_reference=bank_ref)
-                            _logger.info("Dynamic reconciliation sync updated %s records in NSR", updated)
-        except Exception as e:
-            _logger.warning("Error in dynamic reconciliation sync override: %s", e)
-
-        return res
+        _logger.info(
+            "Inserted %s rows into g2p_registry_transaction_ledger",
+            cur.rowcount,
+        )
