@@ -60,90 +60,46 @@ class G2PDisbursementEnvelopeLineNSRSync(models.TransientModel):
             password=password,
         )
 
-    def _get_bridge_connection(self):
-        """
-        Creates a psycopg2 connection to the G2P Bridge database.
-        Reads host/port/dbname/user from ir.config_parameter (with env var fallbacks).
-        """
-        ICP = self.env["ir.config_parameter"].sudo()
-        host = ICP.get_param(
-            "g2p_registry_addon.bridge_db_host",
-            os.getenv("BRIDGE_DB_HOST", os.getenv("NSR_DB_HOST", "commons-postgresql")),
-        )
-        port = ICP.get_param(
-            "g2p_registry_addon.bridge_db_port",
-            os.getenv("BRIDGE_DB_PORT", os.getenv("NSR_DB_PORT", "5432")),
-        )
-        dbname = ICP.get_param(
-            "g2p_registry_addon.bridge_db_name",
-            os.getenv("BRIDGE_DB_NAME", "g2p_bridge"),
-        )
-        user = ICP.get_param(
-            "g2p_registry_addon.bridge_db_user",
-            os.getenv("BRIDGE_DB_USER", os.getenv("NSR_DB_USER", "postgres")),
-        )
-        password = os.getenv("BRIDGE_DB_PASSWORD", os.getenv("NSR_DB_PASSWORD", ""))
-
-        _logger.info(
-            "Connecting to G2P Bridge database: host=%s port=%s dbname=%s user=%s",
-            host, port, dbname, user,
-        )
-        return psycopg2.connect(
-            host=host,
-            port=int(port),
-            dbname=dbname,
-            user=user,
-            password=password,
-        )
-
     def _fetch_reconciliation_details_from_bridge(self, envelope_id):
         """
-        Queries G2P Bridge database for per-beneficiary reconciliation details:
-        returns a tuple: (reconciled_beneficiary_ids, reversed_map)
+        Queries G2P Bridge Partner API /get_envelope_reconciliation_details over HTTP.
+        Returns a tuple: (reconciled_beneficiary_ids, reversed_map)
         where reversed_map is {beneficiary_id: {'reason': ..., 'bank_ref': ...}}
         """
+        import requests
         try:
-            conn = self._get_bridge_connection()
-            with conn.cursor() as cur:
-                cur.execute(
-                    """
-                    SELECT 
-                        d.beneficiary_id,
-                        dr.reversal_found,
-                        COALESCE(dr.reversal_reason, 'PAYMENT_REVERSED_BY_BANK'),
-                        COALESCE(dr.remittance_reference_number, '')
-                    FROM disbursements d
-                    JOIN disbursement_recons dr ON dr.disbursement_id = d.id
-                    WHERE d.disbursement_envelope_id = %s;
-                    """,
-                    (envelope_id,)
-                )
-                rows = cur.fetchall()
-            conn.close()
+            api_url = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.g2p_bridge_api_url')
+            if not api_url:
+                _logger.warning("g2p_bridge_api_url is not set in ir.config_parameter")
+                return [], {}
 
-            reconciled_ids = []
-            reversed_map = {}
-            for row in rows:
-                ben_id = row[0]
-                is_reversed = bool(row[1])
-                rev_reason = row[2]
-                bank_ref = row[3]
-                if is_reversed:
-                    reversed_map[ben_id] = {
-                        "reason": rev_reason,
-                        "bank_ref": bank_ref,
-                    }
-                else:
-                    reconciled_ids.append(ben_id)
+            endpoint = f"{api_url.rstrip('/')}/get_envelope_reconciliation_details"
+            _logger.info("Calling G2P Bridge API: %s with envelope_id=%s", endpoint, envelope_id)
+
+            payload = {"envelope_id": envelope_id}
+            response = requests.post(endpoint, json=payload, timeout=15)
+            response.raise_for_status()
+            data = response.json()
+
+            reconciled_ids = data.get("reconciled_beneficiary_ids", [])
+            reversed_list = data.get("reversed_beneficiaries", [])
+            reversed_map = {
+                item["beneficiary_id"]: {
+                    "reason": item.get("reversal_reason") or "PAYMENT_REVERSED_BY_BANK",
+                    "bank_ref": item.get("bank_reference") or "",
+                }
+                for item in reversed_list
+                if item.get("beneficiary_id")
+            }
 
             _logger.info(
-                "Fetched bridge recon for envelope %s: %s reconciled, %s reversed",
+                "Fetched bridge recon via API for envelope %s: %s reconciled, %s reversed",
                 envelope_id, len(reconciled_ids), len(reversed_map),
             )
             return reconciled_ids, reversed_map
         except Exception as e:
             _logger.warning(
-                "Could not fetch per-beneficiary recon from Bridge DB for envelope %s: %s",
+                "Could not fetch per-beneficiary recon from Bridge API for envelope %s: %s",
                 envelope_id, e,
             )
             return [], {}
