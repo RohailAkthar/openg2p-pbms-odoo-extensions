@@ -6,3 +6,4 @@ from .student_registry import G2PStudentRegistry
 from .group_registry import G2PGroupRegistry
 from .gramstack_household_registry import G2PGramstackHouseholdRegistry
 from .rule_overrides import G2PEntitlementRuleDefinitionExtend, G2PPriorityRuleDefinitionExtend
+from . import reconciliation_sync
