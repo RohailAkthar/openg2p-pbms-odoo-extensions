@@ -46,6 +46,17 @@
 			</span>
 		</xpath>
 
+		<xpath expr="//div[contains(@t-attf-class, 'oe_login_buttons')]" position="after">
+			<div class="powered-by">
+				<span>Powered by</span>
+				<img
+					src="/pbms_theme_extension/static/src/img/ooru_logo.png"
+					alt="ooru"
+					class="powered-logo"
+				/>
+			</div>
+		</xpath>
+
     </template>
 
 	<template id="login_layout_inherit" inherit_id="website.login_layout" name="Website Login Layout inherit">
