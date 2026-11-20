@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t t-name="pbms_knowledge.Knowledge">
+        <div class="pbk">
+            <!-- Left: search + guide list -->
+            <aside class="pbk_side">
+                <a href="#" class="pbk_home" t-on-click.prevent="home">Knowledge library</a>
+                <input type="search" class="pbk_search" placeholder="Search guides, steps, errors…" t-model="state.query"/>
+                <div t-if="searching and !filtered.length" class="pbk_none">No guide matches “<t t-esc="state.query"/>”.</div>
+                <t t-foreach="categories" t-as="cat" t-key="cat.id">
+                    <t t-set="items" t-value="guidesOf(cat)"/>
+                    <div t-if="items.length" class="pbk_cat">
+                        <button type="button" class="pbk_cat_head" t-on-click="() => this.toggleCat(cat)">
+                            <span class="pbk_cat_icon" t-esc="cat.icon"/>
+                            <span class="pbk_cat_title" t-esc="cat.title"/>
+                            <span class="pbk_cat_count" t-esc="items.length"/>
+                        </button>
+                        <ul t-if="searching or !state.collapsed[cat.id]">
+                            <li t-foreach="items" t-as="g" t-key="g.id">
+                                <a href="#" t-attf-class="pbk_item #{state.guideId === g.id ? 'pbk_active' : ''}"
+                                   t-on-click.prevent="() => this.open(g.id)" t-esc="g.title"/>
+                            </li>
+                        </ul>
+                    </div>
+                </t>
+            </aside>
+
+            <!-- Right: landing or guide -->
+            <main class="pbk_main">
+                <t t-if="!guide">
+                    <section class="pbk_hero">
+                        <h1>PBMS Knowledge</h1>
+                        <p>User manual, setup guides and workflow guides for the Programme and Benefit Management System. Pick a topic on the left, or search.</p>
+                    </section>
+                    <div class="pbk_grid">
+                        <div t-foreach="categories" t-as="cat" t-key="cat.id" class="pbk_card">
+                            <div class="pbk_card_icon" t-esc="cat.icon"/>
+                            <h2 t-esc="cat.title"/>
+                            <p t-esc="cat.blurb"/>
+                            <ul>
+                                <li t-foreach="guidesOf(cat)" t-as="g" t-key="g.id">
+                                    <a href="#" t-on-click.prevent="() => this.open(g.id)" t-esc="g.title"/>
+                                </li>
+                            </ul>
+                            <div class="pbk_card_count"><t t-esc="countOf(cat)"/> guides</div>
+                        </div>
+                    </div>
+                </t>
+
+                <article t-else="" class="pbk_guide">
+                    <nav class="pbk_crumbs">
+                        <a href="#" t-on-click.prevent="home">Knowledge</a> ›
+                        <span t-esc="category.title"/>
+                    </nav>
+                    <div class="pbk_titlerow">
+                        <h1 t-esc="guide.title"/>
+                        <div class="pbk_tools">
+                            <button type="button" class="pbk_btn" t-on-click="copyLink"><t t-esc="state.copied ? 'Link copied' : 'Copy link'"/></button>
+                            <button type="button" class="pbk_btn" t-on-click="print">Print</button>
+                        </div>
+                    </div>
+                    <p class="pbk_summary" t-esc="guide.summary"/>
+                    <div class="pbk_meta"><span class="pbk_tag">For</span> <t t-esc="guide.roles"/></div>
+
+                    <div t-if="guide.flow" class="pbk_flow">
+                        <t t-foreach="guide.flow" t-as="f" t-key="f_index">
+                            <span class="pbk_flow_step"><b t-esc="f_index + 1"/> <t t-esc="f"/></span>
+                            <span t-if="!f_last" class="pbk_flow_arrow">→</span>
+                        </t>
+                    </div>
+
+                    <h2>Steps</h2>
+                    <ol class="pbk_steps">
+                        <li t-foreach="guide.steps" t-as="s" t-key="s_index">
+                            <div class="pbk_step_t" t-esc="s.t"/>
+                            <div class="pbk_step_d" t-esc="s.d"/>
+                        </li>
+                    </ol>
+
+                    <div class="pbk_boxes">
+                        <section class="pbk_box">
+                            <h3>What you need</h3>
+                            <p t-esc="guide.need"/>
+                        </section>
+                        <section class="pbk_box">
+                            <h3>Next step</h3>
+                            <p t-esc="guide.next"/>
+                        </section>
+                    </div>
+                    <section t-if="guide.issues and guide.issues.length" class="pbk_box pbk_issues">
+                        <h3>Common issues</h3>
+                        <ul><li t-foreach="guide.issues" t-as="i" t-key="i_index" t-esc="i"/></ul>
+                    </section>
+
+                    <section t-if="related.length" class="pbk_related">
+                        <h3>Related guides</h3>
+                        <a t-foreach="related" t-as="r" t-key="r.id" href="#" class="pbk_chip"
+                           t-on-click.prevent="() => this.open(r.id)" t-esc="r.title"/>
+                    </section>
+
+                    <div class="pbk_pager">
+                        <a t-if="neighbours.prev" href="#" t-on-click.prevent="() => this.open(neighbours.prev.id)">‹ <t t-esc="neighbours.prev.title"/></a>
+                        <span t-else=""/>
+                        <a t-if="neighbours.next" href="#" t-on-click.prevent="() => this.open(neighbours.next.id)"><t t-esc="neighbours.next.title"/> ›</a>
+                    </div>
+                    <p class="pbk_foot">Guidance explains tasks. Your account determines the actions available.</p>
+                </article>
+            </main>
+        </div>
+    </t>
+</templates>

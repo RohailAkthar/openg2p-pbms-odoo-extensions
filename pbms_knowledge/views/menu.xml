@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!-- Knowledge library: client action rendered by static/src/js/knowledge.js.
+         Deep link a guide with  #action=pbms_knowledge.action_pbms_knowledge&guide=<guide-id> -->
+    <record id="action_pbms_knowledge" model="ir.actions.client">
+        <field name="name">Knowledge</field>
+        <field name="tag">pbms_knowledge</field>
+    </record>
+
+    <!-- Visible to every internal PBMS user; content explains tasks, permissions still decide actions. -->
+    <menuitem id="menu_pbms_knowledge"
+              name="Knowledge"
+              parent="g2p_pbms.menu_g2p_root"
+              action="action_pbms_knowledge"
+              sequence="6"
+              groups="base.group_user"/>
+</odoo>
