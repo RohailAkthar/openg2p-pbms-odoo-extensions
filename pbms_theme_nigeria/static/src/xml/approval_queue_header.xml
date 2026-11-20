@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <!-- Presentation only: adds the page header above the existing tabs/list views. -->
+    <t t-name="pbms_theme_nigeria.ApprovalsAction" t-inherit="g2p_pbms.ApprovalsAction" t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('g2p-tab-wrapper')]" position="before">
+            <div class="nsipa_page_header">
+                <div class="nsipa_page_header_text">
+                    <div class="nsipa_eyebrow">PROGRAMME OPERATIONS</div>
+                    <h1 class="nsipa_page_title">
+                        <t t-if="state.activeTab === 'queue'">Approval queue</t>
+                        <t t-else="">Approval history</t>
+                        <span class="nsipa_info_icon">i</span>
+                    </h1>
+                    <p class="nsipa_page_subtitle">
+                        <t t-if="state.activeTab === 'queue'">Approve enrollment and disbursement after required verification.</t>
+                        <t t-else="">Review the approvals and rejections you have actioned.</t>
+                    </p>
+                </div>
+                <button type="button" class="nsipa_refresh_btn" t-on-click="onNsipaRefresh">↻ Refresh</button>
+            </div>
+        </xpath>
+        <xpath expr="//View[@t-key=&quot;'queue'&quot;]" position="attributes">
+            <attribute name="t-key">'queue' + (state.nsipaRefresh || 0)</attribute>
+            <!-- Load the model's search view: without it the embedded list has no searchable fields. -->
+            <attribute name="searchViewId">false</attribute>
+        </xpath>
+        <xpath expr="//View[@t-key=&quot;'history'&quot;]" position="attributes">
+            <attribute name="t-key">'history' + (state.nsipaRefresh || 0)</attribute>
+            <!-- Load the model's search view: without it the embedded list has no searchable fields. -->
+            <attribute name="searchViewId">false</attribute>
+        </xpath>
+    </t>
+</templates>

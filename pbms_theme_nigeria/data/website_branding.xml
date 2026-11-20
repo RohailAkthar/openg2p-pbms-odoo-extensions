@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Sign-in page tab: the title comes from the website name ("Login | <name>") and the tab icon
+         from the website favicon; both default to Odoo's ("My Website", purple circle).
+         website.default_website is noupdate, so a <record> here would be ignored: call a function instead. -->
+    <function model="website" name="_pbms_apply_branding" />
+</odoo>

@@ -1,0 +1,913 @@
+// NSIPA UI/UX layout: sidebar + header + card styling. Presentation only.
+$nsipa-sidebar: #1f3d2e;
+$nsipa-active: #2f5641;
+$nsipa-gold: #c9a227;
+$nsipa-bg: #f4f6f3;
+$nsipa-border: #e5e9e4;
+$nsipa-primary: #2e6b4a;
+$nsipa-w: 270px;
+$nsipa-h: 80px;
+
+@media (min-width: 768px) {
+    .o_web_client {
+        background: $nsipa-bg;
+        padding-left: $nsipa-w;
+        padding-top: $nsipa-h;
+    }
+
+    // ---------- Sidebar ----------
+    .o_navbar {
+        position: static;
+    }
+    .o_main_navbar {
+        position: fixed !important;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        box-sizing: border-box;
+        width: $nsipa-w;
+        max-width: $nsipa-w;
+        height: 100% !important;
+        z-index: 1030;
+        flex-direction: column !important;
+        align-items: stretch !important;
+        padding: 28px 22px 20px;
+        background-color: $nsipa-sidebar !important;
+        border: 0 !important;
+        overflow-y: auto;
+
+        .o_navbar_apps_menu {
+            // Icon sits at the bottom-left, on the same row as the footer text.
+            position: absolute;
+            left: 22px;
+            bottom: 15px;
+            width: 44px;
+            .dropdown-toggle {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                justify-content: center;
+                width: 44px;
+                height: 44px;
+                padding: 0;
+                border-radius: 8px;
+                background: transparent !important;
+                color: #fff !important;
+                border: 0 !important;
+                box-shadow: none !important;
+                &:hover {
+                    background: rgba(255, 255, 255, 0.08) !important;
+                }
+                &::before {
+                    display: none !important;
+                }
+                &::after {
+                    display: none !important; // icon only
+                }
+            }
+        }
+        .nsipa_sidebar_footer {
+            order: 20;
+            margin-top: auto !important; // pin to bottom, beside the apps icon
+            padding-bottom: 4px;
+        }
+        .o_menu_brand {
+            padding: 0 !important;
+            gap: 16px !important;
+            outline: none !important;
+            box-shadow: none !important;
+            width: 100%;
+            min-width: 0;
+            flex-shrink: 0;
+            font-size: 0 !important; // hide app name, show fixed label below
+            &::before {
+                width: 72px;
+                height: 72px;
+                // Drop the design's logo at img/nsipa_sidebar_logo.png; falls back to the existing one.
+                background-image: url("/pbms_theme_nigeria/static/src/img/nsipa_sidebar_logo.png"),
+                    url("/pbms_theme_nigeria/static/src/img/nsipa_login_logo.png") !important;
+                background-color: #fff !important;
+                background-size: 80%;
+                border-radius: 12px;
+            }
+            &::after {
+                content: "Programme & Benefits";
+                font-size: 14px;
+                font-weight: 500;
+                line-height: 1.3;
+                color: #fff;
+                white-space: normal;
+            }
+        }
+        .nsipa_sidebar_caption {
+            margin: 40px 8px 12px 20px;
+            font-size: 11px;
+            letter-spacing: 0.14em;
+            color: rgba(255, 255, 255, 0.55);
+        }
+        .o_menu_sections {
+            flex-direction: column !important;
+            flex-grow: 0 !important;
+            width: auto !important;
+            background-image: none !important;
+            overflow: visible;
+
+            .o_nav_entry,
+            .dropdown-toggle {
+                display: flex;
+                align-items: center;
+                width: 100%;
+                height: 44px;
+                padding: 0 14px;
+                margin-bottom: 4px;
+                border-radius: 8px;
+                border-left: 3px solid transparent;
+                background-color: transparent !important;
+                color: #fff !important;
+                font-size: 14px;
+                &:hover {
+                    background-color: rgba(255, 255, 255, 0.08) !important;
+                }
+                &.nsipa_active,
+                &.show,
+                &[aria-expanded="true"] {
+                    background-color: $nsipa-active !important;
+                    border-left: 3px solid $nsipa-gold !important; // beats Odoo's .dropdown-toggle border rules
+                    font-weight: 600;
+                }
+            }
+        }
+        .nsipa_sidebar_footer {
+            margin-top: auto;
+            padding: 12px 8px 0 52px;
+            color: #fff;
+            .nsipa_sidebar_footer_sub {
+                font-size: 11px;
+                color: rgba(255, 255, 255, 0.55);
+            }
+        }
+    }
+
+    // ---------- Top header ----------
+    .o_main_navbar .o_menu_systray {
+        position: fixed;
+        top: 0;
+        left: $nsipa-w;
+        right: 0;
+        height: $nsipa-h;
+        z-index: 1020;
+        justify-content: flex-end;
+        align-items: center;
+        padding: 0 144px 0 24px;
+        gap: 6px;
+        background: #fff;
+        border-bottom: 1px solid $nsipa-border;
+        .o_user_menu .oe_topbar_name {
+            display: inline !important;
+            margin-left: 12px !important;
+            font-size: 14px;
+            color: #333;
+            mark {
+                display: none !important;
+            }
+        }
+        // Chat and activity icons are not part of the design.
+        .o-mail-DiscussSystray-class {
+            display: none !important;
+        }
+        // Sign out button replaces the user dropdown, so the avatar/name is display-only.
+        .o_user_menu {
+            pointer-events: none;
+        }
+        .o_user_menu .o_user_avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50% !important;
+            border: 1px solid $nsipa-border;
+        }
+        > div,
+        .dropdown-toggle {
+            color: #333 !important;
+        }
+    }
+
+    .o_main_navbar .nsipa_signout {
+        position: fixed;
+        top: ($nsipa-h - 44px) / 2;
+        right: 40px;
+        height: 44px;
+        padding: 0 18px;
+        align-items: center;
+        z-index: 1022;
+        background: #fff;
+        border: 1px solid $nsipa-border;
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: 600;
+        color: #1f3d2e !important;
+        text-decoration: none;
+        &:hover {
+            background: #f4f6f3;
+        }
+    }
+
+    .o_main_navbar .nsipa_header_title {
+        position: fixed;
+        top: 0;
+        left: $nsipa-w;
+        height: $nsipa-h;
+        align-items: center;
+        padding: 0 48px;
+        z-index: 1021;
+        font-size: 15px;
+        color: #1f3d2e;
+        pointer-events: none;
+    }
+
+    // ---------- Page header ----------
+    .o_control_panel {
+        background: transparent;
+        border: 0;
+        padding: 44px 40px 8px;
+        .o_breadcrumb .active,
+        .breadcrumb-item.active {
+            font-size: 34px;
+            font-weight: 700;
+            color: #1f3d2e;
+            position: relative;
+            &::before {
+                content: "PROGRAMME OPERATIONS";
+                position: absolute;
+                top: -20px;
+                left: 0;
+                white-space: nowrap;
+                font-size: 12px;
+                letter-spacing: 0.16em;
+                font-weight: 700;
+                color: #8a6d1a;
+            }
+        }
+        .btn-primary {
+            background-color: $nsipa-primary !important;
+            border-color: $nsipa-primary !important;
+            border-radius: 8px;
+        }
+        .btn-secondary {
+            background: #fff;
+            border: 1px solid $nsipa-border;
+            border-radius: 8px;
+        }
+    }
+
+    // ---------- Content card ----------
+    .o_content {
+        background: transparent;
+    }
+    .o_list_renderer {
+        background: #fff;
+        margin: 8px 40px 40px;
+        width: auto;
+        border: 1px solid $nsipa-border;
+        border-radius: 14px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        overflow: hidden;
+        thead th {
+            background: #f6f8f5;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-size: 12px;
+            color: #55615a;
+        }
+        tbody tr {
+            height: 64px;
+            &:hover {
+                background: #f7faf6;
+            }
+        }
+    }
+}
+
+// ---------- Approval queue page header ----------
+.nsipa_page_header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 36px 40px 8px;
+    .nsipa_eyebrow {
+        font-size: 12px;
+        letter-spacing: 0.16em;
+        font-weight: 700;
+        color: #8a6d1a;
+    }
+    .nsipa_page_title {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin: 8px 0 10px;
+        font-size: 40px;
+        font-weight: 700;
+        line-height: 1.1;
+        color: #1f3d2e;
+    }
+    .nsipa_info_icon {
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 26px;
+        height: 26px;
+        border: 2px solid #5b8a72;
+        border-radius: 50%;
+        font-size: 14px;
+        font-weight: 600;
+        color: #2e6b4a;
+        background: #e6f0ea;
+    }
+    .nsipa_page_subtitle {
+        margin: 0;
+        font-size: 15px;
+        color: #5f6b64;
+    }
+    .nsipa_refresh_btn {
+        height: 44px;
+        padding: 0 20px;
+        background: #fff;
+        border: 1px solid $nsipa-border;
+        border-radius: 8px;
+        font-weight: 600;
+        color: #1f3d2e;
+        &:hover {
+            background: #f4f6f3;
+        }
+    }
+}
+
+// The header replaces the embedded list's own breadcrumb title on this screen.
+.g2p-approvals-action {
+    .o_control_panel .o_breadcrumb,
+    .o_control_panel .breadcrumb {
+        display: none !important;
+    }
+    .o_control_panel {
+        padding-top: 8px;
+    }
+    .nsipa_page_header {
+        flex-shrink: 0;
+    }
+    // Keep both tabs (Approval Queue / Approval History) always visible.
+    .g2p-tab-headers {
+        display: block !important;
+        flex-shrink: 0;
+        padding: 8px 40px 0;
+        .nav-tabs {
+            display: flex !important;
+            border-bottom: 1px solid $nsipa-border;
+        }
+        .nav-item {
+            display: block !important;
+        }
+        .nav-link {
+            padding: 10px 20px;
+            border-radius: 8px 8px 0 0;
+            color: #5f6b64;
+            font-weight: 600;
+            &.active {
+                background: #fff;
+                color: #1f3d2e;
+                border-color: $nsipa-border $nsipa-border #fff;
+            }
+        }
+    }
+}
+
+// ---------- Approval queue: "N records" + search inside the card header ----------
+.g2p-approvals-action .g2p-tab-content {
+    .o_control_panel {
+        margin: 8px 40px 0;
+        padding: 22px 28px !important;
+        background: #fff;
+        border: 1px solid $nsipa-border;
+        border-bottom: 0;
+        border-radius: 14px 14px 0 0;
+        .o_control_panel_main {
+            flex-wrap: nowrap !important;
+            align-items: center !important;
+        }
+        .o_control_panel_breadcrumbs {
+            display: none !important;
+        }
+        // Left: record count (the pager, restyled to read "N records").
+        .o_control_panel_navigation {
+            order: 0 !important;
+            margin-left: 0 !important; // base module sets margin-left:auto, which centred the count
+            margin-right: auto !important;
+            flex-grow: 0 !important;
+            justify-content: flex-start !important;
+            // The pager itself moves to the card footer (see below).
+        }
+        // Right: search box (shown here; the base module hides it by default).
+        .o_control_panel_actions {
+            order: 1 !important;
+            width: auto !important;
+            margin-left: auto;
+            justify-content: flex-end !important;
+        }
+        .o_cp_searchview {
+            width: auto !important;
+            gap: 12px;
+            flex-wrap: nowrap;
+        }
+        .nsipa_search_btn {
+            display: inline-block;
+            margin-left: 0 !important;
+            border-radius: 12px !important;
+        }
+        // Filter/group-by dropdown arrow is not part of the design.
+        .o_cp_searchview .o_searchview_dropdown_toggler,
+        .o_cp_searchview .o-dropdown,
+        .o_cp_searchview > .dropdown {
+            display: none !important;
+        }
+        .o_searchview {
+            display: flex !important;
+            align-items: center;
+            border-radius: 8px !important;
+            flex: 0 0 300px !important;
+            width: 300px !important;
+            max-width: 300px;
+            min-height: 48px;
+            background: #fff;
+            height: 52px;
+            padding: 0 18px !important;
+            border: 1px solid #cdd9d4 !important;
+            border-radius: 12px !important;
+            .o_searchview_icon {
+                display: none !important;
+            }
+            .o_searchview_input {
+                font-size: 16px;
+                &::placeholder {
+                    color: #6f7a74;
+                }
+            }
+        }
+    }
+    // Table is the card's lower half.
+    .o_list_renderer {
+        margin: 0 40px 40px !important;
+        border-top: 0;
+        border-radius: 0 0 14px 14px;
+        box-shadow: none;
+    }
+}
+
+.nsipa_search_btn {
+    display: none; // only shown on the Approval queue screen
+    height: 52px;
+    padding: 0 26px;
+    background: #fff;
+    border: 1px solid #cdd9d4;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 700;
+    color: #1f3d2e;
+    &:hover {
+        background: #f4f6f3;
+    }
+}
+
+// Table header row colour (light grey-green, as in the design).
+.o_list_renderer {
+    --ListRenderer-thead-bg-color: #f6f8f5;
+    thead th {
+        background-color: #f6f8f5 !important;
+        color: #6b756f;
+        font-weight: 600;
+        border-bottom: 1px solid $nsipa-border;
+        // Show full header text (wrap instead of "# OF BE…" truncation).
+        white-space: normal !important;
+        overflow: visible !important;
+        text-overflow: clip !important;
+        vertical-align: middle;
+        .o_column_title,
+        div,
+        span {
+            white-space: normal !important;
+            overflow: visible !important;
+            text-overflow: clip !important;
+        }
+    }
+}
+
+.nsipa_zero_count {
+    display: none;
+}
+.g2p-approvals-action .g2p-tab-content .nsipa_zero_count {
+    display: block;
+    font-size: 14px;
+    color: #5f6b64;
+    strong {
+        font-size: 18px;
+        color: #1f3d2e;
+    }
+}
+
+// Approval queue/history tables: let columns size to their content so no header
+// (e.g. "# OF BENEFICIARIES") is clipped; Odoo's JS otherwise fixes narrow widths.
+.g2p-approvals-action .o_list_renderer .o_list_table {
+    // Equal-width columns: even spacing, and wide enough for every header.
+    table-layout: fixed !important;
+    width: 100% !important;
+    thead th {
+        width: auto !important;
+        min-width: 0 !important;
+        white-space: nowrap !important;
+        .o_column_title,
+        div,
+        span {
+            white-space: nowrap !important;
+        }
+    }
+}
+
+// Type pill (ENROLLMENT / DISBURSEMENT): soft green, rounded, as in the design.
+// Only Odoo's own badge element is restyled (it already renders as a pill), so the
+// text stays inside it; the wrapper is left untouched.
+.g2p-approvals-action .o_list_renderer .o_field_badge .badge {
+    padding: 6px 14px !important;
+    background-color: #eaf3ec !important;
+    color: #2e5a42 !important;
+    border-radius: 10px !important;
+    font-size: 14px !important;
+    font-weight: 400 !important;
+    letter-spacing: 0;
+}
+
+@media (min-width: 768px) {
+// ---------- Approval queue: one card = [count | search] / table / [pager] ----------
+// The list view root becomes a grid; Odoo's control-panel wrappers use display:contents so
+// the count, search box and pager can be placed directly in the grid.
+.g2p-approvals-action .g2p-tab-content {
+    overflow-y: auto !important;
+    padding-bottom: 40px;
+    > * {
+        display: grid !important;
+        grid-template-columns: 1fr auto;
+        align-content: start;
+        flex: 0 0 auto !important;
+        min-height: 0 !important;
+        margin: 8px 40px 0;
+        background: #fff;
+        border: 1px solid $nsipa-border;
+        border-radius: 14px;
+        overflow: hidden;
+    }
+    .o_control_panel,
+    .o_control_panel_main,
+    .o_control_panel_navigation,
+    .o_cp_pager {
+        display: contents !important;
+    }
+    .o_control_panel_breadcrumbs,
+    .o_cp_switch_buttons {
+        display: none !important;
+    }
+    .nsipa_zero_count {
+        grid-row: 1;
+        grid-column: 1;
+        align-self: center;
+        padding: 24px 28px;
+    }
+    .o_control_panel_actions {
+        grid-row: 1;
+        grid-column: 2;
+        align-self: center;
+        padding: 22px 28px;
+    }
+    .o_content {
+        grid-row: 2;
+        grid-column: 1 / -1;
+        margin: 0 !important;
+        overflow: visible !important;
+        flex: none !important;
+    }
+    .o_list_renderer {
+        margin: 0 !important;
+        border: 0 !important;
+        border-top: 1px solid $nsipa-border !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+    }
+    .o_pager {
+        grid-row: 3;
+        grid-column: 1 / -1;
+        display: flex !important;
+        align-items: center;
+        justify-content: space-between;
+        box-sizing: border-box;
+        min-height: 76px;
+        height: auto !important;
+        padding: 14px 28px;
+        border-top: 1px solid $nsipa-border;
+        .o_pager_counter {
+            display: block !important;
+            font-size: 0; // hides Odoo's "/" separator
+            line-height: 1;
+            .o_pager_value,
+            .o_pager_limit {
+                display: inline !important;
+                font-size: 14px;
+                line-height: 1;
+                color: #5f6b64;
+                border: 0;
+            }
+            .o_pager_limit::before {
+                content: "\00a0of\00a0";
+            }
+        }
+        .btn-group {
+            display: flex !important;
+            align-items: center;
+            gap: 12px;
+            height: auto !important;
+        }
+        .o_pager_previous,
+        .o_pager_next {
+            display: inline-flex !important;
+            align-items: center;
+            justify-content: center;
+            height: 48px !important;
+            min-height: 0 !important;
+            margin: 0 !important;
+            padding: 0 22px !important;
+            background: #fff;
+            border: 1px solid $nsipa-border !important;
+            border-radius: 12px !important;
+            color: #1f3d2e;
+            font-weight: 700;
+            font-size: 15px;
+            line-height: 1;
+            i {
+                display: none !important;
+            }
+            &:disabled {
+                color: #9aa59f;
+                opacity: 1;
+            }
+        }
+        .o_pager_previous::after {
+            content: "Previous";
+        }
+        .o_pager_next::after {
+            content: "Next";
+        }
+    }
+}
+}
+
+// Approval queue: give the Program column room and let long names wrap instead of "…".
+.g2p-approvals-action .o_list_renderer .o_list_table {
+    thead th[data-name="program_mnemonic"] {
+        width: 24% !important;
+    }
+    tbody td[name="program_mnemonic"],
+    tbody td[name="program_id"] {
+        white-space: normal !important;
+        text-overflow: clip !important;
+        overflow: visible !important;
+        word-break: break-word;
+    }
+}
+
+// Sidebar "Master Data" dropdown: modern floating card. Presentation only.
+.o_main_navbar .o_menu_sections .dropdown-menu {
+    min-width: 220px;
+    margin-top: 6px !important;
+    padding: 8px;
+    background: #fff;
+    border: 1px solid #e5e9e4;
+    border-radius: 14px;
+    box-shadow: 0 12px 32px rgba(31, 61, 46, 0.18);
+    .dropdown-item {
+        display: flex;
+        align-items: center;
+        height: 40px;
+        padding: 0 14px;
+        border-radius: 10px;
+        color: #1f3d2e !important;
+        font-size: 14px;
+        font-weight: 500;
+        &:hover,
+        &:focus {
+            background: #eaf3ec !important;
+            color: #1f3d2e !important;
+        }
+        &.active,
+        &:active {
+            background: #2e6b4a !important;
+            color: #fff !important;
+            font-weight: 600;
+        }
+    }
+}
+
+// While a sidebar dropdown (Master Data) is open, only that item looks selected: the current
+// page's item drops its highlight until the dropdown closes.
+.o_main_navbar .o_menu_sections:has(.dropdown-toggle.show, .dropdown-toggle[aria-expanded="true"]) {
+    .o_nav_entry.nsipa_active,
+    .dropdown-toggle.nsipa_active:not(.show):not([aria-expanded="true"]) {
+        background-color: transparent !important;
+        border-left: 3px solid transparent !important;
+        font-weight: 400;
+    }
+}
+
+// Approval queue / history tables: every cell (text, badges, numbers, "View Details") is vertically
+// centred in its row, and Odoo's empty striped filler rows are hidden when the table has data.
+.g2p-approvals-action .o_list_renderer .o_list_table {
+    thead th {
+        vertical-align: middle !important;
+    }
+    tbody tr.o_data_row {
+        height: 68px;
+        > td {
+            padding-top: 0 !important;
+            padding-bottom: 0 !important;
+            vertical-align: middle !important;
+            line-height: 1.3;
+        }
+    }
+    // Filler rows are hidden only when there is data; an empty queue keeps its blank rows so the card keeps its height.
+    &:has(tbody .o_data_row) tbody > tr:not(.o_data_row):not(.o_group_header) {
+        display: none;
+    }
+    // Badges (e.g. ENROLLMENT) and the "View Details" button sit on the text's centre line.
+    tbody td .badge,
+    tbody td .o_field_badge,
+    tbody td .o_badge_text {
+        display: inline-flex;
+        align-items: center;
+        vertical-align: middle;
+    }
+    tbody td.o_list_button,
+    tbody td.o_list_button > button {
+        vertical-align: middle !important;
+        display: table-cell;
+    }
+    tbody td.o_list_button > button {
+        display: inline-flex;
+        align-items: center;
+        margin: 0;
+    }
+}
+
+// Floating Help button (bottom right) and its panel.
+.nsipa_help {
+    .nsipa_help_btn {
+        position: fixed;
+        right: 24px;
+        bottom: 24px;
+        z-index: 1040;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        height: 48px;
+        padding: 0 20px;
+        background: #2e6b4a;
+        border: 1px solid rgba(255, 255, 255, 0.7);
+        border-radius: 24px;
+        color: #fff;
+        font-size: 15px;
+        font-weight: 700;
+        box-shadow: 0 6px 18px rgba(31, 61, 46, 0.35);
+        &:hover {
+            background: #1f3d2e;
+        }
+        .nsipa_help_i {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 18px;
+            height: 18px;
+            border: 1.5px solid #fff;
+            border-radius: 50%;
+            font-size: 11px;
+            font-weight: 700;
+        }
+        &.nsipa_help_back .nsipa_help_i {
+            border: 0;
+            width: 20px;
+            font-size: 20px;
+            line-height: 1;
+        }
+    }
+    .nsipa_help_panel {
+        position: fixed;
+        right: 24px;
+        bottom: 84px;
+        z-index: 1041;
+        display: flex;
+        flex-direction: column;
+        width: 420px;
+        max-width: calc(100vw - 48px);
+        max-height: calc(100vh - 120px);
+        background: #fff;
+        border: 1px solid #e5e9e4;
+        border-radius: 22px;
+        box-shadow: 0 18px 48px rgba(31, 61, 46, 0.28);
+        overflow: hidden;
+        color: #3a4a41;
+    }
+    .nsipa_help_head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 20px 24px;
+        border-bottom: 1px solid #e5e9e4;
+        h2 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 700;
+            color: #1f3d2e;
+        }
+    }
+    .nsipa_help_close {
+        height: 40px;
+        padding: 0 18px;
+        background: #2e6b4a;
+        border: 0;
+        border-radius: 10px;
+        color: #fff;
+        font-weight: 700;
+    }
+    .nsipa_help_body {
+        padding: 18px 24px 22px;
+        overflow-y: auto;
+        font-size: 14px;
+        line-height: 1.55;
+        h3 {
+            margin: 18px 0 8px;
+            font-size: 22px;
+            font-weight: 700;
+            color: #1f3d2e;
+        }
+        h4 {
+            margin: 18px 0 6px;
+            font-size: 16px;
+            font-weight: 700;
+            color: #1f3d2e;
+        }
+        p {
+            margin: 0 0 8px;
+        }
+        ol {
+            padding-left: 22px;
+            margin: 8px 0;
+        }
+    }
+    .nsipa_help_auto {
+        padding: 12px 16px;
+        background: #eaf3ec;
+        border-left: 4px solid #2e6b4a;
+        color: #3a4a41;
+    }
+    .nsipa_help_version {
+        margin-top: 18px;
+        font-size: 13px;
+        color: #1f3d2e;
+    }
+    .nsipa_help_browse {
+        margin-top: 14px;
+        padding-top: 14px;
+        border-top: 1px solid #e5e9e4;
+        .nsipa_help_browse_toggle {
+            padding: 0;
+            background: none;
+            border: 0;
+            font-size: 16px;
+            font-weight: 700;
+            color: #1f5c3b;
+        }
+        ul {
+            margin: 8px 0 4px;
+            padding-left: 28px;
+        }
+        a {
+            color: #1f5c3b;
+            text-decoration: underline;
+        }
+        .nsipa_help_link {
+            display: block;
+            margin-top: 10px;
+            font-size: 16px;
+        }
+    }
+    .nsipa_help_foot {
+        margin-top: 18px;
+        padding-top: 12px;
+        border-top: 1px solid #e5e9e4;
+        font-size: 12.5px;
+        color: #6f7a74;
+    }
+}

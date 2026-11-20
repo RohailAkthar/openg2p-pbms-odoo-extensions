@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="nigeria_web_layout" name="Nigeria Web Layout" inherit_id="pbms_theme_extension.custom_web_layout" priority="100">
+        <xpath expr="//link[@rel='shortcut icon']" position="replace">
+            <link
+                type="image/png"
+                rel="shortcut icon"
+                t-att-href="x_icon or '/pbms_theme_nigeria/static/src/img/favicon.png'"
+            />
+        </xpath>
+    </template>
+</odoo>

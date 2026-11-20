@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Presentation only: one search-bar entry per list that matches every column the list shows.
+         The search-only fields are defined in models/nsipa_search.py. -->
+
+    <record id="view_g2p_benefit_codes_search_nsipa" model="ir.ui.view">
+        <field name="name">g2p.benefit.codes.search.nsipa</field>
+        <field name="model">g2p.benefit.codes</field>
+        <field name="arch" type="xml">
+            <search string="Benefit codes">
+                <field name="nsipa_search" string="Benefit codes"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_g2p_approval_queue_search_nsipa" model="ir.ui.view">
+        <field name="name">g2p.workflow.pending.stage.search.nsipa</field>
+        <field name="model">g2p.workflow.pending.stage</field>
+        <field name="arch" type="xml">
+            <search string="Approval queue">
+                <field name="nsipa_search" string="Approval queue"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_g2p_approval_history_search_nsipa" model="ir.ui.view">
+        <field name="name">g2p.workflow.stage.history.search.nsipa</field>
+        <field name="model">g2p.workflow.stage.history</field>
+        <field name="arch" type="xml">
+            <search string="Approval history">
+                <field name="nsipa_search" string="Approval history"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- Sponsor banks / warehouses: both columns are plain text, so a combined filter is enough. -->
+    <record id="view_g2p_warehouse_search_nsipa" model="ir.ui.view">
+        <field name="name">g2p.warehouse.search.nsipa</field>
+        <field name="model">g2p.warehouse</field>
+        <field name="arch" type="xml">
+            <search string="Sponsor banks">
+                <field name="nsipa_search" string="Sponsor banks"/>
+            </search>
+        </field>
+    </record>
+</odoo>

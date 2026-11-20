@@ -1,0 +1,1091 @@
+// "New programme" popup. Presentation only.
+.modal-content:has(.nsipa_prog_popup) {
+    border: 0;
+    border-radius: 24px;
+    padding: 18px 28px 22px;
+    .modal-header {
+        border: 0;
+        padding: 8px 0 16px;
+        .modal-title {
+            font-size: 30px;
+            font-weight: 700;
+            color: #1f3d2e;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            &::after {
+                content: "i";
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                width: 24px;
+                height: 24px;
+                border: 2px solid #5b8a72;
+                border-radius: 50%;
+                background: #e6f0ea;
+                color: #2e6b4a;
+                font-size: 13px;
+                font-weight: 600;
+            }
+        }
+        .btn-close {
+            width: 38px;
+            height: 38px;
+            margin: 0;
+            border: 1px solid #e5e9e4;
+            border-radius: 12px;
+            background-size: 14px;
+            opacity: 0.8;
+        }
+    }
+    .modal-body {
+        padding: 0;
+    }
+    .modal-footer {
+        border: 0;
+        padding: 18px 0 0;
+        gap: 12px;
+        justify-content: flex-end;
+        .nsipa_cancel_btn,
+        .nsipa_save_btn {
+            height: 40px;
+            padding: 0 20px;
+            border-radius: 12px !important; // beats the theme's .btn-primary radius
+            font-weight: 700;
+            font-size: 14px;
+            margin: 0;
+        }
+        .nsipa_cancel_btn {
+            background: #fff;
+            border: 1px solid #e5e9e4;
+            color: #1f3d2e;
+        }
+        .nsipa_save_btn {
+            background: #2e6b4a !important;
+            border: 1px solid #2e6b4a !important;
+            color: #fff;
+        }
+    }
+}
+
+.nsipa_prog_popup {
+    .o_form_sheet_bg,
+    .o_form_sheet {
+        padding: 0 !important;
+        background: transparent;
+        border: 0;
+        box-shadow: none;
+    }
+    .nsipa_prog_grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px 32px;
+        align-items: start;
+    }
+    .nsipa_prog_field {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        > label {
+            margin: 0;
+            font-size: 14px;
+            font-weight: 700;
+            color: #1f3d2e;
+        }
+        .o_field_widget {
+            width: 100%;
+        }
+        .o_input,
+        input.o_input,
+        select.o_input {
+            height: 40px;
+            padding: 0 14px;
+            border: 1px solid #cdd9d4;
+            border-radius: 12px;
+            background-color: #fff;
+            font-size: 14px;
+            font-weight: 500;
+            color: #1f3d2e;
+            &:focus {
+                border-color: #2e6b4a;
+                box-shadow: none;
+            }
+        }
+        .o_field_boolean .o-checkbox,
+        .o_field_boolean .form-check {
+            padding: 0;
+        }
+        .o_field_boolean input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            margin: 0;
+            accent-color: #2e6b4a;
+            cursor: pointer;
+        }
+        .o_field_boolean {
+            width: auto;
+        }
+        .nsipa_hint {
+            font-size: 12.5px;
+            line-height: 1.35;
+            color: #6f7a74;
+        }
+    }
+}
+
+// Tabs (benefit codes, rules, workflows) sit under the fields, inside the scrolling popup.
+.nsipa_prog_popup .o_notebook {
+    margin-top: 22px;
+    font-size: 13px;
+    .o_notebook_headers {
+        margin: 0;
+    }
+    .nav-tabs {
+        gap: 4px;
+        border-bottom: 1px solid #e5e9e4 !important; // theme draws a green line here; keep it neutral so the active tab stands out
+        flex-wrap: nowrap;
+        overflow-x: auto;
+    }
+    .nav-link {
+        padding: 10px 16px;
+        margin: 0 0 -1px;
+        background: transparent !important;
+        border: 0;
+        border-bottom: 2px solid transparent;
+        border-radius: 0;
+        color: #7a857f !important;
+        font-size: 14px;
+        font-weight: 500;
+        white-space: nowrap;
+        &:hover {
+            color: #1f3d2e;
+        }
+        &.active,
+        &.active:hover,
+        &.active:focus {
+            color: #1f5c3b !important;
+            font-weight: 700;
+            background: #eaf3ec !important;
+            border: 0 !important;
+            border-radius: 8px 8px 0 0 !important;
+            border-bottom: 3px solid #2e6b4a !important;
+            box-shadow: none !important;
+            outline: 0;
+        }
+        &:focus {
+            box-shadow: none;
+            outline: 0;
+        }
+    }
+    .tab-content {
+        padding: 16px 0 0;
+        border: 0;
+    }
+    // Tables inside the tabs: full-width bordered card, compact rows, one-line headers.
+    .o_list_renderer,
+    .o_field_x2many_list .o_list_renderer {
+        margin: 0 !important;
+        width: 100% !important;
+        border: 1px solid #e5e9e4;
+        border-radius: 12px;
+        box-shadow: none;
+        overflow: hidden;
+        .o_list_table {
+            table-layout: auto !important;
+            width: 100% !important;
+            thead th {
+                height: 48px;
+                padding: 4px 16px !important;
+                background: #f6f8f5 !important;
+                color: #55615a;
+                font-size: 11.5px;
+                letter-spacing: 0.06em;
+                white-space: normal !important;
+                line-height: 1.25;
+                text-align: left;
+                overflow: visible !important;
+                .o_column_title,
+                div,
+                span {
+                    white-space: normal !important;
+                    overflow: visible !important;
+                    text-overflow: clip !important;
+                }
+            }
+            // Sorted / hovered header cells keep the same flat background as the others.
+            thead th,
+            thead th:hover,
+            thead th:focus,
+            thead th[class],
+            thead th[class]:hover {
+                background: #f6f8f5 !important;
+                background-color: #f6f8f5 !important;
+                box-shadow: none !important;
+            }
+            // Sort arrows stay hidden until the user clicks a header (see list_sort_arrow.js).
+            // "Rule number" / "Stage number" first column: full header text, no clipping.
+            thead th[data-name*="number"],
+            thead th[data-name="sequence"],
+            thead th:first-child:not(.o_list_record_selector) {
+                // !important: Odoo sets an inline narrow width on this column.
+                min-width: 130px !important;
+                width: 130px !important;
+                max-width: none !important;
+                overflow: visible !important;
+                white-space: nowrap !important;
+                .o_column_title,
+                div,
+                span {
+                    white-space: nowrap !important;
+                }
+
+            }
+            tbody td.o_handle_cell,
+            tbody td[name*="number"],
+            tbody td[name="sequence"] {
+                width: 130px !important;
+                min-width: 130px !important;
+            }
+            // Numeric columns: Odoo right-aligns them and reserves room for the sort arrow, which
+            // left a gap before "RULE NUMBER" / "STAGE NUMBER". Align every header and cell left,
+            // with the same padding as the other columns.
+            thead th,
+            thead th.o_list_number_th,
+            tbody td.o_list_number,
+            tbody td.o_list_number_th {
+                text-align: left !important;
+            }
+            thead th > div,
+            thead th > span,
+            thead th .d-flex {
+                display: flex !important;
+                flex-direction: row !important;
+                justify-content: flex-start !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                gap: 0 !important;
+            }
+            thead th::before,
+            thead th::after {
+                content: none !important;
+            }
+            tbody tr {
+                height: 44px;
+            }
+            tbody td {
+                padding: 0 16px !important;
+                vertical-align: middle;
+                font-size: 14px;
+            }
+            .o_field_x2many_list_row_add a,
+            .o_field_x2many_list_row_add {
+                color: #2e6b4a;
+                font-weight: 600;
+            }
+        }
+    }
+}
+.modal-content:has(.nsipa_prog_popup) .modal-body {
+    overflow-y: auto;
+    padding-right: 14px; // keeps right-column inputs clear of the scrollbar
+}
+
+.nsipa_prog_popup .o_notebook .o_list_renderer:not([data-nsipa-sorted]) thead th {
+    i,
+    .o_list_sort_indicator,
+    .fa-angle-up,
+    .fa-angle-down {
+        display: none !important;
+    }
+}
+
+// Dialogs opened from inside the "New programme" popup (e.g. "Create Program Benefit Codes",
+// eligibility rule, workflow stage): same modern look as the popup. Presentation only.
+.o_dialog:has(.nsipa_prog_popup) ~ .o_dialog .modal-content,
+body:has(.nsipa_prog_detail) .o_dialog .modal-content {
+    border: 0;
+    border-radius: 20px;
+    padding: 18px 28px 22px;
+    box-shadow: 0 20px 50px rgba(31, 61, 46, 0.25);
+    .modal-header {
+        border: 0;
+        padding: 8px 0 16px;
+        .modal-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #1f3d2e;
+        }
+        .btn-close {
+            width: 36px;
+            height: 36px;
+            margin: 0;
+            border: 1px solid #e5e9e4;
+            border-radius: 10px;
+            background-size: 12px;
+            opacity: 0.8;
+        }
+    }
+    .modal-body {
+        padding: 0 0 4px;
+        .o_form_sheet_bg,
+        .o_form_sheet {
+            padding: 0 !important;
+            background: transparent;
+            border: 0;
+            box-shadow: none;
+        }
+        .o_form_label,
+        label {
+            font-size: 14px;
+            font-weight: 700;
+            color: #1f3d2e;
+        }
+        .o_inner_group .o_wrap_label,
+        .o_inner_group td {
+            padding-top: 8px;
+            padding-bottom: 8px;
+        }
+        .o_input,
+        input.o_input,
+        select.o_input {
+            height: 40px;
+            padding: 0 14px;
+            border: 1px solid #cdd9d4;
+            border-radius: 12px;
+            background-color: #fff;
+            font-size: 14px;
+            font-weight: 500;
+            color: #1f3d2e;
+            &:focus {
+                border-color: #2e6b4a;
+                box-shadow: none;
+            }
+        }
+        .o_field_boolean input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            accent-color: #2e6b4a;
+        }
+    }
+    .modal-footer {
+        border: 0;
+        padding: 16px 0 0;
+        gap: 12px;
+        justify-content: flex-start;
+        flex-direction: row-reverse; // right-aligned, with "Discard" before "Save & Close"
+        .btn {
+            height: 40px;
+            margin: 0;
+            padding: 0 20px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 700;
+        }
+        .btn-primary {
+            background: #2e6b4a !important;
+            border: 1px solid #2e6b4a !important;
+            color: #fff;
+        }
+        .btn-secondary,
+        .btn-light,
+        .btn:not(.btn-primary) {
+            background: #fff;
+            border: 1px solid #e5e9e4;
+            color: #1f3d2e;
+        }
+    }
+}
+
+// Many2one dropdown arrow (e.g. "Benefit Code"): centred chevron, matching the select boxes.
+.o_dialog:has(.nsipa_prog_popup) ~ .o_dialog .modal-body .o_field_many2one,
+body:has(.nsipa_prog_detail) .o_dialog .modal-body .o_field_many2one {
+    .o_input_dropdown {
+        position: relative;
+        display: block;
+        input.o_input {
+            padding-right: 40px;
+        }
+    }
+    .o_dropdown_button {
+        position: absolute !important;
+        top: 50% !important;
+        right: 14px !important;
+        left: auto !important;
+        bottom: auto !important;
+        width: 16px;
+        height: 16px;
+        margin: 0 !important;
+        padding: 0;
+        transform: translateY(-50%);
+        border: 0 !important;
+        opacity: 1 !important;
+        cursor: pointer;
+        background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%231f3d2e' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 6l5 5 5-5'/%3E%3C/svg%3E") no-repeat center / 14px;
+        &::before,
+        &::after {
+            display: none !important;
+        }
+    }
+}
+
+// Labels sit above their field (not beside it) in dialogs opened from the "New programme" popup.
+.o_dialog:has(.nsipa_prog_popup) ~ .o_dialog .modal-body,
+body:has(.nsipa_prog_detail) .o_dialog .modal-body {
+    .o_group .o_inner_group,
+    .o_inner_group {
+        display: grid !important;
+        grid-template-columns: 1fr !important;
+        row-gap: 14px;
+    }
+    .o_inner_group > .o_wrap_field,
+    .o_inner_group .o_wrap_field {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: stretch;
+        gap: 6px;
+        width: 100%;
+    }
+    .o_wrap_label,
+    .o_cell.o_wrap_label,
+    .o_inner_group .o_td_label {
+        width: auto !important;
+        max-width: none !important;
+        padding: 0 !important;
+        text-align: left;
+    }
+    .o_cell,
+    .o_inner_group .o_cell,
+    .o_wrap_field > .o_cell {
+        width: 100% !important;
+        max-width: none !important;
+        padding: 0 !important;
+        flex: none;
+    }
+    .o_field_widget {
+        width: 100%;
+    }
+}
+
+// Dropdown (autocomplete) options for many2one fields: rounded card, roomy rows, soft highlight.
+body:has(.nsipa_prog_popup) .o-autocomplete--dropdown-menu,
+body:has(.nsipa_prog_popup) .o-autocomplete--dropdown-menu.dropdown-menu {
+    margin-top: 6px;
+    padding: 6px;
+    border: 1px solid #e5e9e4;
+    border-radius: 14px;
+    background: #fff;
+    box-shadow: 0 12px 32px rgba(31, 61, 46, 0.18);
+    max-height: 280px;
+    overflow-y: auto;
+    z-index: 2000;
+    .o-autocomplete--dropdown-item,
+    .dropdown-item {
+        padding: 10px 14px;
+        border-radius: 10px;
+        font-size: 14px;
+        font-weight: 500;
+        color: #1f3d2e;
+        white-space: normal;
+        &:hover,
+        &:focus,
+        &.ui-state-active,
+        &.focus,
+        &.active {
+            background: #eaf3ec !important;
+            color: #1f5c3b !important;
+        }
+        &.o_m2o_dropdown_option,
+        &.o_m2o_start_typing {
+            color: #2e6b4a;
+            font-weight: 600;
+        }
+    }
+    .o_m2o_dropdown_option a,
+    .o_m2o_dropdown_option span {
+        color: #2e6b4a;
+    }
+    .dropdown-divider,
+    li.dropdown-divider {
+        margin: 6px 4px;
+        border-color: #eef1ee;
+    }
+}
+
+// Narrower inner dialogs so inputs and dropdowns are not stretched across the screen.
+.o_dialog:has(.nsipa_prog_popup) ~ .o_dialog .modal-dialog,
+body:has(.nsipa_prog_detail) .o_dialog .modal-dialog {
+    max-width: 560px !important;
+}
+
+// Read-only (computed) fields, e.g. "Measurement Unit", get a soft box so the field is visible.
+.o_dialog:has(.nsipa_prog_popup) ~ .o_dialog .modal-body .o_field_widget.o_readonly_modifier,
+body:has(.nsipa_prog_detail) .o_dialog .modal-body .o_field_widget.o_readonly_modifier {
+    display: flex;
+    align-items: center;
+    min-height: 40px;
+    padding: 0 14px;
+    border: 1px solid #e5e9e4;
+    border-radius: 12px;
+    background: #f6f8f5;
+    font-size: 14px;
+    font-weight: 500;
+    color: #55615a;
+}
+
+// Dialogs with two columns of fields (e.g. "Create Eligibility Rules": fields + SQL query)
+// need more room than the single-column Benefit Code dialog.
+.o_dialog:has(.nsipa_prog_popup) ~ .o_dialog .modal-dialog:has(.o_group_col_6 ~ .o_group_col_6),
+.o_dialog:has(.nsipa_prog_popup) ~ .o_dialog .modal-dialog:has(.o_field_domain),
+.o_dialog:has(.nsipa_prog_popup) ~ .o_dialog .modal-dialog:has(.o_field_code),
+body:has(.nsipa_prog_detail) .o_dialog .modal-dialog:has(.o_group_col_6 ~ .o_group_col_6),
+body:has(.nsipa_prog_detail) .o_dialog .modal-dialog:has(.o_field_domain),
+body:has(.nsipa_prog_detail) .o_dialog .modal-dialog:has(.o_field_code) {
+    max-width: 960px !important;
+    width: 92vw;
+}
+.o_dialog:has(.nsipa_prog_popup) ~ .o_dialog .modal-body,
+body:has(.nsipa_prog_detail) .o_dialog .modal-body {
+    .o_group_col_6 {
+        padding-right: 24px;
+    }
+    .o_group {
+        column-gap: 32px;
+    }
+    // SQL query / long read-only text: grows with its content, no clipped lines.
+    .o_field_widget.o_readonly_modifier {
+        height: auto;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        white-space: pre-wrap;
+        word-break: break-word;
+        align-items: flex-start;
+    }
+}
+
+// Rule dialogs (eligibility / entitlement) have the Domain and SQL Query fields: make them wide.
+// Matched on the field names, so the narrow Benefit Code dialog is unaffected.
+.o_dialog:has(.nsipa_prog_popup) ~ .o_dialog .modal-dialog:has([name="pbms_domain"]),
+.o_dialog:has(.nsipa_prog_popup) ~ .o_dialog .modal-dialog:has([name="sql_query"]),
+body:has(.nsipa_prog_detail) .o_dialog .modal-dialog:has([name="pbms_domain"]),
+body:has(.nsipa_prog_detail) .o_dialog .modal-dialog:has([name="sql_query"]) {
+    max-width: 1040px !important;
+    width: 92vw !important;
+}
+.o_dialog:has(.nsipa_prog_popup) ~ .o_dialog .modal-dialog:has([name="pbms_domain"]) .modal-body,
+body:has(.nsipa_prog_detail) .o_dialog .modal-dialog:has([name="pbms_domain"]) .modal-body {
+    .o_group {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr;
+        column-gap: 40px;
+        align-items: start;
+    }
+    .o_group > .o_group_col_6,
+    .o_group > div {
+        width: 100% !important;
+        max-width: none !important;
+        padding: 0 !important;
+    }
+    .o_field_domain,
+    .o_domain_selector {
+        width: 100%;
+    }
+}
+
+// Entitlement rule dialog (has Quantity + Benefit Code; the Eligibility one does not): same wide, two-column layout as the Eligibility dialog.
+.o_dialog:has(.nsipa_prog_popup) ~ .o_dialog .modal-dialog:has([name="sql_query"]):has([name="quantity"]):has([name="benefit_code_id"]),
+body:has(.nsipa_prog_detail) .o_dialog .modal-dialog:has([name="sql_query"]):has([name="quantity"]):has([name="benefit_code_id"]) {
+    max-width: 1040px !important;
+    width: 92vw !important;
+    .modal-body {
+        .o_form_sheet + .o_form_sheet {
+            margin-top: 6px;
+        }
+        // Same two-column layout as the Eligibility dialog: fields left, SQL query right.
+        .o_group {
+            display: grid !important;
+            grid-template-columns: 1fr 1fr;
+            column-gap: 40px;
+            align-items: start;
+        }
+        .o_group > div,
+        .o_group .o_inner_group {
+            width: 100% !important;
+            max-width: none !important;
+        }
+        // Quantity / Multiplier / Measurement Unit boxes match the other inputs.
+        .o_field_widget[name="multiplier"] select,
+        .o_field_widget[name="multiplier"] input {
+            height: 40px;
+            border: 1px solid #cdd9d4;
+            border-radius: 12px;
+            padding: 0 14px;
+            font-size: 14px;
+        }
+    }
+}
+
+// "New Enrolment Cycle" popup: single narrow column, read-only values shown as soft boxes.
+.modal-dialog:has(.nsipa_cycle_popup) {
+    max-width: 520px;
+}
+.nsipa_cycle_popup {
+    .nsipa_prog_grid {
+        grid-template-columns: 1fr;
+    }
+    .nsipa_prog_field .o_readonly_modifier {
+        display: flex;
+        align-items: center;
+        height: 40px;
+        min-height: 40px;
+        padding: 0 14px;
+        border: 1px solid #e5e9e4;
+        border-radius: 12px;
+        background: #f6f8f5;
+        color: #1f3d2e;
+        font-size: 14px;
+        font-weight: 500;
+        justify-content: flex-start;
+        text-align: left;
+        // Read-only many2one (Programme) renders as a link inside nested wrappers: flatten them
+        // so the value is left-aligned, vertically centred and uses the same colour as the others.
+        > *,
+        .o_field_many2one_selection,
+        .o_input_dropdown,
+        .o_many2one {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            height: auto;
+            min-height: 0;
+            margin: 0;
+            padding: 0;
+            border: 0;
+            line-height: 1.4;
+        }
+        a,
+        a:hover,
+        span {
+            display: inline;
+            margin: 0;
+            padding: 0;
+            color: #1f3d2e !important;
+            font-weight: 500;
+            text-decoration: none;
+            line-height: 1.4;
+        }
+    }
+}
+
+// Read-only values (incl. the Programme many2one link): centre single-line text by giving every
+// wrapper inside the 40px box zero vertical spacing and a 38px line-height (40px minus borders).
+.nsipa_cycle_popup .nsipa_prog_field .o_readonly_modifier {
+    line-height: 38px;
+    * {
+        box-sizing: border-box;
+        height: auto !important;
+        min-height: 0 !important;
+        margin: 0 !important;
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+        border: 0 !important;
+        line-height: 38px !important;
+        vertical-align: middle;
+        text-align: left;
+    }
+}
+
+// "New benefit code" popup: narrower, description spans both columns.
+.modal-dialog:has(.nsipa_benefit_popup) {
+    max-width: 680px;
+}
+.nsipa_benefit_popup .nsipa_prog_field.nsipa_span2 {
+    grid-column: 1 / -1;
+}
+
+// Measurement Unit (benefit unit widget) renders a bare <select> for cash benefit types:
+// give it the same look as the other popup inputs, with a chevron.
+.nsipa_prog_popup .nsipa_prog_field select:not(.o_input) {
+    display: block;
+    width: 100%;
+    height: 40px;
+    padding: 0 38px 0 14px;
+    border: 1px solid #cdd9d4;
+    border-radius: 12px;
+    background-color: #fff;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%231f3d2e' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    appearance: none;
+    -webkit-appearance: none;
+    font-size: 14px;
+    font-weight: 500;
+    color: #1f3d2e;
+    cursor: pointer;
+    &:focus {
+        border-color: #2e6b4a;
+        box-shadow: none;
+        outline: 0;
+    }
+}
+
+// Multi-line fields (e.g. Benefit Description): equal vertical padding so one line of text sits in
+// the middle of the box; the box still grows with longer text.
+.nsipa_prog_popup .nsipa_prog_field textarea,
+.nsipa_prog_popup .nsipa_prog_field textarea.o_input {
+    min-height: 40px !important;
+    height: auto;
+    padding: 9px 14px !important;
+    line-height: 22px;
+    resize: none;
+    overflow: hidden;
+}
+
+// "Sponsor Bank" popup: wider because it holds the Program Benefit Code tab.
+.modal-dialog:has(.nsipa_bank_popup) {
+    max-width: 860px;
+}
+
+// Many2one dropdown (e.g. Benefit Code in "Create Program Benefit Codes"): not a narrow shrunk card,
+// rows left-aligned (incl. "Search More…"), one clear line per option.
+body:has(.nsipa_prog_popup) .o-autocomplete--dropdown-menu,
+body:has(.nsipa_prog_popup) .o-autocomplete--dropdown-menu.dropdown-menu {
+    min-width: 360px;
+    width: max-content;
+    max-width: 560px;
+    text-align: left;
+    .o-autocomplete--dropdown-item,
+    .dropdown-item,
+    li {
+        display: block;
+        width: 100%;
+        text-align: left;
+        > a,
+        > span {
+            display: block;
+            text-align: left;
+            text-decoration: none;
+            color: inherit;
+        }
+    }
+    .o_m2o_dropdown_option,
+    .o_m2o_start_typing {
+        text-align: left;
+    }
+}
+
+// Domain editor (Eligibility / Entitlement rule dialogs): field picker, operator and value are three
+// separate Odoo controls; give them the same height, border, radius and centred text, in one row.
+.o_dialog:has(.nsipa_prog_popup) ~ .o_dialog .modal-dialog:has([name="pbms_domain"]),
+body:has(.nsipa_prog_detail) .o_dialog .modal-dialog:has([name="pbms_domain"]) {
+    .o_domain_selector,
+    .o_tree_editor {
+        font-size: 14px;
+        color: #1f3d2e;
+    }
+    // One condition = one row of aligned controls.
+    .o_tree_editor_condition,
+    .o_tree_editor_row {
+        display: flex;
+        align-items: center;
+        flex-wrap: nowrap;
+        gap: 10px;
+        margin: 8px 0;
+    }
+    // Field picker ("ID").
+    .o_model_field_selector {
+        display: flex;
+        align-items: center;
+        flex: 0 1 190px;
+        min-width: 150px;
+        height: 40px;
+        padding: 0 14px;
+        border: 1px solid #cdd9d4;
+        border-radius: 12px;
+        background: #fff;
+        cursor: pointer;
+        .o_model_field_selector_value,
+        .o_model_field_selector_chain_part,
+        .o_model_field_selector_chain_sep {
+            display: inline-flex;
+            align-items: center;
+            height: auto;
+            margin: 0;
+            padding: 0;
+            border: 0;
+            background: transparent;
+            color: #1f3d2e;
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 1.2;
+        }
+    }
+    // Operator and value inputs.
+    .o_tree_editor_condition select,
+    .o_tree_editor_condition input:not([type="checkbox"]):not([type="radio"]),
+    .o_tree_editor_condition .o_input {
+        height: 40px;
+        min-height: 40px;
+        padding: 0 14px;
+        border: 1px solid #cdd9d4;
+        border-radius: 12px;
+        background-color: #fff;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 38px;
+        color: #1f3d2e;
+        box-shadow: none;
+        &:focus {
+            border-color: #2e6b4a;
+            outline: 0;
+        }
+    }
+    .o_tree_editor_condition select {
+        min-width: 110px;
+        padding-right: 34px;
+        appearance: none;
+        -webkit-appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%231f3d2e' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 12px center;
+    }
+    // Value cell grows to fill the row.
+    .o_tree_editor_editor,
+    .o_ds_value_cell {
+        display: flex;
+        align-items: center;
+        flex: 1 1 auto;
+        gap: 10px;
+    }
+    // Add / branch / delete icons and the "New Rule" link.
+    .o_tree_editor_node_control_panel,
+    .o_tree_editor_node_control_panel .btn {
+        display: inline-flex;
+        align-items: center;
+    }
+    .o_tree_editor a,
+    .o_domain_selector a,
+    .o_tree_editor_row > a,
+    a.o_domain_add_first_node_button {
+        color: #2e6b4a;
+        font-weight: 600;
+        text-decoration: none;
+    }
+}
+
+// Read-only record dialogs opened from the program page: link values (e.g. Benefit Code) use the text colour.
+body:has(.nsipa_prog_detail) .o_dialog .modal-body .o_field_widget.o_readonly_modifier a,
+body:has(.nsipa_prog_detail) .o_dialog .modal-body .o_field_widget.o_readonly_modifier span {
+    color: #1f3d2e;
+    text-decoration: none;
+}
+
+// Read-only record dialogs opened from the program page (Eligibility / Entitlement rule, Benefit Code...).
+// Odoo flags fields differently depending on why they are read-only, so only some got the soft box.
+// Give every read-only value the same box, left-aligned and vertically centred.
+body:has(.nsipa_prog_detail) .o_dialog .modal-body {
+    .o_form_readonly .o_field_widget:not(.o_field_boolean):not(.o_field_domain):not(.o_field_x2many):not(.o_field_many2many_tags):not(.o_field_code):not(.o_field_text),
+    .o_field_widget.o_readonly_modifier:not(.o_field_boolean):not(.o_field_domain):not(.o_field_x2many):not(.o_field_many2many_tags):not(.o_field_code):not(.o_field_text) {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        width: 100%;
+        min-height: 40px;
+        padding: 0 14px;
+        border: 1px solid #e5e9e4;
+        border-radius: 12px;
+        background: #f6f8f5;
+        font-size: 14px;
+        font-weight: 500;
+        color: #1f3d2e;
+        text-align: left;
+        a,
+        span {
+            color: #1f3d2e;
+            text-decoration: none;
+        }
+    }
+    // Read-only Domain: one tidy chip row instead of a squeezed, wrapping line.
+    .o_field_domain {
+        padding: 12px 16px;
+        background: #f6f8f5;
+        border: 1px solid #e5e9e4;
+        border-radius: 12px;
+        .o_tree_editor_condition,
+        .o_tree_editor_row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 10px;
+            margin: 4px 0;
+            > * {
+                flex-shrink: 0;
+                white-space: nowrap;
+            }
+        }
+        .o_model_field_selector {
+            height: 36px;
+            padding: 0 12px;
+            border: 1px solid #cdd9d4;
+            border-radius: 10px;
+            background: #fff;
+        }
+        .o_ds_value_cell,
+        .o_tree_editor_editor {
+            flex: 0 0 auto;
+            min-width: max-content;
+            white-space: nowrap;
+        }
+        a,
+        .o_ds_value_cell span,
+        .o_tree_editor_condition span {
+            color: #1f3d2e;
+            font-weight: 600;
+            text-decoration: none;
+        }
+    }
+}
+
+// Read-only many2one values (e.g. Benefit Code) in record dialogs: the value is a link inside nested
+// wrappers that centre it and push it up. Flatten them: left-aligned, centred vertically in the 40px box.
+.o_dialog:has(.nsipa_prog_popup) ~ .o_dialog .modal-body .o_field_many2one.o_readonly_modifier,
+.o_dialog:has(.nsipa_prog_popup) ~ .o_dialog .modal-body .o_form_readonly .o_field_many2one,
+body:has(.nsipa_prog_detail) .o_dialog .modal-body .o_field_many2one.o_readonly_modifier,
+body:has(.nsipa_prog_detail) .o_dialog .modal-body .o_form_readonly .o_field_many2one {
+    display: block;
+    height: 40px;
+    min-height: 40px;
+    padding: 0 14px;
+    line-height: 38px;
+    text-align: left;
+    * {
+        box-sizing: border-box;
+        height: auto !important;
+        min-height: 0 !important;
+        margin: 0 !important;
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+        border: 0 !important;
+        justify-content: flex-start !important;
+        text-align: left !important;
+        line-height: 38px !important;
+        vertical-align: middle;
+    }
+    .o_field_many2one_selection,
+    .o_input_dropdown {
+        display: block;
+        width: 100%;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+    a,
+    span {
+        display: inline;
+    }
+}
+
+// Read-only many2one: force the value to the left edge of its box whatever centring rule applies
+// (flex / grid / text-align / auto margins), at the field and at the link inside it.
+.o_dialog:has(.nsipa_prog_popup) ~ .o_dialog .modal-body .o_field_many2one.o_readonly_modifier,
+.o_dialog:has(.nsipa_prog_popup) ~ .o_dialog .modal-body .o_form_readonly .o_field_many2one,
+body:has(.nsipa_prog_detail) .o_dialog .modal-body .o_field_many2one.o_readonly_modifier,
+body:has(.nsipa_prog_detail) .o_dialog .modal-body .o_form_readonly .o_field_many2one {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    justify-items: start !important;
+    place-content: center flex-start !important;
+    text-align: left !important;
+    text-indent: 0 !important;
+    > a,
+    > a.o_form_uri,
+    > span {
+        flex: 0 0 auto !important;
+        width: auto !important;
+        margin: 0 auto 0 0 !important;
+        text-align: left !important;
+    }
+}
+
+// "Create New Enrolment / Disbursement List" dialog: info notes as soft green cards, left-aligned programme value.
+.nsipa_list_popup {
+    .alert.alert-info {
+        margin: 18px 0 0;
+        padding: 16px 20px;
+        background: #eaf3ec;
+        border: 1px solid #cfe3d6;
+        border-radius: 14px;
+        color: #1f3d2e;
+        font-size: 14px;
+        line-height: 1.5;
+        p {
+            margin: 0 0 8px;
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+        strong {
+            color: #1f5c3b;
+        }
+    }
+    .o_field_many2one.o_readonly_modifier {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: flex-start !important;
+        text-align: left !important;
+        > a,
+        > span {
+            flex: 0 0 auto !important;
+            margin: 0 auto 0 0 !important;
+            text-align: left !important;
+        }
+    }
+}
+
+// Popup headers: keep the title, the (i) icon and the close button on separate, non-overlapping slots.
+// The narrow dialogs (cycle / list popups) have long titles, so the title may shrink and wrap.
+.modal-content:has(.nsipa_prog_popup) .modal-header {
+    align-items: flex-start;
+    gap: 16px;
+    .modal-title {
+        flex: 1 1 auto;
+        min-width: 0;
+        flex-wrap: wrap;
+        row-gap: 6px;
+        &::after {
+            flex: 0 0 24px;
+        }
+    }
+    .btn-close {
+        flex: 0 0 auto;
+        margin-left: auto;
+    }
+}
+.modal-content:has(.nsipa_cycle_popup) .modal-header .modal-title {
+    font-size: 26px;
+}
+.modal-dialog:has(.nsipa_cycle_popup) {
+    max-width: 560px;
+}
+
+// Approve / Reject reason dialog: roomy reason box, red Confirm for Reject.
+.nsipa_approval_popup {
+    .nsipa_prog_field textarea,
+    .nsipa_prog_field textarea.o_input {
+        min-height: 120px !important;
+        padding: 12px 14px !important;
+        line-height: 22px;
+        resize: vertical;
+        overflow: auto;
+    }
+}
+.modal-content:has(.nsipa_approval_popup) .modal-footer {
+    .nsipa_danger_btn,
+    .nsipa_danger_btn.btn-primary {
+        background: #b3392f !important;
+        border: 1px solid #b3392f !important;
+        color: #fff;
+        &:hover {
+            background: #9a2f26 !important;
+        }
+    }
+}

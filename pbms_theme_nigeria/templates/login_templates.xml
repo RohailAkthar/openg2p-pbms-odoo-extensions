@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="nigeria_login" inherit_id="pbms_theme_extension.login" priority="100">
+<<<<<<< HEAD
+        <xpath expr="//img[contains(@t-attf-src, '/web/binary/company_logo')]" position="replace">
+            <div class="text-center pb-2">
+                <img
+                    src="/pbms_theme_nigeria/static/src/img/nigeria_login_logo.png"
+                    alt="Federal Republic of Nigeria"
+                    style="max-height: 120px; max-width: 100%; width: auto; object-fit: contain;"
+                />
+                <div class="mt-2 text-center">
+                    <h5 class="mb-0 font-weight-bold" style="color: #121111; font-weight: 700; letter-spacing: 0.5px;">FEDERAL REPUBLIC OF NIGERIA</h5>
+                    <div class="small" style="font-size: 13px; font-weight: 600; color: #008751 !important;">PBMS - Social Protection &amp; Beneficiary Operations</div>
+                </div>
+            </div>
+        </xpath>
+=======
+        <!-- Replace the stock company logo (not used in the split layout) -->
+        <xpath expr="//img[contains(@t-attf-src, '/web/binary/company_logo')]" position="replace" />
+
+        <!-- Left brand panel -->
+        <xpath expr="//form" position="before">
+            <aside class="nigeria-login-brand">
+                <div class="nigeria-login-brand-top">
+                    <span class="nigeria-login-logo">
+                        <img
+                            src="/pbms_theme_nigeria/static/src/img/nsipa_login_logo.png"
+                            alt="NSIPA"
+                        />
+                    </span>
+                    <span class="nigeria-login-tagline">Nigeria social protection</span>
+                </div>
+                <div class="nigeria-login-brand-middle">
+                    <div class="nigeria-login-eyebrow">Programme &amp; Benefit Management</div>
+                    <h1 class="nigeria-login-headline">Better delivery.<br />Stronger communities.</h1>
+                    <p class="nigeria-login-sub">Manage programmes, follow enrollment and keep benefit delivery in view.</p>
+                </div>
+                <div class="nigeria-login-brand-foot">NSIPA · Staff workspace</div>
+            </aside>
+        </xpath>
+
+        <!-- Right panel: heading above the fields -->
+        <xpath expr="//form/input[@name='csrf_token']" position="after">
+            <div class="nigeria-login-welcome">Welcome back</div>
+            <h2 class="nigeria-login-title">Sign in to PBMS</h2>
+            <p class="nigeria-login-hint">Use your existing PBMS staff account.</p>
+        </xpath>
+
+        <xpath expr="//form" position="after">
+            <p class="nigeria-login-contact">Contact your PBMS administrator if you need account access.</p>
+
+            <!-- Help on the sign-in page. CSS-only toggle (no JS). The full manual lives in the
+                 Knowledge library, which is available after signing in. -->
+            <input type="checkbox" id="nigeria-login-help-toggle" class="nigeria-login-help-toggle" />
+            <label for="nigeria-login-help-toggle" class="nigeria-login-help-btn">
+                <span class="nigeria-login-help-i">i</span> Help
+            </label>
+            <div class="nigeria-login-help-panel" role="dialog" aria-label="Help for signing in">
+                <div class="nigeria-login-help-head">
+                    <h2>Help for signing in</h2>
+                    <label for="nigeria-login-help-toggle" class="nigeria-login-help-close">Close</label>
+                </div>
+                <div class="nigeria-login-help-body">
+                    <p>Sign in to the Programme &amp; Benefit Management System (PBMS) with the staff account your administrator created for you.</p>
+                    <ol>
+                        <li>Type your <b>email or username</b>.</li>
+                        <li>Type your <b>password</b>. Passwords are case-sensitive.</li>
+                        <li>Select <b>Sign in</b>.</li>
+                    </ol>
+                    <h3>What you need</h3>
+                    <p>A PBMS staff account. The menus you see after signing in depend on the groups assigned to you.</p>
+                    <h3>Common issues</h3>
+                    <ul>
+                        <li><b>Wrong email or password:</b> check Caps Lock and spelling, then try again.</li>
+                        <li><b>Forgot your password or locked out:</b> contact your PBMS administrator, who can reset it.</li>
+                        <li><b>No account yet:</b> ask your administrator to create one for you.</li>
+                        <li><b>Page will not load:</b> refresh the browser or check your network connection.</li>
+                    </ul>
+                    <h3>Next step</h3>
+                    <p>After you sign in, open <b>Knowledge</b> in the left menu for the full user manual, setup guides and workflow guides.</p>
+                    <div class="nigeria-login-help-foot">Never share your password. Sign out when you use a shared computer.</div>
+                </div>
+            </div>
+        </xpath>
+
+        <xpath expr="//button[@type='submit' and contains(@class,'btn-primary')]" position="replace">
+            <button type="submit" class="btn btn-primary">Sign in →</button>
+        </xpath>
+>>>>>>> 4bc2c75 (Align with the UI/UX team)
+    </template>
+</odoo>

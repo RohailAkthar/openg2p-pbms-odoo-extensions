@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!-- Master Data menu: only Sponsor Banks and Benefit Codes are shown.
+         The other entries are hidden (deactivated, not deleted); set active back to True to restore them. -->
+    <record id="g2p_pbms.menu_g2p_warehouse_action" model="ir.ui.menu">
+        <field name="active" eval="False"/>
+    </record>
+    <record id="g2p_pbms.menu_g2p_agency_action" model="ir.ui.menu">
+        <field name="active" eval="False"/>
+    </record>
+    <record id="g2p_pbms.menu_g2p_administrative_area_large_action" model="ir.ui.menu">
+        <field name="active" eval="False"/>
+    </record>
+    <record id="g2p_pbms.menu_g2p_administrative_area_small_action" model="ir.ui.menu">
+        <field name="active" eval="False"/>
+    </record>
+</odoo>

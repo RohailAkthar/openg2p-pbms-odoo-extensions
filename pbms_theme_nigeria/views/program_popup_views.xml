@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Presentation only: popup for creating a programme. Same fields (and readonly rules) as
+         g2p_pbms.view_g2p_programs_config_form, laid out as a modal. -->
+    <record id="view_g2p_programs_new_popup_form" model="ir.ui.view">
+        <field name="name">g2p.programs.new.popup.form</field>
+        <field name="model">g2p.program.definition</field>
+        <field name="inherit_id" ref="g2p_pbms.view_g2p_programs_config_form"/>
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="attributes">
+                <attribute name="class">nsipa_prog_popup</attribute>
+                <attribute name="string">New programme</attribute>
+            </xpath>
+            <xpath expr="//sheet/group" position="replace">
+                <field name="id" invisible="1"/>
+                <field name="show_label_for_beneficiary_list" invisible="1"/>
+                <div class="nsipa_prog_grid">
+                    <div class="nsipa_prog_field">
+                        <label for="program_mnemonic" string="Program Mnemonic"/>
+                        <field name="program_mnemonic" nolabel="1" readonly="not context.get('program_form_edit')"/>
+                    </div>
+                    <div class="nsipa_prog_field">
+                        <label for="description" string="Description"/>
+                        <field name="description" nolabel="1" readonly="not context.get('program_form_edit')"/>
+                    </div>
+                    <div class="nsipa_prog_field">
+                        <label for="program_status" string="Program Status"/>
+                        <field name="program_status" nolabel="1" readonly="not context.get('program_form_edit')"/>
+                    </div>
+                    <div class="nsipa_prog_field">
+                        <label for="target_registry" string="Target Registry"/>
+                        <field name="target_registry" nolabel="1" readonly="not context.get('program_form_create')"/>
+                    </div>
+                    <div class="nsipa_prog_field">
+                        <label for="service_providers_required" string="Service Providers required"/>
+                        <field name="service_providers_required" nolabel="1" readonly="not context.get('program_form_create')"/>
+                        <div class="nsipa_hint">If checked, the program will require benefits to be collected from specified agency and warehouse. If unchecked, beneficiaries may collect benefits from any agency/warehouse in the country.</div>
+                    </div>
+                    <div class="nsipa_prog_field">
+                        <label for="enrollment_frequency" string="Enrollment Frequency"/>
+                        <field name="enrollment_frequency" nolabel="1" readonly="not context.get('program_form_edit')"/>
+                    </div>
+                    <div class="nsipa_prog_field">
+                        <label for="disbursement_frequency" string="Disbursement Frequency"/>
+                        <field name="disbursement_frequency" nolabel="1" readonly="not context.get('program_form_edit')"/>
+                    </div>
+                </div>
+            </xpath>
+            <xpath expr="//sheet" position="after">
+                <footer>
+                    <button string="Cancel" special="cancel" class="nsipa_cancel_btn"/>
+                    <button string="Save programme" special="save" class="btn btn-primary nsipa_save_btn"/>
+                </footer>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_g2p_programs_new_popup" model="ir.actions.act_window">
+        <field name="name">New programme</field>
+        <field name="res_model">g2p.program.definition</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_g2p_programs_new_popup_form"/>
+        <field name="target">new</field>
+        <field name="context">{'create': False, 'program_form_edit': True, 'program_form_create': True, 'program_view_mode': 'config', 'dialog_size': 'extra-large'}</field>
+    </record>
+</odoo>

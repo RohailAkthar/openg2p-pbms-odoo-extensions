@@ -1,0 +1,234 @@
+/* ==========================================================================
+   Nigeria PBMS Theme - Official Federal Republic of Nigeria Branding
+   Colors:
+     - Nigeria Green:        #008751
+     - Nigeria Dark Green:   #00683e
+     - Nigeria Navbar Green: #0b3823
+     - Nigeria Light Green:  #e8f5ed
+   ========================================================================== */
+
+/* 1. TOP NAVBAR BRANDING */
+.o_main_navbar {
+    background-color: #0b3823 !important;
+    border-bottom: 2px solid #00683e !important;
+}
+
+.o_main_navbar .o_menu_sections .o_nav_entry,
+.o_main_navbar .o_menu_sections .dropdown-toggle {
+    background-color: #0b3823 !important;
+    color: #ffffff !important;
+}
+
+.o_main_navbar .o_menu_sections .o_nav_entry:hover,
+.o_main_navbar .o_menu_sections .dropdown-toggle:hover,
+.o_main_navbar .o_menu_sections .dropdown-toggle:focus,
+.o_main_navbar .o_navbar_apps_menu .dropdown-toggle:hover {
+    background-color: #004d2e !important;
+    color: #ffffff !important;
+}
+
+/* Remove default center background logo */
+.o_main_navbar .o_menu_sections {
+    background-image: none !important;
+}
+
+/* App Brand with Nigeria Coat of Arms (Transparent, No Background) */
+.o_main_navbar .o_menu_brand {
+    display: inline-flex !important;
+    align-items: center !important;
+    font-weight: 700 !important;
+    color: #ffffff !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    gap: 8px !important;
+    letter-spacing: 0.5px;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.o_main_navbar .o_menu_brand::before {
+    content: "";
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    background-image: url("/pbms_theme_nigeria/static/src/img/nigeria_navbar_logo_transparent.png?v=3");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    flex-shrink: 0;
+}
+
+/* 2. NOTIFICATIONS & SYSTRAY */
+.o_notification_counter,
+.o_MessagingMenu_counter {
+    background-color: #008751 !important;
+    color: #ffffff !important;
+}
+
+/* 3. BREADCRUMBS */
+.breadcrumb .breadcrumb-item a {
+    color: #008751 !important;
+    font-weight: 500;
+}
+
+.o_cp_action_menus .dropdown-toggle,
+.o_cp_action_menus .dropdown-toggle:active {
+    color: #008751 !important;
+}
+
+/* 4. BUTTONS & ACTIONS */
+.btn-primary,
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:focus {
+    color: #fff !important;
+    background-color: #008751 !important;
+    border-color: #008751 !important;
+}
+
+.btn-primary:hover {
+    background-color: #00683e !important;
+    border-color: #00683e !important;
+}
+
+.o_list_button_add,
+.o_form_button_save,
+.o_form_button_edit,
+.o_list_button_save,
+.o_list_button_add_program,
+.o_list_button_add:hover,
+.o_form_button_save:hover,
+.o_form_button_edit:hover,
+.o_list_button_save:hover,
+.o_list_button_add_program:hover {
+    background: #008751 0% 0% no-repeat padding-box !important;
+    border-radius: 4px !important;
+    border: 1px solid #008751 !important;
+    color: #ffffff !important;
+    margin-right: 3px;
+}
+
+.o_list_button_add:hover,
+.o_form_button_save:hover,
+.o_form_button_edit:hover,
+.o_list_button_save:hover,
+.o_list_button_add_program:hover {
+    background: #00683e !important;
+    border-color: #00683e !important;
+}
+
+.o_form_buttons_view .o_form_button_create,
+.o_form_buttons_view .o_form_button_create:active,
+.o_form_button_cancel,
+.o_list_button_discard,
+.o_list_button_discard:hover,
+.o_form_button_cancel:active,
+.o_form_button_cancel:hover {
+    background: #ffffff 0% 0% no-repeat padding-box !important;
+    border: 1px solid #008751 !important;
+    border-radius: 4px !important;
+    color: #008751 !important;
+}
+
+.o_form_buttons_view .o_form_button_create:hover,
+.o_list_button_discard:hover,
+.o_form_button_cancel:hover {
+    background: #e8f5ed !important;
+    color: #00683e !important;
+    border-color: #00683e !important;
+}
+
+.btn-success,
+.o_statusbar_buttons .btn-success {
+    background: #008751 !important;
+    border: 1px solid #008751 !important;
+    border-radius: 4px !important;
+    color: #ffffff !important;
+}
+
+.btn-success:hover,
+.o_statusbar_buttons .btn-success:hover {
+    background: #00683e !important;
+    border-color: #00683e !important;
+}
+
+/* 5. TABS & NOTEBOOK HEADERS */
+.oe_stat_button .o_button_icon {
+    color: #008751 !important;
+}
+
+.o_notebook_headers .nav-item .active {
+    background: #008751 0% 0% no-repeat padding-box !important;
+    border: 2px solid #008751 !important;
+    border-radius: 4px 4px 0px 0px !important;
+    color: #ffffff !important;
+}
+
+.o_notebook_headers .nav-item a:hover {
+    border-color: #008751 !important;
+}
+
+.o_notebook_headers .nav-tabs {
+    border-bottom-color: #008751 !important;
+    border-bottom-width: 3px !important;
+}
+
+/* 6. FORM CONTROLS & SELECTION */
+.o_horizontal_separator {
+    color: #008751 !important;
+    font-weight: 600;
+}
+
+.o_field_invalid,
+.o_required_modifier {
+    --o-input-border-color: #008751 !important;
+}
+
+.o_required_modifier.o_input,
+.o_required_modifier .o_input {
+    background: #f7fbf8 0% 0% no-repeat padding-box !important;
+    border: 1px solid #008751 !important;
+}
+
+.o_field_invalid.o_form_label:not(:focus-within) {
+    color: #008751 !important;
+}
+
+.custom-control-input:checked ~ .custom-control-label::before,
+.custom-radio .custom-control-input:checked ~ .custom-control-label::after {
+    border-color: #008751 !important;
+    background-color: #008751 !important;
+}
+
+.o_quick_editable a,
+.o_quick_editable > span,
+.o_list_view .o_field_x2many_list_row_add a,
+.o_list_view .o_field_x2many_list_row_add a:focus,
+.o_list_view .o_list_table .o_field_x2many_list_row_add a:active {
+    color: #008751 !important;
+}
+
+.o_domain_selector .o_domain_add_first_node_button {
+    background: #008751 0% 0% no-repeat padding-box !important;
+    border: 1px solid #008751 !important;
+}
+
+.modal-footer .btn-primary {
+    background: #008751 0% 0% no-repeat padding-box !important;
+    border: 1px solid #008751 !important;
+    color: #ffffff !important;
+}
+
+.modal-footer .btn-primary:hover {
+    background: #00683e !important;
+    border-color: #00683e !important;
+}
+
+.o_technical_modal .modal-footer .btn-secondary,
+.btn-warning {
+    border: 1px solid #008751 !important;
+    color: #008751 !important;
+}

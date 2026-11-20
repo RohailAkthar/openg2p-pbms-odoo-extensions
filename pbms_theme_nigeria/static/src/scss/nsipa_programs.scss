@@ -1,0 +1,1098 @@
+// Programs list (Program Configuration) in the NSIPA card layout. Presentation only.
+$p-border: #e5e9e4;
+$p-dark: #1f3d2e;
+$p-primary: #2e6b4a;
+
+.nsipa_programs_header .nsipa_header_actions {
+    display: flex;
+    gap: 14px;
+}
+.nsipa_new_btn {
+    height: 44px;
+    padding: 0 20px;
+    background: $p-primary;
+    border: 1px solid $p-primary;
+    border-radius: 8px;
+    font-weight: 700;
+    color: #fff;
+    &:hover {
+        background: darken($p-primary, 6%);
+    }
+}
+
+@media (min-width: 768px) {
+    .nsipa_programs_list {
+        display: grid !important;
+        grid-template-columns: 1fr auto;
+        grid-template-rows: auto auto 1fr auto;
+        align-content: start;
+        overflow-y: auto !important;
+        margin: 0;
+        padding: 0 40px 40px;
+        background: transparent;
+
+        > .nsipa_programs_header {
+            grid-row: 1;
+            grid-column: 1 / -1;
+            padding: 36px 0 20px;
+        }
+        .o_control_panel,
+        .o_control_panel_main,
+        .o_control_panel_navigation,
+        .o_cp_pager {
+            display: contents !important;
+        }
+        // Title/breadcrumb and the old Create Program button are replaced by the header.
+        .o_control_panel_breadcrumbs,
+        .o_cp_switch_buttons,
+        .o_list_button_add_program,
+        .o_list_button_add_enrollment_cycle,
+        .o_list_button_add_disbursement_cycle,
+        .o_list_button_add_codes,
+        .o_list_button_add_sponsor_bank,
+        .o_cp_searchview .o_searchview_dropdown_toggler,
+        .o_cp_searchview .o-dropdown,
+        .o_cp_searchview > .dropdown {
+            display: none !important;
+        }
+        .nsipa_zero_count {
+            grid-row: 2;
+            grid-column: 1;
+            align-self: stretch;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 22px 28px;
+            background: #fff;
+            border: 1px solid $p-border;
+            border-right: 0;
+            border-bottom: 0;
+            border-radius: 14px 0 0 0;
+            font-size: 14px;
+            color: #5f6b64;
+            strong {
+                font-size: 18px;
+                color: $p-dark;
+            }
+        }
+        .o_control_panel_actions {
+            grid-row: 2;
+            grid-column: 2;
+            align-self: stretch;
+            display: flex !important;
+            align-items: center;
+            width: auto !important;
+            margin: 0 !important;
+            padding: 22px 28px;
+            background: #fff;
+            border: 1px solid $p-border;
+            border-left: 0;
+            border-bottom: 0;
+            border-radius: 0 14px 0 0;
+        }
+        .o_cp_searchview {
+            width: auto !important;
+            gap: 12px;
+            flex-wrap: nowrap;
+            display: flex;
+            align-items: center;
+        }
+        .nsipa_search_btn {
+            display: inline-block;
+            margin-left: 0 !important;
+            border-radius: 12px !important;
+        }
+        .o_searchview {
+            display: flex !important;
+            align-items: center;
+            flex: 0 0 300px !important;
+            width: 300px !important;
+            height: 52px;
+            padding: 0 18px !important;
+            background: #fff;
+            border: 1px solid #cdd9d4 !important;
+            border-radius: 12px !important;
+            .o_searchview_icon {
+                display: none !important;
+            }
+            .o_searchview_input::placeholder {
+                color: #6f7a74;
+            }
+        }
+        .o_content {
+            grid-row: 3;
+            grid-column: 1 / -1;
+            margin: 0 !important;
+            overflow: visible !important;
+            flex: none !important;
+            background: #fff;
+            border: 1px solid $p-border;
+            border-bottom: 0;
+        }
+        .o_list_renderer {
+            margin: 0 !important;
+            border: 0 !important;
+            border-top: 1px solid $p-border !important;
+            border-radius: 0 !important;
+            box-shadow: none !important;
+            tbody tr {
+                height: 68px;
+            }
+            .o_list_table {
+                table-layout: fixed !important;
+                width: 100% !important;
+                th, td {
+                    padding: 0 28px !important;
+                    vertical-align: middle !important;
+                    white-space: nowrap !important;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+                thead th {
+                    height: 56px;
+                    color: #55615a;
+                    letter-spacing: 0.08em;
+                    font-size: 12px;
+                    text-align: left !important;
+                }
+                th[data-name="program_mnemonic"] { width: 26% !important; }
+                th[data-name="description"] { width: 32% !important; }
+                th[data-name="target_registry"] { width: 14% !important; }
+                th[data-name="program_status"] { width: 14% !important; }
+                thead th:last-child:not([data-name]) { width: 14% !important; }
+                td.o_list_button { text-align: left !important; }
+            }
+        }
+        .o_list_record_selector {
+            display: none !important;
+        }
+        // Registry / status shown as soft green pills.
+        .o_list_table td[name="target_registry"],
+        .o_list_table td[name="program_status"] {
+            > * {
+                display: inline-block;
+                padding: 6px 12px;
+                background: #eaf3ec;
+                color: #2e5a42;
+                border-radius: 8px;
+                font-size: 14px;
+            }
+        }
+        // "Details" header for the button column, and "Open →" link look.
+        .o_list_table thead th.o_list_button::after,
+        .o_list_table thead th:last-child:not([data-name])::after {
+            content: "DETAILS";
+        }
+        .nsipa_open_btn {
+            padding: 0;
+            font-weight: 700;
+            color: $p-primary;
+            text-decoration: none;
+            &:hover {
+                color: $p-dark;
+            }
+        }
+        .o_pager {
+            grid-row: 4;
+            grid-column: 1 / -1;
+            display: flex !important;
+            align-items: center;
+            justify-content: space-between;
+            box-sizing: border-box;
+            min-height: 76px;
+            height: auto !important;
+            padding: 14px 28px;
+            background: #fff;
+            border: 1px solid $p-border;
+            border-radius: 0 0 14px 14px;
+            .o_pager_counter {
+                display: block !important;
+                font-size: 0; // hides Odoo's "/" separator
+                line-height: 1;
+                .o_pager_value,
+                .o_pager_limit {
+                    display: inline !important;
+                    font-size: 14px;
+                    line-height: 1;
+                    color: #5f6b64;
+                    border: 0;
+                }
+                .o_pager_limit::before {
+                    content: "\00a0of\00a0";
+                }
+            }
+            .btn-group {
+                display: flex !important;
+                align-items: center;
+                gap: 12px;
+                height: auto !important;
+            }
+            .o_pager_previous,
+            .o_pager_next {
+                display: inline-flex !important;
+                align-items: center;
+                justify-content: center;
+                height: 48px !important;
+                min-height: 0 !important;
+                margin: 0 !important;
+                padding: 0 22px !important;
+                background: #fff;
+                border: 1px solid $p-border !important;
+                border-radius: 12px !important;
+                color: $p-dark;
+                font-weight: 700;
+                font-size: 15px;
+                line-height: 1;
+                i {
+                    display: none !important;
+                }
+                &:disabled {
+                    color: #9aa59f;
+                    opacity: 1;
+                }
+            }
+            .o_pager_previous::after {
+                content: "Previous";
+            }
+            .o_pager_next::after {
+                content: "Next";
+            }
+        }
+    }
+}
+
+// Enrollment cycles list: more columns than Programmes, and the action column holds
+// both "View" and "Create New Cycle", so give each column a fixed share and don't clip buttons.
+@media (min-width: 768px) {
+    .nsipa_programs_list.nsipa_enrollment_cycles_list .o_list_renderer .o_list_table {
+        th, td {
+            padding: 0 16px !important;
+        }
+        th[data-name="program_mnemonic"] { width: 19% !important; }
+        th[data-name="latest_ec_cycle_name"] { width: 11% !important; }
+        th[data-name="latest_ec_version"] { width: 8% !important; }
+        th[data-name="latest_ec_stage"] { width: 10% !important; }
+        th[data-name="latest_ec_status"] { width: 10% !important; }
+        th[data-name="enrollment_frequency"] { width: 10% !important; }
+        th[data-name="latest_ec_creation_date"] { width: 11% !important; }
+        thead th:last-child:not([data-name]),
+        thead th.o_list_button { width: 21% !important; }
+        td.o_list_button {
+            overflow: visible !important;
+            text-overflow: clip !important;
+            > button,
+            > .btn {
+                display: inline-block;
+                margin-right: 12px;
+                vertical-align: middle;
+            }
+            .btn-primary {
+                padding: 6px 14px;
+                white-space: nowrap;
+            }
+        }
+    }
+}
+
+// Cycle list opened from "View": header button replaces the cramped control-panel one.
+@media (min-width: 768px) {
+    .nsipa_programs_list.nsipa_cycle_records_list .o_list_renderer .o_list_table {
+        th, td {
+            padding: 0 16px !important;
+        }
+        th[data-name="cycle_name"] { width: 11% !important; }
+        th[data-name="creation_date"] { width: 13% !important; }
+        th[data-name="number_of_lists_display"] { width: 12% !important; }
+        th[data-name="current_stage_display"] { width: 16% !important; }
+        th[data-name="current_approval_status"] { width: 13% !important; }
+        th[data-name="current_acted_at"] { width: 14% !important; }
+        th[data-name="current_beneficiary_count"] { width: 12% !important; }
+        thead th:last-child:not([data-name]),
+        thead th.o_list_button { width: 9% !important; }
+    }
+}
+
+// Program cycle list (form reached from the Enrollment cycles list). Presentation only.
+.nsipa_cycles_form {
+    .o_form_sheet_bg {
+        background: transparent;
+        border: 0;
+    }
+    .o_form_sheet {
+        max-width: none;
+        margin: 0;
+        padding: 0 40px 40px;
+        background: transparent;
+        border: 0;
+        box-shadow: none;
+    }
+    .nsipa_page_header {
+        padding: 28px 0 20px;
+    }
+    .nsipa_page_title .o_field_widget,
+    .nsipa_page_title .o_field_widget span {
+        display: inline;
+        width: auto;
+        font: inherit;
+        color: inherit;
+    }
+    .o_list_renderer {
+        margin: 0 !important;
+        background: #fff;
+        border: 1px solid $p-border !important;
+        border-radius: 14px !important;
+        box-shadow: none !important;
+        overflow: hidden;
+        .o_list_table {
+            width: 100% !important;
+            thead th {
+                height: 56px;
+                padding: 0 28px !important;
+                color: #55615a;
+                letter-spacing: 0.08em;
+                font-size: 12px;
+                text-align: left !important;
+            }
+            tbody tr {
+                height: 68px;
+            }
+            td {
+                padding: 0 28px !important;
+                vertical-align: middle !important;
+            }
+            td.o_list_button {
+                text-align: left !important;
+            }
+            thead th.o_list_button::after,
+            thead th:last-child:not([data-name])::after {
+                content: "DETAILS";
+            }
+        }
+    }
+    .nsipa_open_btn {
+        padding: 0;
+        font-weight: 700;
+        color: $p-primary;
+        text-decoration: none;
+        &:hover {
+            color: $p-dark;
+        }
+    }
+}
+
+// Program cycle list: hide Odoo's own title (the page header replaces it) and the top pager,
+// and show the pager as the card footer, like the Programmes list.
+.nsipa_cycles_form.o_view_controller > .o_control_panel,
+.nsipa_cycles_form .o_control_panel {
+    display: none !important; // breadcrumb, duplicate title and record pager (1 / 8)
+}
+.nsipa_cycles_form {
+    .o_x2m_control_panel .o_cp_pager {
+        display: none !important;
+    }
+    .o_field_x2many_list {
+        .o_list_renderer {
+            border-bottom: 0 !important;
+            border-radius: 14px 14px 0 0 !important;
+        }
+        .nsipa_x2m_footer {
+            display: block;
+            background: #fff;
+            border: 1px solid $p-border;
+            border-radius: 0 0 14px 14px;
+            .o_pager {
+                display: flex !important;
+                align-items: center;
+                justify-content: space-between;
+                box-sizing: border-box;
+                min-height: 76px;
+                padding: 14px 28px;
+                .o_pager_counter {
+                    display: block !important;
+                    font-size: 0; // hides Odoo's "/" separator
+                    line-height: 1;
+                    .o_pager_value,
+                    .o_pager_limit {
+                        display: inline !important;
+                        font-size: 14px;
+                        line-height: 1;
+                        color: #5f6b64;
+                        border: 0;
+                    }
+                    .o_pager_limit::before {
+                        content: "\00a0of\00a0";
+                    }
+                }
+                .btn-group {
+                    display: flex !important;
+                    align-items: center;
+                    gap: 12px;
+                }
+                .o_pager_previous,
+                .o_pager_next {
+                    display: inline-flex !important;
+                    align-items: center;
+                    justify-content: center;
+                    height: 48px !important;
+                    min-height: 0 !important;
+                    margin: 0 !important;
+                    padding: 0 22px !important;
+                    background: #fff;
+                    border: 1px solid $p-border !important;
+                    border-radius: 12px !important;
+                    color: $p-dark;
+                    font-weight: 700;
+                    font-size: 15px;
+                    line-height: 1;
+                    i {
+                        display: none !important;
+                    }
+                    &:disabled {
+                        color: #9aa59f;
+                        opacity: 1;
+                    }
+                }
+                .o_pager_previous::after {
+                    content: "Previous";
+                }
+                .o_pager_next::after {
+                    content: "Next";
+                }
+            }
+        }
+    }
+}
+
+// Cycle detail form (enrolment / disbursement cycle). Presentation only.
+.nsipa_cycle_detail {
+    .o_control_panel {
+        display: none !important; // title/breadcrumb and 1 / 1 pager are replaced by the page header
+    }
+    .o_form_sheet_bg {
+        background: transparent;
+        border: 0;
+    }
+    .o_form_sheet {
+        max-width: none;
+        margin: 0;
+        padding: 0 40px 40px;
+        background: transparent;
+        border: 0;
+        box-shadow: none;
+    }
+    .nsipa_page_header {
+        padding: 36px 0 16px;
+    }
+    .nsipa_page_subtitle .o_field_widget,
+    .nsipa_page_subtitle .o_field_widget span,
+    .nsipa_page_subtitle > span {
+        display: inline;
+        width: auto;
+        font: inherit;
+        color: inherit;
+    }
+    // Action buttons row (Create New List / Approve / Reject / cycle navigation).
+    // Zero-height, right-aligned row; its buttons overflow down into the page header's top-right
+    // corner (same spot as Refresh on the other screens).
+    .o_form_statusbar {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: flex-end;
+        align-items: flex-start;
+        height: 0 !important;
+        min-height: 0 !important;
+        padding: 0 40px;
+        overflow: visible;
+        background: transparent;
+        border: 0;
+        gap: 10px;
+        .o_statusbar_buttons {
+            display: flex;
+            flex: 0 0 auto;
+            width: auto !important;
+            flex-wrap: nowrap;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 10px;
+            margin-left: auto;
+            transform: translateY(36px);
+            // Odoo adds "ms-auto" to Prev Cycle to push it right; inside one grouped row it must not.
+            > .btn,
+            > .ms-auto {
+                margin: 0 !important;
+            }
+        }
+        > .ms-auto,
+        > .btn {
+            margin-left: 0 !important;
+        }
+        .btn {
+            height: 44px;
+            padding: 0 20px;
+            border-radius: 12px;
+            font-weight: 700;
+        }
+        .btn-primary {
+            background: $p-primary;
+            border-color: $p-primary;
+        }
+        .btn-secondary {
+            background: #fff;
+            border: 1px solid $p-border;
+            color: $p-dark;
+        }
+    }
+    // Cycle / Workflow / Beneficiaries as white cards.
+    .o_form_sheet > .row {
+        margin: 8px 0 0;
+        gap: 18px 0;
+        > [class*="col-"] {
+            padding: 0 9px;
+            > .o_group {
+                height: 100%;
+                margin: 0;
+                padding: 20px 24px;
+                background: #fff;
+                border: 1px solid $p-border;
+                border-radius: 14px;
+            }
+        }
+    }
+    .o_horizontal_separator {
+        margin: 0 0 14px;
+        padding: 0;
+        border: 0;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: #8a6d1a;
+    }
+    .o_form_label {
+        font-weight: 700;
+        color: $p-dark;
+    }
+    // Tabs and their tables.
+    .o_notebook {
+        margin-top: 22px;
+        padding: 0;
+        background: #fff;
+        border: 1px solid $p-border;
+        border-radius: 14px;
+        overflow: hidden;
+        .o_notebook_headers {
+            margin: 0;
+            padding: 0 12px;
+            border-bottom: 1px solid $p-border;
+        }
+        .nav-tabs {
+            gap: 4px;
+            border-bottom: 0 !important;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+        }
+        .nav-link {
+            padding: 14px 18px;
+            margin: 0 0 -1px;
+            background: transparent !important;
+            border: 0;
+            border-bottom: 3px solid transparent;
+            border-radius: 0;
+            color: #7a857f !important;
+            font-size: 14px;
+            font-weight: 500;
+            white-space: nowrap;
+            &.active,
+            &.active:hover,
+            &.active:focus {
+                color: #1f5c3b !important;
+                font-weight: 700;
+                background: #eaf3ec !important;
+                border: 0 !important;
+                border-radius: 8px 8px 0 0 !important;
+                border-bottom: 3px solid $p-primary !important;
+                box-shadow: none !important;
+            }
+        }
+        .tab-content {
+            padding: 20px 24px 24px;
+            border: 0;
+        }
+        .o_list_renderer {
+            border: 1px solid $p-border;
+            border-radius: 12px;
+            box-shadow: none;
+            overflow: hidden;
+            thead th {
+                height: 48px;
+                background: #f6f8f5 !important;
+                color: #55615a;
+                font-size: 12px;
+                letter-spacing: 0.08em;
+            }
+        }
+    }
+}
+
+// Benefit Codes list. Header "Create code" button replaces the control-panel one.
+@media (min-width: 768px) {
+    .nsipa_programs_list.nsipa_benefit_codes_list .o_list_renderer .o_list_table {
+        th[data-name="benefit_mnemonic"] { width: 22% !important; }
+        th[data-name="benefit_type"] { width: 20% !important; }
+        th[data-name="measurement_unit"] { width: 18% !important; }
+        th[data-name="benefit_description"] { width: 30% !important; }
+        thead th:last-child:not([data-name]),
+        thead th.o_list_button { width: 10% !important; }
+        thead th.o_list_button::after,
+        thead th:last-child:not([data-name])::after {
+            content: "ACTIONS";
+        }
+    }
+}
+
+// Sponsor Banks list.
+@media (min-width: 768px) {
+    .nsipa_programs_list.nsipa_sponsor_banks_list .o_list_renderer .o_list_table {
+        th[data-name="name"] { width: 40% !important; }
+        th[data-name="warehouse_mnemonic"] { width: 40% !important; }
+        thead th:last-child:not([data-name]),
+        thead th.o_list_button { width: 20% !important; }
+        thead th.o_list_button::after,
+        thead th:last-child:not([data-name])::after {
+            content: "ACTIONS";
+        }
+    }
+}
+
+// Program Configuration form page (opened by clicking a row). Presentation only.
+.nsipa_prog_detail {
+    .o_form_sheet_bg {
+        background: transparent;
+        border: 0;
+    }
+    .o_form_sheet {
+        max-width: none;
+        margin: 0;
+        padding: 8px 40px 40px;
+        background: transparent;
+        border: 0;
+        box-shadow: none;
+    }
+    // Program Information / Program Configuration / Enrollment / Disbursement as white cards.
+    .o_form_sheet > .o_group {
+        gap: 18px 0;
+        > .o_group_col_6 {
+            padding: 0 9px;
+            > .o_inner_group,
+            > .o_group {
+                height: 100%;
+                margin: 0;
+                padding: 20px 24px;
+                background: #fff;
+                border: 1px solid $p-border;
+                border-radius: 14px;
+            }
+        }
+    }
+    .o_horizontal_separator {
+        margin: 0 0 14px;
+        padding: 0;
+        border: 0;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: #8a6d1a;
+    }
+    .o_form_label {
+        font-weight: 700;
+        color: $p-dark;
+    }
+    // Tabs and their tables in one card.
+    .o_notebook {
+        margin-top: 22px;
+        background: #fff;
+        border: 1px solid $p-border;
+        border-radius: 14px;
+        overflow: hidden;
+        .o_notebook_headers {
+            margin: 0;
+            padding: 0 12px;
+            border-bottom: 1px solid $p-border;
+        }
+        .nav-tabs {
+            gap: 4px;
+            border-bottom: 0 !important;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+        }
+        .nav-link {
+            padding: 14px 18px;
+            margin: 0 0 -1px;
+            background: transparent !important;
+            border: 0;
+            border-bottom: 3px solid transparent;
+            border-radius: 0;
+            color: #7a857f !important;
+            font-size: 14px;
+            font-weight: 500;
+            white-space: nowrap;
+            &.active,
+            &.active:hover,
+            &.active:focus {
+                color: #1f5c3b !important;
+                font-weight: 700;
+                background: #eaf3ec !important;
+                border: 0 !important;
+                border-radius: 8px 8px 0 0 !important;
+                border-bottom: 3px solid $p-primary !important;
+                box-shadow: none !important;
+            }
+        }
+        .tab-content {
+            padding: 20px 24px 24px;
+            border: 0;
+        }
+        .o_list_renderer {
+            border: 1px solid $p-border;
+            border-radius: 12px;
+            box-shadow: none;
+            overflow: hidden;
+            thead th {
+                height: 48px;
+                background: #f6f8f5 !important;
+                color: #55615a;
+                font-size: 12px;
+                letter-spacing: 0.08em;
+            }
+        }
+    }
+    // Breadcrumb title and the gear (Duplicate / Delete) menu.
+    .o_control_panel .o_breadcrumb .breadcrumb-item.active {
+        font-weight: 700;
+        color: $p-dark;
+    }
+    .o_cp_action_menus .dropdown-menu,
+    .o_control_panel .dropdown-menu {
+        min-width: 200px;
+        padding: 8px;
+        background: #fff;
+        border: 1px solid $p-border;
+        border-radius: 14px;
+        box-shadow: 0 12px 32px rgba(31, 61, 46, 0.18);
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            height: 40px;
+            padding: 0 14px;
+            border-radius: 10px;
+            color: $p-dark;
+            font-size: 14px;
+            font-weight: 500;
+            &:hover,
+            &:focus {
+                background: #eaf3ec;
+                color: $p-dark;
+            }
+        }
+    }
+}
+
+// Program Configuration form page: no "Program Configuration" breadcrumb link above the title,
+// and a larger gear (Duplicate / Delete) icon that matches the title's height.
+.nsipa_prog_detail {
+    .o_control_panel .o_breadcrumb .breadcrumb-item:not(.active),
+    .o_control_panel .o_breadcrumb .o_back_button {
+        display: none !important;
+    }
+    .o_control_panel .o_cp_action_menus .dropdown-toggle,
+    .o_control_panel .o_form_cog,
+    .o_control_panel .o_breadcrumb .o_cp_action_menus {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        .fa,
+        .fa-cog,
+        i {
+            font-size: 28px !important;
+            line-height: 1;
+            color: $p-primary;
+        }
+    }
+}
+
+// Program form page: nicer tabs and tables inside the notebook card.
+.nsipa_prog_detail .o_notebook {
+    .nav-link {
+        padding: 16px 22px;
+        font-size: 15px;
+    }
+    .tab-content {
+        padding: 24px 28px 28px;
+    }
+    .o_list_renderer {
+        margin: 0 !important;
+        border: 1px solid $p-border;
+        border-radius: 12px;
+        background: #fff;
+        .o_list_table {
+            width: 100% !important;
+            th,
+            td {
+                padding: 0 24px !important;
+                vertical-align: middle !important;
+            }
+            thead th {
+                height: 52px;
+                background: #f6f8f5 !important;
+                color: #55615a;
+                font-size: 12px;
+                letter-spacing: 0.08em;
+                white-space: nowrap;
+            }
+            tbody tr.o_data_row {
+                height: 56px;
+                background: #fff;
+                &:hover {
+                    background: #f7faf6;
+                }
+            }
+            // Odoo pads short lists with empty striped filler rows: hide them.
+            tbody > tr:not(.o_data_row):not(.o_field_x2many_list_row_add):not(.o_group_header) {
+                display: none;
+            }
+            .o_field_x2many_list_row_add {
+                height: 56px;
+                a {
+                    color: $p-primary;
+                    font-weight: 600;
+                    text-decoration: none;
+                    &:hover {
+                        color: $p-dark;
+                    }
+                }
+            }
+            .o_list_record_remove button,
+            .o_list_record_remove i {
+                color: #9aa59f;
+                &:hover {
+                    color: #c0392b;
+                }
+            }
+        }
+    }
+}
+
+// Record pager ("1 / 1" + arrows) on the program form page: a rounded pill with soft arrow buttons.
+.nsipa_prog_detail .o_control_panel .o_pager {
+    display: inline-flex !important;
+    align-items: center;
+    gap: 10px;
+    margin-right: 0;
+    padding: 6px 8px 6px 16px;
+    background: #fff;
+    border: 1px solid $p-border;
+    border-radius: 14px;
+    .o_pager_counter {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 14px;
+        font-weight: 600;
+        color: $p-dark;
+        .o_pager_value,
+        .o_pager_limit {
+            padding: 0;
+            border: 0;
+            color: $p-dark;
+        }
+        .o_pager_limit::before {
+            content: "of";
+            margin: 0 2px 0 0;
+            color: #6f7a74;
+            font-weight: 500;
+        }
+        // Odoo's own "/" separator is replaced by "of".
+        > span:not(.o_pager_value):not(.o_pager_limit) {
+            display: none;
+        }
+    }
+    .btn-group {
+        display: inline-flex;
+        gap: 6px;
+    }
+    .o_pager_previous,
+    .o_pager_next {
+        display: inline-flex !important;
+        align-items: center;
+        justify-content: center;
+        width: 34px;
+        height: 34px;
+        min-height: 0;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: #f6f8f5;
+        border: 1px solid $p-border !important;
+        border-radius: 10px !important;
+        color: $p-dark;
+        &:hover:not(:disabled) {
+            background: #eaf3ec;
+            color: $p-primary;
+        }
+        &:disabled {
+            color: #b3bcb6;
+            opacity: 1;
+            cursor: default;
+        }
+    }
+}
+
+// Program form page: breathing room between the top header bar and the title, aligned with the cards below.
+.nsipa_prog_detail .o_control_panel {
+    padding: 28px 40px 8px;
+}
+
+// Search box in the themed list layout: no suggestion dropdown ("Search … for: text" lines).
+// Typing + Enter or the Search button runs the search; the combined search entry does the matching.
+.nsipa_programs_list .o_searchview_autocomplete,
+.nsipa_programs_list .o_searchview .dropdown-menu.o_searchview_autocomplete,
+.g2p-approvals-action .o_searchview_autocomplete,
+.g2p-approvals-action .o_searchview .dropdown-menu.o_searchview_autocomplete {
+    display: none !important;
+}
+
+// Search box with an active search: the tag ("apple ✕") and the input share one row instead of the
+// input dropping below the tag. Applies to every list in the themed layout.
+@media (min-width: 768px) {
+    .nsipa_programs_list .o_searchview,
+    .g2p-approvals-action .o_searchview {
+        overflow: hidden;
+        .o_searchview_input_container {
+            display: flex !important;
+            flex-wrap: nowrap !important;
+            align-items: center;
+            gap: 8px;
+            width: 100%;
+            min-width: 0;
+        }
+        .o_searchview_facet {
+            flex: 0 1 auto;
+            display: inline-flex;
+            align-items: center;
+            height: 32px;
+            max-width: 70%;
+            margin: 0;
+            overflow: hidden;
+            background: #eaf3ec;
+            border: 0;
+            border-radius: 10px;
+            // The field-name part ("Programmes") is dropped; only the searched text is shown.
+            .o_searchview_facet_label {
+                display: none !important;
+            }
+            .o_facet_values {
+                display: inline-flex;
+                align-items: center;
+                padding: 0 4px 0 12px;
+                color: $p-dark;
+                font-size: 14px;
+                font-weight: 600;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+            .o_facet_remove {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                height: 100%;
+                padding: 0 10px;
+                color: #55615a;
+                background: transparent;
+                &:hover {
+                    color: $p-dark;
+                }
+            }
+        }
+        .o_searchview_input {
+            flex: 1 1 60px;
+            min-width: 60px;
+            width: auto !important;
+            height: 100%;
+            padding: 0;
+            border: 0;
+            background: transparent;
+        }
+    }
+}
+
+// Disbursement cycles list: five data columns plus the View / Create New Cycle buttons.
+@media (min-width: 768px) {
+    .nsipa_programs_list.nsipa_disbursement_cycles_list .o_list_renderer .o_list_table {
+        th, td {
+            padding: 0 16px !important;
+        }
+        th[data-name="program_mnemonic"] { width: 24% !important; }
+        th[data-name="latest_dc_cycle_name"] { width: 14% !important; }
+        th[data-name="latest_dc_version"] { width: 12% !important; }
+        th[data-name="latest_dc_stage"] { width: 16% !important; }
+        th[data-name="latest_dc_status"] { width: 12% !important; }
+        thead th:last-child:not([data-name]),
+        thead th.o_list_button { width: 22% !important; }
+        td.o_list_button {
+            overflow: visible !important;
+            text-overflow: clip !important;
+            > button,
+            > .btn {
+                display: inline-block;
+                margin-right: 12px;
+                vertical-align: middle;
+            }
+            .btn-primary {
+                padding: 6px 14px;
+                white-space: nowrap;
+            }
+        }
+    }
+}
+
+// Cycle detail page, tables inside the tabs (Disbursement Envelopes / Batches / Rules / Approval History...):
+// columns size to their content and every header stays on one full line instead of being clipped.
+.nsipa_cycle_detail .o_notebook .o_list_renderer {
+    overflow-x: auto;
+    .o_list_table {
+        table-layout: auto !important;
+        width: 100% !important;
+        thead th,
+        thead th .o_column_title,
+        thead th div,
+        thead th span {
+            white-space: nowrap !important;
+            overflow: visible !important;
+            text-overflow: clip !important;
+        }
+        th,
+        td {
+            padding: 0 20px !important;
+            vertical-align: middle !important;
+        }
+        thead th {
+            height: 52px;
+            min-width: max-content;
+        }
+        tbody tr.o_data_row {
+            height: 56px;
+            background: #fff;
+            &:hover {
+                background: #f7faf6;
+            }
+        }
+        // Odoo's empty striped filler rows.
+        tbody > tr:not(.o_data_row):not(.o_group_header) {
+            display: none;
+        }
+    }
+}

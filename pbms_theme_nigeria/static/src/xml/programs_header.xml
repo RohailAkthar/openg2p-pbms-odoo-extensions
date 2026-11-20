@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <!-- Presentation only: page header for the Programs list (Program Configuration action). -->
+    <t t-name="pbms_theme_nigeria.ProgramsListView" t-inherit="web.ListView" t-inherit-mode="extension">
+        <xpath expr="//Layout" position="before">
+            <div t-if="props.resModel == 'g2p.program.definition' and props.context.program_view_mode == 'config'" class="nsipa_page_header nsipa_programs_header">
+                <div class="nsipa_page_header_text">
+                    <div class="nsipa_eyebrow">PROGRAMME OPERATIONS</div>
+                    <h1 class="nsipa_page_title">Programmes <span class="nsipa_info_icon">i</span></h1>
+                    <p class="nsipa_page_subtitle">Design and manage social protection programmes.</p>
+                </div>
+                <div class="nsipa_header_actions">
+                    <button type="button" class="nsipa_refresh_btn" t-on-click="onNsipaRefresh">↻ Refresh</button>
+                    <button t-if="permissions.canCreateProgram" type="button" class="nsipa_new_btn" t-on-click="onNsipaNewProgramme">+ New programme</button>
+                </div>
+            </div>
+        </xpath>
+    </t>
+    <!-- Presentation only: page header for the Enrollment cycles list (program list -> cycles). -->
+    <t t-name="pbms_theme_nigeria.EnrollmentCyclesListView" t-inherit="web.ListView" t-inherit-mode="extension">
+        <xpath expr="//Layout" position="before">
+            <div t-if="props.resModel == 'g2p.program.definition' and props.context.nsipa_header == 'enrollment_cycles'" class="nsipa_page_header nsipa_programs_header">
+                <div class="nsipa_page_header_text">
+                    <div class="nsipa_eyebrow">PROGRAMME OPERATIONS</div>
+                    <h1 class="nsipa_page_title">Enrollment cycles <span class="nsipa_info_icon">i</span></h1>
+                    <p class="nsipa_page_subtitle">Track enrollment windows and approvals.</p>
+                </div>
+                <div class="nsipa_header_actions">
+                    <button type="button" class="nsipa_refresh_btn" t-on-click="onNsipaRefresh">↻ Refresh</button>
+                </div>
+            </div>
+        </xpath>
+    </t>
+    <!-- Presentation only: header for a program's cycle list (reached via "View"). The Create New Cycle
+         button reuses the existing load_enrollment_cycle_wizard handler. -->
+    <t t-name="pbms_theme_nigeria.EnrollmentCycleRecordsListView" t-inherit="web.ListView" t-inherit-mode="extension">
+        <xpath expr="//Layout" position="before">
+            <div t-if="props.resModel == 'g2p.enrollment.cycle'" class="nsipa_page_header nsipa_programs_header">
+                <div class="nsipa_page_header_text">
+                    <div class="nsipa_eyebrow">PROGRAMME OPERATIONS</div>
+                    <h1 class="nsipa_page_title">Enrollment cycles <span class="nsipa_info_icon">i</span></h1>
+                    <p class="nsipa_page_subtitle">Track enrollment windows and approvals.</p>
+                </div>
+                <div class="nsipa_header_actions">
+                    <button type="button" class="nsipa_refresh_btn" t-on-click="onNsipaRefresh">↻ Refresh</button>
+                    <button type="button" class="nsipa_new_btn" t-on-click="load_enrollment_cycle_wizard">+ Create New Cycle</button>
+                </div>
+            </div>
+        </xpath>
+    </t>
+    <!-- Presentation only: always show the pager as a card footer under the program's cycle list
+         (Odoo only shows it when there are more records than the page limit). -->
+    <t t-name="pbms_theme_nigeria.X2ManyCyclesFooter" t-inherit="web.X2ManyField" t-inherit-mode="extension">
+        <!-- Must go AFTER KanbanRenderer: ListRenderer (t-if) and KanbanRenderer (t-elif) are one chain,
+             so inserting between them makes every x2many render a kanban next to its list. -->
+        <xpath expr="//KanbanRenderer" position="after">
+            <div t-if="props.record.resModel == 'g2p.program.definition' and (props.name == 'enrollment_cycle_ids' or props.name == 'disbursement_cycle_ids')" class="nsipa_x2m_footer">
+                <Pager t-props="pagerProps"/>
+            </div>
+        </xpath>
+    </t>
+    <!-- Presentation only: page header for the Benefit Codes list. "Create Code" reuses the existing
+         load_benefit_code_wizard handler and the same permission as the original button. -->
+    <t t-name="pbms_theme_nigeria.BenefitCodesListView" t-inherit="web.ListView" t-inherit-mode="extension">
+        <xpath expr="//Layout" position="before">
+            <div t-if="props.resModel == 'g2p.benefit.codes'" class="nsipa_page_header nsipa_programs_header">
+                <div class="nsipa_page_header_text">
+                    <div class="nsipa_eyebrow">MASTER DATA</div>
+                    <h1 class="nsipa_page_title">Benefit codes <span class="nsipa_info_icon">i</span></h1>
+                    <p class="nsipa_page_subtitle">Manage the benefit codes used by programmes.</p>
+                </div>
+                <div class="nsipa_header_actions">
+                    <button type="button" class="nsipa_refresh_btn" t-on-click="onNsipaRefresh">↻ Refresh</button>
+                    <button t-if="permissions.canCreateBenefitCode" type="button" class="nsipa_new_btn" t-on-click="onNsipaNewBenefitCode">+ Create code</button>
+                </div>
+            </div>
+        </xpath>
+    </t>
+    <!-- Presentation only: page header for the Sponsor Banks list (g2p.warehouse with default_is_sponsor_bank).
+         "Create sponsor bank" uses the same permission as the original button. -->
+    <t t-name="pbms_theme_nigeria.SponsorBanksListView" t-inherit="web.ListView" t-inherit-mode="extension">
+        <xpath expr="//Layout" position="before">
+            <div t-if="props.resModel == 'g2p.warehouse' and props.context.default_is_sponsor_bank" class="nsipa_page_header nsipa_programs_header">
+                <div class="nsipa_page_header_text">
+                    <div class="nsipa_eyebrow">MASTER DATA</div>
+                    <h1 class="nsipa_page_title">Sponsor banks <span class="nsipa_info_icon">i</span></h1>
+                    <p class="nsipa_page_subtitle">Manage the sponsor banks used for disbursements.</p>
+                </div>
+                <div class="nsipa_header_actions">
+                    <button type="button" class="nsipa_refresh_btn" t-on-click="onNsipaRefresh">↻ Refresh</button>
+                    <button t-if="permissions.canCreateSponsorBank" type="button" class="nsipa_new_btn" t-on-click="onNsipaNewSponsorBank">+ Create sponsor bank</button>
+                </div>
+            </div>
+        </xpath>
+    </t>
+    <!-- Presentation only: page header for the Disbursement cycles list (program list -> cycles). -->
+    <t t-name="pbms_theme_nigeria.DisbursementCyclesListView" t-inherit="web.ListView" t-inherit-mode="extension">
+        <xpath expr="//Layout" position="before">
+            <div t-if="props.resModel == 'g2p.program.definition' and props.context.nsipa_header == 'disbursement_cycles'" class="nsipa_page_header nsipa_programs_header">
+                <div class="nsipa_page_header_text">
+                    <div class="nsipa_eyebrow">PROGRAMME OPERATIONS</div>
+                    <h1 class="nsipa_page_title">Disbursement cycles <span class="nsipa_info_icon">i</span></h1>
+                    <p class="nsipa_page_subtitle">Monitor programme disbursement cycles.</p>
+                </div>
+                <div class="nsipa_header_actions">
+                    <button type="button" class="nsipa_refresh_btn" t-on-click="onNsipaRefresh">↻ Refresh</button>
+                </div>
+            </div>
+        </xpath>
+    </t>
+    <!-- Presentation only: header for a program's disbursement cycle list (reached via "View"). The Create New Cycle
+         button reuses the existing load_disbursement_cycle_wizard handler. -->
+    <t t-name="pbms_theme_nigeria.DisbursementCycleRecordsListView" t-inherit="web.ListView" t-inherit-mode="extension">
+        <xpath expr="//Layout" position="before">
+            <div t-if="props.resModel == 'g2p.disbursement.cycle'" class="nsipa_page_header nsipa_programs_header">
+                <div class="nsipa_page_header_text">
+                    <div class="nsipa_eyebrow">PROGRAMME OPERATIONS</div>
+                    <h1 class="nsipa_page_title">Disbursement cycles <span class="nsipa_info_icon">i</span></h1>
+                    <p class="nsipa_page_subtitle">Monitor programme disbursement cycles.</p>
+                </div>
+                <div class="nsipa_header_actions">
+                    <button type="button" class="nsipa_refresh_btn" t-on-click="onNsipaRefresh">↻ Refresh</button>
+                    <button type="button" class="nsipa_new_btn" t-on-click="load_disbursement_cycle_wizard">+ Create New Cycle</button>
+                </div>
+            </div>
+        </xpath>
+    </t>
+</templates>

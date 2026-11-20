@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <!-- Presentation only: The pager moves to the card footer on the Approval queue screen,
+         so the record count is rendered separately. Hidden by CSS everywhere except the Approval queue screen. -->
+    <t t-name="pbms_theme_nigeria.ControlPanel" t-inherit="web.ControlPanel" t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('o_cp_pager')]" position="after">
+            <div t-if="pagerProps" class="nsipa_zero_count text-nowrap">
+                <strong t-esc="pagerProps.total or 0"/> records
+            </div>
+        </xpath>
+    </t>
+</templates>

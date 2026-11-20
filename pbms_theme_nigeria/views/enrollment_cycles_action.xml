@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!-- Presentation only: flag the Enrolment Cycles action so the theme shows the page header. -->
+    <record id="g2p_pbms.action_g2p_programs_enrolment_cycles" model="ir.actions.act_window">
+        <field name="context">{'nsipa_header': 'enrollment_cycles'}</field>
+        <field name="search_view_id" ref="view_g2p_programs_cycle_search_nsipa"/>
+    </record>
+
+    <!-- Presentation only: same fields/buttons as the base list; adds the NSIPA card layout class
+         (count + search box + Search button + pager footer). -->
+    <record id="view_g2p_programs_enrolment_cycles_tree_nsipa" model="ir.ui.view">
+        <field name="name">g2p.programs.enrolment.cycles.tree.nsipa</field>
+        <field name="model">g2p.program.definition</field>
+        <field name="inherit_id" ref="g2p_pbms.view_g2p_programs_enrolment_cycles_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="attributes">
+                <attribute name="class">nsipa_programs_list nsipa_enrollment_cycles_list</attribute>
+            </xpath>
+            <!-- Keep the View button (same label/action); only give it the theme's green link look. -->
+            <xpath expr="//button[@name='action_view_enrollment_cycles']" position="attributes">
+                <attribute name="class">nsipa_open_btn btn btn-link</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Presentation only: card layout for the cycle list opened from "View" (same fields/buttons). -->
+    <record id="view_enrollment_cycle_tree_nsipa" model="ir.ui.view">
+        <field name="name">g2p.enrollment.cycle.tree.nsipa</field>
+        <field name="model">g2p.enrollment.cycle</field>
+        <field name="inherit_id" ref="g2p_pbms.view_enrollment_cycle_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="attributes">
+                <attribute name="class">nsipa_programs_list nsipa_cycle_records_list</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_open_view']" position="attributes">
+                <attribute name="class">nsipa_open_btn btn btn-link</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Presentation only: modern popup for "New Enrolment Cycle" (same fields, readonly rules and Create action). -->
+    <record id="view_enrollment_cycle_create_wizard_form_nsipa" model="ir.ui.view">
+        <field name="name">g2p.enrollment.cycle.create.wizard.form.nsipa</field>
+        <field name="model">g2p.enrollment.cycle.create.wizard</field>
+        <field name="inherit_id" ref="g2p_pbms.view_enrollment_cycle_create_wizard_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="attributes">
+                <attribute name="class">nsipa_prog_popup nsipa_cycle_popup</attribute>
+            </xpath>
+            <xpath expr="//group" position="replace">
+                <div class="nsipa_prog_grid">
+                    <div class="nsipa_prog_field">
+                        <label for="program_id" string="Programme"/>
+                        <field name="program_id" nolabel="1" readonly="1"/>
+                    </div>
+                    <div class="nsipa_prog_field">
+                        <label for="cycle_name"/>
+                        <field name="cycle_name" nolabel="1"/>
+                    </div>
+                    <div class="nsipa_prog_field">
+                        <label for="cycle_number"/>
+                        <field name="cycle_number" nolabel="1" readonly="1"/>
+                    </div>
+                    <div class="nsipa_prog_field">
+                        <label for="creation_date"/>
+                        <field name="creation_date" nolabel="1" readonly="1"/>
+                    </div>
+                </div>
+            </xpath>
+            <xpath expr="//footer" position="replace">
+                <footer>
+                    <button string="Cancel" special="cancel" class="nsipa_cancel_btn"/>
+                    <button name="action_confirm" type="object" string="Create" class="btn btn-primary nsipa_save_btn"/>
+                </footer>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Presentation only: header + card layout for a program's cycle list (same field/columns/View action). -->
+    <record id="view_g2p_program_enrolment_cycles_form_nsipa" model="ir.ui.view">
+        <field name="name">g2p.program.enrolment.cycles.form.nsipa</field>
+        <field name="model">g2p.program.definition</field>
+        <field name="inherit_id" ref="g2p_pbms.view_g2p_program_enrolment_cycles_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="attributes">
+                <attribute name="class">nsipa_cycles_form</attribute>
+            </xpath>
+            <xpath expr="//field[@name='enrollment_cycle_ids']" position="before">
+                <div class="nsipa_page_header">
+                    <div class="nsipa_page_header_text">
+                        <div class="nsipa_eyebrow">PROGRAMME OPERATIONS</div>
+                        <h1 class="nsipa_page_title">Enrollment cycles <span class="nsipa_info_icon">i</span></h1>
+                        <p class="nsipa_page_subtitle"><field name="program_mnemonic" readonly="1" nolabel="1"/></p>
+                    </div>
+                </div>
+            </xpath>
+            <xpath expr="//field[@name='enrollment_cycle_ids']/tree" position="attributes">
+                <attribute name="limit">10</attribute>
+            </xpath>
+            <xpath expr="//field[@name='enrollment_cycle_ids']/tree/button[@name='action_open_view']" position="attributes">
+                <attribute name="class">nsipa_open_btn btn btn-link</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Presentation only: modern page header + card layout for the cycle detail form
+         (shared by enrolment and disbursement cycles). Same fields, buttons and logic. -->
+    <record id="view_g2p_eligibility_summary_wizard_form_nsipa" model="ir.ui.view">
+        <field name="name">g2p.bgtask.summary.wizard.form.nsipa</field>
+        <field name="model">g2p.bgtask.summary.wizard</field>
+        <field name="inherit_id" ref="g2p_pbms.view_g2p_eligibility_summary_wizard_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="attributes">
+                <attribute name="class">nsipa_cycle_detail</attribute>
+            </xpath>
+            <xpath expr="//sheet/field[@name='beneficiary_list_id']" position="before">
+                <div class="nsipa_page_header">
+                    <div class="nsipa_page_header_text">
+                        <div class="nsipa_eyebrow">PROGRAMME OPERATIONS</div>
+                        <h1 class="nsipa_page_title" invisible="list_stage == 'disbursement'">Enrollment cycle <span class="nsipa_info_icon">i</span></h1>
+                        <h1 class="nsipa_page_title" invisible="list_stage != 'disbursement'">Disbursement cycle <span class="nsipa_info_icon">i</span></h1>
+                        <p class="nsipa_page_subtitle" invisible="not cycle_name">
+                            <field name="program_id" readonly="1" nolabel="1" options="{'no_open': True}" invisible="not program_id"/>
+                            <span invisible="not program_id"> · </span>
+                            <field name="cycle_name" readonly="1" nolabel="1"/>
+                        </p>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Presentation only: card layout for the Benefit Codes list (same fields and edit action). -->
+    <record id="view_g2p_benefit_codes_tree_nsipa" model="ir.ui.view">
+        <field name="name">g2p.benefit.codes.tree.nsipa</field>
+        <field name="model">g2p.benefit.codes</field>
+        <field name="inherit_id" ref="g2p_pbms.view_g2p_benefit_codes_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="attributes">
+                <attribute name="class">nsipa_programs_list nsipa_benefit_codes_list</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_open_edit']" position="attributes">
+                <attribute name="class">nsipa_open_btn btn btn-link</attribute>
+                <attribute name="string">Edit →</attribute>
+                <attribute name="context">{'nsipa_popup': True}</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Presentation only: modern "Create New Enrolment / Disbursement List" dialog. Same fields, readonly
+         rules, hidden fields, info notes and button actions; only the layout and styling change. -->
+    <record id="view_g2p_beneficiary_list_form_nsipa" model="ir.ui.view">
+        <field name="name">g2p.beneficiary.list.form.nsipa</field>
+        <field name="model">g2p.beneficiary.list</field>
+        <field name="inherit_id" ref="g2p_pbms.view_g2p_beneficiary_list_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="attributes">
+                <attribute name="class">nsipa_prog_popup nsipa_cycle_popup nsipa_list_popup</attribute>
+            </xpath>
+            <xpath expr="//group" position="replace">
+                <div class="nsipa_prog_grid">
+                    <div class="nsipa_prog_field">
+                        <label for="program_id" string="Programme"/>
+                        <field name="program_id" nolabel="1" readonly="1" options="{'no_open': True}"/>
+                    </div>
+                    <div class="nsipa_prog_field">
+                        <label for="cycle_name_display" string="Cycle"/>
+                        <field name="cycle_name_display" nolabel="1" readonly="1"/>
+                    </div>
+                    <div class="nsipa_prog_field">
+                        <label for="next_list_number" string="List #"/>
+                        <field name="next_list_number" nolabel="1" readonly="1"/>
+                    </div>
+                    <div class="nsipa_prog_field">
+                        <label for="cycle_creation_date" string="Creation Date"/>
+                        <field name="cycle_creation_date" nolabel="1" readonly="1"/>
+                    </div>
+                    <div class="nsipa_prog_field" invisible="list_stage != 'disbursement'">
+                        <label for="disbursement_schedule_date"/>
+                        <field name="disbursement_schedule_date" nolabel="1"/>
+                    </div>
+                    <div class="nsipa_prog_field">
+                        <label for="brief"/>
+                        <field name="brief" nolabel="1" placeholder="Enter a brief description…"/>
+                    </div>
+                </div>
+            </xpath>
+            <xpath expr="//footer" position="replace">
+                <footer>
+                    <button string="Discard" class="nsipa_cancel_btn" special="cancel"/>
+                    <button name="action_save_and_open_summary" type="object" string="Create" class="btn btn-primary nsipa_save_btn"/>
+                </footer>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Presentation only: modern Approve / Reject reason dialog. Same fields, required reason and confirm action;
+         Reject gets a red Confirm button. -->
+    <record id="view_g2p_approval_reason_wizard_form_nsipa" model="ir.ui.view">
+        <field name="name">g2p.approval.reason.wizard.form.nsipa</field>
+        <field name="model">g2p.approval.reason.wizard</field>
+        <field name="inherit_id" ref="g2p_pbms.view_g2p_approval_reason_wizard_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="attributes">
+                <attribute name="class">nsipa_prog_popup nsipa_cycle_popup nsipa_approval_popup</attribute>
+            </xpath>
+            <xpath expr="//group" position="replace">
+                <field name="pending_stage_id" invisible="1"/>
+                <field name="action_type" invisible="1"/>
+                <div class="nsipa_prog_grid">
+                    <div class="nsipa_prog_field">
+                        <label for="reason"/>
+                        <field name="reason" nolabel="1" required="1" placeholder="Please provide a reason..."/>
+                    </div>
+                </div>
+            </xpath>
+            <xpath expr="//footer" position="replace">
+                <footer>
+                    <button string="Cancel" class="nsipa_cancel_btn" special="cancel"/>
+                    <button name="action_confirm" type="object" string="Confirm" class="btn btn-primary nsipa_save_btn"
+                            invisible="action_type == 'reject'"/>
+                    <button name="action_confirm" type="object" string="Confirm" class="btn btn-primary nsipa_save_btn nsipa_danger_btn"
+                            invisible="action_type != 'reject'"/>
+                </footer>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Presentation only: Disbursement cycles page. Flag + search view on the action, card layout on the list
+         (same fields and View / Create New Cycle buttons). -->
+    <record id="g2p_pbms.action_g2p_programs_disbursement_cycles" model="ir.actions.act_window">
+        <field name="context">{'nsipa_header': 'disbursement_cycles'}</field>
+        <field name="search_view_id" ref="view_g2p_programs_dcycle_search_nsipa"/>
+    </record>
+    <record id="view_g2p_programs_disbursement_cycles_tree_nsipa" model="ir.ui.view">
+        <field name="name">g2p.programs.disbursement.cycles.tree.nsipa</field>
+        <field name="model">g2p.program.definition</field>
+        <field name="inherit_id" ref="g2p_pbms.view_g2p_programs_disbursement_cycles_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="attributes">
+                <attribute name="class">nsipa_programs_list nsipa_disbursement_cycles_list</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_view_disbursement_cycles']" position="attributes">
+                <attribute name="class">nsipa_open_btn btn btn-link</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Presentation only: card layout for the disbursement cycle list opened from "View" (same fields/buttons). -->
+    <record id="view_g2p_disbursement_cycle_tree_nsipa" model="ir.ui.view">
+        <field name="name">g2p.disbursement.cycle.tree.nsipa</field>
+        <field name="model">g2p.disbursement.cycle</field>
+        <field name="inherit_id" ref="g2p_pbms.view_g2p_disbursement_cycle_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="attributes">
+                <attribute name="class">nsipa_programs_list nsipa_cycle_records_list</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_open_view']" position="attributes">
+                <attribute name="class">nsipa_open_btn btn btn-link</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Presentation only: header + card layout for a program's disbursement cycle list (same field/columns/View). -->
+    <record id="view_g2p_program_disbursement_cycles_form_nsipa" model="ir.ui.view">
+        <field name="name">g2p.program.disbursement.cycles.form.nsipa</field>
+        <field name="model">g2p.program.definition</field>
+        <field name="inherit_id" ref="g2p_pbms.view_g2p_program_disbursement_cycles_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="attributes">
+                <attribute name="class">nsipa_cycles_form</attribute>
+            </xpath>
+            <xpath expr="//field[@name='disbursement_cycle_ids']" position="before">
+                <div class="nsipa_page_header">
+                    <div class="nsipa_page_header_text">
+                        <div class="nsipa_eyebrow">PROGRAMME OPERATIONS</div>
+                        <h1 class="nsipa_page_title">Disbursement cycles <span class="nsipa_info_icon">i</span></h1>
+                        <p class="nsipa_page_subtitle"><field name="program_mnemonic" readonly="1" nolabel="1"/></p>
+                    </div>
+                </div>
+            </xpath>
+            <xpath expr="//field[@name='disbursement_cycle_ids']/tree" position="attributes">
+                <attribute name="limit">10</attribute>
+            </xpath>
+            <xpath expr="//field[@name='disbursement_cycle_ids']/tree/button[@name='action_open_view']" position="attributes">
+                <attribute name="class">nsipa_open_btn btn btn-link</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Presentation only: modern popup for "New Disbursement Cycle" (same fields, readonly rules and Create action). -->
+    <record id="view_disbursement_cycle_create_wizard_form_nsipa" model="ir.ui.view">
+        <field name="name">g2p.disbursement.cycle.create.wizard.form.nsipa</field>
+        <field name="model">g2p.disbursement.cycle.create.wizard</field>
+        <field name="inherit_id" ref="g2p_pbms.view_disbursement_cycle_create_wizard_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="attributes">
+                <attribute name="class">nsipa_prog_popup nsipa_cycle_popup</attribute>
+            </xpath>
+            <xpath expr="//group" position="replace">
+                <div class="nsipa_prog_grid">
+                    <div class="nsipa_prog_field">
+                        <label for="program_id" string="Programme"/>
+                        <field name="program_id" nolabel="1" readonly="1" options="{'no_open': True}"/>
+                    </div>
+                    <div class="nsipa_prog_field">
+                        <label for="cycle_name"/>
+                        <field name="cycle_name" nolabel="1"/>
+                    </div>
+                    <div class="nsipa_prog_field">
+                        <label for="cycle_number"/>
+                        <field name="cycle_number" nolabel="1" readonly="1"/>
+                    </div>
+                    <div class="nsipa_prog_field">
+                        <label for="creation_date"/>
+                        <field name="creation_date" nolabel="1" readonly="1"/>
+                    </div>
+                    <div class="nsipa_prog_field">
+                        <label for="disbursement_schedule_date"/>
+                        <field name="disbursement_schedule_date" nolabel="1"/>
+                    </div>
+                </div>
+            </xpath>
+            <xpath expr="//footer" position="replace">
+                <footer>
+                    <button string="Cancel" class="nsipa_cancel_btn" special="cancel"/>
+                    <button name="action_confirm" type="object" string="Create" class="btn btn-primary nsipa_save_btn"/>
+                </footer>
+            </xpath>
+        </field>
+    </record>
+</odoo>

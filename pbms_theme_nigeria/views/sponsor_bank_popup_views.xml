@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Presentation only: popup for creating/editing a sponsor bank. Same fields, readonly rules and
+         Program Benefit Code tab as g2p_pbms.view_g2p_sponsor_bank_form, laid out as a modal. -->
+    <record id="view_g2p_sponsor_bank_new_popup_form" model="ir.ui.view">
+        <field name="name">g2p.sponsor.bank.new.popup.form</field>
+        <field name="model">g2p.warehouse</field>
+        <field name="inherit_id" ref="g2p_pbms.view_g2p_sponsor_bank_form"/>
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="attributes">
+                <attribute name="class">nsipa_prog_popup nsipa_bank_popup</attribute>
+                <attribute name="string">New Sponsor Bank</attribute>
+            </xpath>
+            <xpath expr="//sheet/group" position="replace">
+                <field name="is_sponsor_bank" invisible="1"/>
+                <div class="nsipa_prog_grid">
+                    <div class="nsipa_prog_field">
+                        <label for="name" string="Sponsor Bank Name"/>
+                        <field name="name" nolabel="1" readonly="not context.get('warehouse_form_edit')"/>
+                    </div>
+                    <div class="nsipa_prog_field">
+                        <label for="warehouse_mnemonic" string="Sponsor Bank Mnemonic"/>
+                        <field name="warehouse_mnemonic" nolabel="1" readonly="not context.get('warehouse_form_edit')"/>
+                    </div>
+                    <div class="nsipa_prog_field">
+                        <label for="admin_name" string="Admin Name"/>
+                        <field name="admin_name" nolabel="1" readonly="not context.get('warehouse_form_edit')"/>
+                    </div>
+                    <div class="nsipa_prog_field">
+                        <label for="admin_email" string="Admin Email"/>
+                        <field name="admin_email" nolabel="1" readonly="not context.get('warehouse_form_edit')"/>
+                    </div>
+                    <div class="nsipa_prog_field">
+                        <label for="admin_mobile" string="Admin Mobile"/>
+                        <field name="admin_mobile" nolabel="1" readonly="not context.get('warehouse_form_edit')"/>
+                    </div>
+                </div>
+            </xpath>
+            <xpath expr="//sheet" position="after">
+                <footer>
+                    <button string="Cancel" special="cancel" class="nsipa_cancel_btn"/>
+                    <button string="Save Sponsor Bank" special="save" class="btn btn-primary nsipa_save_btn"/>
+                </footer>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_g2p_sponsor_bank_new_popup" model="ir.actions.act_window">
+        <field name="name">New Sponsor Bank</field>
+        <field name="res_model">g2p.warehouse</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_g2p_sponsor_bank_new_popup_form"/>
+        <field name="target">new</field>
+        <field name="context">{'create': True, 'default_is_sponsor_bank': True, 'warehouse_form_edit': True}</field>
+    </record>
+
+    <!-- Card layout for the Sponsor Banks list (same fields and edit action). -->
+    <record id="view_g2p_sponsor_bank_tree_nsipa" model="ir.ui.view">
+        <field name="name">g2p.sponsor.bank.tree.nsipa</field>
+        <field name="model">g2p.warehouse</field>
+        <field name="inherit_id" ref="g2p_pbms.view_g2p_sponsor_bank_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="attributes">
+                <attribute name="class">nsipa_programs_list nsipa_sponsor_banks_list</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_open_edit']" position="attributes">
+                <attribute name="class">nsipa_open_btn btn btn-link</attribute>
+                <attribute name="string">Edit →</attribute>
+                <attribute name="context">{'nsipa_popup': True}</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

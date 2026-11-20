@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Presentation only: popup for creating a benefit code. Same fields, widgets and readonly rules as
+         g2p_pbms.view_g2p_benefit_codes_form, laid out as a modal. -->
+    <record id="view_g2p_benefit_codes_new_popup_form" model="ir.ui.view">
+        <field name="name">g2p.benefit.codes.new.popup.form</field>
+        <field name="model">g2p.benefit.codes</field>
+        <field name="inherit_id" ref="g2p_pbms.view_g2p_benefit_codes_form"/>
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="attributes">
+                <attribute name="class">nsipa_prog_popup nsipa_benefit_popup</attribute>
+                <attribute name="string">New Benefit Code</attribute>
+            </xpath>
+            <xpath expr="//sheet/group" position="replace">
+                <div class="nsipa_prog_grid">
+                    <div class="nsipa_prog_field">
+                        <label for="benefit_mnemonic"/>
+                        <field name="benefit_mnemonic" nolabel="1" readonly="not context.get('benefit_code_form_edit')"/>
+                    </div>
+                    <div class="nsipa_prog_field">
+                        <label for="benefit_type"/>
+                        <field name="benefit_type" nolabel="1" readonly="not context.get('benefit_code_form_edit')"/>
+                    </div>
+                    <div class="nsipa_prog_field">
+                        <label for="measurement_unit"/>
+                        <field name="measurement_unit" nolabel="1" widget="g2p_pbms.benefit_unit_widget" readonly="not context.get('benefit_code_form_edit')"/>
+                    </div>
+                    <div class="nsipa_prog_field">
+                        <label for="decimal_places"/>
+                        <field name="decimal_places" nolabel="1" readonly="not context.get('benefit_code_form_edit')"/>
+                    </div>
+                    <div class="nsipa_prog_field nsipa_span2">
+                        <label for="benefit_description"/>
+                        <field name="benefit_description" nolabel="1" readonly="not context.get('benefit_code_form_edit')"/>
+                    </div>
+                </div>
+            </xpath>
+            <xpath expr="//sheet" position="after">
+                <footer>
+                    <button string="Cancel" special="cancel" class="nsipa_cancel_btn"/>
+                    <button string="Save Code" special="save" class="btn btn-primary nsipa_save_btn"/>
+                </footer>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_g2p_benefit_codes_new_popup" model="ir.actions.act_window">
+        <field name="name">New Benefit Code</field>
+        <field name="res_model">g2p.benefit.codes</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_g2p_benefit_codes_new_popup_form"/>
+        <field name="target">new</field>
+        <field name="context">{'create': False, 'benefit_code_form_edit': True}</field>
+    </record>
+</odoo>

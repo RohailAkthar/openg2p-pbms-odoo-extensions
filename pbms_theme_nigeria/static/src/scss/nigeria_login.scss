@@ -1,0 +1,234 @@
+/* Nigeria Theme Login Styling */
+main:has(.g2p_login) {
+<<<<<<< HEAD
+    background: #edf7f1 0% 0% no-repeat padding-box !important;
+=======
+    background: #f4f5f3 !important;
+    height: 100vh !important;
+>>>>>>> 4bc2c75 (Align with the UI/UX team)
+}
+
+.nigeria-login-header {
+    margin-bottom: 1.5rem;
+}
+
+.nigeria-coat-of-arms-login {
+    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+}
+
+.g2p_login .oe_login_buttons .btn-primary {
+    background-color: #008751 !important;
+    border-color: #008751 !important;
+}
+
+.g2p_login .oe_login_buttons .btn-primary:hover,
+.g2p_login .oe_login_buttons .btn-primary:active,
+.g2p_login .oe_login_buttons .btn-primary:focus {
+    background-color: #00683e !important;
+    border-color: #00683e !important;
+}
+
+.g2p_login .oe_login_buttons a,
+.g2p_login .oe_login_buttons a:hover {
+    color: #008751 !important;
+}
+
+.g2p_login .form-control:focus {
+    border-color: #008751 !important;
+    box-shadow: 0 0 0 0.15rem rgba(0, 135, 81, 0.25) !important;
+}
+<<<<<<< HEAD
+=======
+
+/* ---- Split-screen layout (brand panel + sign-in form) ---- */
+$nl-green-dark: #1f3b31;
+$nl-green: #2f6f4e;
+$nl-gold: #8a6d2f;
+
+.g2p_login.oe_website_login_container {
+    position: fixed !important;
+    inset: 0;
+    transform: none !important;
+    width: 100% !important;
+    height: 100% !important;
+    background: #f4f5f3 !important;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr auto 1fr;
+    z-index: 1;
+    overflow-y: auto;
+}
+
+.g2p_login .nigeria-login-brand {
+    grid-column: 1;
+    grid-row: 1 / -1;
+    align-self: stretch;
+    background: $nl-green-dark;
+    color: #fff;
+    padding: 108px 120px 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.g2p_login .nigeria-login-brand-top {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+.g2p_login .nigeria-login-logo {
+    background: #fff;
+    border-radius: 8px;
+    padding: 8px;
+    display: inline-flex;
+    img { height: 66px; width: auto; }
+}
+.g2p_login .nigeria-login-tagline { font-size: 12px; }
+.g2p_login .nigeria-login-eyebrow {
+    color: $nl-gold;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+}
+.g2p_login .nigeria-login-headline {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: 400;
+    font-size: clamp(36px, 3.6vw, 56px);
+    line-height: 1.15;
+    color: #fff;
+    margin: 0 0 24px;
+}
+.g2p_login .nigeria-login-sub {
+    font-size: 16px;
+    line-height: 1.6;
+    max-width: 380px;
+    color: rgba(255, 255, 255, 0.85);
+}
+.g2p_login .nigeria-login-brand-foot {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* Right column: form (override the old floating-card positioning) */
+.g2p_login .oe_login_form:not(.ssp-signup-body) {
+    grid-column: 2;
+    grid-row: 2;
+    justify-self: center;
+    width: 100%;
+    max-width: 430px !important;
+    top: 0 !important;
+    margin: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+}
+.g2p_login .nigeria-login-contact {
+    grid-column: 2;
+    grid-row: 3;
+    align-self: start;
+    justify-self: center;
+}
+
+.g2p_login .nigeria-login-welcome {
+    color: $nl-gold;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+}
+.g2p_login .nigeria-login-title {
+    font-size: 32px;
+    font-weight: 700;
+    color: $nl-green-dark;
+    margin: 0 0 12px;
+}
+.g2p_login .nigeria-login-hint {
+    color: #555;
+    font-size: 14px;
+    margin-bottom: 28px;
+}
+.g2p_login form label {
+    font-weight: 500 !important;
+    font-size: 14px !important;
+    margin-bottom: 8px;
+}
+.g2p_login .form-control {
+    height: 46px;
+    border-radius: 6px;
+    background: #fff;
+    border: 1px solid #d9dcd8;
+}
+.g2p_login .reset-password { display: none; }
+.g2p_login .oe_login_buttons .btn-primary {
+    background-color: $nl-green !important;
+    border-color: $nl-green !important;
+    height: 52px;
+    border-radius: 6px;
+    font-weight: 600;
+}
+.g2p_login .oe_login_buttons .btn-primary:hover,
+.g2p_login .oe_login_buttons .btn-primary:active,
+.g2p_login .oe_login_buttons .btn-primary:focus {
+    background-color: $nl-green-dark !important;
+    border-color: $nl-green-dark !important;
+}
+.g2p_login .nigeria-login-contact {
+    text-align: center;
+    color: #666;
+    font-size: 14px;
+    margin: 24px auto 0;
+    max-width: 430px;
+}
+
+@media (max-width: 900px) {
+    .g2p_login.oe_website_login_container {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto;
+    }
+    .g2p_login .nigeria-login-brand { grid-column: 1; grid-row: 1; padding: 32px 24px; gap: 24px; }
+    .g2p_login .oe_login_form:not(.ssp-signup-body) { grid-column: 1; grid-row: 2; padding: 32px 24px !important; }
+    .g2p_login .nigeria-login-contact { grid-column: 1; grid-row: 3; padding: 0 24px 32px; }
+}
+
+
+// ---------- Help on the sign-in page (CSS-only toggle) ----------
+.g2p_login {
+    .nigeria-login-help-toggle { position: absolute; opacity: 0; pointer-events: none; }
+    .nigeria-login-help-btn {
+        position: fixed; right: 24px; bottom: 24px; z-index: 1040;
+        display: inline-flex; align-items: center; gap: 8px; height: 48px; padding: 0 20px; margin: 0;
+        background: #2e6b4a; color: #fff; border: 1px solid rgba(255, 255, 255, 0.7); border-radius: 24px;
+        font-size: 15px; font-weight: 700; cursor: pointer; box-shadow: 0 6px 18px rgba(31, 61, 46, 0.35);
+        &:hover { background: #1f3d2e; }
+        .nigeria-login-help-i {
+            display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px;
+            border: 1.5px solid #fff; border-radius: 50%; font-size: 11px;
+        }
+    }
+    .nigeria-login-help-panel {
+        display: none; position: fixed; right: 24px; bottom: 88px; z-index: 1050;
+        width: 420px; max-width: calc(100vw - 32px); max-height: calc(100vh - 120px); overflow-y: auto;
+        background: #fff; border: 1px solid #e5e9e4; border-radius: 16px; box-shadow: 0 16px 40px rgba(31, 61, 46, 0.25);
+        color: #1c2b22; text-align: left;
+        .nigeria-login-help-head {
+            display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; border-bottom: 1px solid #e5e9e4;
+            h2 { margin: 0; font-size: 20px; font-weight: 700; color: #1f3d2e; }
+        }
+        .nigeria-login-help-close {
+            margin: 0; padding: 6px 14px; background: #2e6b4a; color: #fff; border-radius: 8px; font-weight: 600; cursor: pointer;
+        }
+        .nigeria-login-help-body {
+            padding: 16px 20px 20px; font-size: 14px; line-height: 1.5;
+            h3 { margin: 16px 0 4px; font-size: 15px; font-weight: 700; color: #1f3d2e; }
+            p, ol, ul { margin: 0 0 6px; }
+            ol, ul { padding-left: 20px; li { margin: 3px 0; } }
+        }
+        .nigeria-login-help-foot { margin-top: 14px; padding-top: 10px; border-top: 1px solid #e5e9e4; font-size: 12px; color: #5c6b61; }
+    }
+    .nigeria-login-help-toggle:checked ~ .nigeria-login-help-panel { display: block; }
+}
+>>>>>>> 4bc2c75 (Align with the UI/UX team)

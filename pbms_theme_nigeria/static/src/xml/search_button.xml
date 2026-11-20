@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <!-- Presentation only: a "Search" button next to the search box. Hidden by CSS
+         everywhere except the Approval queue screen. -->
+    <t t-name="pbms_theme_nigeria.SearchBar" t-inherit="web.SearchBar" t-inherit-mode="extension">
+        <xpath expr="//SearchBarMenu" position="before">
+            <button type="button" class="nsipa_search_btn" t-on-click="onNsipaSearchClick">Search</button>
+        </xpath>
+    </t>
+</templates>

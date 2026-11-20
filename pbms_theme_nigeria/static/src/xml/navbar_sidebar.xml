@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t t-name="pbms_theme_nigeria.NavBar" t-inherit="web.NavBar" t-inherit-mode="extension">
+        <xpath expr="//t[@t-if='currentAppSections.length']" position="before">
+            <div class="nsipa_sidebar_caption d-none d-md-block">WORKSPACE</div>
+        </xpath>
+        <xpath expr="//nav" position="inside">
+            <div class="nsipa_header_title d-none d-md-flex">Programme &amp; Benefit Management</div>
+            <a class="nsipa_signout d-none d-md-flex" href="/web/session/logout">Sign out</a>
+            <div class="nsipa_sidebar_footer d-none d-md-block">
+                <div class="nsipa_sidebar_footer_title">NSIPA</div>
+                <div class="nsipa_sidebar_footer_sub">PBMS · Connected staff workspace</div>
+            </div>
+        </xpath>
+    </t>
+</templates>

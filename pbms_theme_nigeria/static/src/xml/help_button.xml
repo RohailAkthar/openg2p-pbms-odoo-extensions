@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <!-- Presentation only: floating Help button + "Help for this screen" panel. Text is per screen (help_button.js). -->
+    <t t-name="pbms_theme_nigeria.NsipaHelp">
+        <div class="nsipa_help">
+            <button t-if="inKnowledge" type="button" class="nsipa_help_btn nsipa_help_back" t-on-click="goBack">
+                <span class="nsipa_help_i">←</span> Back
+            </button>
+            <button t-else="" type="button" class="nsipa_help_btn" t-on-click="toggle">
+                <span class="nsipa_help_i">i</span> Help
+            </button>
+            <div t-if="state.open and !inKnowledge" class="nsipa_help_panel" role="dialog" aria-label="Help for this screen">
+                <div class="nsipa_help_head">
+                    <h2>Help for this screen</h2>
+                    <button type="button" class="nsipa_help_close" t-on-click="toggle">Close</button>
+                </div>
+                <div class="nsipa_help_body">
+                    <div class="nsipa_help_auto">Automatically selected: <t t-esc="state.name"/> • all users</div>
+                    <h3><t t-esc="state.help.title"/></h3>
+                    <p><t t-esc="state.help.intro"/></p>
+                    <ol>
+                        <li t-foreach="state.help.steps" t-as="step" t-key="step_index"><t t-esc="step"/></li>
+                    </ol>
+                    <h4>What you need</h4>
+                    <p><t t-esc="common.need"/></p>
+                    <h4>Next step</h4>
+                    <p><t t-esc="common.next"/></p>
+                    <h4>Common issues</h4>
+                    <p><t t-esc="common.issues"/></p>
+                    <div class="nsipa_help_version">Published version 1</div>
+                    <div class="nsipa_help_browse">
+                        <button type="button" class="nsipa_help_browse_toggle" t-on-click="toggleBrowse">
+                            <span t-esc="state.browse ? '▼' : '▶'"/> Browse other help (optional)
+                        </button>
+                        <ul t-if="state.browse">
+                            <li t-foreach="allHelp" t-as="item" t-key="item.title">
+                                <a href="#" t-on-click.prevent="() => this.showHelp(item)"><t t-esc="item.title"/></a>
+                            </li>
+                        </ul>
+                        <a href="#" class="nsipa_help_link" t-on-click.prevent="openCurrentGuide">Read the full guide for this screen →</a>
+                        <a href="#" class="nsipa_help_link" t-on-click.prevent="() => this.openKnowledge('what-is-pbms')">Open knowledge library</a>
+                        <a t-if="aiUrl" t-att-href="aiUrl" target="_blank" class="nsipa_help_link">Ask local AI about this stage</a>
+                    </div>
+                    <div class="nsipa_help_foot">Guidance explains tasks. Your account determines the actions available.</div>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

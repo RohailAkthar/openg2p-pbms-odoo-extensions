@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Presentation only: same fields, domain and actions as the base Programs list.
+         Adds a styling class, display labels and an "Open →" link on the existing edit button. -->
+    <record id="view_g2p_programs_tree_nsipa" model="ir.ui.view">
+        <field name="name">g2p.programs.tree.nsipa</field>
+        <field name="model">g2p.program.definition</field>
+        <field name="inherit_id" ref="g2p_pbms.view_g2p_programs_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="attributes">
+                <attribute name="class">nsipa_programs_list</attribute>
+            </xpath>
+            <field name="program_mnemonic" position="attributes">
+                <attribute name="string">Programme Name</attribute>
+            </field>
+            <xpath expr="//button[@name='action_open_edit']" position="attributes">
+                <attribute name="class">nsipa_open_btn btn btn-link</attribute>
+                <attribute name="string">Edit →</attribute>
+                <attribute name="title">Edit</attribute>
+                <attribute name="context">{'nsipa_popup': True}</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Presentation only: styling class for the Program Configuration form page (row click).
+         The "New/Edit programme" popup is a primary view that sets its own class, so it is unaffected. -->
+    <record id="view_g2p_programs_config_form_nsipa" model="ir.ui.view">
+        <field name="name">g2p.programs.config.form.nsipa</field>
+        <field name="model">g2p.program.definition</field>
+        <field name="inherit_id" ref="g2p_pbms.view_g2p_programs_config_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="attributes">
+                <attribute name="class">nsipa_prog_detail</attribute>
+            </xpath>
+            <!-- Same rule the other fields already use: read-only unless the form is opened for editing
+                 (context program_form_edit). Hides Add / Delete in these tabs on the read-only page. -->
+            <field name="program_benefit_code_ids" position="attributes">
+                <attribute name="readonly">not context.get('program_form_edit')</attribute>
+            </field>
+            <field name="eligibility_rule_ids" position="attributes">
+                <attribute name="readonly">not context.get('program_form_edit')</attribute>
+            </field>
+            <field name="entitlement_rule_ids" position="attributes">
+                <attribute name="readonly">not context.get('program_form_edit')</attribute>
+            </field>
+            <field name="enrollment_workflow_stage_ids" position="attributes">
+                <attribute name="readonly">not context.get('program_form_edit')</attribute>
+            </field>
+            <field name="disbursement_workflow_stage_ids" position="attributes">
+                <attribute name="readonly">not context.get('program_form_edit')</attribute>
+            </field>
+        </field>
+    </record>
+
+    <!-- Presentation only: search bar entry that matches across every column of the Programmes list. -->
+    <record id="view_g2p_programs_search_nsipa" model="ir.ui.view">
+        <field name="name">g2p.programs.search.nsipa</field>
+        <field name="model">g2p.program.definition</field>
+        <field name="arch" type="xml">
+            <search string="Programmes">
+                <field name="nsipa_search" string="Programmes"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- Presentation only: search bar entry for the Enrollment cycles list; matches every column shown there. -->
+    <record id="view_g2p_programs_cycle_search_nsipa" model="ir.ui.view">
+        <field name="name">g2p.programs.cycle.search.nsipa</field>
+        <field name="model">g2p.program.definition</field>
+        <field name="arch" type="xml">
+            <search string="Enrollment cycles">
+                <field name="nsipa_cycle_search" string="Enrollment cycles"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- Presentation only: search bar entry for the Disbursement cycles list; matches every column shown there. -->
+    <record id="view_g2p_programs_dcycle_search_nsipa" model="ir.ui.view">
+        <field name="name">g2p.programs.dcycle.search.nsipa</field>
+        <field name="model">g2p.program.definition</field>
+        <field name="arch" type="xml">
+            <search string="Disbursement cycles">
+                <field name="nsipa_dcycle_search" string="Disbursement cycles"/>
+            </search>
+        </field>
+    </record>
+</odoo>

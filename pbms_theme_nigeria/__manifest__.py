@@ -1,0 +1,66 @@
+{
+    "name": "PBMS Nigeria Branding Theme",
+    "category": "G2P/Theme",
+    "version": "1.0.0",
+    "sequence": 1,
+    "summary": "Official Federal Republic of Nigeria Branding and Theme for PBMS",
+    "author": "OpenG2P / Nigeria Social Protection",
+    "website": "https://openg2p.org",
+    "license": "LGPL-3",
+    "depends": [
+        "base",
+        "web",
+        "pbms_theme_extension",
+<<<<<<< HEAD
+    ],
+    "data": [
+        "views/webclient_templates.xml",
+        "templates/login_templates.xml",
+=======
+        "g2p_pbms",
+    ],
+    "data": [
+        "data/website_branding.xml",
+        "views/webclient_templates.xml",
+        "templates/login_templates.xml",
+        "views/program_list_views.xml",
+        "views/program_popup_views.xml",
+        "views/enrollment_cycles_action.xml",
+        "views/master_data_menus.xml",
+        "views/benefit_code_popup_views.xml",
+        "views/sponsor_bank_popup_views.xml",
+        "views/search_views.xml",
+>>>>>>> 4bc2c75 (Align with the UI/UX team)
+    ],
+    "assets": {
+        "web.assets_backend": [
+            "pbms_theme_nigeria/static/src/js/nigeria_window_title.js",
+            "pbms_theme_nigeria/static/src/css/nigeria_navbar.css",
+<<<<<<< HEAD
+=======
+            "pbms_theme_nigeria/static/src/scss/nsipa_layout.scss",
+            "pbms_theme_nigeria/static/src/js/navbar_sidebar.js",
+            "pbms_theme_nigeria/static/src/js/help_button.js",
+            "pbms_theme_nigeria/static/src/xml/help_button.xml",
+            "pbms_theme_nigeria/static/src/xml/navbar_sidebar.xml",
+            "pbms_theme_nigeria/static/src/xml/approval_queue_header.xml",
+            "pbms_theme_nigeria/static/src/js/approval_queue_header.js",
+            "pbms_theme_nigeria/static/src/xml/control_panel_count.xml",
+            "pbms_theme_nigeria/static/src/xml/search_button.xml",
+            "pbms_theme_nigeria/static/src/js/search_button.js",
+            "pbms_theme_nigeria/static/src/xml/programs_header.xml",
+            "pbms_theme_nigeria/static/src/js/programs_header.js",
+            "pbms_theme_nigeria/static/src/js/list_sort_arrow.js",
+            "pbms_theme_nigeria/static/src/scss/nsipa_programs.scss",
+            "pbms_theme_nigeria/static/src/scss/nsipa_program_popup.scss",
+>>>>>>> 4bc2c75 (Align with the UI/UX team)
+        ],
+        "web.assets_frontend": [
+            "pbms_theme_nigeria/static/src/scss/nigeria_login.scss",
+        ],
+    },
+    "post_init_hook": "post_init_hook",
+    "application": False,
+    "installable": True,
+    "auto_install": False,
+}
