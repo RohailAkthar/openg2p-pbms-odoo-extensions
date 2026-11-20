@@ -11,12 +11,6 @@
         "base",
         "web",
         "pbms_theme_extension",
-<<<<<<< HEAD
-    ],
-    "data": [
-        "views/webclient_templates.xml",
-        "templates/login_templates.xml",
-=======
         "g2p_pbms",
     ],
     "data": [
@@ -30,14 +24,11 @@
         "views/benefit_code_popup_views.xml",
         "views/sponsor_bank_popup_views.xml",
         "views/search_views.xml",
->>>>>>> 4bc2c75 (Align with the UI/UX team)
     ],
     "assets": {
         "web.assets_backend": [
             "pbms_theme_nigeria/static/src/js/nigeria_window_title.js",
             "pbms_theme_nigeria/static/src/css/nigeria_navbar.css",
-<<<<<<< HEAD
-=======
             "pbms_theme_nigeria/static/src/scss/nsipa_layout.scss",
             "pbms_theme_nigeria/static/src/js/navbar_sidebar.js",
             "pbms_theme_nigeria/static/src/js/help_button.js",
@@ -53,7 +44,6 @@
             "pbms_theme_nigeria/static/src/js/list_sort_arrow.js",
             "pbms_theme_nigeria/static/src/scss/nsipa_programs.scss",
             "pbms_theme_nigeria/static/src/scss/nsipa_program_popup.scss",
->>>>>>> 4bc2c75 (Align with the UI/UX team)
         ],
         "web.assets_frontend": [
             "pbms_theme_nigeria/static/src/scss/nigeria_login.scss",

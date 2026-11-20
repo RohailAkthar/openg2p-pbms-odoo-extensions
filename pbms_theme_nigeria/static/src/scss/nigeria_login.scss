@@ -1,11 +1,7 @@
 /* Nigeria Theme Login Styling */
 main:has(.g2p_login) {
-<<<<<<< HEAD
-    background: #edf7f1 0% 0% no-repeat padding-box !important;
-=======
     background: #f4f5f3 !important;
     height: 100vh !important;
->>>>>>> 4bc2c75 (Align with the UI/UX team)
 }
 
 .nigeria-login-header {
@@ -37,8 +33,6 @@ main:has(.g2p_login) {
     border-color: #008751 !important;
     box-shadow: 0 0 0 0.15rem rgba(0, 135, 81, 0.25) !important;
 }
-<<<<<<< HEAD
-=======
 
 /* ---- Split-screen layout (brand panel + sign-in form) ---- */
 $nl-green-dark: #1f3b31;
@@ -231,4 +225,3 @@ $nl-gold: #8a6d2f;
     }
     .nigeria-login-help-toggle:checked ~ .nigeria-login-help-panel { display: block; }
 }
->>>>>>> 4bc2c75 (Align with the UI/UX team)
