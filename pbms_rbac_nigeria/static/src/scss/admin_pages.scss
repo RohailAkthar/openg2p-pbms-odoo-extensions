@@ -1,0 +1,848 @@
+// ADMINISTRATION screens (User Access Settings, Developer Apps, General Settings) in the same
+// look as the PBMS workspace screens. The Users list and Apps cards already get the shared card
+// layout through `nsipa_programs_list` (see admin_pages.js); this file adds what differs.
+// Presentation only.
+$a-border: #e5e9e4;
+$a-dark: #1f3d2e;
+$a-active: #eaf3ec;
+$a-gold: #c9a227;
+
+@media (min-width: 768px) {
+    // Page title eyebrow on admin forms (a user, a module, Settings) reads ADMINISTRATION.
+    .nsipa_admin_page .o_control_panel {
+        .o_breadcrumb .active::before,
+        .breadcrumb-item.active::before {
+            content: "ADMINISTRATION";
+        }
+    }
+
+    // ---------- Developer Apps: module cards inside the white card ----------
+    .nsipa_admin_view.o_kanban_view {
+        .o_kanban_renderer {
+            padding: 24px 28px;
+            gap: 16px;
+            background: #fff;
+            border-top: 1px solid $a-border;
+        }
+        .o_kanban_record {
+            margin: 0 !important;
+            border: 1px solid $a-border !important;
+            border-radius: 12px;
+            box-shadow: none;
+            &:hover {
+                border-color: #b9d1c3 !important;
+                box-shadow: 0 2px 8px rgba(31, 61, 46, 0.08);
+            }
+        }
+        .o_kanban_record .btn-primary {
+            background-color: #2e6b4a;
+            border-color: #2e6b4a;
+            border-radius: 8px;
+        }
+        .o_kanban_record .btn-secondary {
+            background: #fff;
+            border: 1px solid $a-border;
+            border-radius: 8px;
+            color: $a-dark;
+        }
+        // The default "Apps" filter stays visible (and removable) inside the search box.
+        .o_searchview_facet {
+            border-radius: 8px;
+            background: $a-active;
+            color: #2e5a42;
+        }
+    }
+
+    // ---------- User Access Settings: users table ----------
+    .nsipa_admin_view.nsipa_admin_users .o_list_table {
+        // Full-width columns (Odoo otherwise freezes narrow inline widths).
+        th[data-name="name"] { width: 24% !important; }
+        th[data-name="login"] { width: 24% !important; }
+        th[data-name="lang"] { width: 16% !important; }
+        th[data-name="login_date"] { width: 20% !important; }
+        th[data-name="state"] { width: 16% !important; }
+        td[name="name"] {
+            font-weight: 600;
+            color: $a-dark;
+        }
+        // Status as the soft green pill used on the workspace screens.
+        .o_field_badge .badge {
+            padding: 6px 12px;
+            border-radius: 8px;
+            background: $a-active !important;
+            color: #2e5a42 !important;
+            font-size: 14px;
+            font-weight: 500;
+        }
+    }
+    // Hide Odoo's empty striped filler rows once there is data, as on the Approvals screen.
+    .nsipa_admin_view .o_list_table:has(tbody .o_data_row) tbody > tr:not(.o_data_row):not(.o_group_header) {
+        display: none;
+    }
+
+    // ---------- Developer Apps: filter panel and empty placeholders ----------
+    .nsipa_admin_view.o_kanban_view {
+        .o_kanban_ghost {
+            display: none !important;
+        }
+        .o_search_panel {
+            padding: 20px 16px;
+            background: #f6f8f5;
+            border-top: 1px solid $a-border;
+            border-right: 1px solid $a-border;
+            .o_search_panel_section_header {
+                font-size: 12px;
+                letter-spacing: 0.08em;
+                color: #55615a;
+                .fa {
+                    color: #8a6d1a;
+                }
+            }
+            .list-group-item,
+            header {
+                border-radius: 8px;
+                color: $a-dark;
+            }
+            .active,
+            .list-group-item-action.active {
+                background: $a-active !important;
+                color: $a-dark !important;
+                font-weight: 600;
+                box-shadow: inset 3px 0 0 $a-gold;
+            }
+        }
+    }
+
+    // ---------- General Settings ----------
+    .o_base_settings_view {
+        .o_control_panel {
+            padding: 58px 40px 24px !important; // eyebrow at the same height as on the list pages
+            // Same header layout as the list pages: title + subtitle on the left,
+            // Save / Discard + search at the top right, aligned to the card's right edge.
+            .o_control_panel_main {
+                align-items: flex-start !important;
+            }
+            .o_control_panel_actions,
+            .o_cp_buttons {
+                align-self: flex-start !important;
+                margin-top: -22px; // level with the eyebrow + title, like Refresh / New on list pages
+            }
+            .o_control_panel_breadcrumbs {
+                flex: 1 1 auto !important; // Odoo gives it a fixed half-width share
+                max-width: none !important;
+                min-width: 0;
+                align-items: flex-end !important;
+                gap: 12px !important;
+            }
+            .o_breadcrumb {
+                flex-direction: column !important;
+                align-items: flex-start !important;
+                &::after {
+                    content: "Configure PBMS integrations, document storage and key management.";
+                    margin-top: 10px;
+                    font-size: 15px;
+                    font-weight: 400;
+                    color: #5f6b64;
+                    white-space: normal; // may wrap on narrow screens instead of pushing the buttons
+                }
+            }
+            // Only holds Odoo's (hidden) collapsed "create" menu here; it would offset the title.
+            .o_control_panel_main_buttons {
+                display: none !important;
+            }
+            .o_breadcrumb {
+                overflow: visible !important;
+            }
+            .o_last_breadcrumb_item.active {
+                font-size: 40px !important; // same size as the list page titles
+                margin-left: -0.06em; // optical: big letters start ~2px right of the eyebrow / subtitle
+                &::before {
+                    left: 2.4px !important; // the eyebrow belongs to the title: undo the shift for it
+                }
+                font-weight: 700;
+                line-height: 1.1;
+                color: $a-dark;
+                overflow: visible !important;
+                > span {
+                    overflow: visible !important;
+                }
+            }
+            .o_cp_buttons {
+                order: 2 !important;
+                flex: 0 0 auto; // Save / Discard never shrink under the search box
+                margin-left: auto;
+                gap: 8px;
+                .btn {
+                    height: 44px;
+                    padding: 0 20px;
+                    border-radius: 8px;
+                    font-weight: 700;
+                }
+                .btn-secondary {
+                    color: $a-dark;
+                }
+            }
+            .o_control_panel_actions {
+                flex: 0 1 360px; // shrinks (down to 220px) on narrower screens instead of overlapping
+                width: auto !important;
+                min-width: 220px;
+                margin-left: 16px;
+                align-self: flex-end;
+            }
+            .o_searchview {
+                height: 52px;
+                padding: 0 18px !important;
+                background: #fff;
+                border: 1px solid #cdd9d4 !important;
+                border-radius: 12px !important;
+                .o_searchview_icon {
+                    display: none !important;
+                }
+                .o_searchview_input::placeholder {
+                    color: #6f7a74;
+                }
+            }
+        }
+        .o_content {
+            padding: 8px 40px 40px;
+        }
+        .o_setting_container {
+            height: 100%;
+            background: #fff;
+            border: 1px solid $a-border;
+            border-radius: 14px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+        }
+        // Only the G2P PBMS Settings tab is offered: Odoo's General Settings and Website tabs, and
+        // their sections (which settings search would otherwise still list), are hidden.
+        .settings_tab .tab[data-key="general_settings"],
+        .settings_tab .tab[data-key="website"],
+        .app_settings_block[data-key="general_settings"],
+        .app_settings_block[data-key="website"] {
+            display: none !important;
+        }
+        // Section titles (Users, Languages, ...) styled like the workspace table headers.
+        .app_settings_block h2 {
+            margin: 0 !important;
+            padding: 18px 28px !important;
+            background: #f6f8f5 !important;
+            border-bottom: 1px solid $a-border;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-size: 12px !important;
+            font-weight: 600;
+            color: #55615a;
+        }
+        .settings_tab {
+            background: #f6f8f5;
+            border-color: $a-border !important;
+            .tab {
+                border-left: 3px solid transparent;
+                color: $a-dark;
+                &:hover {
+                    background: #eef3ee;
+                }
+                &.selected {
+                    background: $a-active !important;
+                    border-left-color: $a-gold;
+                    color: $a-dark !important;
+                    font-weight: 600;
+                }
+            }
+        }
+    }
+}
+
+// ---------- Records opened from ADMINISTRATION (a user, a module) ----------
+// Same look as the workspace record pages: ADMINISTRATION eyebrow + big title, a back link,
+// soft pill status, the record in a white card, underlined tabs. Layout/colours only: no field,
+// button or behaviour changes. Pop-up dialogs are not affected (scoped to the action manager).
+@media (min-width: 768px) {
+    .nsipa_admin_page .o_action_manager .o_form_view:not(.o_base_settings_view) {
+        // Header: eyebrow, back link, big title; New button on the right.
+        .o_control_panel {
+            padding: 36px 40px 16px !important;
+            .o_control_panel_main {
+                align-items: flex-end !important;
+            }
+            .o_control_panel_breadcrumbs {
+                flex: 1 1 auto !important; // Odoo gives it a fixed half-width share
+                max-width: none !important;
+                min-width: 0;
+                align-items: flex-end !important;
+                gap: 16px !important;
+            }
+            .o_control_panel_navigation {
+                flex: 0 0 auto !important;
+                width: auto !important;
+            }
+            // Forms have no search box: let the title area take the width so New sits by the pager.
+            .o_control_panel_actions {
+                flex: 0 0 auto !important;
+                width: auto !important;
+            }
+            // That slot only holds the smart-button box; when it is empty it would still take space.
+            .o_control_panel_actions:has(> .oe_button_box:empty:only-child) {
+                display: none !important;
+            }
+            .o_control_panel_main_buttons {
+                order: 2;
+                margin-left: auto;
+                align-self: flex-end;
+                .o_form_button_create {
+                    height: 40px;
+                    padding: 0 18px;
+                    font-size: 14px;
+                    background: #2e6b4a;
+                    border: 1px solid #2e6b4a;
+                    border-radius: 8px;
+                    color: #fff;
+                    font-weight: 700;
+                    &::before {
+                        content: "+ ";
+                    }
+                    &:hover {
+                        background: #255a3e;
+                    }
+                }
+            }
+            // Two levels only: a small breadcrumb line "ADMINISTRATION › USERS" (USERS goes back),
+            // then the record title. Same size, weight and letter-spacing on the whole first line.
+            .o_breadcrumb {
+                flex-direction: row !important;
+                flex-wrap: wrap !important;
+                align-items: center !important;
+                justify-content: flex-start !important;
+                column-gap: 8px;
+                row-gap: 8px;
+                overflow: visible !important;
+                &::before {
+                    content: "ADMINISTRATION";
+                    font-size: 12px;
+                    line-height: 16px;
+                    letter-spacing: 0.14em;
+                    font-weight: 700;
+                    color: #8a6d1a;
+                }
+                .breadcrumb {
+                    display: flex;
+                    align-items: center;
+                    margin: 0;
+                    padding: 0 !important;
+                    background: transparent !important;
+                    font-size: 12px !important;
+                    line-height: 16px !important;
+                    &::before {
+                        content: "\203A"; // ›
+                        margin-right: 8px;
+                        font-size: 14px;
+                        color: #b3a36a;
+                    }
+                    .breadcrumb-item + .breadcrumb-item::before {
+                        color: #b3a36a;
+                    }
+                    a {
+                        color: #2e6b4a !important;
+                        font-weight: 700 !important;
+                        letter-spacing: 0.14em;
+                        text-transform: uppercase;
+                        text-decoration: none;
+                        &:hover {
+                            color: $a-dark !important;
+                            text-decoration: underline;
+                        }
+                    }
+                }
+                > .d-flex {
+                    flex-basis: 100%; // title on its own line
+                    overflow: visible !important;
+                    align-items: center;
+                    gap: 10px !important;
+                }
+                .o_last_breadcrumb_item.active {
+                    margin-left: -0.04em; // same optical left edge as the breadcrumb line
+                    font-size: 30px !important;
+                    font-weight: 700;
+                    line-height: 40px !important;
+                    color: $a-dark;
+                    &::before {
+                        display: none !important; // eyebrow is the breadcrumb line above
+                    }
+                }
+                .o_cp_action_menus .fa-cog {
+                    font-size: 18px;
+                    color: #2e6b4a;
+                }
+            }
+        }
+
+        // Status bar: action buttons and status as soft pills (no arrows).
+        .o_form_sheet_bg {
+            padding: 0 40px 40px;
+            background: transparent;
+            border: 0;
+        }
+        .o_form_statusbar {
+            margin: 0 0 16px !important;
+            padding: 0 !important;
+            background: transparent;
+            border: 0 !important;
+            align-items: center;
+            // Left edge of the first button = left edge of the card below.
+            .o_statusbar_buttons {
+                margin: 0 !important;
+                padding: 0 !important;
+                gap: 8px !important;
+            }
+            .o_statusbar_buttons .btn {
+                height: 36px;
+                margin: 0 !important;
+                padding: 0 16px;
+                background: #fff;
+                border: 1px solid $a-border;
+                border-radius: 8px;
+                color: $a-dark;
+                font-size: 13px;
+                font-weight: 600;
+                &:hover {
+                    background: #f4f6f3;
+                }
+                &.btn-primary {
+                    background: #2e6b4a;
+                    border-color: #2e6b4a;
+                    color: #fff;
+                }
+            }
+            .o_statusbar_status {
+                gap: 8px;
+                margin: 0 !important;
+                .o_arrow_button {
+                    height: 36px;
+                    margin: 0 !important;
+                    padding: 0 16px !important;
+                    background: #fff !important;
+                    border: 1px solid $a-border !important;
+                    border-radius: 999px !important;
+                    color: #7a857f !important;
+                    font-size: 13px;
+                    font-weight: 600;
+                    opacity: 1;
+                    &::before,
+                    &::after {
+                        display: none !important;
+                    }
+                }
+                .o_arrow_button_current {
+                    background: $a-active !important;
+                    border-color: #b9d1c3 !important;
+                    color: #1f5c3b !important;
+                }
+            }
+        }
+
+        // The record itself in a white card.
+        .o_form_sheet {
+            max-width: none;
+            margin: 0;
+            padding: 28px 32px 32px;
+            background: #fff;
+            border: 1px solid $a-border;
+            border-radius: 14px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+        .oe_avatar img {
+            border: 1px solid $a-border;
+            border-radius: 12px;
+        }
+        .oe_title .o_form_label {
+            font-size: 12px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #55615a;
+        }
+        .o_form_label {
+            font-weight: 700;
+            color: $a-dark;
+        }
+        .o_horizontal_separator {
+            margin: 8px 0 14px;
+            padding: 0 0 8px;
+            border-bottom: 1px solid $a-border !important;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: #8a6d1a !important;
+        }
+
+        // Tabs: underlined, as on the workspace record pages.
+        .o_notebook {
+            margin-top: 24px;
+            .o_notebook_headers {
+                margin: 0 !important;
+                padding: 0 !important;
+                overflow: visible !important;
+                border-bottom: 1px solid $a-border;
+            }
+            .nav-tabs {
+                gap: 4px;
+                margin: 0 !important;
+                padding: 0 !important;
+                overflow: visible !important;
+                border-bottom: 0 !important;
+            }
+            .nav-link {
+                padding: 12px 18px;
+                margin: 0;
+                background: transparent !important;
+                border: 0 !important;
+                border-bottom: 3px solid transparent !important;
+                border-radius: 0 !important;
+                color: #7a857f !important;
+                font-size: 14px;
+                font-weight: 500;
+                &:hover {
+                    color: $a-dark !important;
+                }
+                &.active,
+                &.active:hover,
+                &.active:focus {
+                    color: #1f5c3b !important;
+                    font-weight: 700;
+                    background: $a-active !important;
+                    border-radius: 8px 8px 0 0 !important;
+                    border-bottom: 3px solid #2e6b4a !important;
+                    box-shadow: none !important;
+                }
+            }
+            .tab-content {
+                padding: 8px 0 0;
+                border: 0 !important;
+            }
+            .o_list_renderer {
+                border: 1px solid $a-border;
+                border-radius: 12px;
+                overflow: hidden;
+                thead th {
+                    height: 48px;
+                    background: #f6f8f5 !important;
+                    color: #55615a;
+                    font-size: 12px;
+                    letter-spacing: 0.08em;
+                    text-transform: uppercase;
+                }
+            }
+        }
+    }
+}
+
+// ---------- ADMINISTRATION polish: fields, buttons, settings rows, app cards ----------
+// Presentation only. Scoped to the admin screens (body.nsipa_admin_page) inside the main
+// action area, so PBMS screens and pop-up dialogs keep their current look.
+$a-input-border: #cdd9d4;
+$a-muted: #6f7a74;
+$a-primary: #2e6b4a;
+
+@media (min-width: 768px) {
+    .nsipa_admin_page .o_action_manager {
+        // Buttons: one consistent set (green primary, white secondary, green links).
+        .o_form_view,
+        .o_kanban_view {
+            .btn-primary {
+                background: $a-primary !important;
+                border-color: $a-primary !important;
+                color: #fff !important;
+                border-radius: 8px;
+                font-weight: 700;
+                &:hover {
+                    background: #255a3e !important;
+                }
+            }
+            .btn-secondary {
+                background: #fff;
+                border: 1px solid $a-border;
+                border-radius: 8px;
+                color: $a-dark;
+                font-weight: 600;
+                &:hover {
+                    background: #f4f6f3;
+                }
+            }
+            .btn-link,
+            .o_form_uri {
+                color: $a-primary;
+                font-weight: 600;
+            }
+        }
+
+        // Fields in records and settings: clean rounded inputs instead of heavy green boxes.
+        :is(.o_form_sheet, .o_setting_container) :is(.o_inner_group, .oe_title, .o_setting_right_pane) {
+            .o_field_widget:not(.o_field_boolean):not(.o_field_radio):not(.o_field_badge) .o_input,
+            .o_field_widget select.o_input {
+                min-height: 42px;
+                padding: 8px 12px !important;
+                background: #fff !important;
+                border: 1px solid $a-input-border !important;
+                border-radius: 10px !important;
+                box-shadow: none !important;
+                color: $a-dark;
+                font-size: 14px;
+                transition: border-color 0.15s, box-shadow 0.15s;
+                &:hover {
+                    border-color: #a9bfb3 !important;
+                }
+                &:focus {
+                    border-color: $a-primary !important;
+                    box-shadow: 0 0 0 3px rgba(46, 107, 74, 0.15) !important;
+                    outline: none;
+                }
+                &::placeholder {
+                    color: #9aa59f;
+                }
+            }
+            // Many2one dropdown arrow sits inside the rounded box.
+            .o_field_many2one .o_input_dropdown .o_dropdown_button {
+                right: 12px;
+            }
+        }
+
+        // Record title fields (e.g. a user's name / email): readable, not oversized.
+        .o_form_view:not(.o_base_settings_view) .oe_title {
+            max-width: 720px;
+            // Same height as every other input; the name is only slightly emphasised.
+            h1,
+            h2 {
+                margin: 0 0 20px !important;
+                font-size: 14px !important;
+                line-height: 1.4 !important;
+            }
+            h1 .o_input {
+                font-size: 16px !important;
+                font-weight: 600;
+            }
+            h2 .o_input {
+                font-size: 14px !important;
+                font-weight: 400;
+            }
+            .o_form_label {
+                margin-bottom: 6px;
+            }
+        }
+
+        // Label / value rows inside records: lighter labels, even spacing.
+        .o_form_view:not(.o_base_settings_view) .o_inner_group {
+            row-gap: 14px;
+            .o_wrap_label .o_form_label,
+            .o_cell .o_form_label {
+                font-size: 14px;
+                font-weight: 600;
+                color: #55615a;
+            }
+            .o_cell {
+                align-self: center;
+            }
+        }
+
+        // Module page: calmer description headings, bigger action button.
+        .o_form_view .o_field_html {
+            h1 {
+                font-size: 22px;
+                font-weight: 700;
+                color: $a-dark;
+            }
+            h2 {
+                font-size: 18px;
+                color: $a-dark;
+            }
+            p,
+            li {
+                color: #3d4943;
+                line-height: 1.6;
+            }
+        }
+        .o_form_view .o_form_sheet button[name="button_immediate_install"],
+        .o_form_view .o_form_sheet button[name="button_immediate_upgrade"],
+        .o_form_view .o_form_sheet button[name="button_immediate_uninstall"] {
+            height: 40px;
+            padding: 0 20px;
+        }
+
+        // ---------- General Settings ----------
+        .o_base_settings_view {
+            // Only one tab is offered, so the tab column is dropped and settings use the full card.
+            .o_setting_container > .position-sticky:has(.settings_tab) {
+                display: none !important;
+            }
+            .settings {
+                padding: 0;
+            }
+            // Each setting is one full-width row: title + description on the left, input on the right,
+            // rows separated by a hairline (instead of half-width boxes leaving the right side empty).
+            .o_settings_container {
+                display: block !important;
+                width: auto !important;
+                max-width: none !important;
+                margin: 0 !important;
+                padding: 0 !important; // Odoo indents it by 32px
+            }
+            .o_setting_left_pane:has(*) {
+                margin: 0 16px 0 0 !important; // checkbox settings: box, then the text
+            }
+            .o_setting_box {
+                display: flex;
+                align-items: center;
+                gap: 0;
+                width: 100% !important;
+                max-width: none !important;
+                padding: 22px 28px !important;
+                margin: 0 !important;
+                border-bottom: 1px solid #eef1ed;
+                &:last-child {
+                    border-bottom: 0;
+                }
+            }
+            .o_setting_right_pane {
+                flex: 1 1 auto;
+                display: grid;
+                grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+                column-gap: 48px;
+                align-items: center;
+                > .o_form_label {
+                    grid-column: 1;
+                    grid-row: 1;
+                }
+                > .text-muted {
+                    grid-column: 1;
+                    grid-row: 2;
+                }
+                > :not(.o_form_label):not(.text-muted) {
+                    grid-column: 2;
+                    grid-row: 1 / span 2;
+                    margin-top: 0 !important;
+                }
+                .o_field_widget {
+                    max-width: none !important;
+                }
+            }
+            // Empty left pane (no checkbox) only adds an indent.
+            .o_setting_left_pane:not(:has(*)) {
+                display: none !important;
+            }
+            .o_setting_right_pane {
+                margin-left: 0 !important;
+                padding-left: 0 !important; // text lines up with the section headings
+                border-left: 0 !important; // Odoo's grey vertical rule
+                .o_form_label {
+                    font-size: 15px;
+                    font-weight: 700;
+                    color: $a-dark;
+                }
+                .text-muted {
+                    margin-top: 2px;
+                    font-size: 13px;
+                    line-height: 1.5;
+                    color: $a-muted !important;
+                }
+                .mt16 {
+                    margin-top: 12px !important;
+                }
+                .o_field_widget {
+                    width: 100%;
+                    max-width: 520px;
+                }
+            }
+            .app_settings_block h2 {
+                margin-top: 0 !important;
+            }
+        }
+
+        // ---------- Developer Apps: module cards ----------
+        .nsipa_admin_apps {
+            .o_kanban_renderer {
+                gap: 16px;
+            }
+            .o_kanban_record:not(.o_kanban_ghost) {
+                min-height: 112px;
+                background: #fff;
+                transition: border-color 0.15s, box-shadow 0.15s, transform 0.15s;
+                &:hover {
+                    transform: translateY(-1px);
+                }
+            }
+            .oe_module_vignette {
+                display: flex;
+                gap: 16px;
+                align-items: flex-start;
+                width: 100%;
+                padding: 18px 20px;
+            }
+            .oe_module_icon {
+                flex: 0 0 56px;
+                width: 56px !important;
+                img {
+                    border-radius: 12px;
+                    border: 1px solid $a-border;
+                    background: #fff;
+                }
+            }
+            .oe_module_desc {
+                flex: 1 1 auto;
+                min-width: 0;
+                padding: 0 !important;
+            }
+            .o_kanban_record_title {
+                margin: 0 0 2px;
+                font-size: 16px;
+                font-weight: 700;
+                color: $a-dark;
+            }
+            .oe_module_name {
+                margin-bottom: 12px;
+                font-size: 13px;
+                color: $a-muted;
+            }
+            .oe_module_action {
+                gap: 8px;
+                justify-content: flex-start !important;
+                .btn {
+                    float: none !important;
+                    height: 32px;
+                    padding: 0 14px;
+                    display: inline-flex;
+                    align-items: center;
+                    border-radius: 8px;
+                    font-size: 13px;
+                }
+            }
+            .o_dropdown_kanban .dropdown-toggle {
+                color: #9aa59f;
+                &:hover {
+                    color: $a-dark;
+                }
+            }
+            // Filter panel: compact, readable list.
+            .o_search_panel {
+                width: 230px;
+                .list-group-item {
+                    padding: 0 !important;
+                    margin-bottom: 2px;
+                    border: 0;
+                    background: transparent;
+                }
+                header {
+                    padding: 6px 12px !important;
+                    font-size: 14px;
+                }
+                .o_search_panel_counter {
+                    padding: 1px 8px;
+                    border-radius: 999px;
+                    background: #fff;
+                    border: 1px solid $a-border;
+                    font-size: 12px;
+                    color: $a-muted;
+                }
+            }
+        }
+    }
+}

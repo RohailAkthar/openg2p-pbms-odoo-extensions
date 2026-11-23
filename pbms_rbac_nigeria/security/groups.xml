@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Program Super Administration (OpenG2P PBMS) also grants Odoo administrator rights
+         ("Settings", which includes "Access Rights"), so the ADMINISTRATION pages it unlocks
+         (User Access Settings, Developer Apps, General Settings) actually open. -->
+    <record id="g2p_pbms.group_program_super_administration" model="res.groups">
+        <field name="implied_ids" eval="[(4, ref('base.group_system'))]"/>
+    </record>
+
+    <!-- The built-in administrator keeps the ADMINISTRATION section. -->
+    <record id="g2p_pbms.group_program_super_administration" model="res.groups">
+        <field name="users" eval="[(4, ref('base.user_admin'))]"/>
+    </record>
+</odoo>
