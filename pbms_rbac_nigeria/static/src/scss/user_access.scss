@@ -323,3 +323,11 @@ $u-active: #eaf3ec;
 .nsipa_user_popup .o_inner_group .o_cell {
     align-self: center;
 }
+
+// Language under Name and Email (user page and pop-up): same width and spacing as Email.
+.oe_title .nsipa_title_lang {
+    margin: 0 0 18px;
+    .o_field_widget {
+        width: 100%;
+    }
+}

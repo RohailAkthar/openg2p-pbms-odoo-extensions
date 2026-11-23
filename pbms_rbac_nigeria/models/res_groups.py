@@ -5,7 +5,7 @@ from lxml.builder import E
 
 from odoo import api, models
 from odoo.addons.base.models.ir_model import MODULE_UNINSTALL_FLAG
-from odoo.addons.base.models.res_users import name_boolean_group, name_selection_groups
+from odoo.addons.base.models.res_users import name_boolean_group
 
 _logger = logging.getLogger(__name__)
 
@@ -16,7 +16,6 @@ RBAC_ROLE_CATEGORIES = [
     "g2p_pbms.g2p_pbms",
     "g2p_documents.g2p_documents_module",
 ]
-ADMINISTRATION_CATEGORY = "base.module_category_administration_administration"
 
 
 class ResGroups(models.Model):
@@ -38,22 +37,19 @@ class ResGroups(models.Model):
         if not (roles_view and base_view):
             return
 
-        admin_field = None
         sections = []
         for app, kind, groups, _category_name in self.sudo().get_groups_by_application():
             xml_id = app.get_external_id().get(app.id) if app else None
-            if xml_id == ADMINISTRATION_CATEGORY and kind == "selection":
-                admin_field = name_selection_groups(groups.ids)
-            elif xml_id in RBAC_ROLE_CATEGORIES and kind == "boolean":
+            if xml_id in RBAC_ROLE_CATEGORIES and kind == "boolean":
                 sections.append((RBAC_ROLE_CATEGORIES.index(xml_id), app.name, groups))
         sections.sort(key=lambda s: s[0])
 
-        self._pbms_rbac_write(roles_view, self._pbms_rbac_roles_arch(base_view, admin_field, sections))
+        self._pbms_rbac_write(roles_view, self._pbms_rbac_roles_arch(base_view, sections))
 
     @api.model
-    def _pbms_rbac_roles_arch(self, base_view, admin_field, sections):
+    def _pbms_rbac_roles_arch(self, base_view, sections):
         """Inherited view on top of Odoo's generated groups view: hide its sections, add ours
-        (Administration dropdown, then the PBMS and Documents role checkboxes)."""
+        (the PBMS and Documents role checkboxes)."""
         base_arch = etree.fromstring(base_view.arch)
         nodes = []
 
@@ -71,14 +67,10 @@ class ResGroups(models.Model):
                 )
                 anchor = expr
 
-        # Administration: Odoo's own dropdown (none / Access Rights / Settings) with the user's
-        # Language beside it (the Preferences tab is hidden), shown first.
-        children = [E.separator(string="Administration")]
-        children.append(
-            E.group(E.field(name=admin_field, string="Administration")) if admin_field else E.group()
-        )
-        children.append(E.group(E.field(name="lang", string="Language", required="1")))
         # Our role sections: two columns of checkboxes per category, always visible.
+        # (Odoo's Administration dropdown stays hidden; Language is shown under Email instead,
+        # see views/res_users_views.xml.)
+        children = []
         for _seq, name, groups in sections:
             children.append(E.separator(string=name))
             left, right = [], []

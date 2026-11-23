@@ -19,7 +19,14 @@
             <xpath expr="//div[hasclass('oe_title')]//field[@name='partner_id']" position="attributes">
                 <attribute name="invisible">1</attribute>
             </xpath>
-            <!-- Only the Access Rights tab is used (its Language field replaces Preferences). -->
+            <!-- Language right after Name and Email (the Preferences tab that holds it is hidden). -->
+            <xpath expr="//div[hasclass('oe_title')]/h2[field[@name='login']]" position="after">
+                <label for="lang" string="Language"/>
+                <div class="nsipa_title_lang">
+                    <field name="lang" required="1"/>
+                </div>
+            </xpath>
+            <!-- Only the Access Rights content is used. -->
             <page name="preferences" position="attributes">
                 <attribute name="invisible">1</attribute>
             </page>
