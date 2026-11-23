@@ -13,6 +13,5 @@
               parent="g2p_pbms.menu_g2p_root"
               action="action_pbms_knowledge"
               sequence="6"
-              active="False"
               groups="base.group_user"/>
 </odoo>
