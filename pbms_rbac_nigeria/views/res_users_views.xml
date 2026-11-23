@@ -19,33 +19,40 @@
             <xpath expr="//div[hasclass('oe_title')]//field[@name='partner_id']" position="attributes">
                 <attribute name="invisible">1</attribute>
             </xpath>
+            <!-- Only the Access Rights tab is used (its Language field replaces Preferences). -->
+            <page name="preferences" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </page>
         </field>
     </record>
 
-    <!-- Account Security tab also while creating a user (Odoo shows it only once saved). For a new
-         user it offers an optional initial password; two-factor authentication is switched on by
-         the user after their first sign-in, as before. -->
+    <!-- Account Security tab (two-factor authentication) hidden on the user page and pop-up. -->
     <record id="view_users_form_rbac_security" model="ir.ui.view">
         <field name="name">res.users.form.pbms.rbac.security</field>
         <field name="model">res.users</field>
         <field name="inherit_id" ref="auth_totp.view_totp_form"/>
         <field name="arch" type="xml">
             <page name="security" position="attributes">
-                <attribute name="invisible">0</attribute>
+                <attribute name="invisible">1</attribute>
             </page>
-            <!-- Odoo's two-factor block needs a saved user: hidden until then (the note below says why). -->
-            <xpath expr="//page[@name='security']/div" position="attributes">
-                <attribute name="invisible">not id</attribute>
-            </xpath>
-            <xpath expr="//page[@name='security']/field[@name='totp_enabled']" position="after">
-                <group name="pbms_rbac_new_user_security" string="Sign-in" invisible="id">
-                    <field name="password" password="True" string="Initial password"
-                           placeholder="Optional - leave empty to send an invitation instead"/>
-                </group>
-                <div class="text-muted nsipa_rbac_security_note" invisible="id">
-                    Two-factor authentication can be switched on by the user after their first sign-in.
-                </div>
-            </xpath>
+        </field>
+    </record>
+
+    <!-- Change Password: show which user the row is for (Odoo hides the name but keeps the column). -->
+    <record id="change_password_wizard_user_tree_view_rbac" model="ir.ui.view">
+        <field name="name">change.password.user.tree.pbms.rbac</field>
+        <field name="model">change.password.user</field>
+        <field name="inherit_id" ref="base.change_password_wizard_user_tree_view"/>
+        <field name="arch" type="xml">
+            <field name="user_id" position="attributes">
+                <attribute name="invisible">0</attribute>
+                <attribute name="readonly">1</attribute>
+                <attribute name="force_save">1</attribute>
+                <attribute name="options">{'no_open': True}</attribute>
+            </field>
+            <field name="new_passwd" position="attributes">
+                <attribute name="placeholder">Type the new password</attribute>
+            </field>
         </field>
     </record>
 
@@ -63,8 +70,8 @@
     </record>
 
     <!-- "New user" pop-up: the same user form as the user page (Name, Email, Access Rights with
-         Administration + PBMS + Documents roles, Preferences, Account Security), in a dialog with
-         Odoo's Save / Discard buttons at the bottom. -->
+         Administration + Language and the PBMS + Documents roles), in a dialog with Odoo's
+         Save / Discard buttons at the bottom. -->
     <record id="action_res_users_new_popup" model="ir.actions.act_window">
         <field name="name">New user</field>
         <field name="res_model">res.users</field>

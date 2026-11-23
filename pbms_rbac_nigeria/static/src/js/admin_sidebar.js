@@ -31,7 +31,6 @@ patch(NavBar.prototype, {
         }
         const byXmlid = nsipaMenusByXmlid(this.menuService);
         const workspace = this._nsipaWorkspaceApp();
-        const currentActionId = this._nsipaCurrentActionId();
         const links = [];
         for (const [key, label, xmlid] of NSIPA_ADMIN_LINKS) {
             const menu = byXmlid[xmlid];
@@ -40,15 +39,33 @@ patch(NavBar.prototype, {
             }
             // Keep the PBMS menu in the URL so a reload or new tab keeps the same sidebar.
             const menuId = workspace ? workspace.id : menu.id;
-            links.push({
-                key,
-                label,
-                menu,
-                href: `/web#action=${menu.actionID}&menu_id=${menuId}`,
-                active: !this._nsipaClickedId && menu.actionID === currentActionId,
-            });
+            links.push({key, label, menu, href: `/web#action=${menu.actionID}&menu_id=${menuId}`});
+        }
+        const activeKey = this._nsipaActiveAdminKey(links);
+        for (const link of links) {
+            link.active = link.key === activeKey;
         }
         return links;
+    },
+
+    // Which ADMINISTRATION page is open. Pages opened from it (e.g. Settings > Filesystem Backend,
+    // shown with a breadcrumb back to Settings) keep the same ADMINISTRATION context and look.
+    _nsipaActiveAdminKey(links) {
+        if (this._nsipaClickedId) {
+            return (this._nsipaAdminKey = null); // a WORKSPACE entry was clicked
+        }
+        const currentActionId = this._nsipaCurrentActionId();
+        const direct = links.find((link) => link.menu.actionID === currentActionId);
+        if (direct) {
+            this._nsipaAdminKey = direct.key;
+        } else {
+            const controller = this.actionService.currentController;
+            const depth = (controller && controller.config && controller.config.breadcrumbs || []).length;
+            if (depth <= 1) {
+                this._nsipaAdminKey = null; // a new top-level page, not opened from an admin page
+            }
+        }
+        return this._nsipaAdminKey || null;
     },
 
     // An ADMINISTRATION page is open: no WORKSPACE entry is highlighted, and the page is

@@ -213,7 +213,7 @@ $u-active: #eaf3ec;
     :is(.oe_title, .o_inner_group) .o_field_widget:not(.o_field_boolean):not(.o_field_radio) .o_input {
         min-height: 44px;
         padding: 10px 14px !important;
-        background: #fff !important;
+        background-color: #fff !important; // keeps the select chevron (nsipa_controls.scss)
         border: 1px solid $u-input-border !important;
         border-radius: 10px !important;
         box-shadow: none !important;
@@ -272,9 +272,54 @@ $u-active: #eaf3ec;
     }
 }
 
-// Account Security tab of a new user: initial password + two-factor note.
-.nsipa_rbac_security_note {
-    margin-top: 4px;
-    font-size: 13px;
-    line-height: 1.5;
+
+// Only one tab (Access Rights) is left on the user page and pop-up: no tab bar / label.
+.nsipa_admin_user,
+.nsipa_user_popup {
+    .o_notebook_headers {
+        display: none !important;
+    }
+    .o_notebook {
+        margin-top: 4px !important;
+    }
+    .o_notebook .tab-content {
+        padding-top: 0 !important;
+    }
+}
+
+// Change Password dialog: clearly show where the new password goes.
+.o_dialog .modal-content:has([name="new_passwd"]) {
+    .o_list_renderer td[name="user_id"] {
+        font-weight: 600;
+        color: #1f3d2e;
+    }
+    .o_list_renderer td[name="new_passwd"] {
+        cursor: text;
+        &:not(:has(input)):empty::after,
+        &:not(:has(input)) .o_field_widget:empty::after {
+            content: "Click to set a new password";
+            display: inline-block;
+            padding: 6px 12px;
+            border: 1px dashed #cdd9d4;
+            border-radius: 8px;
+            color: #6f7a74;
+            font-size: 13px;
+        }
+        input.o_input {
+            min-height: 36px;
+            padding: 6px 12px !important;
+            border: 1px solid #cdd9d4 !important;
+            border-radius: 8px !important;
+            background-color: #fff !important;
+            &:focus {
+                border-color: #2e6b4a !important;
+                box-shadow: 0 0 0 3px rgba(46, 107, 74, 0.15) !important;
+            }
+        }
+    }
+}
+
+// Pop-up: labels vertically centred with their fields (as on the user page).
+.nsipa_user_popup .o_inner_group .o_cell {
+    align-self: center;
 }

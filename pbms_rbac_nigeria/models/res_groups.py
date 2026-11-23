@@ -71,12 +71,13 @@ class ResGroups(models.Model):
                 )
                 anchor = expr
 
-        # Administration: Odoo's own dropdown (none / Access Rights / Settings), shown first.
-        children = []
-        if admin_field:
-            children.append(E.separator(string="Administration"))
-            children.append(E.group(E.field(name=admin_field, string="Administration")))
-            children.append(E.group())
+        # Administration: Odoo's own dropdown (none / Access Rights / Settings) with the user's
+        # Language beside it (the Preferences tab is hidden), shown first.
+        children = [E.separator(string="Administration")]
+        children.append(
+            E.group(E.field(name=admin_field, string="Administration")) if admin_field else E.group()
+        )
+        children.append(E.group(E.field(name="lang", string="Language", required="1")))
         # Our role sections: two columns of checkboxes per category, always visible.
         for _seq, name, groups in sections:
             children.append(E.separator(string=name))

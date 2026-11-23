@@ -582,7 +582,7 @@ $a-primary: #2e6b4a;
             .o_field_widget select.o_input {
                 min-height: 42px;
                 padding: 8px 12px !important;
-                background: #fff !important;
+                background-color: #fff !important; // keeps the select chevron (nsipa_controls.scss)
                 border: 1px solid $a-input-border !important;
                 border-radius: 10px !important;
                 box-shadow: none !important;
@@ -845,4 +845,21 @@ $a-primary: #2e6b4a;
             }
         }
     }
+}
+
+// General Settings: "Unsaved changes" as a small amber pill next to Save / Discard.
+.o_base_settings_view .o_control_panel_breadcrumbs:has(.o_dirty_warning) .o_cp_buttons {
+    margin-left: 0 !important;
+}
+.o_base_settings_view .o_control_panel .o_dirty_warning {
+    order: 1; // just before Save / Discard (order 2), on the same line
+    align-self: flex-start;
+    margin: -14px 4px 0 auto !important; // level with the buttons (see .o_cp_buttons margin-top)
+    padding: 4px 12px;
+    border-radius: 999px;
+    background: #fff6e0;
+    color: #8a6d1a !important;
+    font-size: 12px;
+    font-weight: 700;
+    white-space: nowrap;
 }
