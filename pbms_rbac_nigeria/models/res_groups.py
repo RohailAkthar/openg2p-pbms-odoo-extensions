@@ -18,6 +18,9 @@ RBAC_ROLE_CATEGORIES = [
 ]
 
 
+EMPTY_ROLES_ARCH = "<data/>"
+
+
 class ResGroups(models.Model):
     _inherit = "res.groups"
 
@@ -25,6 +28,16 @@ class ResGroups(models.Model):
     def _update_user_groups_view(self):
         """Odoo regenerates its Access Rights fields whenever groups change; regenerate ours after it,
         as both views depend on the database-specific field names (in_group_<id>, sel_groups_<ids>)."""
+        # Odoo rewrites base.user_groups_view (the parent of our roles view) here, and during
+        # install/upgrade it resets it to a dummy. Validating that write also validates our roles view,
+        # whose generated xpaths no longer exist in the new parent ("Element ... cannot be located in
+        # parent view"). So empty our view first; it is regenerated below and after each module load.
+        roles_view = self.env.ref("pbms_rbac_nigeria.view_users_form_rbac_roles", raise_if_not_found=False)
+        if roles_view and roles_view._name == "ir.ui.view" and roles_view.arch != EMPTY_ROLES_ARCH:
+            new_context = dict(roles_view._context)
+            new_context.pop("install_filename", None)
+            new_context["lang"] = None
+            roles_view.sudo().with_context(new_context).write({"arch": EMPTY_ROLES_ARCH})
         res = super()._update_user_groups_view()
         if not self._context.get("install_filename") and not self._context.get(MODULE_UNINSTALL_FLAG):
             self._pbms_rbac_update_views()

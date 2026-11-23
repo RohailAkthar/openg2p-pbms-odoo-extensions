@@ -7,11 +7,13 @@
         <field name="tag">pbms_knowledge</field>
     </record>
 
-    <!-- Visible to every internal PBMS user; content explains tasks, permissions still decide actions. -->
+    <!-- Hidden from the sidebar (active=False). The library is still reachable through the Help button
+         and the (i) icons, which open the client action by its tag, not through this menu. -->
     <menuitem id="menu_pbms_knowledge"
               name="Knowledge"
               parent="g2p_pbms.menu_g2p_root"
               action="action_pbms_knowledge"
               sequence="6"
+              active="False"
               groups="base.group_user"/>
 </odoo>

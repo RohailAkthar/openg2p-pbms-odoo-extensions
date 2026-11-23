@@ -4,4 +4,10 @@
          from the website favicon; both default to Odoo's ("My Website", purple circle).
          website.default_website is noupdate, so a <record> here would be ignored: call a function instead. -->
     <function model="website" name="_pbms_apply_branding" />
+
+    <!-- Backend tab icon: the company favicon is stored in the database (see res_company.py). -->
+    <function model="res.company" name="_pbms_apply_branding" />
+
+    <!-- Sign-in page: switch off Odoo's built-in "Log in with Odoo.com" provider (noupdate in auth_oauth). -->
+    <function model="res.company" name="_pbms_disable_odoo_oauth" />
 </odoo>
