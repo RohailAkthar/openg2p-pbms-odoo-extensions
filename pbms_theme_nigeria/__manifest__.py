@@ -43,6 +43,8 @@
             "pbms_theme_nigeria/static/src/js/programs_header.js",
             "pbms_theme_nigeria/static/src/js/list_sort_arrow.js",
             "pbms_theme_nigeria/static/src/scss/nsipa_programs.scss",
+            "pbms_theme_nigeria/static/src/scss/nsipa_controls.scss",
+            "pbms_theme_nigeria/static/src/scss/nsipa_sidebar_icons.scss",
             "pbms_theme_nigeria/static/src/scss/nsipa_program_popup.scss",
         ],
         "web.assets_frontend": [

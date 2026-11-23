@@ -1,0 +1,216 @@
+// Shared look for Odoo's dropdowns, selects and dialogs, so every screen uses the same NSIPA
+// style (the one of the "New programme" popup). Presentation only. Screen-specific styles
+// (e.g. nsipa_program_popup.scss) are more specific and still win where they exist.
+$c-border: #e5e9e4;
+$c-input-border: #cdd9d4;
+$c-dark: #1f3d2e;
+$c-muted: #6f7a74;
+$c-primary: #2e6b4a;
+$c-active: #eaf3ec;
+$c-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%232e6b4a' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m4 6 4 4 4-4'/%3E%3C/svg%3E");
+
+// ---------- Dropdown menus (gear / actions menus, many2one suggestions, filters) ----------
+.o-dropdown--menu.dropdown-menu,
+.o-autocomplete--dropdown-menu.dropdown-menu {
+    min-width: 220px;
+    padding: 6px;
+    background: #fff;
+    border: 1px solid $c-border;
+    border-radius: 12px;
+    box-shadow: 0 12px 32px rgba(31, 61, 46, 0.18);
+
+    .dropdown-item,
+    .o-autocomplete--dropdown-item > a {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        min-height: 38px;
+        padding: 8px 12px;
+        border-radius: 8px;
+        color: $c-dark;
+        font-size: 14px;
+        font-weight: 500;
+        white-space: nowrap;
+        .fa,
+        .oi {
+            color: $c-primary;
+        }
+        &:hover,
+        &:focus,
+        &.focus,
+        &.ui-state-active,
+        &.active {
+            background: $c-active !important;
+            color: $c-dark !important;
+        }
+    }
+    .dropdown-divider {
+        margin: 6px 4px;
+        border-color: $c-border;
+    }
+    .dropdown-header {
+        padding: 8px 12px 4px;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: #8a6d1a;
+    }
+}
+// Many2one: "Search More..." in green, "Start typing..." as a muted hint.
+.o-autocomplete--dropdown-menu {
+    .o_m2o_dropdown_option > a,
+    .o_m2o_dropdown_option_search_more > a {
+        color: $c-primary !important;
+        font-weight: 600;
+    }
+    .o_m2o_start_typing > a {
+        color: $c-muted !important;
+        font-style: normal;
+        font-weight: 400;
+        pointer-events: none;
+    }
+}
+
+// Suggestions as wide as the field they belong to.
+.o-autocomplete .o-autocomplete--dropdown-menu.dropdown-menu {
+    min-width: 100%;
+}
+
+// Many2one / date dropdown arrow: the same green chevron as the selection fields.
+.o_input_dropdown .o_dropdown_button {
+    top: 50% !important;
+    right: 12px !important;
+    width: 14px;
+    height: 14px;
+    margin-top: -7px;
+    background: $c-chevron no-repeat center / 14px;
+    &::after {
+        display: none !important;
+    }
+}
+
+// ---------- Selection fields: rounded box with a green chevron ----------
+.o_field_widget select.o_input,
+select.o_input {
+    appearance: none;
+    -webkit-appearance: none;
+    padding-right: 36px !important;
+    background-image: $c-chevron !important;
+    background-repeat: no-repeat !important;
+    background-position: right 12px center !important;
+    background-size: 14px !important;
+    cursor: pointer;
+}
+
+// ---------- Dialogs (confirmations, "Unsaved changes", wizards, record pop-ups) ----------
+.o_dialog .modal-content {
+    border: 0;
+    border-radius: 20px;
+    box-shadow: 0 20px 50px rgba(31, 61, 46, 0.25);
+    overflow: hidden;
+    .modal-header {
+        padding: 22px 28px 14px;
+        border-bottom: 1px solid $c-border;
+        .modal-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: $c-dark;
+        }
+        .btn-close {
+            width: 36px;
+            height: 36px;
+            margin: 0 0 0 auto;
+            padding: 0;
+            border: 1px solid $c-border;
+            border-radius: 10px;
+            background-size: 12px;
+            opacity: 0.8;
+            &:hover {
+                opacity: 1;
+                background-color: #f4f6f3;
+            }
+        }
+    }
+    // Plain message dialogs ("Would you like to save your changes?").
+    .modal-body:not(.p-0) {
+        padding: 20px 28px;
+        font-size: 15px;
+        line-height: 1.55;
+        color: #3d4943;
+    }
+    // Buttons right-aligned, main action on the right (secondary ones before it).
+    .modal-footer,
+    .modal-footer > footer {
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: flex-start !important;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    .modal-footer {
+        padding: 16px 28px 20px;
+        border-top: 1px solid $c-border;
+        > footer {
+            margin: 0;
+            padding: 0;
+            border: 0;
+        }
+        .btn {
+            height: 40px;
+            margin: 0;
+            padding: 0 20px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 700;
+        }
+        .btn-primary {
+            background: $c-primary !important;
+            border: 1px solid $c-primary !important;
+            color: #fff !important;
+            &:hover {
+                background: #255a3e !important;
+                border-color: #255a3e !important;
+            }
+        }
+        .btn-secondary,
+        .btn-light,
+        .btn-link {
+            background: #fff !important;
+            border: 1px solid $c-border !important;
+            color: $c-dark !important;
+            text-decoration: none;
+            &:hover {
+                background: #f4f6f3 !important;
+            }
+        }
+    }
+    // Lists inside dialogs (e.g. Change Password, Search More): same table look as the pages.
+    .o_list_renderer {
+        border: 1px solid $c-border;
+        border-radius: 12px;
+        overflow: hidden;
+        thead th {
+            height: 44px;
+            background: #f6f8f5 !important;
+            color: #55615a;
+            font-size: 12px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            vertical-align: middle;
+        }
+        tbody tr.o_data_row {
+            height: 48px;
+            td {
+                vertical-align: middle;
+            }
+            &:hover {
+                background: #f7faf6;
+            }
+        }
+        // Odoo's empty striped filler rows.
+        .o_list_table:has(tbody .o_data_row) tbody > tr:not(.o_data_row):not(.o_group_header):not(.o_field_x2many_list_row_add) {
+            display: none;
+        }
+    }
+}

@@ -1,0 +1,333 @@
+// "New user" pop-up and the user page's role sections, in the PBMS look. Presentation only.
+$u-border: #e5e9e4;
+$u-input-border: #cdd9d4;
+$u-dark: #1f3d2e;
+$u-muted: #6f7a74;
+$u-primary: #2e6b4a;
+$u-active: #eaf3ec;
+
+// ---------- "New user" pop-up ----------
+.modal-content:has(.nsipa_user_popup) {
+    border: 0;
+    border-radius: 16px;
+    box-shadow: 0 24px 64px rgba(31, 61, 46, 0.25);
+    overflow: hidden;
+
+    .modal-header {
+        padding: 24px 28px 8px;
+        border-bottom: 0;
+        background: #fff;
+        .modal-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: $u-dark;
+        }
+        &::before {
+            content: "ADMINISTRATION";
+            position: absolute;
+            top: 12px;
+            left: 28px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            color: #8a6d1a;
+        }
+    }
+    .modal-body {
+        padding: 0 !important;
+        background: #fff;
+    }
+    .modal-footer {
+        justify-content: flex-end !important; // Discard, then Save, on the right
+        gap: 10px;
+        padding: 16px 28px 22px;
+        background: #fff;
+        border-top: 1px solid $u-border;
+        > * {
+            margin: 0;
+        }
+        // Odoo wraps the form's Save / Discard in its own containers: push them to the right.
+        > div,
+        > footer,
+        .o_cp_buttons,
+        .o_form_buttons_edit {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            width: 100%;
+            margin-left: auto !important;
+        }
+        .btn {
+            min-width: 104px;
+            height: 42px;
+            padding: 0 20px;
+            border-radius: 8px;
+            font-weight: 700;
+        }
+        .btn-primary {
+            order: 2; // Save on the right
+            background: $u-primary !important;
+            border-color: $u-primary !important;
+            color: #fff !important;
+            &:hover {
+                background: #255a3e !important;
+            }
+        }
+        .btn-secondary {
+            order: 1;
+            background: #fff !important;
+            border: 1px solid $u-border !important;
+            color: $u-dark !important;
+            &:hover {
+                background: #f4f6f3;
+            }
+        }
+    }
+}
+
+.nsipa_user_popup {
+    .o_form_sheet_bg {
+        padding: 0;
+        background: #fff;
+        border: 0;
+    }
+    .o_form_sheet {
+        max-width: none;
+        margin: 0;
+        padding: 12px 28px 24px;
+        border: 0;
+        box-shadow: none;
+    }
+    // Status bar (Never Connected / Confirmed) as soft pills; no arrows.
+    .o_form_statusbar {
+        margin: 0 28px 8px !important;
+        padding: 12px 0 0 !important;
+        background: transparent;
+        border: 0 !important;
+        .o_statusbar_status {
+            gap: 8px;
+            .o_arrow_button {
+                height: 32px;
+                margin: 0 !important;
+                padding: 0 14px !important;
+                background: #fff !important;
+                border: 1px solid $u-border !important;
+                border-radius: 999px !important;
+                color: #7a857f !important;
+                font-size: 12px;
+                font-weight: 600;
+                &::before,
+                &::after {
+                    display: none !important;
+                }
+            }
+            .o_arrow_button_current {
+                background: $u-active !important;
+                border-color: #b9d1c3 !important;
+                color: #1f5c3b !important;
+            }
+        }
+    }
+    // Name / Email: label above a rounded input, same size as every other field.
+    .oe_title {
+        max-width: 640px;
+        .o_form_label {
+            margin-bottom: 6px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #55615a;
+        }
+        h1,
+        h2 {
+            margin: 0 0 18px !important;
+            font-size: 14px !important;
+            line-height: 1.4 !important;
+        }
+        h1 .o_input {
+            font-size: 16px !important;
+            font-weight: 600;
+        }
+    }
+    .oe_avatar img {
+        border: 1px solid $u-border;
+        border-radius: 12px;
+    }
+    // Tabs: underlined, as on the user page.
+    .o_notebook {
+        margin-top: 8px;
+        .o_notebook_headers {
+            margin: 0 !important;
+            padding: 0 !important;
+            overflow: visible !important;
+            border-bottom: 1px solid $u-border;
+        }
+        .nav-tabs {
+            gap: 4px;
+            margin: 0 !important;
+            padding: 0 !important;
+            border-bottom: 0 !important;
+        }
+        .nav-link {
+            padding: 12px 18px;
+            margin: 0;
+            background: transparent !important;
+            border: 0 !important;
+            border-bottom: 3px solid transparent !important;
+            border-radius: 0 !important;
+            color: #7a857f !important;
+            font-size: 14px;
+            font-weight: 500;
+            &.active,
+            &.active:hover,
+            &.active:focus {
+                color: #1f5c3b !important;
+                font-weight: 700;
+                background: $u-active !important;
+                border-radius: 8px 8px 0 0 !important;
+                border-bottom: 3px solid $u-primary !important;
+            }
+        }
+        .tab-content {
+            padding: 8px 0 0;
+            border: 0 !important;
+        }
+    }
+    .o_horizontal_separator {
+        margin: 16px 0 12px;
+        padding: 0 0 8px;
+        border-bottom: 1px solid $u-border !important;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: #8a6d1a !important;
+    }
+    .o_inner_group .o_wrap_label .o_form_label {
+        font-size: 14px;
+        font-weight: 600;
+        color: #55615a;
+    }
+    // Text, dropdown and selection fields (not checkboxes): rounded inputs.
+    :is(.oe_title, .o_inner_group) .o_field_widget:not(.o_field_boolean):not(.o_field_radio) .o_input {
+        min-height: 44px;
+        padding: 10px 14px !important;
+        background-color: #fff !important; // keeps the select chevron (nsipa_controls.scss)
+        border: 1px solid $u-input-border !important;
+        border-radius: 10px !important;
+        box-shadow: none !important;
+        color: $u-dark;
+        font-size: 14px;
+        &:hover {
+            border-color: #a9bfb3 !important;
+        }
+        &:focus {
+            border-color: $u-primary !important;
+            box-shadow: 0 0 0 3px rgba(46, 107, 74, 0.15) !important;
+            outline: none;
+        }
+        &::placeholder {
+            color: #9aa59f;
+        }
+    }
+}
+
+// ---------- User page ----------
+@media (min-width: 768px) {
+    // No record pager on a user page.
+    .nsipa_admin_user .o_control_panel_navigation .o_pager {
+        display: none !important;
+    }
+}
+
+// Role sections (OpenG2P PBMS, OpenG2P Documents Module) on the Access Rights tab.
+.nsipa_rbac_roles {
+    row-gap: 4px;
+    .o_horizontal_separator {
+        grid-column: 1 / -1;
+        margin: 20px 0 12px !important;
+        padding: 0 0 8px;
+        border-bottom: 1px solid $u-border !important;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: #8a6d1a !important;
+        &:first-child {
+            margin-top: 4px !important;
+        }
+    }
+    .o_inner_group {
+        row-gap: 10px;
+    }
+    .o_wrap_label .o_form_label {
+        font-size: 14px;
+        font-weight: 500 !important;
+        color: $u-dark !important;
+    }
+    .o-checkbox .form-check-input:checked {
+        background-color: $u-primary;
+        border-color: $u-primary;
+    }
+}
+
+
+// Only one tab (Access Rights) is left on the user page and pop-up: no tab bar / label.
+.nsipa_admin_user,
+.nsipa_user_popup {
+    .o_notebook_headers {
+        display: none !important;
+    }
+    .o_notebook {
+        margin-top: 4px !important;
+    }
+    .o_notebook .tab-content {
+        padding-top: 0 !important;
+    }
+}
+
+// Change Password dialog: clearly show where the new password goes.
+.o_dialog .modal-content:has([name="new_passwd"]) {
+    .o_list_renderer td[name="user_id"] {
+        font-weight: 600;
+        color: #1f3d2e;
+    }
+    .o_list_renderer td[name="new_passwd"] {
+        cursor: text;
+        &:not(:has(input)):empty::after,
+        &:not(:has(input)) .o_field_widget:empty::after {
+            content: "Click to set a new password";
+            display: inline-block;
+            padding: 6px 12px;
+            border: 1px dashed #cdd9d4;
+            border-radius: 8px;
+            color: #6f7a74;
+            font-size: 13px;
+        }
+        input.o_input {
+            min-height: 36px;
+            padding: 6px 12px !important;
+            border: 1px solid #cdd9d4 !important;
+            border-radius: 8px !important;
+            background-color: #fff !important;
+            &:focus {
+                border-color: #2e6b4a !important;
+                box-shadow: 0 0 0 3px rgba(46, 107, 74, 0.15) !important;
+            }
+        }
+    }
+}
+
+// Pop-up: labels vertically centred with their fields (as on the user page).
+.nsipa_user_popup .o_inner_group .o_cell {
+    align-self: center;
+}
+
+// Language under Name and Email (user page and pop-up): same width and spacing as Email.
+.oe_title .nsipa_title_lang {
+    margin: 0 0 18px;
+    .o_field_widget {
+        width: 100%;
+    }
+}

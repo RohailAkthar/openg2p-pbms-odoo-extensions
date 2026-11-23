@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <!-- Page header for User Access Settings (Users list). "+ New user" opens the compact pop-up
+         and follows the same permission as Odoo's New button. -->
+    <t t-name="pbms_rbac_nigeria.AdminUsersListView" t-inherit="web.ListView" t-inherit-mode="extension">
+        <xpath expr="//Layout" position="before">
+            <div t-if="nsipaAdminScreen == 'users'" class="nsipa_page_header nsipa_programs_header">
+                <div class="nsipa_page_header_text">
+                    <div class="nsipa_eyebrow">ADMINISTRATION</div>
+                    <h1 class="nsipa_page_title">User access settings <span class="nsipa_info_icon">i</span></h1>
+                    <p class="nsipa_page_subtitle">Manage who can sign in to PBMS and what they can access.</p>
+                </div>
+                <div class="nsipa_header_actions">
+                    <button type="button" class="nsipa_refresh_btn" t-on-click="onNsipaRefresh">↻ Refresh</button>
+                    <button t-if="activeActions.create" type="button" class="nsipa_new_btn" t-on-click="onNsipaNewUser">+ New user</button>
+                </div>
+            </div>
+        </xpath>
+    </t>
+    <!-- Page header for Developer Apps (Apps cards). -->
+    <t t-name="pbms_rbac_nigeria.AdminAppsKanbanView" t-inherit="web.KanbanView" t-inherit-mode="extension">
+        <xpath expr="//Layout" position="before">
+            <div t-if="nsipaAdminScreen == 'apps'" class="nsipa_page_header nsipa_programs_header">
+                <div class="nsipa_page_header_text">
+                    <div class="nsipa_eyebrow">ADMINISTRATION</div>
+                    <h1 class="nsipa_page_title">Developer apps <span class="nsipa_info_icon">i</span></h1>
+                    <p class="nsipa_page_subtitle">Install, upgrade and manage the modules of this PBMS instance.</p>
+                </div>
+                <div class="nsipa_header_actions">
+                    <button type="button" class="nsipa_refresh_btn" t-on-click="onNsipaRefresh">↻ Refresh</button>
+                    <button type="button" class="nsipa_new_btn" t-on-click="onNsipaUpdateApps">↻ Update apps list</button>
+                </div>
+            </div>
+        </xpath>
+    </t>
+</templates>
