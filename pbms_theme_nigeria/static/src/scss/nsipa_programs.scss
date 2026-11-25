@@ -268,7 +268,7 @@ $p-primary: #2e6b4a;
         th, td {
             padding: 0 16px !important;
         }
-        th[data-name="program_mnemonic"] { width: 19% !important; }
+        th[data-name="program_mnemonic"] { width: 16% !important; }
         th[data-name="latest_ec_cycle_name"] { width: 11% !important; }
         th[data-name="latest_ec_version"] { width: 8% !important; }
         th[data-name="latest_ec_stage"] { width: 10% !important; }
@@ -276,7 +276,7 @@ $p-primary: #2e6b4a;
         th[data-name="enrollment_frequency"] { width: 10% !important; }
         th[data-name="latest_ec_creation_date"] { width: 11% !important; }
         thead th:last-child:not([data-name]),
-        thead th.o_list_button { width: 21% !important; }
+        thead th.o_list_button { width: 24% !important; }
         td.o_list_button {
             overflow: visible !important;
             text-overflow: clip !important;
@@ -1035,13 +1035,13 @@ $p-primary: #2e6b4a;
         th, td {
             padding: 0 16px !important;
         }
-        th[data-name="program_mnemonic"] { width: 24% !important; }
+        th[data-name="program_mnemonic"] { width: 21% !important; }
         th[data-name="latest_dc_cycle_name"] { width: 14% !important; }
         th[data-name="latest_dc_version"] { width: 12% !important; }
         th[data-name="latest_dc_stage"] { width: 16% !important; }
         th[data-name="latest_dc_status"] { width: 12% !important; }
         thead th:last-child:not([data-name]),
-        thead th.o_list_button { width: 22% !important; }
+        thead th.o_list_button { width: 25% !important; }
         td.o_list_button {
             overflow: visible !important;
             text-overflow: clip !important;

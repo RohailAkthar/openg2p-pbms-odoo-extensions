@@ -217,7 +217,7 @@ $nsipa-h: 80px;
         left: $nsipa-w;
         height: $nsipa-h;
         align-items: center;
-        padding: 0 48px;
+        padding: 0 40px; // same 40px inset as every page's content, so all left edges line up
         z-index: 1021;
         font-size: 15px;
         color: #1f3d2e;
@@ -361,20 +361,30 @@ $nsipa-h: 80px;
         padding: 8px 40px 0;
         .nav-tabs {
             display: flex !important;
+            gap: 32px;
             border-bottom: 1px solid $nsipa-border;
         }
         .nav-item {
             display: block !important;
         }
+        // Underlined tabs: the first label starts exactly at the page's left edge (no box padding),
+        // in line with the eyebrow, title and subtitle above it.
         .nav-link {
-            padding: 10px 20px;
-            border-radius: 8px 8px 0 0;
+            margin: 0 0 -1px;
+            padding: 12px 0;
+            background: transparent !important;
+            border: 0 !important;
+            border-bottom: 3px solid transparent !important;
+            border-radius: 0;
             color: #5f6b64;
             font-weight: 600;
-            &.active {
-                background: #fff;
+            &:hover {
                 color: #1f3d2e;
-                border-color: $nsipa-border $nsipa-border #fff;
+            }
+            &.active {
+                background: transparent !important;
+                color: #1f3d2e;
+                border-bottom-color: #2e6b4a !important;
             }
         }
     }
@@ -916,4 +926,53 @@ $nsipa-h: 80px;
 // eyebrow and subtitle (font side bearing). Pull it back so all three lines share one left edge.
 .nsipa_page_header .nsipa_page_title {
     margin-left: -0.06em;
+}
+
+// ---------- Uniform alignment on Approvals, Programmes, Enrolment and Disbursement cycles ----------
+@media (min-width: 768px) {
+    // Approvals: the whole page scrolls (header + tabs + card), as on the other pages, so the card
+    // is not narrowed by a scrollbar of its own and lines up with Refresh / the page edges.
+    .o_action.g2p-approvals-action {
+        overflow-y: auto !important;
+    }
+    .g2p-approvals-action .g2p-tab-content {
+        overflow: visible !important;
+        flex: 0 0 auto !important;
+    }
+
+    // Every table card: the first column starts where "N records" starts (28px inside the card)
+    // and the last column ends 28px before the card edge, whatever the inner column padding.
+    .o_action_manager :is(.nsipa_programs_list, .g2p-approvals-action) .o_list_renderer .o_list_table tr {
+        > :first-child:not(.o_list_record_selector),
+        > .o_list_record_selector + th,
+        > .o_list_record_selector + td {
+            padding-left: 28px !important;
+        }
+        > :last-child {
+            padding-right: 28px !important;
+        }
+    }
+}
+
+@media (min-width: 768px) {
+    // Approvals: long headers ("# OF BENEFICIARIES") wrap onto two lines instead of being cut.
+    .g2p-approvals-action .o_list_renderer .o_list_table thead th {
+        &,
+        .o_column_title,
+        div,
+        span {
+            white-space: normal !important;
+            overflow: visible !important;
+            text-overflow: clip !important;
+        }
+        line-height: 1.35;
+    }
+    // Action buttons (View / Create New Cycle): no extra space after the last one, so the
+    // column keeps the same 28px right edge as the rest of the card.
+    .o_action_manager .nsipa_programs_list .o_list_renderer .o_list_table td.o_list_button {
+        white-space: nowrap;
+        > :last-child {
+            margin-right: 0 !important;
+        }
+    }
 }
