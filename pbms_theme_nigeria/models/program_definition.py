@@ -20,7 +20,7 @@ class G2PProgramDefinition(models.Model):
         ]
 
     # Search-only helper for the list's search bar: one entry that looks in every column of the list.
-    nsipa_search = fields.Char(string="Programmes", compute="_compute_nsipa_search", search="_search_nsipa_search")
+    nsipa_search = fields.Char(string="Programs", compute="_compute_nsipa_search", search="_search_nsipa_search")
 
     def _compute_nsipa_search(self):
         for rec in self:
@@ -47,7 +47,7 @@ class G2PProgramDefinition(models.Model):
 
     # Search-only helpers for the Enrollment / Disbursement cycles lists: one entry that looks in every column
     # shown there. The "latest cycle" columns are computed (not searchable), so the cycles themselves are
-    # searched and a programme matches when its LATEST cycle matches (or its own name / frequency does).
+    # searched and a program matches when its LATEST cycle matches (or its own name / frequency does).
     nsipa_cycle_search = fields.Char(
         string="Enrollment cycles", compute="_compute_nsipa_search", search="_search_nsipa_cycle_search"
     )
@@ -112,7 +112,7 @@ class G2PProgramDefinition(models.Model):
         return ["|"] * (len(domain) - 1) + domain
 
     def action_open_edit(self):
-        """Presentation only: the themed Programmes list asks for the popup form (context nsipa_popup).
+        """Presentation only: the themed Programs list asks for the popup form (context nsipa_popup).
         Program Operations (management mode) and every other caller keep the original full-page form."""
         ctx = self.env.context
         if not ctx.get("nsipa_popup") or ctx.get("program_view_mode", "config") != "config":
@@ -120,7 +120,7 @@ class G2PProgramDefinition(models.Model):
         self.ensure_one()
         return {
             "type": "ir.actions.act_window",
-            "name": "Edit programme",
+            "name": "Edit program",
             "res_model": "g2p.program.definition",
             "res_id": self.id,
             "view_mode": "form",

@@ -15,6 +15,7 @@
     ],
     "data": [
         "data/website_branding.xml",
+        "data/benefit_codes.xml",
         "views/webclient_templates.xml",
         "templates/login_templates.xml",
         "views/program_list_views.xml",
@@ -24,6 +25,7 @@
         "views/benefit_code_popup_views.xml",
         "views/sponsor_bank_popup_views.xml",
         "views/search_views.xml",
+        "views/mnemonic_labels.xml",
     ],
     "assets": {
         "web.assets_backend": [

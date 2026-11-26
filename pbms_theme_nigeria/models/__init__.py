@@ -5,3 +5,7 @@ from . import warehouse
 from . import program_definition
 from . import nsipa_search
 from . import website
+
+from . import name_labels
+from . import transfer_labels
+from . import entitlement_defaults

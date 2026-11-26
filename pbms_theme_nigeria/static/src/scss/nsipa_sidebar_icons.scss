@@ -55,6 +55,12 @@
             content: "";
             --nsipa-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cellipse cx='12' cy='6' rx='7.5' ry='2.7'/%3E%3Cpath d='M4.5 6v12c0 1.5 3.4 2.7 7.5 2.7s7.5-1.2 7.5-2.7V6'/%3E%3Cpath d='M4.5 12c0 1.5 3.4 2.7 7.5 2.7s7.5-1.2 7.5-2.7'/%3E%3C/svg%3E");
         }
+        // Transfer Types: two opposing arrows
+        [data-menu-xmlid="g2p_pbms.menu_g2p_benefit_codes"]::before,
+        .dropdown-toggle[data-menu-xmlid="g2p_pbms.menu_g2p_benefit_codes"]::before {
+            content: "";
+            --nsipa-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 8h15M15 4l4 4-4 4'/%3E%3Cpath d='M20 16H5M9 12l-4 4 4 4'/%3E%3C/svg%3E");
+        }
         // Knowledge: book
         [data-menu-xmlid="pbms_knowledge.menu_pbms_knowledge"]::before,
         .dropdown-toggle[data-menu-xmlid="pbms_knowledge.menu_pbms_knowledge"]::before {

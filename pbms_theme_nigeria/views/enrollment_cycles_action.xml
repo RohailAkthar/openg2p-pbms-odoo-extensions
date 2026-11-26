@@ -50,7 +50,7 @@
             <xpath expr="//group" position="replace">
                 <div class="nsipa_prog_grid">
                     <div class="nsipa_prog_field">
-                        <label for="program_id" string="Programme"/>
+                        <label for="program_id" string="Program"/>
                         <field name="program_id" nolabel="1" readonly="1"/>
                     </div>
                     <div class="nsipa_prog_field">
@@ -88,7 +88,7 @@
             <xpath expr="//field[@name='enrollment_cycle_ids']" position="before">
                 <div class="nsipa_page_header">
                     <div class="nsipa_page_header_text">
-                        <div class="nsipa_eyebrow">PROGRAMME OPERATIONS</div>
+                        <div class="nsipa_eyebrow">PROGRAM OPERATIONS</div>
                         <h1 class="nsipa_page_title">Enrollment cycles <span class="nsipa_info_icon">i</span></h1>
                         <p class="nsipa_page_subtitle"><field name="program_mnemonic" readonly="1" nolabel="1"/></p>
                     </div>
@@ -116,7 +116,7 @@
             <xpath expr="//sheet/field[@name='beneficiary_list_id']" position="before">
                 <div class="nsipa_page_header">
                     <div class="nsipa_page_header_text">
-                        <div class="nsipa_eyebrow">PROGRAMME OPERATIONS</div>
+                        <div class="nsipa_eyebrow">PROGRAM OPERATIONS</div>
                         <h1 class="nsipa_page_title" invisible="list_stage == 'disbursement'">Enrollment cycle <span class="nsipa_info_icon">i</span></h1>
                         <h1 class="nsipa_page_title" invisible="list_stage != 'disbursement'">Disbursement cycle <span class="nsipa_info_icon">i</span></h1>
                         <p class="nsipa_page_subtitle" invisible="not cycle_name">
@@ -139,11 +139,23 @@
             <xpath expr="//tree" position="attributes">
                 <attribute name="class">nsipa_programs_list nsipa_benefit_codes_list</attribute>
             </xpath>
-            <xpath expr="//button[@name='action_open_edit']" position="attributes">
-                <attribute name="class">nsipa_open_btn btn btn-link</attribute>
-                <attribute name="string">Edit →</attribute>
-                <attribute name="context">{'nsipa_popup': True}</attribute>
-            </xpath>
+            <!-- Editing benefit codes is disabled for now (NGN code is seeded): the Edit button, and with it the
+                 Actions column, is removed. To re-enable, replace this xpath with the one in git history:
+                 //button[@name='action_open_edit'] position=attributes: class nsipa_open_btn btn btn-link,
+                 string "Edit →", context {'nsipa_popup': True}. -->
+            <xpath expr="//button[@name='action_open_edit']" position="replace"/>
+            <field name="benefit_mnemonic" position="attributes">
+                <attribute name="string">Transfer Name</attribute>
+            </field>
+            <field name="benefit_type" position="attributes">
+                <attribute name="string">Transfer Type</attribute>
+            </field>
+            <field name="measurement_unit" position="attributes">
+                <attribute name="string">Currency</attribute>
+            </field>
+            <field name="benefit_description" position="attributes">
+                <attribute name="string">Transfer Description</attribute>
+            </field>
         </field>
     </record>
 
@@ -160,7 +172,7 @@
             <xpath expr="//group" position="replace">
                 <div class="nsipa_prog_grid">
                     <div class="nsipa_prog_field">
-                        <label for="program_id" string="Programme"/>
+                        <label for="program_id" string="Program"/>
                         <field name="program_id" nolabel="1" readonly="1" options="{'no_open': True}"/>
                     </div>
                     <div class="nsipa_prog_field">
@@ -273,7 +285,7 @@
             <xpath expr="//field[@name='disbursement_cycle_ids']" position="before">
                 <div class="nsipa_page_header">
                     <div class="nsipa_page_header_text">
-                        <div class="nsipa_eyebrow">PROGRAMME OPERATIONS</div>
+                        <div class="nsipa_eyebrow">PROGRAM OPERATIONS</div>
                         <h1 class="nsipa_page_title">Disbursement cycles <span class="nsipa_info_icon">i</span></h1>
                         <p class="nsipa_page_subtitle"><field name="program_mnemonic" readonly="1" nolabel="1"/></p>
                     </div>
@@ -300,7 +312,7 @@
             <xpath expr="//group" position="replace">
                 <div class="nsipa_prog_grid">
                     <div class="nsipa_prog_field">
-                        <label for="program_id" string="Programme"/>
+                        <label for="program_id" string="Program"/>
                         <field name="program_id" nolabel="1" readonly="1" options="{'no_open': True}"/>
                     </div>
                     <div class="nsipa_prog_field">

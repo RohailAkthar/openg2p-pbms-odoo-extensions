@@ -11,7 +11,7 @@
                 <attribute name="class">nsipa_programs_list</attribute>
             </xpath>
             <field name="program_mnemonic" position="attributes">
-                <attribute name="string">Programme Name</attribute>
+                <attribute name="string">Program Name</attribute>
             </field>
             <xpath expr="//button[@name='action_open_edit']" position="attributes">
                 <attribute name="class">nsipa_open_btn btn btn-link</attribute>
@@ -23,7 +23,7 @@
     </record>
 
     <!-- Presentation only: styling class for the Program Configuration form page (row click).
-         The "New/Edit programme" popup is a primary view that sets its own class, so it is unaffected. -->
+         The "New/Edit program" popup is a primary view that sets its own class, so it is unaffected. -->
     <record id="view_g2p_programs_config_form_nsipa" model="ir.ui.view">
         <field name="name">g2p.programs.config.form.nsipa</field>
         <field name="model">g2p.program.definition</field>
@@ -52,13 +52,13 @@
         </field>
     </record>
 
-    <!-- Presentation only: search bar entry that matches across every column of the Programmes list. -->
+    <!-- Presentation only: search bar entry that matches across every column of the Programs list. -->
     <record id="view_g2p_programs_search_nsipa" model="ir.ui.view">
         <field name="name">g2p.programs.search.nsipa</field>
         <field name="model">g2p.program.definition</field>
         <field name="arch" type="xml">
-            <search string="Programmes">
-                <field name="nsipa_search" string="Programmes"/>
+            <search string="Programs">
+                <field name="nsipa_search" string="Programs"/>
             </search>
         </field>
     </record>

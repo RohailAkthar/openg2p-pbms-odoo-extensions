@@ -261,7 +261,7 @@ $p-primary: #2e6b4a;
     }
 }
 
-// Enrollment cycles list: more columns than Programmes, and the action column holds
+// Enrollment cycles list: more columns than Programs, and the action column holds
 // both "View" and "Create New Cycle", so give each column a fixed share and don't clip buttons.
 @media (min-width: 768px) {
     .nsipa_programs_list.nsipa_enrollment_cycles_list .o_list_renderer .o_list_table {
@@ -381,7 +381,7 @@ $p-primary: #2e6b4a;
 }
 
 // Program cycle list: hide Odoo's own title (the page header replaces it) and the top pager,
-// and show the pager as the card footer, like the Programmes list.
+// and show the pager as the card footer, like the Programs list.
 .nsipa_cycles_form.o_view_controller > .o_control_panel,
 .nsipa_cycles_form .o_control_panel {
     display: none !important; // breadcrumb, duplicate title and record pager (1 / 8)
@@ -639,16 +639,14 @@ $p-primary: #2e6b4a;
 // Benefit Codes list. Header "Create code" button replaces the control-panel one.
 @media (min-width: 768px) {
     .nsipa_programs_list.nsipa_benefit_codes_list .o_list_renderer .o_list_table {
-        th[data-name="benefit_mnemonic"] { width: 22% !important; }
-        th[data-name="benefit_type"] { width: 20% !important; }
-        th[data-name="measurement_unit"] { width: 18% !important; }
-        th[data-name="benefit_description"] { width: 30% !important; }
+        // Edit/Actions column is removed for now, so the four data columns fill the whole table (100%).
+        // If the Edit button is restored, shrink these back to 22/20/18/30 and re-add the 10% Actions width.
+        th[data-name="benefit_mnemonic"] { width: 25% !important; }
+        th[data-name="benefit_type"] { width: 22% !important; }
+        th[data-name="measurement_unit"] { width: 20% !important; }
+        th[data-name="benefit_description"] { width: 33% !important; }
         thead th:last-child:not([data-name]),
-        thead th.o_list_button { width: 10% !important; }
-        thead th.o_list_button::after,
-        thead th:last-child:not([data-name])::after {
-            content: "ACTIONS";
-        }
+        thead th.o_list_button { width: 0 !important; padding: 0 !important; }
     }
 }
 
@@ -989,7 +987,7 @@ $p-primary: #2e6b4a;
             background: #eaf3ec;
             border: 0;
             border-radius: 10px;
-            // The field-name part ("Programmes") is dropped; only the searched text is shown.
+            // The field-name part ("Programs") is dropped; only the searched text is shown.
             .o_searchview_facet_label {
                 display: none !important;
             }

@@ -5,7 +5,7 @@
         <xpath expr="//div[hasclass('g2p-tab-wrapper')]" position="before">
             <div class="nsipa_page_header">
                 <div class="nsipa_page_header_text">
-                    <div class="nsipa_eyebrow">PROGRAMME OPERATIONS</div>
+                    <div class="nsipa_eyebrow">PROGRAM OPERATIONS</div>
                     <h1 class="nsipa_page_title">
                         <t t-if="state.activeTab === 'queue'">Approval queue</t>
                         <t t-else="">Approval history</t>

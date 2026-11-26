@@ -55,7 +55,7 @@ class G2PBenefitCodes(models.Model):
         self.ensure_one()
         return [self.benefit_mnemonic, label_of(self, "benefit_type"), self.measurement_unit, self.benefit_description]
 
-    nsipa_search = fields.Char(string="Benefit codes", compute="_compute_nsipa_search", search="_search_nsipa_search")
+    nsipa_search = fields.Char(string="Transfer types", compute="_compute_nsipa_search", search="_search_nsipa_search")
 
     def _compute_nsipa_search(self):
         for rec in self:

@@ -91,7 +91,7 @@ $nsipa-h: 80px;
                 border-radius: 12px;
             }
             &::after {
-                content: "Programme & Benefits";
+                content: "Program & Benefits";
                 font-size: 14px;
                 font-weight: 500;
                 line-height: 1.3;
@@ -236,7 +236,7 @@ $nsipa-h: 80px;
             color: #1f3d2e;
             position: relative;
             &::before {
-                content: "PROGRAMME OPERATIONS";
+                content: "PROGRAM OPERATIONS";
                 position: absolute;
                 top: -20px;
                 left: 0;
@@ -928,7 +928,7 @@ $nsipa-h: 80px;
     margin-left: -0.06em;
 }
 
-// ---------- Uniform alignment on Approvals, Programmes, Enrolment and Disbursement cycles ----------
+// ---------- Uniform alignment on Approvals, Programs, Enrolment and Disbursement cycles ----------
 @media (min-width: 768px) {
     // Approvals: the whole page scrolls (header + tabs + card), as on the other pages, so the card
     // is not narrowed by a scrollbar of its own and lines up with Refresh / the page edges.

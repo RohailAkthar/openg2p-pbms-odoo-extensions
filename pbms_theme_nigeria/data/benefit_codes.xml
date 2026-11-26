@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Default Nigeria benefit code. noupdate so later edits in the UI survive module upgrades. -->
+    <data noupdate="1">
+        <record id="benefit_code_ngn_cash_digital" model="g2p.benefit.codes">
+            <field name="benefit_mnemonic">Digital Cash (Naira)</field>
+            <field name="benefit_type">CASH_DIGITAL</field>
+            <field name="measurement_unit">NGN</field>
+            <field name="decimal_places">2</field>
+            <field name="benefit_description">Digital cash transfer in Nigerian Naira (NGN)</field>
+        </record>
+    </data>
+</odoo>

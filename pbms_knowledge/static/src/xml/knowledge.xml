@@ -30,7 +30,7 @@
                 <t t-if="!guide">
                     <section class="pbk_hero">
                         <h1>PBMS Knowledge</h1>
-                        <p>User manual, setup guides and workflow guides for the Programme and Benefit Management System. Pick a topic on the left, or search.</p>
+                        <p>User manual, setup guides and workflow guides for the Program and Benefit Management System. Pick a topic on the left, or search.</p>
                     </section>
                     <div class="pbk_grid">
                         <div t-foreach="categories" t-as="cat" t-key="cat.id" class="pbk_card">

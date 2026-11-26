@@ -5,7 +5,7 @@
             <div class="nsipa_sidebar_caption d-none d-md-block">WORKSPACE</div>
         </xpath>
         <xpath expr="//nav" position="inside">
-            <div class="nsipa_header_title d-none d-md-flex">Programme &amp; Benefit Management</div>
+            <div class="nsipa_header_title d-none d-md-flex">Program &amp; Benefit Management</div>
             <a class="nsipa_signout d-none d-md-flex" href="/web/session/logout">Sign out</a>
             <div class="nsipa_sidebar_footer d-none d-md-block">
                 <div class="nsipa_sidebar_footer_title">NSIPA</div>

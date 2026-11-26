@@ -1,4 +1,4 @@
-// "New programme" popup. Presentation only.
+// "New program" popup. Presentation only.
 .modal-content:has(.nsipa_prog_popup) {
     border: 0;
     border-radius: 24px;
@@ -14,6 +14,7 @@
             align-items: center;
             gap: 14px;
             &::after {
+                cursor: pointer; // clicking it opens the matching Knowledge guide (see help_button.js)
                 content: "i";
                 display: inline-flex;
                 align-items: center;
@@ -190,6 +191,9 @@
         border-radius: 12px;
         box-shadow: none;
         overflow: hidden;
+        // Keep the card as tall as the empty state (header + 3 filler rows) so the popup does not shrink
+        // when the first row is added. It still grows when there are more rows.
+        min-height: 225px;
         .o_list_table {
             table-layout: auto !important;
             width: 100% !important;
@@ -299,7 +303,7 @@
     }
 }
 
-// Dialogs opened from inside the "New programme" popup (e.g. "Create Program Benefit Codes",
+// Dialogs opened from inside the "New program" popup (e.g. "Create Program Benefit Codes",
 // eligibility rule, workflow stage): same modern look as the popup. Presentation only.
 .o_dialog:has(.nsipa_prog_popup) ~ .o_dialog .modal-content,
 body:has(.nsipa_prog_detail) .o_dialog .modal-content {
@@ -428,7 +432,7 @@ body:has(.nsipa_prog_detail) .o_dialog .modal-body .o_field_many2one {
     }
 }
 
-// Labels sit above their field (not beside it) in dialogs opened from the "New programme" popup.
+// Labels sit above their field (not beside it) in dialogs opened from the "New program" popup.
 .o_dialog:has(.nsipa_prog_popup) ~ .o_dialog .modal-body,
 body:has(.nsipa_prog_detail) .o_dialog .modal-body {
     .o_group .o_inner_group,
@@ -646,7 +650,7 @@ body:has(.nsipa_prog_detail) .o_dialog .modal-dialog:has([name="sql_query"]):has
         font-weight: 500;
         justify-content: flex-start;
         text-align: left;
-        // Read-only many2one (Programme) renders as a link inside nested wrappers: flatten them
+        // Read-only many2one (Program) renders as a link inside nested wrappers: flatten them
         // so the value is left-aligned, vertically centred and uses the same colour as the others.
         > *,
         .o_field_many2one_selection,
@@ -676,7 +680,7 @@ body:has(.nsipa_prog_detail) .o_dialog .modal-dialog:has([name="sql_query"]):has
     }
 }
 
-// Read-only values (incl. the Programme many2one link): centre single-line text by giving every
+// Read-only values (incl. the Program many2one link): centre single-line text by giving every
 // wrapper inside the 40px box zero vertical spacing and a 38px line-height (40px minus borders).
 .nsipa_cycle_popup .nsipa_prog_field .o_readonly_modifier {
     line-height: 38px;
@@ -749,10 +753,22 @@ body:has(.nsipa_prog_detail) .o_dialog .modal-dialog:has([name="sql_query"]):has
 // rows left-aligned (incl. "Search More…"), one clear line per option.
 body:has(.nsipa_prog_popup) .o-autocomplete--dropdown-menu,
 body:has(.nsipa_prog_popup) .o-autocomplete--dropdown-menu.dropdown-menu {
-    min-width: 360px;
+    min-width: 470px; // about as wide as the field it opens from, so it does not look cut short
     width: max-content;
     max-width: 560px;
     text-align: left;
+    // The <li> and the <a class="dropdown-item"> inside it both matched the padded/rounded row style above,
+    // so every option was padded and highlighted twice. Let the link carry the row; the <li> is only a wrapper.
+    li.o-autocomplete--dropdown-item {
+        padding: 0 !important;
+        margin: 0;
+        background: transparent !important;
+        border-radius: 0;
+    }
+    li.o-autocomplete--dropdown-item > .dropdown-item {
+        padding: 10px 14px;
+        width: 100%;
+    }
     .o-autocomplete--dropdown-item,
     .dropdown-item,
     li {
@@ -1006,7 +1022,7 @@ body:has(.nsipa_prog_detail) .o_dialog .modal-body .o_form_readonly .o_field_man
     }
 }
 
-// "Create New Enrolment / Disbursement List" dialog: info notes as soft green cards, left-aligned programme value.
+// "Create New Enrolment / Disbursement List" dialog: info notes as soft green cards, left-aligned program value.
 .nsipa_list_popup {
     .alert.alert-info {
         margin: 18px 0 0;

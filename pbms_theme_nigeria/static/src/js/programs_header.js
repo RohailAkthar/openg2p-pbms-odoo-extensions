@@ -4,8 +4,8 @@ import {patch} from "@web/core/utils/patch";
 
 // Presentation only: Refresh reloads the current list with the same domain/filters.
 patch(ListController.prototype, {
-    // "New programme" opens the popup form; reloads the list once it is closed (saved or cancelled).
-    onNsipaNewProgramme() {
+    // "New program" opens the popup form; reloads the list once it is closed (saved or cancelled).
+    onNsipaNewProgram() {
         return this.action.doAction("pbms_theme_nigeria.action_g2p_programs_new_popup", {
             onClose: () => this.onNsipaRefresh(),
         });
@@ -23,6 +23,15 @@ patch(ListController.prototype, {
         return this.action.doAction("pbms_theme_nigeria.action_g2p_sponsor_bank_new_popup", {
             onClose: () => this.onNsipaRefresh(),
         });
+    },
+
+    // Row click on the Transfer Types list opens the read-only popup instead of the full-page form.
+    async openRecord(record) {
+        if (this.props.resModel === "g2p.benefit.codes") {
+            const action = await this.orm.call("g2p.benefit.codes", "action_nsipa_view", [[record.resId]]);
+            return this.action.doAction(action);
+        }
+        return super.openRecord(record);
     },
 
     async onNsipaRefresh() {

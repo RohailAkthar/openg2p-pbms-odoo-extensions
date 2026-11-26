@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Labels that are hard-coded in base views / reports: "... Mnemonic" shown as "... Name". Field-level labels are in models/name_labels.py. -->
+    <record id="nsipa_name_label_warehouse_tree_warehouse_mnemonic" model="ir.ui.view">
+        <field name="name">nsipa.name.label.warehouse_tree.warehouse_mnemonic</field>
+        <field name="model">g2p.warehouse</field>
+        <field name="inherit_id" ref="g2p_pbms.view_g2p_warehouse_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='warehouse_mnemonic']" position="attributes">
+                <attribute name="string">Warehouse Name</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="nsipa_name_label_sponsor_bank_form_warehouse_mnemonic" model="ir.ui.view">
+        <field name="name">nsipa.name.label.sponsor_bank_form.warehouse_mnemonic</field>
+        <field name="model">g2p.warehouse</field>
+        <field name="inherit_id" ref="g2p_pbms.view_g2p_sponsor_bank_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='warehouse_mnemonic']" position="attributes">
+                <attribute name="string">Sponsor Bank Name</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="nsipa_name_label_sponsor_bank_tree_warehouse_mnemonic" model="ir.ui.view">
+        <field name="name">nsipa.name.label.sponsor_bank_tree.warehouse_mnemonic</field>
+        <field name="model">g2p.warehouse</field>
+        <field name="inherit_id" ref="g2p_pbms.view_g2p_sponsor_bank_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='warehouse_mnemonic']" position="attributes">
+                <attribute name="string">Sponsor Bank Name</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="nsipa_name_label_beneficiary_list_tree_mnemonic" model="ir.ui.view">
+        <field name="name">nsipa.name.label.beneficiary_list_tree.mnemonic</field>
+        <field name="model">g2p.beneficiary.list</field>
+        <field name="inherit_id" ref="g2p_pbms.view_g2p_beneficiary_list_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='mnemonic']" position="attributes">
+                <attribute name="string">Name</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="nsipa_name_label_bgtask_summary_form_mnemonic" model="ir.ui.view">
+        <field name="name">nsipa.name.label.bgtask_summary_form.mnemonic</field>
+        <field name="model">g2p.bgtask.summary.wizard</field>
+        <field name="inherit_id" ref="g2p_pbms.view_g2p_eligibility_summary_wizard_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='mnemonic'][@readonly='1']" position="attributes">
+                <attribute name="string">List Name</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="nsipa_name_label_entitlement_rule_tree_mnemonic" model="ir.ui.view">
+        <field name="name">nsipa.name.label.entitlement_rule_tree.mnemonic</field>
+        <field name="model">g2p.entitlement.rule.definition</field>
+        <field name="inherit_id" ref="g2p_pbms.view_g2p_entitlement_rule_definition_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='mnemonic']" position="attributes">
+                <attribute name="string">Rule Name</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <template id="nsipa_name_label_disbursement_batch_summary_strong_disbursement_cycle_mnemonic" inherit_id="g2p_pbms.print_disbursement_batch_summary">
+        <xpath expr="//strong[normalize-space()='Disbursement Cycle Mnemonic:']" position="replace"><strong>Disbursement Cycle Name:</strong></xpath>
+    </template>
+
+    <template id="nsipa_name_label_disbursement_batch_summary_strong_benefit_code_mnemonic" inherit_id="g2p_pbms.print_disbursement_batch_summary">
+        <xpath expr="//strong[normalize-space()='Benefit Code Mnemonic:']" position="replace"><strong>Transfer Name:</strong></xpath>
+    </template>
+
+    <template id="nsipa_name_label_disbursement_batch_summary_th_large_zone_mnemonic" inherit_id="g2p_pbms.print_disbursement_batch_summary">
+        <xpath expr="//th[normalize-space()='Large Zone Mnemonic']" position="replace"><th>Large Zone Name</th></xpath>
+    </template>
+
+    <template id="nsipa_name_label_disbursement_batch_summary_th_small_zone_mnemonic" inherit_id="g2p_pbms.print_disbursement_batch_summary">
+        <xpath expr="//th[normalize-space()='Small Zone Mnemonic']" position="replace"><th>Small Zone Name</th></xpath>
+    </template>
+
+    <template id="nsipa_name_label_disbursement_envelope_summary_strong_benefit_code_mnemonic" inherit_id="g2p_pbms.print_disbursement_envelope_summary">
+        <xpath expr="//strong[normalize-space()='Benefit Code Mnemonic:']" position="replace"><strong>Transfer Name:</strong></xpath>
+    </template>
+
+    <template id="nsipa_name_label_disbursement_envelope_summary_th_large_zone_mnemonic" inherit_id="g2p_pbms.print_disbursement_envelope_summary">
+        <xpath expr="//th[normalize-space()='Large Zone Mnemonic']" position="replace"><th>Large Zone Name</th></xpath>
+    </template>
+
+    <template id="nsipa_name_label_disbursement_envelope_summary_th_small_zone_mnemonic" inherit_id="g2p_pbms.print_disbursement_envelope_summary">
+        <xpath expr="//th[normalize-space()='Small Zone Mnemonic']" position="replace"><th>Small Zone Name</th></xpath>
+    </template>
+
+    <record id="nsipa_name_label_bgtask_summary_form_benefit_1" model="ir.ui.view">
+        <field name="name">nsipa.name.label.bgtask_summary_form.benefit</field>
+        <field name="model">g2p.bgtask.summary.wizard</field>
+        <field name="inherit_id" ref="g2p_pbms.view_g2p_eligibility_summary_wizard_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="(//field[@name='benefit_code_mnemonic'])[1]" position="attributes">
+                <attribute name="string">Transfer Name</attribute>
+            </xpath>
+            <xpath expr="(//field[@name='benefit_code_mnemonic'])[2]" position="attributes">
+                <attribute name="string">Transfer Name</attribute>
+            </xpath>
+        </field>
+    </record>
+    <record id="nsipa_transfer_tab_programs_form" model="ir.ui.view">
+        <field name="name">nsipa.transfer.tab.programs.form</field>
+        <field name="model">g2p.program.definition</field>
+        <field name="inherit_id" ref="g2p_pbms.view_g2p_programs_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[field[@name='program_benefit_code_ids']]" position="attributes">
+                <attribute name="string">Program Transfer Types</attribute>
+            </xpath>
+        </field>
+    </record>
+    <record id="nsipa_transfer_tab_programs_config_form" model="ir.ui.view">
+        <field name="name">nsipa.transfer.tab.programs.config.form</field>
+        <field name="model">g2p.program.definition</field>
+        <field name="inherit_id" ref="g2p_pbms.view_g2p_programs_config_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[field[@name='program_benefit_code_ids']]" position="attributes">
+                <attribute name="string">Program Transfer Types</attribute>
+            </xpath>
+        </field>
+    </record>
+    <record id="nsipa_transfer_program_benefit_tree" model="ir.ui.view">
+        <field name="name">nsipa.transfer.program.benefit.tree</field>
+        <field name="model">g2p.program.benefit.codes</field>
+        <field name="inherit_id" ref="g2p_pbms.view_g2p_program_benefit_codes_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="attributes">
+                <attribute name="string">Program Transfer Types</attribute>
+            </xpath>
+            <xpath expr="//create" position="attributes">
+                <attribute name="string">Add Program Transfer Type</attribute>
+            </xpath>
+            <!-- Display only: the stored column is numeric(16,4); the value is already rounded to the transfer
+                 type's decimal places on save, so show 2 decimals (kobo) instead of 25,000.0000. -->
+            <xpath expr="//field[@name='max_quantity']" position="attributes">
+                <attribute name="options">{"digits": [16, 2]}</attribute>
+            </xpath>
+        </field>
+    </record>
+    <record id="nsipa_transfer_program_benefit_form" model="ir.ui.view">
+        <field name="name">nsipa.transfer.program.benefit.form</field>
+        <field name="model">g2p.program.benefit.codes</field>
+        <field name="inherit_id" ref="g2p_pbms.view_g2p_program_benefit_codes_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="attributes">
+                <attribute name="string">Program Transfer Type</attribute>
+            </xpath>
+            <!-- Display only: the stored column is numeric(16,4); the value is already rounded to the transfer
+                 type's decimal places on save, so show 2 decimals (kobo) instead of 25,000.0000. -->
+            <xpath expr="//field[@name='max_quantity']" position="attributes">
+                <attribute name="options">{"digits": [16, 2]}</attribute>
+            </xpath>
+        </field>
+    </record>
+    <record id="nsipa_quantity_digits_entitlement_form" model="ir.ui.view">
+        <field name="name">nsipa.quantity.digits.entitlement.form</field>
+        <field name="model">g2p.entitlement.rule.definition</field>
+        <field name="inherit_id" ref="g2p_pbms.view_g2p_entitlement_rule_definition_form"/>
+        <field name="arch" type="xml">
+            <!-- Display only: show the quantity with 2 decimals (kobo), e.g. 25,000.00. -->
+            <xpath expr="//field[@name='quantity']" position="attributes">
+                <attribute name="options">{"digits": [16, 2]}</attribute>
+            </xpath>
+        </field>
+    </record>
+    <record id="nsipa_quantity_digits_entitlement_tree" model="ir.ui.view">
+        <field name="name">nsipa.quantity.digits.entitlement.tree</field>
+        <field name="model">g2p.entitlement.rule.definition</field>
+        <field name="inherit_id" ref="g2p_pbms.view_g2p_entitlement_rule_definition_tree"/>
+        <field name="arch" type="xml">
+            <!-- Display only: show the quantity with 2 decimals (kobo), e.g. 25,000.00. -->
+            <xpath expr="//field[@name='quantity']" position="attributes">
+                <attribute name="options">{"digits": [16, 2]}</attribute>
+            </xpath>
+        </field>
+    </record>
+    <!-- Enrolment Workflow tab hidden for now (not needed yet). The field and data are untouched; remove this
+         record (or the invisible attribute) to bring the tab back. -->
+    <record id="nsipa_hide_enrolment_workflow_tab" model="ir.ui.view">
+        <field name="name">nsipa.hide.enrolment.workflow.tab</field>
+        <field name="model">g2p.program.definition</field>
+        <field name="inherit_id" ref="g2p_pbms.view_g2p_programs_config_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[field[@name='enrollment_workflow_stage_ids']]" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+    <!-- Set Operator hidden for now (one rule per program, so there is nothing to combine). The field is still
+         saved with its default NONE. Remove these two records to show it again. -->
+    <record id="nsipa_hide_set_operator_form" model="ir.ui.view">
+        <field name="name">nsipa.hide.set.operator.form</field>
+        <field name="model">g2p.eligibility.rule.definition</field>
+        <field name="inherit_id" ref="g2p_pbms.view_g2p_eligibility_rule_definition_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='set_operator']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+    <record id="nsipa_hide_set_operator_tree" model="ir.ui.view">
+        <field name="name">nsipa.hide.set.operator.tree</field>
+        <field name="model">g2p.eligibility.rule.definition</field>
+        <field name="inherit_id" ref="g2p_pbms.view_g2p_eligibility_rule_definition_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='set_operator']" position="attributes">
+                <attribute name="column_invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+    <!-- Entitlement rule Domain hidden for now: who qualifies is decided by the eligibility rule, so every
+         eligible beneficiary gets the entitlement (domain "[]" = match all, set in models/entitlement_defaults.py).
+         Remove this record to show the Domain again, e.g. to pay different amounts to different groups. -->
+    <record id="nsipa_hide_entitlement_domain" model="ir.ui.view">
+        <field name="name">nsipa.hide.entitlement.domain</field>
+        <field name="model">g2p.entitlement.rule.definition</field>
+        <field name="inherit_id" ref="g2p_registry_addon.view_g2p_entitlement_rule_definition_form_inherit"/>
+        <field name="arch" type="xml">
+            <xpath expr="(//field[@name='pbms_domain'])[1]" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="(//field[@name='pbms_domain'])[2]" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+    <!-- Multiplier hidden for now (flat amount for every beneficiary). The field is optional, so nothing else
+         is needed. Remove these two records to show it again. -->
+    <record id="nsipa_hide_multiplier_form" model="ir.ui.view">
+        <field name="name">nsipa.hide.multiplier.form</field>
+        <field name="model">g2p.entitlement.rule.definition</field>
+        <field name="inherit_id" ref="g2p_pbms.view_g2p_entitlement_rule_definition_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='multiplier']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+    <record id="nsipa_hide_multiplier_tree" model="ir.ui.view">
+        <field name="name">nsipa.hide.multiplier.tree</field>
+        <field name="model">g2p.entitlement.rule.definition</field>
+        <field name="inherit_id" ref="g2p_pbms.view_g2p_entitlement_rule_definition_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='multiplier']" position="attributes">
+                <attribute name="column_invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

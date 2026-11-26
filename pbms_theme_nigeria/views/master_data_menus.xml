@@ -14,4 +14,29 @@
     <record id="g2p_pbms.menu_g2p_administrative_area_small_action" model="ir.ui.menu">
         <field name="active" eval="False"/>
     </record>
+
+    <!-- "Benefit Codes" is shown to end users as "Transfer Types" (cash transfers only for now). Labels only:
+         the model, fields and xml ids are unchanged. -->
+    <record id="g2p_pbms.menu_g2p_benefit_codes" model="ir.ui.menu">
+        <field name="name">Transfer Types</field>
+        <!-- Moved up to a top-level sidebar entry (sibling of Programs); the Master Data parent is hidden below.
+             To restore the old layout, set parent_id back to g2p_pbms.menu_g2p_master_data and sequence 4. -->
+        <field name="parent_id" ref="g2p_pbms.menu_g2p_root"/>
+        <field name="sequence">5</field>
+    </record>
+    <!-- Sponsor Banks is not needed for now (deactivated, not deleted); set active back to True to restore. -->
+    <record id="g2p_pbms.menu_g2p_sponsor_bank_action" model="ir.ui.menu">
+        <field name="active" eval="False"/>
+    </record>
+    <!-- Master Data parent is now empty, so it is hidden too. -->
+    <record id="g2p_pbms.menu_g2p_master_data" model="ir.ui.menu">
+        <field name="active" eval="False"/>
+    </record>
+    <record id="g2p_pbms.action_g2p_benefit_codes" model="ir.actions.act_window">
+        <field name="name">Transfer Types</field>
+    </record>
+    <!-- Sidebar label only: "Programs" is shown as "Program Management". The page title stays "Programs". -->
+    <record id="g2p_pbms.menu_g2p_programs" model="ir.ui.menu">
+        <field name="name">Program Management</field>
+    </record>
 </odoo>

@@ -20,7 +20,7 @@
                         <field name="name" nolabel="1" readonly="not context.get('warehouse_form_edit')"/>
                     </div>
                     <div class="nsipa_prog_field">
-                        <label for="warehouse_mnemonic" string="Sponsor Bank Mnemonic"/>
+                        <label for="warehouse_mnemonic" string="Sponsor Bank Name"/>
                         <field name="warehouse_mnemonic" nolabel="1" readonly="not context.get('warehouse_form_edit')"/>
                     </div>
                     <div class="nsipa_prog_field">

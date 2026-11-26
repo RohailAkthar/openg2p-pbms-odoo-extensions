@@ -7,8 +7,8 @@
         <field name="name">g2p.benefit.codes.search.nsipa</field>
         <field name="model">g2p.benefit.codes</field>
         <field name="arch" type="xml">
-            <search string="Benefit codes">
-                <field name="nsipa_search" string="Benefit codes"/>
+            <search string="Transfer types">
+                <field name="nsipa_search" string="Transfer types"/>
             </search>
         </field>
     </record>
