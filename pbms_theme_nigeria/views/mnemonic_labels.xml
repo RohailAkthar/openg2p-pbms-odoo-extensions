@@ -258,4 +258,64 @@
             </xpath>
         </field>
     </record>
+    <!-- Enrolment lists are approved automatically (models/enrolment_auto_approval.py), so the Stage / Status /
+         Queued On fields and the Approval History tab mean nothing for them. They stay for disbursement lists.
+         Remove this record to show them again. -->
+    <record id="nsipa_hide_enrolment_approval_info" model="ir.ui.view">
+        <field name="name">nsipa.hide.enrolment.approval.info</field>
+        <field name="model">g2p.bgtask.summary.wizard</field>
+        <field name="inherit_id" ref="g2p_pbms.view_g2p_eligibility_summary_wizard_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='current_stage_display']" position="attributes">
+                <attribute name="invisible">list_stage == 'enrollment'</attribute>
+            </xpath>
+            <xpath expr="//field[@name='current_approval_status']" position="attributes">
+                <attribute name="invisible">list_stage == 'enrollment'</attribute>
+            </xpath>
+            <xpath expr="//field[@name='current_enqueued_at']" position="attributes">
+                <attribute name="invisible">list_stage == 'enrollment'</attribute>
+            </xpath>
+            <xpath expr="//page[@string='Approval History']" position="attributes">
+                <attribute name="invisible">list_stage == 'enrollment'</attribute>
+            </xpath>
+        </field>
+    </record>
+    <!-- Enrolment cycles need no approval (models/enrolment_auto_approval.py): hide the approval columns in the
+         cycle list and the approval information in the cycle form. Remove these two records to show them again. -->
+    <record id="nsipa_hide_enrolment_cycle_approval_tree" model="ir.ui.view">
+        <field name="name">nsipa.hide.enrolment.cycle.approval.tree</field>
+        <field name="model">g2p.enrollment.cycle</field>
+        <field name="inherit_id" ref="g2p_pbms.view_enrollment_cycle_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='current_stage_display']" position="attributes">
+                <attribute name="column_invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='current_approval_status']" position="attributes">
+                <attribute name="column_invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='current_acted_at']" position="attributes">
+                <attribute name="column_invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+    <record id="nsipa_hide_enrolment_cycle_approval_form" model="ir.ui.view">
+        <field name="name">nsipa.hide.enrolment.cycle.approval.form</field>
+        <field name="model">g2p.enrollment.cycle</field>
+        <field name="inherit_id" ref="g2p_pbms.view_enrollment_cycle_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='current_stage_display']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='current_enqueued_at']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <!-- the "Status" row (status badge + approved/rejected by) -->
+            <xpath expr="//field[@name='current_approval_status']/../.." position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//page[@string='Approval History']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
 </odoo>

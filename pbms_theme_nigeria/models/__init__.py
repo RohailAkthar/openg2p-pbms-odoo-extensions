@@ -9,3 +9,5 @@ from . import website
 from . import name_labels
 from . import transfer_labels
 from . import entitlement_defaults
+
+from . import enrolment_auto_approval
