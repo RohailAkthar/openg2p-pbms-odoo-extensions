@@ -275,7 +275,7 @@
             <xpath expr="//field[@name='current_enqueued_at']" position="attributes">
                 <attribute name="invisible">list_stage == 'enrollment'</attribute>
             </xpath>
-            <xpath expr="//page[@string='Approval History']" position="attributes">
+            <xpath expr="//page[.//field[@name='stage_history_ids']]" position="attributes">
                 <attribute name="invisible">list_stage == 'enrollment'</attribute>
             </xpath>
         </field>
@@ -313,7 +313,7 @@
             <xpath expr="//field[@name='current_approval_status']/../.." position="attributes">
                 <attribute name="invisible">1</attribute>
             </xpath>
-            <xpath expr="//page[@string='Approval History']" position="attributes">
+            <xpath expr="//page[.//field[@name='current_stage_history_ids']]" position="attributes">
                 <attribute name="invisible">1</attribute>
             </xpath>
         </field>
