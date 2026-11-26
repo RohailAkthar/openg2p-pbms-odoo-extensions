@@ -58,11 +58,29 @@ export class G2PBeneficiariesComponent extends Component {
             {},
         );
         if (result.message) {
-            this.state.records = result.message.beneficiaries;
-            this.state.totalCount = result.message.total_beneficiary_count;
+            this.state.records = result.message.beneficiaries || [];
+            this.state.totalCount = result.message.total_beneficiary_count || 0;
+        } else if (result.response_body && result.response_body.response_payload) {
+            // v3.1.0 staff-portal API shape:
+            //   response_body.response_payload.beneficiaries
+            //   response_body.pagination_response.number_of_items
+            // (also the shape of Odoo's fallback when the API call failed).
+            const body = result.response_body;
+            const payload = body.response_payload;
+            const pagination = body.pagination_response || {};
+            this.state.records = payload.beneficiaries || [];
+            this.state.totalCount =
+                pagination.number_of_items ??
+                payload.total_beneficiary_count ??
+                payload.beneficiary_count ??
+                0;
+            if (!this.state.records.length) {
+                console.warn("Beneficiary search returned no rows.", result);
+            }
         } else {
-            this.state.records = result.records;
-            this.state.totalCount = result.total_count;
+            console.warn("Unrecognised beneficiary search response", result);
+            this.state.records = result.records || [];
+            this.state.totalCount = result.total_count || 0;
         }
         this.state.totalPages = Math.ceil(this.state.totalCount / this.state.pageSize) || 1;
     }

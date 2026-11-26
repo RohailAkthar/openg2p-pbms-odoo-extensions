@@ -1,4 +1,4 @@
-from odoo import models, fields
+from odoo import api, models, fields
 
 from .registry import G2PRegistry
 
@@ -32,7 +32,8 @@ class G2PHouseholdRegistry(models.Model):
         for rec in self:
             rec.link_registry_id = rec.internal_record_id
 
-    def search_count(self, domain, limit=None):
+    @api.model
+    def search_count(self, domain=None, limit=None):
         # The table lives in the registry database, not in Odoo's; the domain
         # editor's "N records match" preview must not query it.
         return 0
