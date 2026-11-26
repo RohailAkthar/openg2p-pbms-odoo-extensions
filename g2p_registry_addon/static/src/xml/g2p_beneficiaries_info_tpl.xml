@@ -27,6 +27,17 @@
                         <th><t t-esc="('Link Registry ID')"/></th>
                         <!-- <th><t t-esc="('Registration Date')"/></th> -->
 
+                        <!-- Conditional columns (household) -->
+                        <t t-if="state.target_registry === 'household'">
+                            <th><t t-esc="('Household ID')"/></th>
+                            <th><t t-esc="('Household Head')"/></th>
+                            <th><t t-esc="('Headship Type')"/></th>
+                            <th><t t-esc="('Household Size')"/></th>
+                            <th><t t-esc="('Region')"/></th>
+                            <th><t t-esc="('District')"/></th>
+                            <th><t t-esc="('Ward')"/></th>
+                            <th><t t-esc="('Contact Number')"/></th>
+                        </t>
                         <!-- Conditional columns (farmer) -->
                         <t t-if="state.target_registry === 'farmer'">
                             <th><t t-esc="('Name')"/></th>
@@ -47,11 +58,22 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <t t-foreach="state.records" t-as="record" t-key="record.id">
+                    <t t-foreach="state.records" t-as="record" t-key="record.id || record.internal_record_id">
                         <tr>
-                            <td><t t-esc="record.link_registry_id"/></td>
+                            <td><t t-esc="record.link_registry_id || record.internal_record_id"/></td>
                             <!-- <td><t t-esc="record.registration_date"/></td> -->
 
+                            <!-- Conditional cells (household) -->
+                            <t t-if="state.target_registry === 'household'">
+                                <td><t t-esc="record.functional_record_id"/></td>
+                                <td><t t-esc="record.household_head_name"/></td>
+                                <td><t t-esc="record.headship_type"/></td>
+                                <td><t t-esc="record.size_total"/></td>
+                                <td><t t-esc="record.region"/></td>
+                                <td><t t-esc="record.district"/></td>
+                                <td><t t-esc="record.ward"/></td>
+                                <td><t t-esc="record.contact_number"/></td>
+                            </t>
                             <!-- Conditional cells (farmer) -->
                             <t t-if="state.target_registry === 'farmer'">
                                 <td><t t-esc="record.name"/></td>

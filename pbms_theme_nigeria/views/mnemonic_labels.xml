@@ -231,6 +231,9 @@
             <xpath expr="(//field[@name='pbms_domain'])[2]" position="attributes">
                 <attribute name="invisible">1</attribute>
             </xpath>
+            <xpath expr="(//field[@name='pbms_domain'])[3]" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
         </field>
     </record>
     <!-- Multiplier hidden for now (flat amount for every beneficiary). The field is optional, so nothing else

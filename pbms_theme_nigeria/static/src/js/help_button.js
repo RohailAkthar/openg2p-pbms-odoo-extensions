@@ -126,6 +126,7 @@ class NsipaHelp extends Component {
         this.menus = useService("menu");
         this.router = useService("router");
         this.action = useService("action");
+        this.notification = useService("notification");
         this.state = useState({open: false, help: GENERIC, name: "", browse: false});
         // Re-render when the screen changes so the button can switch between Help and Back.
         useBus(this.env.bus, "ACTION_MANAGER:UI-UPDATED", () => this.render());
@@ -190,6 +191,13 @@ class NsipaHelp extends Component {
                 params: {guide: guide || DEFAULT_GUIDE},
             });
         } else {
+            // Knowledge module not loaded (not installed / assets not rebuilt): say so instead of doing nothing.
+            if (this.state.open) {
+                this.notification.add(
+                    "The Knowledge library is not available on this server. Ask your administrator to install or upgrade the 'PBMS Knowledge Management' (pbms_knowledge) module.",
+                    {type: "warning"}
+                );
+            }
             this.state.open = true;
         }
     }

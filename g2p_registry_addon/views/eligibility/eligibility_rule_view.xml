@@ -19,6 +19,11 @@
                        options="{'model': 'g2p.student.registry'}"
                        invisible="target_registry != 'student'"/>
 
+                <!-- Domain widget for the 'household' type -->
+                <field name="pbms_domain" widget="domain"
+                       options="{'model': 'g2p.household.registry'}"
+                       invisible="target_registry != 'household'"/>
+
             </xpath>
         </field>
     </record>
